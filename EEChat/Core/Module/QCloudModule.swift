@@ -80,7 +80,15 @@ class QCloudModule: NSObject {
             case is Data:
                 break
             case is String, is URL:
-                let text = (any as? String) ?? (any as? URL)?.relativePath ?? ""
+                let text: String = {
+                    if let text = any as? String {
+                        return text
+                    }
+                    if let url = any as? URL {
+                        return url.isFileURL ? url.relativePath : url.relativeString
+                    }
+                    fatalError()
+                }()
                 let value = regExp.stringByReplacingMatches(in: text,
                                                             options: .anchored,
                                                             range: NSRange(location: 0, length: text.count),

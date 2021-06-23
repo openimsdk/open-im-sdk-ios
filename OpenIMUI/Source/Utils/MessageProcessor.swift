@@ -170,24 +170,12 @@ public final class MessageProcessor: NSObject {
         
     }
     
-    public func file(_ urls: [URL]) {
-        urls.forEach { url in
-            assert(url.isFileURL)
-            _ = url.startAccessingSecurityScopedResource()
-            defer {
-                url.stopAccessingSecurityScopedResource()
-            }
-            
-            let path = self.path + "file/" + url.lastPathComponent
-            let newURL = URL(fileURLWithPath: path)
-            do {
-                try? FileManager.default.removeItem(at: newURL)
-                try FileManager.default.copyItem(at: url, to: newURL)
-            } catch {
-                fatalError()
-            }
-            
-        }
+    public func file(_ url: URL) -> OIMMessage {
+        let path = self.path + "file/" + url.lastPathComponent
+        let newURL = URL(fileURLWithPath: path)
+        try? FileManager.default.removeItem(at: newURL)
+        try? FileManager.default.copyItem(at: url, to: newURL)
+        return OIMManager.createFileMessage(path, filename: url.lastPathComponent)
     }
     
 }

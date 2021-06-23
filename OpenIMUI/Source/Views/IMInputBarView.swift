@@ -205,6 +205,7 @@ extension IMInputBarView: UITextViewDelegate {
         keyboardButton.isHidden = true
         
         layoutContent(self.textView.heightThatFits(contentWidth))
+        delegate?.inputBarViewDidTouchKeyboard(self)
     }
     
     public func textViewDidChange(_ textView: UITextView) {

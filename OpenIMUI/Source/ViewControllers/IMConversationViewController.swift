@@ -525,7 +525,13 @@ extension IMConversationViewController: UIImagePickerControllerDelegate, UINavig
 
 extension IMConversationViewController: UIDocumentPickerDelegate {
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        MessageProcessor.shared.file(urls)
+        urls.forEach { url in
+            _ = url.startAccessingSecurityScopedResource()
+            let message = MessageProcessor.shared.file(url).toUIMessage()
+            self.sendMessage(message)
+            self.append([message])
+            url.stopAccessingSecurityScopedResource()
+        }
         controller.dismiss(animated: true)
     }
     

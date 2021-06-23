@@ -195,7 +195,6 @@ extension IMInputViewController: IMInputBarViewDelegate {
     public func inputBarViewDidTouchMore(_ inputBarView: IMInputBarView) {
         showMoreView()
         status = .more
-        
         let newHeight = inputBarView.bounds.height + moreView.bounds.height + view.safeAreaInsets.bottom
         delegate?.inputViewController(self, didChange: newHeight)
     }
@@ -210,8 +209,6 @@ extension IMInputViewController: IMInputBarViewDelegate {
     public func inputBarViewDidTouchKeyboard(_ inputBarView: IMInputBarView) {
         hideMoreView()
         status = .keyboard
-        let newHeight = inputBarView.bounds.height + view.safeAreaInsets.bottom
-        delegate?.inputViewController(self, didChange: newHeight)
     }
     
     public func inputBarView(_ inputBarView: IMInputBarView, didChangeInputHeight offset: CGFloat) {
