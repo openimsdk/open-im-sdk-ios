@@ -1,0 +1,66 @@
+# Mac OS X Finder and whatnot
+.DS_Store
+
+# Xcode
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+profile
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+
+# Generated files
+VersionX-revision.h
+
+# build products
+*.o
+*.LinkFileList
+
+# Other source repository archive directories (protects when importing)
+.hg
+.svn
+CVS
+
+# automatic backup files
+*~.nib/
+*.swp
+*~
+*.dat
+*.dep
+
+#CocoaPods
+Pods
+*.xcworkspace
+
+# AppCode data folder
+.idea/
+
+# Temporary OS X files
+*.lock
+
+#injectionforxcode
+iOSInjectionProject/
+OSXInjectionProject/
+
+Carthage/
+
+rswift
+R.generated.swift
+
+node_modules/
+package-lock.json
+
+ipa/
+report.xml
+
+multiple-device-upload-ios.txt

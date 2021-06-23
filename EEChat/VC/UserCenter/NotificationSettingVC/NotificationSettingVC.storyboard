@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WwU-ja-Z5f">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Message notification-->
+        <scene sceneID="5kf-5x-4RQ">
+            <objects>
+                <viewController title="Message notification" id="WwU-ja-Z5f" customClass="NotificationSettingVC" customModule="EEChat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XYF-gO-Moj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CeC-An-ik4">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="re7-tf-q7T">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kqh-Ve-2PD">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JwW-qW-N30">
+                                                        <rect key="frame" x="0.0" y="49" width="414" height="1"/>
+                                                        <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="1" id="khq-AL-7Z5" customClass="HairlineConstraint" customModule="EEChat" customModuleProvider="target"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="04i-gM-bRR">
+                                                        <rect key="frame" x="22" y="14.5" width="183.5" height="21"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Nes-dM-0i8" customClass="SwitchView" customModule="EEChat" customModuleProvider="target">
+                                                        <rect key="frame" x="350" y="9.5" width="51" height="31"/>
+                                                        <color key="onTintColor" red="0.1058823529" green="0.44705882349999998" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="thumbTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </switch>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvq-lr-05g">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                                        <connections>
+                                                            <action selector="jumpSettingAction" destination="WwU-ja-Z5f" eventType="touchUpInside" id="Rp9-0W-ANj"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="Nes-dM-0i8" firstAttribute="centerY" secondItem="kqh-Ve-2PD" secondAttribute="centerY" id="3nR-KR-rKW"/>
+                                                    <constraint firstAttribute="bottom" secondItem="JwW-qW-N30" secondAttribute="bottom" id="Eit-Gc-2in"/>
+                                                    <constraint firstItem="pvq-lr-05g" firstAttribute="top" secondItem="kqh-Ve-2PD" secondAttribute="top" id="Er9-BP-gQT"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Nes-dM-0i8" secondAttribute="trailing" constant="15" id="IIK-7a-ohT"/>
+                                                    <constraint firstAttribute="trailing" secondItem="JwW-qW-N30" secondAttribute="trailing" id="TNV-R0-Om6"/>
+                                                    <constraint firstItem="JwW-qW-N30" firstAttribute="leading" secondItem="kqh-Ve-2PD" secondAttribute="leading" id="XDf-iW-9tr"/>
+                                                    <constraint firstItem="04i-gM-bRR" firstAttribute="leading" secondItem="kqh-Ve-2PD" secondAttribute="leading" constant="22" id="iV9-Tp-m9U"/>
+                                                    <constraint firstAttribute="height" constant="50" id="ifh-uD-NCv"/>
+                                                    <constraint firstItem="pvq-lr-05g" firstAttribute="leading" secondItem="kqh-Ve-2PD" secondAttribute="leading" id="qDV-cD-LiP"/>
+                                                    <constraint firstAttribute="trailing" secondItem="pvq-lr-05g" secondAttribute="trailing" id="sG5-bj-ELT"/>
+                                                    <constraint firstItem="04i-gM-bRR" firstAttribute="centerY" secondItem="kqh-Ve-2PD" secondAttribute="centerY" id="sk2-1b-goO"/>
+                                                    <constraint firstAttribute="bottom" secondItem="pvq-lr-05g" secondAttribute="bottom" id="vzc-AF-YFB"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstItem="kqh-Ve-2PD" firstAttribute="top" secondItem="re7-tf-q7T" secondAttribute="top" id="2ds-A7-eLh"/>
+                                            <constraint firstItem="kqh-Ve-2PD" firstAttribute="leading" secondItem="re7-tf-q7T" secondAttribute="leading" id="7X2-VL-9VT"/>
+                                            <constraint firstAttribute="trailing" secondItem="kqh-Ve-2PD" secondAttribute="trailing" id="DAh-Mk-451"/>
+                                            <constraint firstAttribute="bottom" secondItem="kqh-Ve-2PD" secondAttribute="bottom" constant="30" id="kli-uf-3ND"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="re7-tf-q7T" secondAttribute="bottom" id="1KC-iu-6sT"/>
+                                    <constraint firstItem="re7-tf-q7T" firstAttribute="leading" secondItem="CeC-An-ik4" secondAttribute="leading" id="1VP-dI-T7E"/>
+                                    <constraint firstItem="re7-tf-q7T" firstAttribute="width" secondItem="CeC-An-ik4" secondAttribute="width" id="2Bw-2j-vwB"/>
+                                    <constraint firstItem="re7-tf-q7T" firstAttribute="top" secondItem="CeC-An-ik4" secondAttribute="top" id="5pr-9j-7F3"/>
+                                    <constraint firstAttribute="trailing" secondItem="re7-tf-q7T" secondAttribute="trailing" id="CQq-e7-jDI"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="nM9-IG-hcq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="nM9-IG-hcq" firstAttribute="bottom" secondItem="CeC-An-ik4" secondAttribute="bottom" id="1aE-Yo-9YZ"/>
+                            <constraint firstItem="CeC-An-ik4" firstAttribute="leading" secondItem="nM9-IG-hcq" secondAttribute="leading" id="R75-Hr-XWk"/>
+                            <constraint firstItem="nM9-IG-hcq" firstAttribute="trailing" secondItem="CeC-An-ik4" secondAttribute="trailing" id="oYC-BV-Gb5"/>
+                            <constraint firstItem="CeC-An-ik4" firstAttribute="top" secondItem="XYF-gO-Moj" secondAttribute="top" id="y9N-Da-9Lg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="notificationSwitch" destination="Nes-dM-0i8" id="ygz-s2-6h4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zif-cL-uum" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-184.05797101449278" y="18.75"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

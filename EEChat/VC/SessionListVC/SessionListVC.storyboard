@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6oP-cF-Rwc">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Session ListVC-->
+        <scene sceneID="fxU-N0-oBm">
+            <objects>
+                <viewController id="6oP-cF-Rwc" customClass="SessionListVC" customModule="EEChat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lHS-Ug-HqW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="73" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lD7-xJ-9pe">
+                                <rect key="frame" x="0.0" y="94" width="414" height="768"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="95D-RG-Wvo" customClass="MainHeaderView" customModule="EEChat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="IkI-b2-cMg"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="title" value="Chats"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showSearch" value="NO"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="voF-bv-PyK"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="voF-bv-PyK" firstAttribute="bottom" secondItem="lD7-xJ-9pe" secondAttribute="bottom" id="8Zy-CW-lRX"/>
+                            <constraint firstItem="lD7-xJ-9pe" firstAttribute="leading" secondItem="voF-bv-PyK" secondAttribute="leading" id="FMP-1a-Zmb"/>
+                            <constraint firstItem="voF-bv-PyK" firstAttribute="trailing" secondItem="lD7-xJ-9pe" secondAttribute="trailing" id="Jgi-Ll-jeX"/>
+                            <constraint firstItem="lD7-xJ-9pe" firstAttribute="top" secondItem="95D-RG-Wvo" secondAttribute="bottom" id="NXr-bj-I3k"/>
+                            <constraint firstItem="95D-RG-Wvo" firstAttribute="trailing" secondItem="voF-bv-PyK" secondAttribute="trailing" id="mpc-AV-wnJ"/>
+                            <constraint firstItem="95D-RG-Wvo" firstAttribute="leading" secondItem="voF-bv-PyK" secondAttribute="leading" id="v3y-4t-ern"/>
+                            <constraint firstItem="95D-RG-Wvo" firstAttribute="top" secondItem="voF-bv-PyK" secondAttribute="top" id="xDX-K6-fiQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="lD7-xJ-9pe" id="EeI-vI-Ddw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gOc-Fn-3DM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="422" y="76"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
