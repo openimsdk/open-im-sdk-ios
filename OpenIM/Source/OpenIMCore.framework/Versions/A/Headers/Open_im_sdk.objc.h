@@ -18,6 +18,8 @@
 @class Open_im_sdkFriend;
 @class Open_im_sdkIMConfig;
 @class Open_im_sdkIMManager;
+@class Open_im_sdkInviteUserToGroupReq;
+@class Open_im_sdkKickGroupMemberReq;
 @class Open_im_sdkLogInfo;
 @class Open_im_sdkMessageReceipt;
 @class Open_im_sdkMsg;
@@ -60,6 +62,7 @@
 
 @protocol Open_im_sdkOnAdvancedMsgListener <NSObject>
 - (void)onRecvC2CReadReceipt:(NSString* _Nullable)msgReceiptList;
+- (void)onRecvMessageRevoked:(NSString* _Nullable)msgId;
 - (void)onRecvNewMessage:(NSString* _Nullable)message;
 @end
 
@@ -195,6 +198,32 @@
 @property (nonatomic) long loginState;
 @end
 
+@interface Open_im_sdkInviteUserToGroupReq : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nonnull instancetype)init;
+@property (nonatomic) NSString* _Nonnull op;
+@property (nonatomic) NSString* _Nonnull groupID;
+@property (nonatomic) NSString* _Nonnull reason;
+// skipped field InviteUserToGroupReq.UidList with unsupported type: []string
+
+@end
+
+@interface Open_im_sdkKickGroupMemberReq : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nonnull instancetype)init;
+@property (nonatomic) NSString* _Nonnull op;
+@property (nonatomic) NSString* _Nonnull groupID;
+@property (nonatomic) NSString* _Nonnull reason;
+// skipped field KickGroupMemberReq.UidList with unsupported type: []string
+
+@end
+
 @interface Open_im_sdkLogInfo : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -287,6 +316,8 @@
 
 // skipped field MsgStruct.MergeElem with unsupported type: struct{Title string "json:\"title\""; AbstractList []string "json:\"abstractList\""; MultiMessage []*open_im_sdk/open_im_sdk.MsgStruct "json:\"multiMessage\""}
 
+// skipped field MsgStruct.RevokeMessage with unsupported type: struct{ServerMsgID string "json:\"serverMsgID\""; SendID string "json:\"sendID\""; SenderNickname string "json:\"senderNickname\""; RecvID string "json:\"recvID\""; GroupID string "json:\"groupID\""; ContentType int32 "json:\"contentType\""; SendTime int64 "json:\"sendTime\""}
+
 @end
 
 @interface Open_im_sdkPictureBaseInfo : NSObject <goSeqRefInterface> {
@@ -368,12 +399,15 @@
 @property (nonatomic) int32_t flag;
 @end
 
+FOUNDATION_EXPORT const int64_t Open_im_sdkAcceptFriendApplicationTip;
+FOUNDATION_EXPORT const int64_t Open_im_sdkAcceptGroupApplicationTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkAddConOrUpLatMsg;
 FOUNDATION_EXPORT const int64_t Open_im_sdkAddFriendTip;
-FOUNDATION_EXPORT const int64_t Open_im_sdkAgreeAddFriendTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkC2CMessageAsRead;
 FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdAcceptFriend;
+FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdAddFriend;
 FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdBlackList;
+FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdCreateGroup;
 FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdDeleteConversation;
 FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdForceSyncFriend;
 FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdForceSyncFriendApplication;
@@ -389,10 +423,12 @@ FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdGeyLoginUserInfo;
 FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdGroup;
 FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdNewMsgCome;
 FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdReLogin;
+FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdRefuseFriend;
 FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdUnInit;
 FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkCmdUpdateConversation;
 FOUNDATION_EXPORT const int64_t Open_im_sdkConAndUnreadChange;
 FOUNDATION_EXPORT const int64_t Open_im_sdkConChange;
+FOUNDATION_EXPORT const int64_t Open_im_sdkCreateGroupTip;
 FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkDeFaultSuccessMsg;
 FOUNDATION_EXPORT const int64_t Open_im_sdkErrCodeConversation;
 FOUNDATION_EXPORT const int64_t Open_im_sdkErrCodeFriend;
@@ -409,9 +445,13 @@ FOUNDATION_EXPORT const int64_t Open_im_sdkGroupActionQuitGroup;
 FOUNDATION_EXPORT const int64_t Open_im_sdkGroupActionRefuseGroupApplication;
 FOUNDATION_EXPORT const int64_t Open_im_sdkGroupActionSetGroupInfo;
 FOUNDATION_EXPORT const int64_t Open_im_sdkGroupActionTransferGroupOwner;
+FOUNDATION_EXPORT const int64_t Open_im_sdkGroupApplicationResponseTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkGroupChatType;
 FOUNDATION_EXPORT const int64_t Open_im_sdkHasRead;
 FOUNDATION_EXPORT const int64_t Open_im_sdkIncrUnread;
+FOUNDATION_EXPORT const int64_t Open_im_sdkInviteUserToGroupTip;
+FOUNDATION_EXPORT const int64_t Open_im_sdkJoinGroupTip;
+FOUNDATION_EXPORT const int64_t Open_im_sdkKickGroupMemberTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkKickOnlineTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkLoginFailed;
 FOUNDATION_EXPORT const int64_t Open_im_sdkLoginSuccess;
@@ -428,7 +468,12 @@ FOUNDATION_EXPORT const int64_t Open_im_sdkMsgStatusSendSuccess;
 FOUNDATION_EXPORT const int64_t Open_im_sdkMsgStatusSending;
 FOUNDATION_EXPORT const int64_t Open_im_sdkNotRead;
 FOUNDATION_EXPORT const int64_t Open_im_sdkPicture;
+FOUNDATION_EXPORT const int64_t Open_im_sdkQuitGroupTip;
+FOUNDATION_EXPORT const int64_t Open_im_sdkRefuseFriendApplicationTip;
+FOUNDATION_EXPORT const int64_t Open_im_sdkRefuseGroupApplicationTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkRevoke;
+FOUNDATION_EXPORT const int64_t Open_im_sdkSetGroupInfoTip;
+FOUNDATION_EXPORT const int64_t Open_im_sdkSetSelfInfoTip;
 /**
  * ///////////////////////////////////
 SessionType
@@ -442,6 +487,7 @@ FOUNDATION_EXPORT const int64_t Open_im_sdkSysMsgType;
  */
 FOUNDATION_EXPORT const int64_t Open_im_sdkText;
 FOUNDATION_EXPORT const int64_t Open_im_sdkTimeOffset;
+FOUNDATION_EXPORT const int64_t Open_im_sdkTransferGroupOwnerTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkUnreadCountSetZero;
 /**
  * //////////////////////////////////////
@@ -455,8 +501,6 @@ FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkZoomScale;
 // skipped variable ConListener with unsupported type: open_im_sdk/open_im_sdk.ConversationListener
 
 // skipped variable ConversationCh with unsupported type: chan open_im_sdk/open_im_sdk.cmd2Value
-
-// skipped variable FriendCh with unsupported type: chan open_im_sdk/open_im_sdk.cmd2Value
 
 // skipped variable FriendObj with unsupported type: open_im_sdk/open_im_sdk.Friend
 
@@ -474,7 +518,7 @@ FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkZoomScale;
 
 @end
 
-FOUNDATION_EXPORT void Open_im_sdkAcceptFriendApplication(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable info);
+FOUNDATION_EXPORT void Open_im_sdkAcceptFriendApplication(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable uid);
 
 FOUNDATION_EXPORT void Open_im_sdkAcceptGroupApplication(NSString* _Nullable application, NSString* _Nullable reason, id<Open_im_sdkBase> _Nullable callback);
 
@@ -511,8 +555,6 @@ FOUNDATION_EXPORT void Open_im_sdkDeleteFromBlackList(id<Open_im_sdkBase> _Nulla
 FOUNDATION_EXPORT void Open_im_sdkDeleteFromFriendList(NSString* _Nullable deleteUid, id<Open_im_sdkBase> _Nullable callback);
 
 FOUNDATION_EXPORT void Open_im_sdkDeleteMessageFromLocalStorage(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable message);
-
-FOUNDATION_EXPORT void Open_im_sdkDeleteMessages(id<Open_im_sdkBase> _Nullable s, NSString* _Nullable msg);
 
 FOUNDATION_EXPORT void Open_im_sdkDoCreateGroup(void);
 
@@ -679,6 +721,7 @@ FOUNDATION_EXPORT void Open_im_sdkUnInitSDK(void);
 
 - (nonnull instancetype)initWithRef:(_Nonnull id)ref;
 - (void)onRecvC2CReadReceipt:(NSString* _Nullable)msgReceiptList;
+- (void)onRecvMessageRevoked:(NSString* _Nullable)msgId;
 - (void)onRecvNewMessage:(NSString* _Nullable)message;
 @end
 

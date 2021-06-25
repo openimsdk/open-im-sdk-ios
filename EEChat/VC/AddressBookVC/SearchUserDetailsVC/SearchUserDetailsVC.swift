@@ -109,10 +109,10 @@ class SearchUserDetailsVC: BaseViewController {
     
     @objc
     func onFriendApplicationListAcceptNotification(_ notification: Notification) {
-        guard let uid = notification.object as? String else {
+        guard let user = notification.object as? OIMUserInfo else {
             return
         }
-        if self.model.uid == uid {
+        if self.model == user {
             self.model.isFriend = true
             refreshUI()
         }

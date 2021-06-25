@@ -162,9 +162,9 @@ extension OUIKit: OIMFriendshipListener {
     
     public static let onFriendApplicationListAcceptNotification = NSNotification.Name("OUIKit.onFriendApplicationListAcceptNotification")
     
-    public func onFriendApplicationListAccept(_ uid: String) {
+    public func onFriendApplicationListAccept(_ user: OIMUserInfo) {
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onFriendApplicationListAcceptNotification, object: uid)
+            NotificationCenter.default.post(name: OUIKit.onFriendApplicationListAcceptNotification, object: user)
         }
     }
     

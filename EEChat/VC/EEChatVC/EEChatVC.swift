@@ -86,7 +86,7 @@ class EEChatVC: IMConversationViewController {
                     return
                 }
                 
-                OIMManager.deleteMessages([message.innerMessage], callback: { result in
+                OIMManager.deleteMessageFromLocalStorage([message.innerMessage], callback: { result in
                     
                 })
                 self.remove(message)

@@ -13,7 +13,7 @@ public protocol OIMFriendshipListener: AnyObject {
     func onFriendApplicationListDeleted(_ uid: String)
     func onFriendApplicationListRead()
     func onFriendApplicationListReject(_ uid: String)
-    func onFriendApplicationListAccept(_ uid: String)
+    func onFriendApplicationListAccept(_ user: OIMUserInfo)
     func onFriendListAdded()
     func onFriendListDeleted(_ uid: String)
     func onBlackListAdded(_ user: OIMUserInfo)
@@ -134,14 +134,8 @@ extension OIMManager: Open_im_sdkOnFriendshipListenerProtocol {
     }
     
     public func onFriendApplicationListAccept(_ info: String?) {
-        struct Model: Codable {
-            let uid: String
-        }
-        
-        let array: [Model] = decodeModel(info)
-        array.forEach { model in
-            self.friendshipListener?.onFriendApplicationListAccept(model.uid)
-        }
+        let model: OIMUserInfo = decodeModel(info)
+        self.friendshipListener?.onFriendApplicationListAccept(model)
     }
     
     public func onFriendApplicationListAdded(_ info: String?) {

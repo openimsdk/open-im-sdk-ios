@@ -31,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIViewController.initHook()
         
+        PushManager.shared.launchOptions(launchOptions)
+        
         _ = Observable.merge(
             NotificationCenter.default.rx.notification(AccountManager.loginNotification),
             NotificationCenter.default.rx.notification(AccountManager.logoutNotification)

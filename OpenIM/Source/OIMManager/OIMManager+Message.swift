@@ -125,6 +125,10 @@ extension OIMManager: Open_im_sdkOnAdvancedMsgListenerProtocol {
         
     }
     
+    public func onRecvMessageRevoked(_ msgId: String?) {
+        
+    }
+    
     public static func addAdvancedMsgListener(_ listener: OIMAdvancedMsgListener) {
         shared.advancedMsgListeners.append(WeakRef(value: listener))
     }
@@ -137,8 +141,8 @@ extension OIMManager: Open_im_sdkOnAdvancedMsgListenerProtocol {
 }
 
 extension OIMManager {
-    public static func deleteMessages(_ messages: [OIMMessage], callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkDeleteMessages(CallbackProxy(callback), messages.toString())
+    public static func deleteMessageFromLocalStorage(_ messages: [OIMMessage], callback: @escaping (Result<Void, Error>) -> Void) {
+        Open_im_sdkDeleteMessageFromLocalStorage(CallbackProxy(callback), messages.toString())
     }
     
     public static func createTextMessage(_ text: String, at uids: [String] = []) -> OIMMessage {

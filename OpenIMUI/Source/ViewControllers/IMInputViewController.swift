@@ -61,9 +61,22 @@ open class IMInputViewController: UIViewController {
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow(_:)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillChangeFrame(_:)),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(_:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reset),
+                                               name: MessagesCollectionView.resignAllResponderNotification,
+                                               object: nil)
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -74,12 +87,6 @@ open class IMInputViewController: UIViewController {
             }
         }
         navigationController?.interactivePopGestureRecognizer?.delaysTouchesBegan = false
-        
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(resignAllResponder),
-                                               name: MessagesCollectionView.resignAllResponderNotification,
-                                               object: nil)
     }
     
     open override func viewDidDisappear(_ animated: Bool) {
@@ -109,7 +116,7 @@ open class IMInputViewController: UIViewController {
     // MARK: - Methods [Private]
     
     @objc
-    private func resignAllResponder() {
+    private func reset() {
         switch status {
         case .more:
             hideMoreView()
@@ -159,16 +166,11 @@ open class IMInputViewController: UIViewController {
     
     // MARK: - Methods
     
-    public func reset() {
-        status = .none
-        inputBarView.textView.resignFirstResponder()
-        delegate?.inputViewController(self, didChange: view.safeAreaInsets.bottom + inputBarView.bounds.height)
-    }
-    
     // MARK: - Methods [Notification]
     
     @objc
     func keyboardWillShow(_ notification: Notification) {
+        hideMoreView()
         status = .keyboard
     }
     
@@ -207,8 +209,7 @@ extension IMInputViewController: IMInputBarViewDelegate {
     }
     
     public func inputBarViewDidTouchKeyboard(_ inputBarView: IMInputBarView) {
-        hideMoreView()
-        status = .keyboard
+        
     }
     
     public func inputBarView(_ inputBarView: IMInputBarView, didChangeInputHeight offset: CGFloat) {
