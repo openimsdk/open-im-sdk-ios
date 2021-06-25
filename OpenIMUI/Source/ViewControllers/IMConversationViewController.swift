@@ -321,7 +321,7 @@ open class IMConversationViewController: UIViewController,
         }
     }
     
-    open func inputViewController(_ inputViewController: IMInputViewController, didSelectMore item: IMInputMoreItem, index: Int) {
+    open func inputViewController(_ inputViewController: IMInputViewController, didSelectMore index: Int) {
         switch index {
         case 0:
             takePictureForSend()

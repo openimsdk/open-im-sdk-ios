@@ -61,6 +61,8 @@ target 'EEChat' do
   pod 'YBImageBrowser', '~> 3.0.9'
   pod 'YBImageBrowser/Video', '~> 3.0.9'
   
+  pod 'QMUIKit', '~> 4.2.3'
+  
   pod 'Reveal-SDK', '~> 21', :configurations => ['Debug']
   pod 'PgyUpdate', :configurations => ['Debug', 'Beta']
 end

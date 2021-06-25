@@ -11,7 +11,7 @@ public protocol IMInputViewControllerDelegate: AnyObject {
     func inputViewController(_ inputViewController: IMInputViewController, didChange height: CGFloat)
     func inputViewController(_ inputViewController: IMInputViewController, didSendText text: String, at uids: [String])
     func inputViewController(_ inputViewController: IMInputViewController, didSendVoice url: URL)
-    func inputViewController(_ inputViewController: IMInputViewController, didSelectMore item: IMInputMoreItem, index: Int)
+    func inputViewController(_ inputViewController: IMInputViewController, didSelectMore index: Int)
     func inputViewController(_ inputViewController: IMInputViewController, didInputAt completionHandler: @escaping (_ name: String, _ uid: String) -> Void)
 }
 
@@ -232,6 +232,6 @@ extension IMInputViewController: IMInputBarViewDelegate {
 
 extension IMInputViewController: IMInputMoreViewDelegate {
     public func inputMoreView(_ inputMoreView: IMInputMoreView, didSelectMore item: IMInputMoreItem, index: Int) {
-        delegate?.inputViewController(self, didSelectMore: item, index: index)
+        delegate?.inputViewController(self, didSelectMore: index)
     }
 }

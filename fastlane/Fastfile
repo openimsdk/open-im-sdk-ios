@@ -1,3 +1,4 @@
+# fastlane add_plugin pgyer
 
 lane :do_beta do |options|
     increment_build_number(

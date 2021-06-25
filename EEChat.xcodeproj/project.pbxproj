@@ -93,6 +93,7 @@
 		8094F6AB267C35FF0022D686 /* SessionListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8094F6A7267C35FF0022D686 /* SessionListVC.swift */; };
 		8094F6AC267C35FF0022D686 /* SessionListVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8094F6A8267C35FF0022D686 /* SessionListVC.storyboard */; };
 		8094F6AD267C35FF0022D686 /* SessionListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8094F6A9267C35FF0022D686 /* SessionListCell.swift */; };
+		80EDCC962685D46600532366 /* QMUIConfigurationTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -188,6 +189,7 @@
 		8094F6A7267C35FF0022D686 /* SessionListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionListVC.swift; sourceTree = "<group>"; };
 		8094F6A8267C35FF0022D686 /* SessionListVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SessionListVC.storyboard; sourceTree = "<group>"; };
 		8094F6A9267C35FF0022D686 /* SessionListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionListCell.swift; sourceTree = "<group>"; };
+		80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMUIConfigurationTemplate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -413,6 +415,7 @@
 		807F6D5C2671F7620025370B /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				80EDCC912685D43C00532366 /* Common */,
 				807F6D5D2671F76E0025370B /* Manager */,
 			);
 			path = Project;
@@ -552,6 +555,14 @@
 				8094F6A9267C35FF0022D686 /* SessionListCell.swift */,
 			);
 			path = SessionListVC;
+			sourceTree = "<group>";
+		};
+		80EDCC912685D43C00532366 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		8C52F9158960CA4D32668E23 /* Pods */ = {
@@ -733,6 +744,7 @@
 				807F6D2D2671F2530025370B /* NavigationModule.swift in Sources */,
 				807F6D302671F2530025370B /* EECPopupVC.swift in Sources */,
 				807F6D4E2671F2E70025370B /* ApiResult.swift in Sources */,
+				80EDCC962685D46600532366 /* QMUIConfigurationTemplate.swift in Sources */,
 				805EB956267300740071035E /* SearchUserDetailsVC.swift in Sources */,
 				807F6D242671F2530025370B /* String+EEC.swift in Sources */,
 				807F6D2A2671F2530025370B /* UIView+EEC.swift in Sources */,

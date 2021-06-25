@@ -4,6 +4,7 @@
 
 #import "Toast.h"
 #import <TPNS-iOS/XGPush.h>
+#import <QMUIKit/QMUIKit.h>
 
 #if defined(DEBUG) || defined(BETA)
 #import <PgyUpdate/PgyUpdateManager.h>

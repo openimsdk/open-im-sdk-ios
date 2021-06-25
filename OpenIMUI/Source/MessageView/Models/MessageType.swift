@@ -211,8 +211,13 @@ public class MessageType: Hashable {
             content = .video(item)
         default:
             if message.contentType.rawValue >= 200 {
-                let model = try! JSONDecoder().decode(SystemItem.self, from: message.content.data(using: .utf8)!)
-                content = .system(message.contentType.rawValue, model)
+                let item: SystemItem
+                do {
+                    item = try JSONDecoder().decode(SystemItem.self, from: message.content.data(using: .utf8)!)
+                } catch {
+                    item = SystemItem(isDisplay: 1, id: "", text: message.content)
+                }
+                content = .system(message.contentType.rawValue, item)
             } else {
                 content = .unknown(message.contentType.rawValue, message.content)
             }

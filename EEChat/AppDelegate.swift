@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         OUIKit.shared.initSDK()
         OUIKit.shared.messageDelegate = MessageModule.shared
         configKeyboard()
+        configQMUIKit()
         
         UIViewController.initHook()
         
@@ -74,6 +75,14 @@ extension AppDelegate {
         keyboardManager.disabledDistanceHandlingClasses.append(contentsOf: classes)
         keyboardManager.disabledToolbarClasses.append(contentsOf: classes)
         keyboardManager.disabledTouchResignedClasses.append(contentsOf: classes)
+    }
+    
+    private func configQMUIKit() {
+        guard let configuration = QMUIConfiguration.sharedInstance() else {
+            return
+        }
+        configuration.sendAnalyticsToQMUITeam = false
+        configuration.applyInitialTemplate()
     }
     
     func checkUpdate() {
