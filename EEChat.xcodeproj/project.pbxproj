@@ -957,6 +957,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 002F95BCA8CD3E6E60FD7184 /* Pods-EEChat.debug.xcconfig */;
 			buildSettings = {
+				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -986,6 +987,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 428E60A9BCC633B72654292A /* Pods-EEChat.release.xcconfig */;
 			buildSettings = {
+				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
@@ -1071,6 +1073,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0DF78AF4D8483F0363B3EA7B /* Pods-EEChat.beta.xcconfig */;
 			buildSettings = {
+				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;

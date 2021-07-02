@@ -7,6 +7,11 @@
 
 import Foundation
 
+public enum OIMConversationType: Int {
+    case c2c = 1
+    case group = 2
+}
+
 public enum OIMGender: Int, Codable {
     case unknown = 0
     case male = 1

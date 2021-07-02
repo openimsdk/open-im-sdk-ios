@@ -97,7 +97,7 @@ extension AppDelegate {
     
     func checkUpdate() {
         #if BETA // DEBUG || BETA
-        PgyUpdateManager.sharedPgy().start(withAppId: "6d8bd7f759ad3a7b92ea3288fe8e8e4c")
+        PgyUpdateManager.sharedPgy().start(withAppId: "8823db48e4d89ab039a00b25dc14f9e5")
         DispatchQueue.main.async {
             PgyUpdateManager.sharedPgy().checkUpdate()
         }

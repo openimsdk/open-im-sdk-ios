@@ -12,7 +12,8 @@ import OpenIMUI
 class EEChatVC: IMConversationViewController {
     
     class func show(uid: String = "", groupID: String = "") {
-        OIMManager.getConversation(type: uid != "" ? .c2c : .group,
+        let type: OIMConversationType = uid != "" ? .c2c : .group
+        OIMManager.getConversation(type: type,
                                    id: uid != "" ? uid : groupID)
         { result in
             if case let .success(conversation) = result {

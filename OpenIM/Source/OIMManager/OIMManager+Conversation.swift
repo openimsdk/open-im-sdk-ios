@@ -74,11 +74,7 @@ public class OIMConversation: Codable, Hashable {
 }
 
 extension OIMManager {
-    public enum ConversationType: Int {
-        case c2c = 1
-        case group = 2
-    }
-    public static func getConversation(type: ConversationType,
+    public static func getConversation(type: OIMConversationType,
                                        id: String,
                                        callback: @escaping (Result<OIMConversation, Error>) -> Void) {
         Open_im_sdkGetOneConversation(id, type.rawValue, CallbackArgsProxy(callback));

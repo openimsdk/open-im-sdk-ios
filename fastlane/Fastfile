@@ -35,4 +35,14 @@ lane :do_release do |options|
     increment_build_number(
         build_number: "0",
     )
+
+    upload_appstore()
 end
+
+def upload_appstore(ipa_path=Actions.lane_context[SharedValues::IPA_OUTPUT_PATH])
+    script = %Q{
+      IPA_PATH="#{ipa_path}"
+      xcrun altool --upload-app --file "$IPA_PATH" --username "$APP_STORE_USERNAME" --password "$APP_STORE_PASSWORD"
+    }
+    sh(script)
+  end
