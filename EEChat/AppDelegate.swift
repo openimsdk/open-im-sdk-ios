@@ -10,6 +10,7 @@ import RxSwift
 import OpenIM
 import OpenIMUI
 import IQKeyboardManagerSwift
+import Bugly
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         OUIKit.shared.initSDK()
         OUIKit.shared.messageDelegate = MessageModule.shared
+        configBugly()
         configKeyboard()
         configQMUIKit()
         
@@ -78,11 +80,19 @@ extension AppDelegate {
     }
     
     private func configQMUIKit() {
-        guard let configuration = QMUIConfiguration.sharedInstance() else {
+        guard let instance = QMUIConfiguration.sharedInstance() else {
             return
         }
-        configuration.sendAnalyticsToQMUITeam = false
-        configuration.applyInitialTemplate()
+        instance.sendAnalyticsToQMUITeam = false
+        instance.shouldPrintDefaultLog = false
+        instance.shouldPrintInfoLog = false
+        instance.shouldPrintWarnLog = false
+        instance.shouldPrintQMUIWarnLogToConsole = false
+        instance.applyInitialTemplate()
+    }
+    
+    func configBugly() {
+        Bugly.start(withAppId: "21ae582b11")
     }
     
     func checkUpdate() {

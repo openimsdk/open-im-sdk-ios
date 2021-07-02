@@ -74,11 +74,14 @@ public class OIMConversation: Codable, Hashable {
 }
 
 extension OIMManager {
-    public static func getConversation(uid: String,
-                                       groupID: String,
+    public enum ConversationType: Int {
+        case c2c = 1
+        case group = 2
+    }
+    public static func getConversation(type: ConversationType,
+                                       id: String,
                                        callback: @escaping (Result<OIMConversation, Error>) -> Void) {
-        let conversationID: String = uid != "" ? "single_" + uid : "group_" + groupID
-        Open_im_sdkGetOneConversation(conversationID, CallbackArgsProxy(callback))
+        Open_im_sdkGetOneConversation(id, type.rawValue, CallbackArgsProxy(callback));
     }
     
     

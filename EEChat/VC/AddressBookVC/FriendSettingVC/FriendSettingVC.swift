@@ -7,20 +7,9 @@
 
 import UIKit
 import OpenIM
+import OpenIMUI
 
 class FriendSettingVC: BaseViewController {
-    
-    override class func show(param: Any? = nil, callback: BaseViewController.Callback? = nil) {
-        assert(param is String)
-        let uid = param as! String
-        
-        _ = rxRequest(showLoading: true, callback: { OIMManager.getUsers(uids: [uid], callback: $0) })
-            .subscribe(onSuccess: { array in
-                if let model = array.first {
-                    super.show(param: model, callback: callback)
-                }
-            })
-    }
 
     @IBOutlet var avatarImageView: ImageView!
     @IBOutlet var nameLabel: UILabel!
@@ -30,24 +19,27 @@ class FriendSettingVC: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshUI()
+        
+        OUIKit.shared.getUser(model.userID, isForce: true, callback: { user in
+            self.set(user: user)
+        })
     }
     
-    private lazy var model: OIMUserInfo = {
-        assert(param is OIMUserInfo)
-        return param as! OIMUserInfo
+    private lazy var model: OIMConversation = {
+        assert(param is OIMConversation)
+        return param as! OIMConversation
     }()
     
     private func refreshUI() {
-        avatarImageView.setImage(with: model.icon,
+        avatarImageView.setImage(with: URL(string: model.faceUrl),
                                  placeholder: UIImage(named: "icon_default_avatar"))
-        nameLabel.text = model.getName()
-        blacklistButton.isSelected = model.isInBlackList
-        
-//        if let session = OIMManager.shared.getSession(.p2p(model.uid)) {
-//            topButton.isSelected = session.isTop
-//        } else {
-//            topButton.isSelected = false
-//        }
+        nameLabel.text = model.showName
+        topButton.isSelected = model.isPinned
+    }
+    
+    private func set(user: OIMUserInfo?) {
+        guard let user = user else { return }
+        blacklistButton.isSelected = user.isInBlackList
     }
     
     // MARK: - Action
@@ -59,15 +51,15 @@ class FriendSettingVC: BaseViewController {
     @IBAction func remarkAction() {
         UIAlertController.show(title: LocalizedString("Modify the remark"),
                                message: nil,
-                               text: model.comment,
+                               text: model.showName,
                                placeholder: LocalizedString("Please enter remarks"))
         { (text) in
             let model = self.model
             
-            rxRequest(showLoading: true, callback: { OIMManager.setFriendInfo(model.uid, comment: text, callback: $0) })
+            rxRequest(showLoading: true, callback: { OIMManager.setFriendInfo(model.userID, comment: text, callback: $0) })
                 .subscribe(onSuccess: { _ in
                     MessageModule.showMessage(text: LocalizedString("Modify the success"))
-                    self.model.comment = text
+                    self.model.showName = text
                     self.refreshUI()
                 })
                 .disposed(by: self.disposeBag)
@@ -75,33 +67,27 @@ class FriendSettingVC: BaseViewController {
     }
     
     @IBAction func topAction(_ sender: UIButton) {
-//        let userInfo = model.userInfo
-//        let isTop = !sender.isSelected
-//        if let session = OIMManager.shared.getSession(.p2p(userInfo.uid)) {
-//            session.isTop = isTop
-//        } else {
-//            let session = Session()
-//            session.session = .p2p(userInfo.uid)
-//            session.isTop = true
-//            session.date = Date().timeIntervalSince1970
-//            OIMManager.shared.update(session: session)
-//        }
-//        sender.isSelected = isTop
+        let isPinned = !model.isPinned
+        
+        OIMManager.pinConversation(model.conversationID, isPinned: isPinned) { [weak self] result in
+            if case .success = result {
+                guard let self = self else { return }
+                self.model.isPinned = isPinned
+                self.refreshUI()
+            }
+        }
     }
     
     @IBAction func blacklistAction(_ sender: UIButton) {
-        let uid = model.uid
-        let isInBlackList = model.isInBlackList
+        let uid = model.userID
+        let isInBlackList = blacklistButton.isSelected
         let observe = isInBlackList
             ? rxRequest(showLoading: true, callback: { OIMManager.deleteFromBlackList(uid: uid, callback: $0) })
             : rxRequest(showLoading: true, callback: { OIMManager.addToBlackList(uid: uid, callback: $0) })
         
         observe
-            .subscribe(onSuccess: { [unowned self] _ in
-                let text = isInBlackList ? LocalizedString("Remove blacklist successfully") : LocalizedString("Add blacklist successfully")
-                MessageModule.showMessage(text: text)
-                self.model.isInBlackList = !isInBlackList
-                self.refreshUI()
+            .subscribe(onSuccess: { _ in
+                sender.isSelected = !isInBlackList
             })
             .disposed(by: disposeBag)
     }
@@ -113,8 +99,11 @@ class FriendSettingVC: BaseViewController {
                                cancel: LocalizedString("No"))
         { (index) in
             if index == 1 {
-//                let uid = self.model.userInfo.uid
-//                OIMManager.shared.deleteAllMessage(.p2p(uid))
+                OIMManager.deleteConversation(self.model.conversationID) { result in
+                    if case .success = result {
+                        NavigationModule.shared.pop(popCount: 2)
+                    }
+                }
             }
         }
     }
@@ -132,7 +121,7 @@ class FriendSettingVC: BaseViewController {
     }
     
     private func delFriend() {
-        let uid = model.uid
+        let uid = model.userID
         rxRequest(showLoading: true, callback: { OIMManager.deleteFromFriendList(uid, callback: $0) })
             .subscribe(onSuccess: { _ in
                 NavigationModule.shared.pop(popCount: 2)

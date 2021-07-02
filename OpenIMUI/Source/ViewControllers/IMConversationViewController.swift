@@ -75,9 +75,7 @@ open class IMConversationViewController: UIViewController,
             IMInputMoreItem(title: LocalizedString("Album"),
                             image: ImageCache.named("openim_icon_more_photo")),
             IMInputMoreItem(title: LocalizedString("Video"),
-                            image: ImageCache.named("openim_icon_more_photo_shoot")),
-            IMInputMoreItem(title: LocalizedString("File"),
-                            image: ImageCache.named("openim_icon_more_photo_shoot")),
+                            image: ImageCache.named("openim_icon_more_video")),
         ]
         
         inputVC.inputBarView.textView.text = conversation.draftText

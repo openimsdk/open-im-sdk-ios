@@ -27,18 +27,21 @@ public class OIMManager: NSObject {
         return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! + "/cn.rentsoft.openIM/"
     }
     
-    private func initSDK() {
+    private func initSDK(
+        api: String = "https://open-im.rentsoft.cn",
+        ws: String = "wss://open-im.rentsoft.cn/wss"
+    ) {
         let dbPath = OIMManager.cachePath
         struct Config: Encodable {
             let platform = 1
-            let ipApi = "http://47.112.160.66:10000"
-            let ipWs = "47.112.160.66:17778"
+            let ipApi: String
+            let ipWs: String
             let dbDir: String
         }
         
         try? FileManager.default.createDirectory(atPath: dbPath, withIntermediateDirectories: true, attributes: nil)
         
-        let config = Config(dbDir: dbPath)
+        let config = Config(ipApi: api, ipWs: ws, dbDir: dbPath)
         Open_im_sdkInitSDK(config.toString(), self)
         Open_im_sdkSetFriendListener(self)
         Open_im_sdkSetConversationListener(self)
@@ -72,26 +75,29 @@ public class OIMManager: NSObject {
 // MARK: - Login & Logout
 
 extension OIMManager {
-    public private(set) static var uid = ""
-    
     public static func login(uid: String, token: String, callback: ((Result<Void, Error>) -> Void)? = nil) {
-        if self.uid != "" {
-            if self.uid == uid {
+        let oldUid = self.getLoginUser()
+        if oldUid != "" {
+            if oldUid == uid {
                 return
             }
             logout()
         }
-        Open_im_sdkLogin(uid, token, CallbackProxy<Void>({ result in
-            if case .success(_) = result {
-                self.uid = uid
-            }
-            callback?(result)
-        }))
+        Open_im_sdkLogin(uid, token, CallbackProxy(callback))
     }
     
     public static func logout(_ callback: ((Result<Void, Error>) -> Void)? = nil) {
-        self.uid = ""
-        Open_im_sdkLogout(CallbackProxy(callback))
+        if self.getLoginUser() != "" {
+            Open_im_sdkLogout(CallbackProxy(callback))
+        }
+    }
+    
+    public static func getTencentOssCredentials(_ callback: @escaping ((Result<String, Error>) -> Void)) {
+        Open_im_sdkTencentOssCredentials(CallbackProxy(callback));
+    }
+    
+    public static func getLoginUser() -> String {
+        return Open_im_sdkGetLoginUser()
     }
 }
 
@@ -128,10 +134,7 @@ extension OIMManager {
 extension OIMManager {
     
     public static func getUsers(uids: [String], callback: @escaping (Result<[OIMUserInfo], Error>) -> Void) {
-        struct Param: Encodable {
-            let uidList: [String]
-        }
-        Open_im_sdkGetUsersInfo(Param(uidList: uids).toString(), CallbackArgsProxy<[OIMUserInfo]>({ result in
+        Open_im_sdkGetUsersInfo(uids.toString(), CallbackArgsProxy<[OIMUserInfo]>({ result in
             switch result {
             case .success(let users):
                 getFriendList { result in

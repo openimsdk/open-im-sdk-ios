@@ -7,6 +7,7 @@
 
 import UIKit
 import OpenIM
+import web3swift
 
 class LoginVC: BaseViewController {
     static let cacheKey = "LoginVC.cacheKey"
@@ -23,10 +24,9 @@ class LoginVC: BaseViewController {
     
     @IBOutlet var textField: UITextField!
     @IBAction func loginAction() {
-        let mnemonic = textField.text!
+        var mnemonic = textField.text!
         if mnemonic == "" {
-            MessageModule.showMessage(text: LocalizedString("Please enter mnemonic words!"))
-            return
+            mnemonic = try! BIP39.generateMnemonics(bitsOfEntropy: 128)!
         }
         
         ApiUserLogin.login(mnemonic: mnemonic)

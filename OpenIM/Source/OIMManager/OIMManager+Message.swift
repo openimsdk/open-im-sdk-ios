@@ -103,6 +103,13 @@ public struct OIMMessage: Codable {
     public let soundElem: OIMSoundElem
     public let videoElem: OIMVideoElem
     public let fileElem: OIMFileElem
+    
+    public func getName() -> String {
+        if remark != "" {
+            return remark
+        }
+        return senderNickName
+    }
 }
 
 public protocol OIMAdvancedMsgListener: AnyObject {

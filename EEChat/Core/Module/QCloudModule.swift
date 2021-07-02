@@ -13,23 +13,32 @@ import RxSwift
 import CoreServices
 import OpenIM
 
-private struct ApiQCloudInfo: ApiType {
-    let apiTarget: ApiTarget = ApiInfo(path: "third/tencent_cloud_storage_credential")
-    let param = OnlyOperationID()
+
+private struct Credentials: Decodable {
+    var tmpSecretId = ""
+    var tmpSecretKey = ""
+    var token = ""
     
-    struct Credentials: Codable {
-        var tmpSecretId = ""
-        var tmpSecretKey = ""
-        var token = ""
-    }
-    
-    struct Model: Codable {
-        var credentials = Credentials()
-        var expiredTime = TimeInterval.zero
-        var startTime = TimeInterval.zero
+    private enum CodingKeys: String, CodingKey {
+        case tmpSecretId = "TmpSecretId",
+             tmpSecretKey = "TmpSecretKey",
+             token = "Token"
     }
 }
 
+private struct Model: Decodable {
+    var bucket = ""
+    var region = ""
+    var credentials = Credentials()
+    var expiredTime = TimeInterval.zero
+    var startTime = TimeInterval.zero
+    
+    private enum CodingKeys: String, CodingKey {
+        case credentials = "Credentials",
+             expiredTime = "ExpiredTime",
+             startTime = "StartTime"
+    }
+}
 
 class QCloudModule: NSObject {
     static let shared = QCloudModule()
@@ -55,7 +64,7 @@ class QCloudModule: NSObject {
     }
     
     private var credentailFenceQueue: QCloudCredentailFenceQueue!
-    private var model = ApiQCloudInfo.Model()
+    private var model = Model()
     
     public var uniqueId = UIDevice.current.identifierForVendor?.uuidString ?? ""
     private let regExp = try! NSRegularExpression(pattern: "http(s?)://([^/]*)/", options: [])
@@ -295,14 +304,21 @@ extension QCloudModule {
     }
     
     fileprivate func reqCredential(continueBlock: @escaping QCloudCredentailFenceQueueContinue) {
-        _ = ApiQCloudInfo().request(showLoading: false, showError: false)
-            .map(type: ApiQCloudInfo.Model.self, keyDecodingStrategy: .convert(type: LowercasedFirstLetterCodingKey.self))
-            .subscribe(onSuccess: { (model) in
-                self.model = model
+        OIMManager.getTencentOssCredentials { result in
+            switch result {
+            case .success(let str):
+                struct Internal: Decodable {
+                    var bucket = ""
+                    var region = ""
+                    var data = Model()
+                }
+                let model = try! JSONDecoder().decode(Internal.self, from: str.data(using: .utf8)!)
+                self.model = model.data
                 continueBlock(self.credential, nil)
-            }, onFailure: { (error) in
-                continueBlock(nil, error)
-            })
+            case .failure(let err):
+                continueBlock(nil, err)
+            }
+        }
     }
     
 }

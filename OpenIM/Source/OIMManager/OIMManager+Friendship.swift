@@ -29,19 +29,16 @@ extension OIMManager {
     
     // MARK: - Friend
     
+    public static func checkFriend(uids: [String], callback: @escaping (Result<[OIMCheckFriend], Error>) -> Void) {
+        Open_im_sdkCheckFriend(CallbackArgsProxy(callback), uids.toString())
+    }
+    
     public static func getFriendList(_ callback: @escaping (Result<[OIMUserInfo], Error>) -> Void) {
         Open_im_sdkGetFriendList(CallbackArgsProxy(callback))
     }
     
     public static func getFriendsInfo(_ uids: [String], callback: @escaping (Result<[OIMUserInfo], Error>) -> Void) {
-        getFriendList { result in
-            if case let .success(array) = result {
-                let array = array.filter{ uids.contains($0.uid) }
-                callback(.success(array))
-            } else {
-                callback(result)
-            }
-        }
+        Open_im_sdkGetFriendsInfo(CallbackArgsProxy(callback), uids.toString())
     }
     
     public static func setFriendInfo(_ uid: String, comment: String, callback: @escaping (Result<Void, Error>) -> Void) {
@@ -57,10 +54,7 @@ extension OIMManager {
     }
     
     public static func deleteFromFriendList(_ uid: String, callback: @escaping (Result<Void, Error>) -> Void) {
-        struct Param: Encodable {
-            let uid: String
-        }
-        Open_im_sdkDeleteFromFriendList(Param(uid: uid).toString(), CallbackProxy(callback))
+        Open_im_sdkDeleteFromFriendList(uid.toString(), CallbackProxy(callback))
     }
      
     // MARK: - FriendApplication
@@ -70,17 +64,11 @@ extension OIMManager {
     }
     
     public static func acceptFriendApplication(uid: String, callback: @escaping (Result<Void, Error>) -> Void) {
-        struct Param: Encodable {
-            let uid: String
-        }
-        Open_im_sdkAcceptFriendApplication(CallbackProxy(callback), Param(uid: uid).toString())
+        Open_im_sdkAcceptFriendApplication(CallbackProxy(callback), uid.toString())
     }
     
     public static func refuseFriendApplication(uid: String, callback: @escaping (Result<Void, Error>) -> Void) {
-        struct Param: Encodable {
-            let uid: String
-        }
-        Open_im_sdkRefuseFriendApplication(CallbackProxy(callback), Param(uid: uid).toString())
+        Open_im_sdkRefuseFriendApplication(CallbackProxy(callback), uid.toString())
     }
     
     // deleteFriendApplication
@@ -93,17 +81,11 @@ extension OIMManager {
     }
     
     public static func addToBlackList(uid: String, callback: @escaping (Result<Void, Error>) -> Void) {
-        struct Param: Encodable {
-            let uid: String
-        }
-        Open_im_sdkAddToBlackList(CallbackProxy(callback), Param(uid: uid).toString())
+        Open_im_sdkAddToBlackList(CallbackProxy(callback), uid.toString())
     }
     
     public static func deleteFromBlackList(uid: String, callback: @escaping (Result<Void, Error>) -> Void) {
-        struct Param: Encodable {
-            let uid: String
-        }
-        Open_im_sdkDeleteFromBlackList(CallbackProxy(callback), Param(uid: uid).toString())
+        Open_im_sdkDeleteFromBlackList(CallbackProxy(callback), uid.toString())
     }
     
 }

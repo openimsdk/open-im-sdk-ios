@@ -95,7 +95,7 @@ extension ApiModule {
                 }
                 if showError, case let Result.failure(error) = result {
                     let error = error as NSError
-                    if error.code == 0 || error.code >= 400 {
+                    if ![0, 200].contains(error.code) {
                         runInMain {
                             MessageModule.showMessage(error: error)
                         }

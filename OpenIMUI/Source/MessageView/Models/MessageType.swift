@@ -148,10 +148,11 @@ public class MessageType: Hashable {
         at = message.forceList ?? []
         messageId = message.serverMsgID != "" ? message.serverMsgID : message.clientMsgID
         sendTime = message.sendTime != 0 ? message.sendTime : message.createTime
-        isSelf = message.sendID == OIMManager.uid
+        let loginUID = OIMManager.getLoginUser()
+        isSelf = message.sendID == loginUID
         sendID = message.sendID
         if message.groupID.isEmpty {
-            let uid = message.sendID != OIMManager.uid ? message.sendID : message.recvID
+            let uid = isSelf ? message.recvID : message.sendID
             userID = uid
         } else {
             userID = ""

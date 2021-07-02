@@ -63,6 +63,7 @@ target 'EEChat' do
   
   pod 'QMUIKit', '~> 4.2.3'
   
+  pod 'Bugly', '~> 2.5.90'
   pod 'Reveal-SDK', '~> 21', :configurations => ['Debug']
   pod 'PgyUpdate', :configurations => ['Debug', 'Beta']
 end

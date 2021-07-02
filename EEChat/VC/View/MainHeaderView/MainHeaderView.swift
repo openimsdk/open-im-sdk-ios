@@ -34,8 +34,8 @@ class MainHeaderView: ResuableCustomView {
                 .when(.ended)
                 .subscribe(onNext: { [unowned self] _ in
                     switch index {
-//                    case 0:
-//                        LocalSearchUserVC.show()
+                    case 0:
+                        LocalSearchUserVC.show()
                     case 1:
                         MainPopupView.show(targetView: self.addImageView)
                     default:

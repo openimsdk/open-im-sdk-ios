@@ -40,9 +40,10 @@ public class OUIKit: NSObject {
         return users[uid] != nil
     }
     
+    @discardableResult
     public func getUser(_ uid: String, isForce: Bool = false, callback: ((OIMUserInfo?) -> Void)? = nil) -> OIMUserInfo? {
         let user = users[uid]
-        if let user = users[uid] {
+        if !isForce, let user = users[uid] {
             return user
         }
         

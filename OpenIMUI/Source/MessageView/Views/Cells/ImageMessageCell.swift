@@ -22,7 +22,6 @@ public class ImageMessageCell: MessageContentCell {
         super.setupSubviews()
         
         messageContainerView.layer.cornerRadius = 5
-        messageContainerView.image = nil
         messageContainerView.backgroundColor = UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1)
     }
     
@@ -40,6 +39,7 @@ public class ImageMessageCell: MessageContentCell {
     public override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         
+        messageContainerView.image = nil
         if case let .image(item) = message.content {
             imageView.setImage(with: item.thumbnail)
             testProgress(message: message)

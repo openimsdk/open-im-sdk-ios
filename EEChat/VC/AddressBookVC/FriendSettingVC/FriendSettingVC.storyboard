@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPw-O1-FkM">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="578"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="535"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ZT-mY-HNG">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="10"/>
@@ -106,28 +106,28 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ei5-eU-Bc5">
-                                                <rect key="frame" x="0.0" y="172" width="414" height="215"/>
+                                                <rect key="frame" x="0.0" y="172" width="414" height="172"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lzI-aw-k3F">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lzI-aw-k3F">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bPd-GY-w1G" customClass="BackgroundButton" customModule="EEChat" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
                                                                 <connections>
                                                                     <action selector="historyAction" destination="Y6W-OH-hqX" eventType="touchUpInside" id="e1r-rV-l7v"/>
                                                                 </connections>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search Chat History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ja-s9-3si">
-                                                                <rect key="frame" x="22" y="12" width="145.5" height="19.5"/>
+                                                                <rect key="frame" x="22" y="-9.5" width="145.5" height="19.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_arrow_black" translatesAutoresizingMaskIntoConstraints="NO" id="ZPT-2U-cxu">
-                                                                <rect key="frame" x="382" y="13" width="10" height="17"/>
+                                                                <rect key="frame" x="382" y="-8.5" width="10" height="17"/>
                                                             </imageView>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pJw-02-cXC">
-                                                                <rect key="frame" x="0.0" y="42" width="414" height="1"/>
+                                                                <rect key="frame" x="0.0" y="-1" width="414" height="1"/>
                                                                 <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="1" id="lf2-SQ-dcr" customClass="HairlineConstraint" customModule="EEChat" customModuleProvider="target"/>
@@ -140,7 +140,7 @@
                                                             <constraint firstItem="pJw-02-cXC" firstAttribute="leading" secondItem="lzI-aw-k3F" secondAttribute="leading" id="EJq-E7-YMo"/>
                                                             <constraint firstAttribute="bottom" secondItem="bPd-GY-w1G" secondAttribute="bottom" id="FjR-Ca-d9o"/>
                                                             <constraint firstAttribute="bottom" secondItem="pJw-02-cXC" secondAttribute="bottom" id="GKD-AW-x9j"/>
-                                                            <constraint firstAttribute="height" constant="43" id="HSd-hR-wO6"/>
+                                                            <constraint firstAttribute="height" id="HSd-hR-wO6"/>
                                                             <constraint firstItem="bPd-GY-w1G" firstAttribute="top" secondItem="lzI-aw-k3F" secondAttribute="top" id="SUu-Ve-NkK"/>
                                                             <constraint firstAttribute="trailing" secondItem="pJw-02-cXC" secondAttribute="trailing" id="XDx-6i-wIO"/>
                                                             <constraint firstItem="7Ja-s9-3si" firstAttribute="leading" secondItem="lzI-aw-k3F" secondAttribute="leading" constant="22" id="XKm-MR-4sk"/>
@@ -151,7 +151,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nNJ-La-3LP">
-                                                        <rect key="frame" x="0.0" y="43" width="414" height="43"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rCm-hp-jAI" customClass="BackgroundButton" customModule="EEChat" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
@@ -193,7 +193,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CdI-Vo-jJG">
-                                                        <rect key="frame" x="0.0" y="86" width="414" height="43"/>
+                                                        <rect key="frame" x="0.0" y="43" width="414" height="43"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sticky on Top" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inB-Zh-Z95">
                                                                 <rect key="frame" x="22" y="12" width="98" height="19.5"/>
@@ -201,10 +201,9 @@
                                                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AnR-Bi-u0t">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AnR-Bi-u0t" customClass="SwitchButton" customModule="EEChat" customModuleProvider="target">
                                                                 <rect key="frame" x="358" y="10.5" width="34" height="22"/>
                                                                 <state key="normal" image="icon_switch_off"/>
-                                                                <state key="selected" image="icon_switch_on"/>
                                                                 <connections>
                                                                     <action selector="topAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="pcg-DW-daN"/>
                                                                 </connections>
@@ -230,7 +229,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfJ-xy-Yhx">
-                                                        <rect key="frame" x="0.0" y="129" width="414" height="43"/>
+                                                        <rect key="frame" x="0.0" y="86" width="414" height="43"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fw8-T8-He0">
                                                                 <rect key="frame" x="22" y="12" width="35" height="19.5"/>
@@ -238,10 +237,9 @@
                                                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CwB-ju-pZs">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CwB-ju-pZs" customClass="SwitchButton" customModule="EEChat" customModuleProvider="target">
                                                                 <rect key="frame" x="358" y="10.5" width="34" height="22"/>
                                                                 <state key="normal" image="icon_switch_off"/>
-                                                                <state key="selected" image="icon_switch_on"/>
                                                                 <connections>
                                                                     <action selector="blacklistAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="42Y-4a-oQd"/>
                                                                 </connections>
@@ -267,7 +265,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tya-OI-yzJ">
-                                                        <rect key="frame" x="0.0" y="172" width="414" height="43"/>
+                                                        <rect key="frame" x="0.0" y="129" width="414" height="43"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cq4-9M-C25" customClass="BackgroundButton" customModule="EEChat" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
@@ -311,7 +309,7 @@
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fwK-1G-pfW" customClass="BackgroundButton" customModule="EEChat" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="503" width="414" height="45"/>
+                                                <rect key="frame" x="0.0" y="460" width="414" height="45"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="11w-RV-LEU"/>
                                                 </constraints>
@@ -383,7 +381,6 @@
         <image name="icon_arrow_black" width="10" height="17"/>
         <image name="icon_default_avatar" width="41" height="41"/>
         <image name="icon_switch_off" width="34" height="20"/>
-        <image name="icon_switch_on" width="34" height="20"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

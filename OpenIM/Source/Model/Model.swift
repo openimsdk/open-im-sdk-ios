@@ -93,3 +93,8 @@ public class OIMFriendApplicationModel: Decodable {
         flag = try container.decode(Flag.self, forKey: .flag)
     }
 }
+
+public struct OIMCheckFriend: Decodable {
+    public let uid: String
+    public let flag: Int
+}

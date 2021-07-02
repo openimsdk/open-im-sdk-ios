@@ -25,8 +25,7 @@ class MainTabBarController: UITabBarController {
             LocalizedString("Contacts"),
             LocalizedString("Me"),
         ]
-        for i in 0 ..< (tabBar.items?.count ?? 0) {
-            let item = tabBar.items![i]
+        for (i, item) in (tabBar.items ?? []).enumerated() {
             item.title = titles[i]
             item.image = UIImage(named: "tabbar_icon_\(i)_0")!.withRenderingMode(.alwaysOriginal)
             item.selectedImage = UIImage(named: "tabbar_icon_\(i)_1")!.withRenderingMode(.alwaysOriginal)

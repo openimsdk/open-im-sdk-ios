@@ -94,6 +94,7 @@
 		8094F6AC267C35FF0022D686 /* SessionListVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8094F6A8267C35FF0022D686 /* SessionListVC.storyboard */; };
 		8094F6AD267C35FF0022D686 /* SessionListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8094F6A9267C35FF0022D686 /* SessionListCell.swift */; };
 		80EDCC962685D46600532366 /* QMUIConfigurationTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */; };
+		80EDCC982689B0E200532366 /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDCC972689B0E200532366 /* SwitchButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -190,6 +191,7 @@
 		8094F6A8267C35FF0022D686 /* SessionListVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SessionListVC.storyboard; sourceTree = "<group>"; };
 		8094F6A9267C35FF0022D686 /* SessionListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionListCell.swift; sourceTree = "<group>"; };
 		80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMUIConfigurationTemplate.swift; sourceTree = "<group>"; };
+		80EDCC972689B0E200532366 /* SwitchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -487,6 +489,7 @@
 				807F6D9226722FF10025370B /* BackgroundButton.swift */,
 				807F6D9326722FF10025370B /* MainHeaderView */,
 				807F6D9626722FF10025370B /* SwitchView.swift */,
+				80EDCC972689B0E200532366 /* SwitchButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -764,6 +767,7 @@
 				807F6D392671F2530025370B /* CodingKey.swift in Sources */,
 				8094F6AB267C35FF0022D686 /* SessionListVC.swift in Sources */,
 				807F6D372671F2530025370B /* Tuple.swift in Sources */,
+				80EDCC982689B0E200532366 /* SwitchButton.swift in Sources */,
 				807F6D602671F77E0025370B /* AccountManager.swift in Sources */,
 				807F6D2C2671F2530025370B /* QCloudModule.swift in Sources */,
 				807F6D222671F2530025370B /* UIView+EECCollapsibleConstraints.swift in Sources */,
@@ -956,7 +960,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = BDLHL8GNFV;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -970,9 +973,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = cn.rentsoft.eechat;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.rentsoft.openim;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "EEChat/EEChat-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -987,7 +989,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = BDLHL8GNFV;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1001,9 +1002,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = cn.rentsoft.eechat;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.rentsoft.openim;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "EEChat/EEChat-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1074,7 +1074,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = BDLHL8GNFV;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1088,9 +1087,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = cn.rentsoft.eechat;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.rentsoft.openim;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "EEChat/EEChat-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

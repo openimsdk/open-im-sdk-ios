@@ -38,9 +38,13 @@ public final class AccountManager {
     
     func login(model: ApiUserLogin.Model) {
         self.model = model
-        OIMManager.login(uid: model.openImToken.uid, token: model.openImToken.token)
         PushManager.shared.setAlias(model.userInfo.uid)
         NotificationCenter.default.post(name: AccountManager.loginNotification, object: nil)
+        OIMManager.login(uid: model.openImToken.uid, token: model.openImToken.token) { result in
+            if case .failure = result {
+                self.logout()
+            }
+        }
     }
     
     func logout() {

@@ -96,13 +96,19 @@ class LocalSearchUserVC: BaseViewController {
             .subscribe(onNext: { [weak self] text in
                 guard let self = self else { return }
                 
-//                let friends: [UserInfo] = {
-//                    if let text = text, text != "" {
-//                        return OpenIMManager.shared.fetchFriends(text)
-//                    }
-//                    return []
-//                }()
-                self.reload(users: [])
+                if let key = text?.lowercased(), key != "" {
+                    OIMManager.getFriendList { result in
+                        if case let .success(array) = result {
+                            let user = array.filter {
+                                $0.name.range(of: key, options: .caseInsensitive) != nil
+                                    || $0.comment.range(of: key, options: .caseInsensitive) != nil
+                            }
+                            self.reload(users: user)
+                        }
+                    }
+                } else {
+                    self.reload(users: [])
+                }
             })
             .disposed(by: disposeBag)
     }

@@ -8,7 +8,7 @@ lane :do_beta do |options|
         scheme: "EEChat",
         export_method: "development",
         configuration: "Beta",
-        output_directory: "./ipa/",
+        output_directory: "./ipa/development/",
     )
     increment_build_number(
         build_number: "0",
@@ -20,4 +20,19 @@ def upload_ipa()
     api_key=ENV["pgyer_api_key"]
     user_key=ENV["pgyer_user_key"]
     pgyer(api_key: api_key, user_key: user_key)
+end
+
+lane :do_release do |options|
+    increment_build_number(
+        build_number: Time.new.strftime("%Y%m%d%H%M"),
+    )
+    gym(
+        scheme: "EEChat",
+        export_method: "app-store",
+        configuration: "Release",
+        output_directory: "./ipa/app-store/",
+    )
+    increment_build_number(
+        build_number: "0",
+    )
 end

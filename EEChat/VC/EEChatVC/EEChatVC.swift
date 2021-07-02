@@ -12,7 +12,9 @@ import OpenIMUI
 class EEChatVC: IMConversationViewController {
     
     class func show(uid: String = "", groupID: String = "") {
-        OIMManager.getConversation(uid: uid, groupID: groupID) { result in
+        OIMManager.getConversation(type: uid != "" ? .c2c : .group,
+                                   id: uid != "" ? uid : groupID)
+        { result in
             if case let .success(conversation) = result {
                 let vc = EEChatVC.init(conversation: conversation)
                 NavigationModule.shared.push(vc)
@@ -108,7 +110,7 @@ class EEChatVC: IMConversationViewController {
     @objc
     func friendSettingAction() {
         if conversation.userID != "" {
-            FriendSettingVC.show(param: conversation.userID)
+            FriendSettingVC.show(param: conversation)
         }
     }
 

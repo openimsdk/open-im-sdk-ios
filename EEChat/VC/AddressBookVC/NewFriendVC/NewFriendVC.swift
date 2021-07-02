@@ -42,7 +42,11 @@ class NewFriendVC: BaseViewController {
         tableView.rx.modelSelected(OIMFriendApplicationModel.self)
             .subscribe(onNext: { model in
                 if model.flag == .agree {
-                    FriendSettingVC.show(param: model.info.uid)
+                    OIMManager.getConversation(type: .c2c, id: model.info.uid) { result in
+                        if case let .success(conversation) = result {
+                            FriendSettingVC.show(param: conversation)
+                        }
+                    }
                 }
             })
             .disposed(by: disposeBag)

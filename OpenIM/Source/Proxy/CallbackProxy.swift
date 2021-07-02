@@ -10,13 +10,18 @@ import OpenIMCore
 class CallbackProxy<ResultType>: NSObject, Open_im_sdkBaseProtocol {
     
     private var callback: ((Result<ResultType, Error>) -> Void)?
-    init(_ callback: ((Result<ResultType, Error>) -> Void)?) {
-        assert(!"\(Self.self)".starts(with: "CallbackProxy<") || ResultType.self is Void.Type)
+    let function: String
+    
+    init(_ callback: ((Result<ResultType, Error>) -> Void)?, function: String = #function) {
+        assert(!"\(Self.self)".starts(with: "CallbackProxy<")
+                || ResultType.self is Void.Type
+                || ResultType.self is String.Type)
         self.callback = callback
+        self.function = function
     }
     
     func onError(_ errCode: Int, errMsg: String?) {
-        let error = NSError(domain: "", code: errCode, userInfo: [NSLocalizedDescriptionKey: errMsg ?? ""])
+        let error = NSError(domain: self.function, code: errCode, userInfo: [NSLocalizedDescriptionKey: errMsg ?? ""])
         doResult(.failure(error))
     }
 
@@ -24,6 +29,8 @@ class CallbackProxy<ResultType>: NSObject, Open_im_sdkBaseProtocol {
         switch ResultType.self {
         case is Void.Type:
             doResult(.success(Void() as! ResultType))
+        case is String.Type:
+            doResult(.success((data ?? "") as! ResultType))
         default:
             fatalError()
         }
@@ -66,11 +73,6 @@ class ProgressCallbackProxy: CallbackProxy<Void>, Open_im_sdkSendMsgCallBackProt
     }
     
     func onProgress(_ value: Int) {
-        if let progress = self.progress {
-            progress(value)
-            if value >= 100 {
-                self.progress = nil
-            }
-        }
+        progress?(value)
     }
 }
