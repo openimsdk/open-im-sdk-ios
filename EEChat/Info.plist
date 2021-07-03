@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>0</string>
+	<string>202107031916</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -28,17 +28,17 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>If not allowed, you will not be able to send pictures or videos to friends</string>
 	<key>NSContactsUsageDescription</key>
-	<string></string>
+	<string>If not allowed, you will not be able to use functions such as address book contacts</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string></string>
+	<string>If not allowed, location information cannot be sent</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>If not allowed, location information cannot be sent</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string></string>
+	<string>If not allowed, you will not be able to send voice to friends</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
+	<string>If not allowed, you will not be able to send pictures or videos to friends</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
