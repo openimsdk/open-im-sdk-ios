@@ -102,6 +102,7 @@
 		0DF78AF4D8483F0363B3EA7B /* Pods-EEChat.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EEChat.beta.xcconfig"; path = "Target Support Files/Pods-EEChat/Pods-EEChat.beta.xcconfig"; sourceTree = "<group>"; };
 		428E60A9BCC633B72654292A /* Pods-EEChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EEChat.release.xcconfig"; path = "Target Support Files/Pods-EEChat/Pods-EEChat.release.xcconfig"; sourceTree = "<group>"; };
 		70E6F2279E8108B84E6E02E5 /* Pods_EEChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EEChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8025EC692692A99C00279987 /* EEChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EEChat.entitlements; sourceTree = "<group>"; };
 		803B9CAF2672F98200CF4ED9 /* EEChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EEChatVC.swift; sourceTree = "<group>"; };
 		805EB954267300740071035E /* SearchUserDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUserDetailsVC.swift; sourceTree = "<group>"; };
 		805EB955267300740071035E /* SearchUserDetailsVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchUserDetailsVC.storyboard; sourceTree = "<group>"; };
@@ -281,8 +282,9 @@
 				807F6D6226720DD70025370B /* MainTabBarController.swift */,
 				807F6CE72671E7400025370B /* Assets.xcassets */,
 				807F6CE92671E7400025370B /* LaunchScreen.storyboard */,
-				807F6CEC2671E7400025370B /* Info.plist */,
 				807F6D3A2671F2740025370B /* EEChat-Bridging-Header.h */,
+				807F6CEC2671E7400025370B /* Info.plist */,
+				8025EC692692A99C00279987 /* EEChat.entitlements */,
 			);
 			path = EEChat;
 			sourceTree = "<group>";
@@ -957,10 +959,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 002F95BCA8CD3E6E60FD7184 /* Pods-EEChat.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = EEChat/EEChat.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = BDLHL8GNFV;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -976,6 +980,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rentsoft.openim;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "EEChat/EEChat-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -987,10 +992,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 428E60A9BCC633B72654292A /* Pods-EEChat.release.xcconfig */;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = EEChat/EEChat.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = BDLHL8GNFV;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1006,6 +1013,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rentsoft.openim;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = OpenIM;
 				SWIFT_OBJC_BRIDGING_HEADER = "EEChat/EEChat-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1073,10 +1081,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0DF78AF4D8483F0363B3EA7B /* Pods-EEChat.beta.xcconfig */;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = EEChat/EEChat.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = BDLHL8GNFV;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1092,6 +1102,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rentsoft.openim;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "EEChat/EEChat-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

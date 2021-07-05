@@ -70,10 +70,10 @@ end
 
 #post_install do |installer|
 #  installer.pods_project.targets.each do |target|
-#    if ['CryptoSwift'].include? target.name
+#    if ['OpenIM'].include? target.name
 #      target.build_configurations.each do |config|
-#        if config.name == 'Debug'
-#          config.build_settings['SWIFT_OPTIMIZATION_LEVEL'] = '-Osize'
+#        if config.name != 'Debug'
+#          config.build_settings['ARCHS[sdk=iphoneos*]'] = 'arm64'
 #        end
 #      end
 #    end

@@ -41,6 +41,9 @@ end
 
 def upload_appstore(ipa_path=Actions.lane_context[SharedValues::IPA_OUTPUT_PATH])
     script = %Q{
+      APP_STORE_USERNAME=#{ENV["APP_STORE_USERNAME"]}
+      APP_STORE_PASSWORD=#{ENV["APP_STORE_PASSWORD"]}
+      
       IPA_PATH="#{ipa_path}"
       xcrun altool --upload-app --file "$IPA_PATH" --username "$APP_STORE_USERNAME" --password "$APP_STORE_PASSWORD"
     }

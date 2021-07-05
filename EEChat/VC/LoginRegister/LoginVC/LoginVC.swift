@@ -24,7 +24,7 @@ class LoginVC: BaseViewController {
     
     @IBOutlet var textField: UITextField!
     @IBAction func loginAction() {
-        var mnemonic = textField.text!
+        var mnemonic = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if mnemonic == "" {
             mnemonic = try! BIP39.generateMnemonics(bitsOfEntropy: 128)!
         }
