@@ -133,7 +133,7 @@
                                                             <action selector="loginAction" destination="Z7y-1U-tGM" eventType="touchUpInside" id="T2Y-zw-8F2"/>
                                                         </connections>
                                                     </button>
-                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BPk-9h-yin">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BPk-9h-yin">
                                                         <rect key="frame" x="119.5" y="567.5" width="175" height="33"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="33" id="Fs2-eK-VuW"/>
