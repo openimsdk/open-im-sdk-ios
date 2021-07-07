@@ -24,6 +24,9 @@ class LoginVC: BaseViewController {
     
     @IBOutlet var textField: UITextField!
     @IBAction func loginAction() {
+        guard agreementView.agree else {
+            return
+        }
         view.endEditing(true)
         var mnemonic = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if mnemonic == "" {
@@ -33,7 +36,11 @@ class LoginVC: BaseViewController {
         ApiUserLogin.login(mnemonic: mnemonic)
     }
     
+    @IBOutlet var agreementView: AgreementView!
+    
     @IBAction func registerAction() {
-        RegisterVC.show()
+        if agreementView.agree {
+            RegisterVC.show()
+        }
     }
 }

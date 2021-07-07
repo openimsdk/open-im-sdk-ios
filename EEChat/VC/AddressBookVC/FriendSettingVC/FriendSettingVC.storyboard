@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPw-O1-FkM">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="535"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="578"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ZT-mY-HNG">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="10"/>
@@ -106,7 +106,7 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ei5-eU-Bc5">
-                                                <rect key="frame" x="0.0" y="172" width="414" height="172"/>
+                                                <rect key="frame" x="0.0" y="172" width="414" height="215"/>
                                                 <subviews>
                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lzI-aw-k3F">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
@@ -306,10 +306,52 @@
                                                             <constraint firstItem="nvb-19-2Q8" firstAttribute="centerY" secondItem="tya-OI-yzJ" secondAttribute="centerY" id="tBR-pB-fUl"/>
                                                         </constraints>
                                                     </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hbu-oo-ZDX">
+                                                        <rect key="frame" x="0.0" y="172" width="414" height="43"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1r0-GT-I8r" customClass="BackgroundButton" customModule="EEChat" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
+                                                                <connections>
+                                                                    <action selector="reportAction" destination="Y6W-OH-hqX" eventType="touchUpInside" id="2Si-Ai-Rku"/>
+                                                                </connections>
+                                                            </button>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBv-RH-2F9">
+                                                                <rect key="frame" x="22" y="12" width="49.5" height="19.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_arrow_black" translatesAutoresizingMaskIntoConstraints="NO" id="eHe-1h-rqV">
+                                                                <rect key="frame" x="382" y="13" width="10" height="17"/>
+                                                            </imageView>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4fN-jK-Ra0">
+                                                                <rect key="frame" x="0.0" y="42" width="414" height="1"/>
+                                                                <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="1" id="sD6-6I-ES0" customClass="HairlineConstraint" customModule="EEChat" customModuleProvider="target"/>
+                                                                </constraints>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="43" id="7uG-2C-n1j"/>
+                                                            <constraint firstAttribute="trailing" secondItem="1r0-GT-I8r" secondAttribute="trailing" id="Ako-2s-HPa"/>
+                                                            <constraint firstItem="OBv-RH-2F9" firstAttribute="centerY" secondItem="Hbu-oo-ZDX" secondAttribute="centerY" id="HuS-iU-BzO"/>
+                                                            <constraint firstItem="OBv-RH-2F9" firstAttribute="leading" secondItem="Hbu-oo-ZDX" secondAttribute="leading" constant="22" id="IOI-09-I0N"/>
+                                                            <constraint firstAttribute="trailing" secondItem="eHe-1h-rqV" secondAttribute="trailing" constant="22" id="JBh-QI-eWa"/>
+                                                            <constraint firstAttribute="bottom" secondItem="4fN-jK-Ra0" secondAttribute="bottom" id="JbM-RI-gag"/>
+                                                            <constraint firstItem="1r0-GT-I8r" firstAttribute="top" secondItem="Hbu-oo-ZDX" secondAttribute="top" id="MVY-an-O6q"/>
+                                                            <constraint firstAttribute="trailing" secondItem="4fN-jK-Ra0" secondAttribute="trailing" id="S8f-6c-oGt"/>
+                                                            <constraint firstItem="4fN-jK-Ra0" firstAttribute="leading" secondItem="Hbu-oo-ZDX" secondAttribute="leading" id="Zo6-Kg-UIM"/>
+                                                            <constraint firstItem="eHe-1h-rqV" firstAttribute="centerY" secondItem="Hbu-oo-ZDX" secondAttribute="centerY" id="ad9-wh-Kai"/>
+                                                            <constraint firstItem="1r0-GT-I8r" firstAttribute="leading" secondItem="Hbu-oo-ZDX" secondAttribute="leading" id="fQp-DG-cbT"/>
+                                                            <constraint firstAttribute="bottom" secondItem="1r0-GT-I8r" secondAttribute="bottom" id="nVv-hY-cpe"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fwK-1G-pfW" customClass="BackgroundButton" customModule="EEChat" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="460" width="414" height="45"/>
+                                                <rect key="frame" x="0.0" y="503" width="414" height="45"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="11w-RV-LEU"/>
                                                 </constraints>

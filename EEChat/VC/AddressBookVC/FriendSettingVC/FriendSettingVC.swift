@@ -108,6 +108,10 @@ class FriendSettingVC: BaseViewController {
         }
     }
     
+    @IBAction func reportAction() {
+        ReportVC.show(param: model)
+    }
+    
     @IBAction func delFriendAction() {
         UIAlertController.show(title: LocalizedString("Remove friends?"),
                                message: nil,
