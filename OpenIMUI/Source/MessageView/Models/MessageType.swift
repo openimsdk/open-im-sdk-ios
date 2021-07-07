@@ -27,7 +27,7 @@ public enum ContentType: CustomStringConvertible {
         case .video:
             return "[Video]"
         case .system(_, let item):
-            return item.text
+            return item.defaultTips
         case .unknown:
             return "[Unknown]"
         }
@@ -79,8 +79,8 @@ public struct AudioItem: Codable {
 
 public struct SystemItem: Codable {
     public let isDisplay: Int
-    public let id: String
-    public let text: String
+    public let defaultTips: String
+    public let detail: String
 }
 
 public class MessageType: Hashable {
@@ -216,7 +216,7 @@ public class MessageType: Hashable {
                 do {
                     item = try JSONDecoder().decode(SystemItem.self, from: message.content.data(using: .utf8)!)
                 } catch {
-                    item = SystemItem(isDisplay: 1, id: "", text: message.content)
+                    item = SystemItem(isDisplay: 1, defaultTips: message.content, detail: "")
                 }
                 content = .system(message.contentType.rawValue, item)
             } else {

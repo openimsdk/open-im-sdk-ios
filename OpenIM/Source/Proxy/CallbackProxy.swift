@@ -49,7 +49,8 @@ class CallbackProxy<ResultType>: NSObject, Open_im_sdkBaseProtocol {
 class CallbackArgsProxy<ResultType: Decodable>: CallbackProxy<ResultType> {
     override func onSuccess(_ str: String?) {
         do {
-            let data = (str ?? "").data(using: .utf8)!
+            let str = str ?? ""
+            let data = str.data(using: .utf8)!
             let model = try JSONDecoder().decode(ResultType.self, from: data)
             doResult(.success(model))
         } catch {

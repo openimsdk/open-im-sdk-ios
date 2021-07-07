@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum OIMConversationType: Int {
+public enum OIMConversationType: Int, Codable {
     case c2c = 1
     case group = 2
 }

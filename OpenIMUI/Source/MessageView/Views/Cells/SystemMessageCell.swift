@@ -36,7 +36,7 @@ public class SystemMessageCell: MessageCollectionViewCell {
         
         switch message.content {
         case .system(_, let item):
-            textLabel.text = item.text
+            textLabel.text = item.defaultTips
         default:
             fatalError()
         }

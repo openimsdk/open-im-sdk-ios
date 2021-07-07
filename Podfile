@@ -14,25 +14,14 @@ def sharedLibs()
   pod 'Alamofire', '~> 5.2'
 end
 
-# target 'OpenIM' do
-#   project 'OpenIM.xcodeproj'
-#   sharedLibs()
-# end
-
-# target 'OpenIMUI' do
-#   project 'OpenIMUI.xcodeproj'
-#   pod 'OpenIM', :path => '.'
-#   sharedUILibs()
-# end
-
 target 'EEChat' do
   project 'EEChat.xcodeproj'
   
   sharedLibs()
   sharedUILibs()
   
-   pod 'OpenIM', :path => '.'
-   pod 'OpenIMUI', :path => '.'
+  pod 'OpenIM', :path => '.'
+  pod 'OpenIMUI', :path => '.'
   
   pod 'MBProgressHUD', '~> 1.2.0'
   

@@ -32,11 +32,13 @@ class SessionListCell: UITableViewCell {
             }
             
             let (timestamp, text): (TimeInterval, String) = {
-                if model.draftText != "" {
-                    return (model.draftTimestamp, model.draftText)
+                if let text = NSAttributedString.from(base64Encoded: model.draftText)?.string, !text.isEmpty {
+                    return (model.draftTimestamp, text)
                 }
-                let message = model.latestMsg!.toUIMessage()
-                return (message.sendTime, LocalizedString(message.content.description))
+                if let message = model.latestMsg?.toUIMessage() {
+                    return (message.sendTime, LocalizedString(message.content.description))
+                }
+                return (model.draftTimestamp, "")
             }()
             
             contentLabel.text = text

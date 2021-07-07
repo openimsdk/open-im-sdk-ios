@@ -78,7 +78,9 @@ open class IMConversationViewController: UIViewController,
                             image: ImageCache.named("openim_icon_more_video")),
         ]
         
-        inputVC.inputBarView.textView.text = conversation.draftText
+        if let attributedText = NSAttributedString.from(base64Encoded: conversation.draftText) {
+            inputVC.inputBarView.textView.attributedText = attributedText
+        }
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onFriendProfileChanged),
@@ -101,7 +103,11 @@ open class IMConversationViewController: UIViewController,
         super.viewWillDisappear(animated)
         responseKeyboard = false
         OIMManager.markMessageAsRead(uid: conversation.userID, groupID: conversation.groupID)
-        OIMManager.setConversationDraft(conversation.conversationID, draftText: inputVC.inputBarView.textView.text)
+        
+        if let attributedText = inputVC.inputBarView.textView.attributedText {
+            let text = attributedText.string.isEmpty ? "" : attributedText.toBase64String()
+            OIMManager.setConversationDraft(conversation.conversationID, draftText: text)
+        }
     }
     
     open override func viewWillLayoutSubviews() {

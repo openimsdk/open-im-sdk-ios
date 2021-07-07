@@ -16,7 +16,7 @@ final class MainPopupView: ResuableCustomView {
             let rect = targetView.convert(targetView.bounds, to: popupVC.view)
             view.snp.makeConstraints { (make) in
                 make.top.equalTo(rect.maxY - 10)
-                make.left.equalTo(rect.minX - 103)
+                make.trailing.equalTo(-10)
             }
         }
     }
@@ -35,9 +35,9 @@ final class MainPopupView: ResuableCustomView {
                         case 0:
                             SearchUserVC.show()
                         case 1:
-                            break
+                            LaunchGroupChatVC.show()
                         case 2:
-                            break
+                            AddGroupChatVC.show()
                         default:
                             fatalError()
                         }

@@ -19,15 +19,15 @@ public protocol OIMConversationListener: AnyObject {
 
 public class OIMConversation: Codable, Hashable {
     
-    public var conversationID: String = ""
-    public var conversationType: Int = 0
+    public let conversationID: String
+    public let conversationType: OIMConversationType
     public let userID: String
     public let groupID: String
     public var showName: String = ""
     public var faceUrl: String = ""
     public var recvMsgOpt: Int = 0
     public var unreadCount: Int = 0
-    public var latestMsg: OIMMessage!
+    public var latestMsg: OIMMessage?
     public var latestMsgSendTime: TimeInterval = .zero
     public var draftText: String = ""
     public var draftTimestamp: TimeInterval = .zero
@@ -43,7 +43,7 @@ public class OIMConversation: Codable, Hashable {
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         conversationID = try container.decode(String.self, forKey: .conversationID)
-        conversationType = try container.decode(Int.self, forKey: .conversationType)
+        conversationType = try container.decode(OIMConversationType.self, forKey: .conversationType)
         userID = try container.decode(String.self, forKey: .userID)
         groupID = try container.decode(String.self, forKey: .groupID)
         showName = try container.decode(String.self, forKey: .showName)
@@ -53,7 +53,7 @@ public class OIMConversation: Codable, Hashable {
         
         let str = try container.decode(String.self, forKey: .latestMsg)
         let data = str.data(using: .utf8)!
-        latestMsg = try JSONDecoder().decode(OIMMessage.self, from: data)
+        latestMsg = try? JSONDecoder().decode(OIMMessage.self, from: data)
         
         latestMsgSendTime = try container.decode(TimeInterval.self, forKey: .latestMsgSendTime)
         draftText = try container.decode(String.self, forKey: .draftText)
