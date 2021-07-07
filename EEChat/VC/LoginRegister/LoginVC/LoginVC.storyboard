@@ -25,10 +25,10 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YPi-ur-2gd">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="630.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="690.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TDC-Ws-KMF">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="630.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="690.5"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_icon_logo" translatesAutoresizingMaskIntoConstraints="NO" id="cS3-X5-X9A">
                                                         <rect key="frame" x="137.5" y="90" width="139" height="140"/>
@@ -152,18 +152,27 @@
                                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xN8-Ty-vpW" customClass="AgreementView" customModule="EEChat" customModuleProvider="target">
+                                                        <rect key="frame" x="22" y="610.5" width="370" height="50"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" placeholder="YES" id="evl-qd-iCt"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="jkF-wN-l4k" secondAttribute="trailing" constant="20" id="7Of-Xe-Xme"/>
                                                     <constraint firstItem="mNt-wc-W9O" firstAttribute="top" secondItem="2KM-pr-RGa" secondAttribute="bottom" constant="6" id="9ap-RR-yMb"/>
                                                     <constraint firstItem="bY0-NT-1gx" firstAttribute="top" secondItem="mNt-wc-W9O" secondAttribute="bottom" constant="8" id="CO5-nh-CfK"/>
+                                                    <constraint firstAttribute="bottom" secondItem="xN8-Ty-vpW" secondAttribute="bottom" constant="30" id="CSR-1T-dFp"/>
+                                                    <constraint firstAttribute="trailing" secondItem="xN8-Ty-vpW" secondAttribute="trailing" constant="22" id="DaH-V2-S3S"/>
                                                     <constraint firstItem="mNt-wc-W9O" firstAttribute="centerX" secondItem="TDC-Ws-KMF" secondAttribute="centerX" id="G2G-DS-HDb"/>
+                                                    <constraint firstItem="xN8-Ty-vpW" firstAttribute="leading" secondItem="TDC-Ws-KMF" secondAttribute="leading" constant="22" id="GhF-YY-RTo"/>
                                                     <constraint firstItem="BPk-9h-yin" firstAttribute="centerX" secondItem="TDC-Ws-KMF" secondAttribute="centerX" id="Gk2-YN-ce3"/>
                                                     <constraint firstItem="BPk-9h-yin" firstAttribute="top" secondItem="857-Oq-Pvf" secondAttribute="bottom" constant="8" id="Nz2-fm-ct1"/>
                                                     <constraint firstItem="jkF-wN-l4k" firstAttribute="leading" secondItem="TDC-Ws-KMF" secondAttribute="leading" constant="20" id="PUc-Df-u6x"/>
                                                     <constraint firstItem="bY0-NT-1gx" firstAttribute="centerX" secondItem="TDC-Ws-KMF" secondAttribute="centerX" id="PhP-cn-yHi"/>
-                                                    <constraint firstAttribute="bottom" secondItem="BPk-9h-yin" secondAttribute="bottom" constant="30" id="RAV-uT-diN"/>
                                                     <constraint firstItem="jkF-wN-l4k" firstAttribute="top" secondItem="bY0-NT-1gx" secondAttribute="bottom" constant="65" id="WLi-rz-snG"/>
                                                     <constraint firstItem="cS3-X5-X9A" firstAttribute="centerX" secondItem="TDC-Ws-KMF" secondAttribute="centerX" id="YkM-as-72y"/>
                                                     <constraint firstItem="857-Oq-Pvf" firstAttribute="top" secondItem="jkF-wN-l4k" secondAttribute="bottom" constant="60" id="ZAP-m0-xn6"/>
@@ -172,6 +181,7 @@
                                                     <constraint firstItem="2KM-pr-RGa" firstAttribute="centerX" secondItem="TDC-Ws-KMF" secondAttribute="centerX" id="ham-ua-WUI"/>
                                                     <constraint firstItem="857-Oq-Pvf" firstAttribute="centerX" secondItem="TDC-Ws-KMF" secondAttribute="centerX" id="iV6-O1-ii2"/>
                                                     <constraint firstItem="M6W-rl-hT9" firstAttribute="centerX" secondItem="TDC-Ws-KMF" secondAttribute="centerX" id="ige-Xy-rhn"/>
+                                                    <constraint firstItem="xN8-Ty-vpW" firstAttribute="top" secondItem="BPk-9h-yin" secondAttribute="bottom" constant="10" id="jAn-oM-d6f"/>
                                                     <constraint firstItem="cS3-X5-X9A" firstAttribute="top" secondItem="TDC-Ws-KMF" secondAttribute="top" constant="90" id="pzh-x3-wTz"/>
                                                 </constraints>
                                             </view>
@@ -233,6 +243,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="agreementView" destination="xN8-Ty-vpW" id="QbG-QX-bAd"/>
                         <outlet property="textField" destination="4DF-Q0-QE1" id="hq8-PZ-nfE"/>
                     </connections>
                 </viewController>

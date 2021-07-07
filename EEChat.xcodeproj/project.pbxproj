@@ -93,6 +93,12 @@
 		8094F6AB267C35FF0022D686 /* SessionListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8094F6A7267C35FF0022D686 /* SessionListVC.swift */; };
 		8094F6AC267C35FF0022D686 /* SessionListVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8094F6A8267C35FF0022D686 /* SessionListVC.storyboard */; };
 		8094F6AD267C35FF0022D686 /* SessionListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8094F6A9267C35FF0022D686 /* SessionListCell.swift */; };
+		80B55B2C26959282004C8D3A /* ReportVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B55B2A26959282004C8D3A /* ReportVC.storyboard */; };
+		80B55B2D26959282004C8D3A /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55B2B26959282004C8D3A /* ReportVC.swift */; };
+		80B55B2F26959D23004C8D3A /* AgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55B2E26959D23004C8D3A /* AgreementView.swift */; };
+		80B55B3226959D48004C8D3A /* AgreementView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80B55B3126959D48004C8D3A /* AgreementView.xib */; };
+		80B55B352695A664004C8D3A /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55B342695A664004C8D3A /* AgreementVC.swift */; };
+		80B55B372695A67C004C8D3A /* AgreementVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B55B362695A67C004C8D3A /* AgreementVC.storyboard */; };
 		80EDCC962685D46600532366 /* QMUIConfigurationTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */; };
 		80EDCC982689B0E200532366 /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDCC972689B0E200532366 /* SwitchButton.swift */; };
 /* End PBXBuildFile section */
@@ -191,6 +197,12 @@
 		8094F6A7267C35FF0022D686 /* SessionListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionListVC.swift; sourceTree = "<group>"; };
 		8094F6A8267C35FF0022D686 /* SessionListVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SessionListVC.storyboard; sourceTree = "<group>"; };
 		8094F6A9267C35FF0022D686 /* SessionListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionListCell.swift; sourceTree = "<group>"; };
+		80B55B2A26959282004C8D3A /* ReportVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReportVC.storyboard; sourceTree = "<group>"; };
+		80B55B2B26959282004C8D3A /* ReportVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
+		80B55B2E26959D23004C8D3A /* AgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementView.swift; sourceTree = "<group>"; };
+		80B55B3126959D48004C8D3A /* AgreementView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AgreementView.xib; sourceTree = "<group>"; };
+		80B55B342695A664004C8D3A /* AgreementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementVC.swift; sourceTree = "<group>"; };
+		80B55B362695A67C004C8D3A /* AgreementVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AgreementVC.storyboard; sourceTree = "<group>"; };
 		80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMUIConfigurationTemplate.swift; sourceTree = "<group>"; };
 		80EDCC972689B0E200532366 /* SwitchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -292,6 +304,8 @@
 		807F6CF92671F1E90025370B /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				80B55B332695A640004C8D3A /* AgreementVC */,
+				80B55B2926959282004C8D3A /* ReportVC */,
 				803B9CAE2672F98200CF4ED9 /* EEChatVC */,
 				8094F6A5267C35FF0022D686 /* SessionListVC */,
 				807F6DA7267231060025370B /* AddressBookVC */,
@@ -562,6 +576,34 @@
 			path = SessionListVC;
 			sourceTree = "<group>";
 		};
+		80B55B2926959282004C8D3A /* ReportVC */ = {
+			isa = PBXGroup;
+			children = (
+				80B55B2A26959282004C8D3A /* ReportVC.storyboard */,
+				80B55B2B26959282004C8D3A /* ReportVC.swift */,
+			);
+			path = ReportVC;
+			sourceTree = "<group>";
+		};
+		80B55B3026959D2E004C8D3A /* AgreementView */ = {
+			isa = PBXGroup;
+			children = (
+				80B55B2E26959D23004C8D3A /* AgreementView.swift */,
+				80B55B3126959D48004C8D3A /* AgreementView.xib */,
+			);
+			path = AgreementView;
+			sourceTree = "<group>";
+		};
+		80B55B332695A640004C8D3A /* AgreementVC */ = {
+			isa = PBXGroup;
+			children = (
+				80B55B3026959D2E004C8D3A /* AgreementView */,
+				80B55B342695A664004C8D3A /* AgreementVC.swift */,
+				80B55B362695A67C004C8D3A /* AgreementVC.storyboard */,
+			);
+			path = AgreementVC;
+			sourceTree = "<group>";
+		};
 		80EDCC912685D43C00532366 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -648,15 +690,18 @@
 				807F6D8726722D1D0025370B /* RegisterNextVC.storyboard in Resources */,
 				807B3A2826802E9A00C36249 /* LocalSearchUserVC.storyboard in Resources */,
 				807F6DC1267235190025370B /* SearchNextUserVC.storyboard in Resources */,
+				80B55B372695A67C004C8D3A /* AgreementVC.storyboard in Resources */,
 				805EB957267300740071035E /* SearchUserDetailsVC.storyboard in Resources */,
 				8094F6AA267C35FF0022D686 /* SessionListCell.xib in Resources */,
 				8094F6AC267C35FF0022D686 /* SessionListVC.storyboard in Resources */,
+				80B55B2C26959282004C8D3A /* ReportVC.storyboard in Resources */,
 				807F6DB8267231F70025370B /* NewFriendVC.storyboard in Resources */,
 				807F6CFF2671F21E0025370B /* LoginVC.storyboard in Resources */,
 				807F6D9926722FF10025370B /* MainPopupView.xib in Resources */,
 				807F6D9C26722FF10025370B /* MainHeaderView.xib in Resources */,
 				807F6D6D267229E90025370B /* NotificationSettingVC.storyboard in Resources */,
 				807F6DB1267231130025370B /* AddressBookVC.storyboard in Resources */,
+				80B55B3226959D48004C8D3A /* AgreementView.xib in Resources */,
 				807F6CEB2671E7400025370B /* LaunchScreen.storyboard in Resources */,
 				807F6D7426722A130025370B /* BlacklistVC.storyboard in Resources */,
 				807F6DAF2672310F0025370B /* AddressBookHeaderView.xib in Resources */,
@@ -737,6 +782,7 @@
 				807B3A212680290A00C36249 /* MenuWindow.swift in Sources */,
 				807B3A2526802E9400C36249 /* LocalSearchUserCell.swift in Sources */,
 				807F6D322671F2530025370B /* EECCollectionViewAutolayout.swift in Sources */,
+				80B55B352695A664004C8D3A /* AgreementVC.swift in Sources */,
 				807F6D9826722FF10025370B /* MainPopupView.swift in Sources */,
 				807F6D232671F2530025370B /* UIScrollView+EEC.swift in Sources */,
 				807F6D312671F2530025370B /* ResuableCustomView.swift in Sources */,
@@ -749,6 +795,7 @@
 				807F6D2D2671F2530025370B /* NavigationModule.swift in Sources */,
 				807F6D302671F2530025370B /* EECPopupVC.swift in Sources */,
 				807F6D4E2671F2E70025370B /* ApiResult.swift in Sources */,
+				80B55B2F26959D23004C8D3A /* AgreementView.swift in Sources */,
 				80EDCC962685D46600532366 /* QMUIConfigurationTemplate.swift in Sources */,
 				805EB956267300740071035E /* SearchUserDetailsVC.swift in Sources */,
 				807F6D242671F2530025370B /* String+EEC.swift in Sources */,
@@ -781,6 +828,7 @@
 				807F6D382671F2530025370B /* Function.swift in Sources */,
 				807F6D6B267229E20025370B /* NotificationSettingVC.swift in Sources */,
 				807F6DAC2672310F0025370B /* AddressBookHeaderView.swift in Sources */,
+				80B55B2D26959282004C8D3A /* ReportVC.swift in Sources */,
 				807F6D262671F2530025370B /* UIColor+EEC.swift in Sources */,
 				807F6D4B2671F2E70025370B /* ApiModule.swift in Sources */,
 				807F6D362671F2530025370B /* Namespace.swift in Sources */,
