@@ -41,16 +41,11 @@ class LaunchGroupChatCell: UITableViewCell {
         customMultipleChioce()
     }
     
-    override func layoutSubviews() {
-        customMultipleChioce()
-        super.layoutSubviews()
-    }
-    
     private var selectImageView: UIImageView?
     
     private func customMultipleChioce() {
         if selectImageView == nil {
-            guard isEditing, let cls = NSClassFromString("UITableViewCellEditControl") else {
+            guard let cls = NSClassFromString("UITableViewCellEditControl") else {
                 return
             }
             for control in self.subviews {
@@ -65,11 +60,13 @@ class LaunchGroupChatCell: UITableViewCell {
         }
         
         if let imageView = selectImageView {
-            if self.isSelected {
-                imageView.image = UIImage(named: "launch_group_chat_icon_selected")
-            } else {
-                imageView.image = UIImage(named: "launch_group_chat_icon_unselected")
-            }
+            imageView.image = {
+                if self.isSelected {
+                    return UIImage(named: "launch_group_chat_icon_selected")
+                } else {
+                    return UIImage(named: "launch_group_chat_icon_unselected")
+                }
+            }()
         }
     }
     

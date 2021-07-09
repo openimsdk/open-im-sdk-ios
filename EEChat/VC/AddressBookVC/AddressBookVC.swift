@@ -144,6 +144,9 @@ class AddressBookVC: BaseViewController {
         NewFriendVC.show()
     }
     
+    @IBAction func groupNoticeAction() {
+        GroupNoticeVC.show()
+    }
 }
 
 extension AddressBookVC: UITableViewDelegate {

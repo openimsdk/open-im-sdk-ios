@@ -11,6 +11,26 @@ import OpenIM
 
 class GroupProfileVC: BaseViewController {
     
+    override class func show(param: Any? = nil, callback: BaseViewController.Callback? = nil) {
+        assert(param is String)
+        let groupID = param as! String
+        let uid = OIMManager.getLoginUser()
+        var member: OIMGroupMember!
+        _ = rxRequest(showLoading: true, action: { OIMManager.getGroupMembersInfo(gid: groupID,
+                                                                                  uids: [uid],
+                                                                                  callback: $0) })
+            .flatMap({ array -> Single<[OIMGroupInfo]> in
+                if let first = array.first {
+                    member = first
+                    return rxRequest(showLoading: true, action: { OIMManager.getGroupsInfo(gids: [groupID], callback: $0) })
+                }
+                throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "You're not in the group."])
+            })
+            .subscribe(onSuccess: { array in
+                super.show(param: (array[0], member), callback: callback)
+            })
+    }
+    
     var member: OIMGroupMember!
     var groupInfo: OIMGroupInfo!
 
@@ -27,8 +47,8 @@ class GroupProfileVC: BaseViewController {
     }
     
     private func bindAction() {
-        assert(param is (OIMGroupMember, OIMGroupInfo))
-        (member, groupInfo) = param as! (OIMGroupMember, OIMGroupInfo)
+        assert(param is (OIMGroupInfo, OIMGroupMember))
+        (groupInfo, member) = param as! (OIMGroupInfo, OIMGroupMember)
         textView.isEditable = false
         textView.eec.autoHeight(minHeight: 200)
             .disposed(by: disposeBag)

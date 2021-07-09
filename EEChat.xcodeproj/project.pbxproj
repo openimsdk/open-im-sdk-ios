@@ -17,8 +17,6 @@
 		805EB95C26735F5B0071035E /* FriendSettingVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 805EB95B26735F5B0071035E /* FriendSettingVC.storyboard */; };
 		806FBF1C2692E3E50002072F /* LaunchGroupChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806FBF1B2692E3E50002072F /* LaunchGroupChatVC.swift */; };
 		806FBF1F2692E3F20002072F /* LaunchGroupChatVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806FBF1E2692E3F20002072F /* LaunchGroupChatVC.storyboard */; };
-		806FBF212692E50A0002072F /* AddGroupChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806FBF202692E50A0002072F /* AddGroupChatVC.swift */; };
-		806FBF242692E5170002072F /* AddGroupChatVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 806FBF232692E5170002072F /* AddGroupChatVC.storyboard */; };
 		806FBF272692EDF50002072F /* LaunchGroupChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806FBF252692EDF50002072F /* LaunchGroupChatCell.swift */; };
 		806FBF282692EDF50002072F /* LaunchGroupChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 806FBF262692EDF50002072F /* LaunchGroupChatCell.xib */; };
 		807B3A212680290A00C36249 /* MenuWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807B3A202680290A00C36249 /* MenuWindow.swift */; };
@@ -116,6 +114,10 @@
 		80B55B4C26969272004C8D3A /* SelectGroupOwnerVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B55B4B26969272004C8D3A /* SelectGroupOwnerVC.storyboard */; };
 		80EDCC962685D46600532366 /* QMUIConfigurationTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */; };
 		80EDCC982689B0E200532366 /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDCC972689B0E200532366 /* SwitchButton.swift */; };
+		80F88F4B269836DE00061410 /* GroupMemberVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80F88F4A269836DE00061410 /* GroupMemberVC.storyboard */; };
+		80F88F4E26984B8C00061410 /* GroupNoticeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F88F4D26984B8C00061410 /* GroupNoticeVC.swift */; };
+		80F88F5026984B9300061410 /* GroupNoticeVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80F88F4F26984B9300061410 /* GroupNoticeVC.storyboard */; };
+		80F88F52269853AF00061410 /* GroupNoticeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F88F51269853AF00061410 /* GroupNoticeCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -133,8 +135,6 @@
 		805EB95B26735F5B0071035E /* FriendSettingVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FriendSettingVC.storyboard; sourceTree = "<group>"; };
 		806FBF1B2692E3E50002072F /* LaunchGroupChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchGroupChatVC.swift; sourceTree = "<group>"; };
 		806FBF1E2692E3F20002072F /* LaunchGroupChatVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchGroupChatVC.storyboard; sourceTree = "<group>"; };
-		806FBF202692E50A0002072F /* AddGroupChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupChatVC.swift; sourceTree = "<group>"; };
-		806FBF232692E5170002072F /* AddGroupChatVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddGroupChatVC.storyboard; sourceTree = "<group>"; };
 		806FBF252692EDF50002072F /* LaunchGroupChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchGroupChatCell.swift; sourceTree = "<group>"; };
 		806FBF262692EDF50002072F /* LaunchGroupChatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchGroupChatCell.xib; sourceTree = "<group>"; };
 		807B3A202680290A00C36249 /* MenuWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuWindow.swift; sourceTree = "<group>"; };
@@ -235,6 +235,10 @@
 		80B55B4B26969272004C8D3A /* SelectGroupOwnerVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SelectGroupOwnerVC.storyboard; sourceTree = "<group>"; };
 		80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMUIConfigurationTemplate.swift; sourceTree = "<group>"; };
 		80EDCC972689B0E200532366 /* SwitchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
+		80F88F4A269836DE00061410 /* GroupMemberVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GroupMemberVC.storyboard; sourceTree = "<group>"; };
+		80F88F4D26984B8C00061410 /* GroupNoticeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNoticeVC.swift; sourceTree = "<group>"; };
+		80F88F4F26984B9300061410 /* GroupNoticeVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GroupNoticeVC.storyboard; sourceTree = "<group>"; };
+		80F88F51269853AF00061410 /* GroupNoticeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNoticeCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -297,9 +301,9 @@
 		806FBF1A2692E3BD0002072F /* Group */ = {
 			isa = PBXGroup;
 			children = (
+				80F88F4C26984B7A00061410 /* GroupNoticeVC */,
 				80B55B21269583EF004C8D3A /* GroupMemberVC */,
 				80B55B15269478B8004C8D3A /* View */,
-				806FBF222692E50D0002072F /* AddGroupChatVC */,
 				806FBF1D2692E3EA0002072F /* LaunchGroupChatVC */,
 				80B55B1C269547C8004C8D3A /* GroupSettingVC */,
 			);
@@ -315,15 +319,6 @@
 				806FBF262692EDF50002072F /* LaunchGroupChatCell.xib */,
 			);
 			path = LaunchGroupChatVC;
-			sourceTree = "<group>";
-		};
-		806FBF222692E50D0002072F /* AddGroupChatVC */ = {
-			isa = PBXGroup;
-			children = (
-				806FBF202692E50A0002072F /* AddGroupChatVC.swift */,
-				806FBF232692E5170002072F /* AddGroupChatVC.storyboard */,
-			);
-			path = AddGroupChatVC;
 			sourceTree = "<group>";
 		};
 		807B3A2226802E8700C36249 /* LocalSearchUserVC */ = {
@@ -629,10 +624,10 @@
 		807F6DB9267234FA0025370B /* SearchUserVC */ = {
 			isa = PBXGroup;
 			children = (
-				807F6DBA2672350C0025370B /* SearchNextUserVC.swift */,
 				807F6DBB2672350C0025370B /* SearchUserVC.swift */,
-				807F6DBF267235190025370B /* SearchNextUserVC.storyboard */,
 				807F6DBE267235190025370B /* SearchUserVC.storyboard */,
+				807F6DBA2672350C0025370B /* SearchNextUserVC.swift */,
+				807F6DBF267235190025370B /* SearchNextUserVC.storyboard */,
 			);
 			path = SearchUserVC;
 			sourceTree = "<group>";
@@ -672,6 +667,7 @@
 			isa = PBXGroup;
 			children = (
 				80B55B222695841C004C8D3A /* GroupMemberVC.swift */,
+				80F88F4A269836DE00061410 /* GroupMemberVC.storyboard */,
 			);
 			path = GroupMemberVC;
 			sourceTree = "<group>";
@@ -719,6 +715,16 @@
 				80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		80F88F4C26984B7A00061410 /* GroupNoticeVC */ = {
+			isa = PBXGroup;
+			children = (
+				80F88F51269853AF00061410 /* GroupNoticeCell.swift */,
+				80F88F4D26984B8C00061410 /* GroupNoticeVC.swift */,
+				80F88F4F26984B9300061410 /* GroupNoticeVC.storyboard */,
+			);
+			path = GroupNoticeVC;
 			sourceTree = "<group>";
 		};
 		8C52F9158960CA4D32668E23 /* Pods */ = {
@@ -799,7 +805,6 @@
 				804663A82696E6FA0011A320 /* GroupProfileVC.storyboard in Resources */,
 				807F6D8826722D1D0025370B /* RegisterVC.storyboard in Resources */,
 				807F6DC0267235190025370B /* SearchUserVC.storyboard in Resources */,
-				806FBF242692E5170002072F /* AddGroupChatVC.storyboard in Resources */,
 				807F6D8726722D1D0025370B /* RegisterNextVC.storyboard in Resources */,
 				807B3A2826802E9A00C36249 /* LocalSearchUserVC.storyboard in Resources */,
 				807F6DC1267235190025370B /* SearchNextUserVC.storyboard in Resources */,
@@ -810,6 +815,7 @@
 				8094F6AC267C35FF0022D686 /* SessionListVC.storyboard in Resources */,
 				807F6DB8267231F70025370B /* NewFriendVC.storyboard in Resources */,
 				807F6CFF2671F21E0025370B /* LoginVC.storyboard in Resources */,
+				80F88F5026984B9300061410 /* GroupNoticeVC.storyboard in Resources */,
 				807F6D9926722FF10025370B /* MainPopupView.xib in Resources */,
 				806FBF1F2692E3F20002072F /* LaunchGroupChatVC.storyboard in Resources */,
 				807F6D9C26722FF10025370B /* MainHeaderView.xib in Resources */,
@@ -818,6 +824,7 @@
 				807F6CEB2671E7400025370B /* LaunchScreen.storyboard in Resources */,
 				807F6D7426722A130025370B /* BlacklistVC.storyboard in Resources */,
 				807F6DAF2672310F0025370B /* AddressBookHeaderView.xib in Resources */,
+				80F88F4B269836DE00061410 /* GroupMemberVC.storyboard in Resources */,
 				807F6CE82671E7400025370B /* Assets.xcassets in Resources */,
 				80B55B3F2695AEC6004C8D3A /* AgreementView.xib in Resources */,
 				80B55B412695AEC6004C8D3A /* AgreementVC.storyboard in Resources */,
@@ -898,6 +905,7 @@
 				807B3A212680290A00C36249 /* MenuWindow.swift in Sources */,
 				80B55B1E269547E5004C8D3A /* GroupSettingVC.swift in Sources */,
 				807B3A2526802E9400C36249 /* LocalSearchUserCell.swift in Sources */,
+				80F88F52269853AF00061410 /* GroupNoticeCell.swift in Sources */,
 				807F6D322671F2530025370B /* EECCollectionViewAutolayout.swift in Sources */,
 				807F6D9826722FF10025370B /* MainPopupView.swift in Sources */,
 				807F6D232671F2530025370B /* UIScrollView+EEC.swift in Sources */,
@@ -936,7 +944,6 @@
 				80B55B17269478D3004C8D3A /* GroupMemberView.swift in Sources */,
 				807F6D372671F2530025370B /* Tuple.swift in Sources */,
 				80EDCC982689B0E200532366 /* SwitchButton.swift in Sources */,
-				806FBF212692E50A0002072F /* AddGroupChatVC.swift in Sources */,
 				80B55B3E2695AEC6004C8D3A /* AgreementView.swift in Sources */,
 				807F6D602671F77E0025370B /* AccountManager.swift in Sources */,
 				807F6D2C2671F2530025370B /* QCloudModule.swift in Sources */,
@@ -957,6 +964,7 @@
 				807F6D6326720DD70025370B /* MainTabBarController.swift in Sources */,
 				807F6D612671F77E0025370B /* PushManager.swift in Sources */,
 				806FBF1C2692E3E50002072F /* LaunchGroupChatVC.swift in Sources */,
+				80F88F4E26984B8C00061410 /* GroupNoticeVC.swift in Sources */,
 				807F6DB5267231F10025370B /* NewFriendCell.swift in Sources */,
 				807F6D9B26722FF10025370B /* MainHeaderView.swift in Sources */,
 				807F6D7226722A080025370B /* BlacklistVC.swift in Sources */,

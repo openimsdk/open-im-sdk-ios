@@ -66,7 +66,7 @@ public struct OIMGroupInfo: Decodable {
     }
 }
 
-public struct OIMGroupMember: Decodable {
+public struct OIMGroupMember: Decodable, Equatable {
     public let groupID: String
     public let userId: String
     public let role: OIMGroupRole
@@ -77,12 +77,35 @@ public struct OIMGroupMember: Decodable {
     public func getName() -> String {
         return nickName.isEmpty ? userId : nickName
     }
+    
+    public static func == (lhs: OIMGroupMember, rhs: OIMGroupMember) -> Bool {
+        return lhs.groupID == rhs.groupID && lhs.userId == rhs.userId
+    }
 }
 
 public enum OIMGroupRole: Int32, Codable {
     case none = 0
     case owner = 1
     case administrator = 2
+}
+
+public class OIMGroupApplication: Decodable {
+    var id: String
+    var groupID: String
+    var fromUserID: String
+    var toUserID: String
+    var flag: Int
+    var reqMsg: String
+    var handledMsg: String
+    var createTime: TimeInterval
+    var fromUserNickName: String
+    var toUserNickName: String
+    var fromUserFaceURL: String
+    var toUserFaceURL: String
+    var handledUser: String
+    var type: Int
+    var handleStatus: Int
+    var handleResult: Int
 }
 
 extension OIMManager {
@@ -145,11 +168,15 @@ extension OIMManager {
     }
     
     public static func quitGroup(gid: String, callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkQuitGroup(gid.toString(), CallbackProxy(callback))
+        Open_im_sdkQuitGroup(gid, CallbackProxy(callback))
     }
     
     public static func transferGroupOwner(gid: String, uid: String, callback: @escaping (Result<Void, Error>) -> Void) {
         Open_im_sdkTransferGroupOwner(gid, uid, CallbackProxy(callback))
+    }
+    
+    public static func getGroupApplicationList(callback: @escaping (Result<[OIMGroupApplication], Error>) -> Void) {
+        Open_im_sdkGetGroupApplicationList(CallbackArgsProxy(callback))
     }
 }
 

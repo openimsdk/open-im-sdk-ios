@@ -203,6 +203,7 @@
                         <outlet property="addressLabel" destination="pcC-i8-2am" id="gqo-9T-kr0"/>
                         <outlet property="notFoundView" destination="6Er-aF-dWB" id="kY3-1K-Lxd"/>
                         <outlet property="textField" destination="58r-9V-w2v" id="djl-zx-YMi"/>
+                        <outlet property="tipsLabel" destination="QD1-OR-QiP" id="6al-ic-rVX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fbv-G5-WTt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

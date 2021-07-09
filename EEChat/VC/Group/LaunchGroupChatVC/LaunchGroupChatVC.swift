@@ -35,6 +35,7 @@ class LaunchGroupChatVC: BaseViewController {
             for (section, sectionModel) in self.relay.value.enumerated() {
                 if let row = sectionModel.items.firstIndex(of: user) {
                     self.tableView.deselectRow(at: IndexPath(row: row, section: section), animated: true)
+                    self.updateSelectCount()
                     break
                 }
             }
@@ -74,12 +75,14 @@ class LaunchGroupChatVC: BaseViewController {
         tableView.rx.modelSelected(OIMUser.self)
             .subscribe(onNext: { [unowned self] model in
                 self.memberView.add(user: model)
+                self.updateSelectCount()
             })
             .disposed(by: disposeBag)
         
         tableView.rx.modelDeselected(OIMUser.self)
-            .subscribe(onNext: { model in
+            .subscribe(onNext: { [unowned self] model in
                 self.memberView.remove(user: model)
+                self.updateSelectCount()
             })
             .disposed(by: disposeBag)
     }
@@ -125,6 +128,13 @@ class LaunchGroupChatVC: BaseViewController {
         relay.accept(items)
     }
     
+    private func updateSelectCount() {
+        let count = tableView.indexPathsForSelectedRows?.count ?? 0
+        let title: String = count == 0 ? "Complete" : "Complete(\(count))"
+        submitBtn.setTitle(title, for: .normal)
+    }
+    
+    @IBOutlet var submitBtn: UIButton!
     @IBAction func submitAction() {
         guard let indexPaths = tableView.indexPathsForSelectedRows else {
             return
@@ -138,8 +148,9 @@ class LaunchGroupChatVC: BaseViewController {
                                                                                 reason: "",
                                                                                 uids: uids,
                                                                                 callback: $0) })
-                .subscribe(onSuccess: { 
-                    
+                .subscribe(onSuccess: {
+                    MessageModule.showMessage("Invitation sent!")
+                    NavigationModule.shared.pop()
                 })
                 .disposed(by: disposeBag)
         } else {

@@ -89,6 +89,7 @@
                     </view>
                     <connections>
                         <outlet property="addressLabel" destination="wPh-jn-N4F" id="hPh-rd-BRf"/>
+                        <outlet property="tipsLabel" destination="qnv-C8-fN1" id="1XR-Tm-Zxj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JYC-pG-Si4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

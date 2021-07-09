@@ -748,7 +748,7 @@ FOUNDATION_EXPORT void Open_im_sdkInviteUserToGroup(NSString* _Nullable groupId,
 
 FOUNDATION_EXPORT void Open_im_sdkJoinGroup(NSString* _Nullable groupId, NSString* _Nullable message, id<Open_im_sdkBase> _Nullable callback);
 
-FOUNDATION_EXPORT void Open_im_sdkKickGroupMember(NSString* _Nullable groupId, NSString* _Nullable userList, NSString* _Nullable reason, id<Open_im_sdkBase> _Nullable callback);
+FOUNDATION_EXPORT void Open_im_sdkKickGroupMember(NSString* _Nullable groupId, NSString* _Nullable reason, NSString* _Nullable userList, id<Open_im_sdkBase> _Nullable callback);
 
 FOUNDATION_EXPORT void Open_im_sdkLogin(NSString* _Nullable uid, NSString* _Nullable tk, id<Open_im_sdkBase> _Nullable callback);
 

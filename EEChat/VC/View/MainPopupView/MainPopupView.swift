@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import OpenIM
 
 final class MainPopupView: ResuableCustomView {
 
@@ -33,11 +34,11 @@ final class MainPopupView: ResuableCustomView {
                     NavigationModule.shared.dismiss {
                         switch index {
                         case 0:
-                            SearchUserVC.show()
+                            SearchUserVC.show(param: OIMConversationType.c2c)
                         case 1:
                             LaunchGroupChatVC.show()
                         case 2:
-                            AddGroupChatVC.show()
+                            SearchUserVC.show(param: OIMConversationType.group)
                         default:
                             fatalError()
                         }

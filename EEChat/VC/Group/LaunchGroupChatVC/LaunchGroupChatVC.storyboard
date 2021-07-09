@@ -30,11 +30,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SuB-NH-dsU">
                                 <rect key="frame" x="0.0" y="815" width="414" height="47"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SlN-Iv-Hqb">
-                                        <rect key="frame" x="326" y="10.5" width="73" height="26"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SlN-Iv-Hqb">
+                                        <rect key="frame" x="299" y="10.5" width="100" height="26"/>
                                         <color key="backgroundColor" red="0.1058823529" green="0.44705882349999998" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="73" id="BlU-e8-TIm"/>
+                                            <constraint firstAttribute="width" constant="100" id="BlU-e8-TIm"/>
                                             <constraint firstAttribute="height" constant="26" id="NJp-63-UXK"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
@@ -76,6 +76,7 @@
                     </view>
                     <connections>
                         <outlet property="memberView" destination="YNa-PP-SQq" id="Y3T-5C-BgJ"/>
+                        <outlet property="submitBtn" destination="SlN-Iv-Hqb" id="BP8-pT-Ew8"/>
                         <outlet property="tableView" destination="EaG-fw-XKZ" id="M6G-Ql-07r"/>
                     </connections>
                 </viewController>

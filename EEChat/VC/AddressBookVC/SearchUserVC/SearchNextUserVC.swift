@@ -14,13 +14,29 @@ class SearchNextUserVC: BaseViewController {
         let vc = self.vc(param: param, callback: callback)
         NavigationModule.shared.presentCustom(vc)
     }
+    
+    lazy var conversationType: OIMConversationType = {
+        assert(param is OIMConversationType)
+        return param as! OIMConversationType
+    }()
 
     @IBOutlet var textField: UITextField!
     @IBOutlet var notFoundView: UIView!
+    @IBOutlet var tipsLabel: UILabel!
     @IBOutlet var addressLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        switch conversationType {
+        case .c2c:
+            textField.placeholder = "Please enter account."
+            tipsLabel.text = "The user does not exist."
+        case .group:
+            textField.placeholder = "Please enter group number"
+            tipsLabel.text = "Group chat doesn't exist."
+        }
+        
         bindAction()
         refresh(isSearch: true)
     }
@@ -56,18 +72,34 @@ class SearchNextUserVC: BaseViewController {
     
     @IBAction func searchAction() {
         textField.isUserInteractionEnabled = false
-        let uid = textField.text!
-        rxRequest(showLoading: true, action: { OIMManager.getUsers(uids: [uid], callback: $0) })
-            .subscribe(onSuccess: { [unowned self] array in
-                if array.isEmpty {
+        let id = textField.text!
+        switch conversationType {
+        case .c2c:
+            rxRequest(showLoading: true, action: { OIMManager.getUsers(uids: [id],
+                                                                       callback: $0) })
+                .subscribe(onSuccess: { [unowned self] array in
+                    if array.isEmpty {
+                        self.refresh(isSearch: false)
+                    } else {
+                        SearchUserDetailsVC.show(param: array.first)
+                    }
+                }, onFailure: { [unowned self] error in
                     self.refresh(isSearch: false)
-                } else {
-                    SearchUserDetailsVC.show(param: array.first)
-                }
-            }, onFailure: { [unowned self] error in
-                self.refresh(isSearch: false)
-            })
-            .disposed(by: disposeBag)
+                })
+                .disposed(by: disposeBag)
+        case .group:
+            rxRequest(showLoading: true, action: { OIMManager.getGroupsInfo(gids: [id], callback: $0) })
+                .subscribe(onSuccess: { [unowned self] array in
+                    if array.isEmpty {
+                        self.refresh(isSearch: false)
+                    } else {
+                        GroupProfileVC.show(param: id)
+                    }
+                }, onFailure: { [unowned self] error in
+                    self.refresh(isSearch: false)
+                })
+                .disposed(by: disposeBag)
+        }
     }
     
     @IBAction func dismissAction() {

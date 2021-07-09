@@ -40,7 +40,11 @@ class GroupSettingVC: BaseViewController {
             refreshUI()
         }
     }
-    private var members: [OIMGroupMember] = []
+    private var members: [OIMGroupMember] = [] {
+        didSet {
+            memberView.members = members
+        }
+    }
 
     @IBOutlet var avatarImageView: ImageView!
     @IBOutlet var nameLabel: UILabel!
@@ -53,12 +57,16 @@ class GroupSettingVC: BaseViewController {
         bindAction()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.request()
+    }
+    
     private func bindAction() {
         assert(param is (OIMConversation, OIMGroupInfo, [OIMGroupMember]))
         (conversation, groupInfo, members) = param as! (OIMConversation, OIMGroupInfo, [OIMGroupMember])
         
         memberView.layout.itemSize = CGSize(width: 34, height: 54)
-        memberView.members = members
         
         memberView.addBlock = { [weak self] in
             guard let self = self else { return }
@@ -67,7 +75,22 @@ class GroupSettingVC: BaseViewController {
         
         memberView.removeBlock = { [weak self] in
             guard let self = self else { return }
-            
+            self.checkPermissions([.administrator, .owner], tips: "You're not an administrator.")
+                .subscribe(onSuccess: { _ in
+                    SelectGroupOwnerVC.show(op: .removeMember, groupID: self.groupInfo.groupID)
+                })
+                .disposed(by: self.disposeBag)
+        }
+    }
+    
+    private func request() {
+        OIMManager.getGroupMemberList(gid: conversation.groupID,
+                                      filter: .all,
+                                      next: 0) { [weak self] result in
+            guard let self = self else { return }
+            if case .success(let result) = result {
+                self.members = result.data
+            }
         }
     }
     
@@ -83,7 +106,7 @@ class GroupSettingVC: BaseViewController {
     @IBAction func profileAction() {
         checkPermissions()
             .subscribe(onSuccess: { [unowned self] member in
-                GroupProfileVC.show(param: (member, self.groupInfo)) { any in
+                GroupProfileVC.show(param: self.groupInfo.groupID) { any in
                     self.groupInfo = (any as! OIMGroupInfo)
                 }
             })
@@ -151,7 +174,7 @@ class GroupSettingVC: BaseViewController {
         let groupID = conversation.groupID
         checkPermissions([.owner], tips: "You are not the owner of the group.")
             .subscribe(onSuccess: { _ in
-                SelectGroupOwnerVC.show(param: groupID)
+                SelectGroupOwnerVC.show(op: .transferOwner, groupID: groupID)
             })
             .disposed(by: disposeBag)
     }
