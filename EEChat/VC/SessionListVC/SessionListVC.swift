@@ -43,29 +43,18 @@ class SessionListVC: BaseViewController {
                                                name: OUIKit.onConversationChangedNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onFriendProfileChanged),
+                                               selector: #selector(updateConversation),
                                                name: OUIKit.onFriendProfileChangedNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateConversation),
+                                               name: OUIKit.onGroupInfoChangedNotification,
                                                object: nil)
     }
     
     private func config(array: [OIMConversation]) {
-        let uids = array.compactMap { conversation -> String? in
-            let uid = conversation.userID
-            if uid != "", !OUIKit.shared.hasUser(uid) {
-                return uid
-            }
-            return nil
-        }
-        if uids.isEmpty {
-            self.array = array
-            self.tableView.reloadData()
-            return
-        }
-        
-        OUIKit.shared.getUsers(uids) { result in
-            self.array = array
-            self.tableView.reloadData()
-        }
+        self.array = array
+        self.tableView.reloadData()
     }
     
     @objc
@@ -132,7 +121,7 @@ extension SessionListVC: UITableViewDelegate {
 
         let read = UIContextualAction(style: .destructive, title: "标为已读")
         { (action, view, completionHandler) in
-            OIMManager.markMessageAsRead(uid: model.userID, groupID: model.groupID) { _ in
+            OIMManager.markMessageHasRead(uid: model.userID, gid: model.groupID) { _ in
                 model.unreadCount = 0
                 self.tableView.reloadRows(at: [indexPath], with: .none)
             }

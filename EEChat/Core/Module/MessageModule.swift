@@ -63,12 +63,16 @@ public final class MessageModule: NSObject, OUIKitMessageDelegate {
     public func showError(_ error: Error) {
         showMessage(error.localizedDescription)
     }
-
-    public static func showMessage(text: String) {
+    
+    public static func showMessage(_ text: String) {
         shared.showMessage(text)
     }
     
-    public static func showMessage(error: Error) {
+    public static func showError(_ text: String) {
+        shared.showError(text)
+    }
+    
+    public static func showMessage(_ error: Error) {
         shared.showError(error)
     }
 }

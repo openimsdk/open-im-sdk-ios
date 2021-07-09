@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4C764670B19E7C188F5280C6 /* Pods_EEChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70E6F2279E8108B84E6E02E5 /* Pods_EEChat.framework */; };
 		803B9CB02672F98200CF4ED9 /* EEChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B9CAF2672F98200CF4ED9 /* EEChatVC.swift */; };
+		804663A62696E6F10011A320 /* GroupProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804663A52696E6F10011A320 /* GroupProfileVC.swift */; };
+		804663A82696E6FA0011A320 /* GroupProfileVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 804663A72696E6FA0011A320 /* GroupProfileVC.storyboard */; };
 		805EB956267300740071035E /* SearchUserDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EB954267300740071035E /* SearchUserDetailsVC.swift */; };
 		805EB957267300740071035E /* SearchUserDetailsVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 805EB955267300740071035E /* SearchUserDetailsVC.storyboard */; };
 		805EB95A26735F570071035E /* FriendSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805EB95926735F570071035E /* FriendSettingVC.swift */; };
@@ -110,6 +112,8 @@
 		80B55B412695AEC6004C8D3A /* AgreementVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B55B3D2695AEC6004C8D3A /* AgreementVC.storyboard */; };
 		80B55B452695AEEE004C8D3A /* ReportVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B55B432695AEEE004C8D3A /* ReportVC.storyboard */; };
 		80B55B462695AEEE004C8D3A /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55B442695AEEE004C8D3A /* ReportVC.swift */; };
+		80B55B4A26969245004C8D3A /* SelectGroupOwnerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55B4926969245004C8D3A /* SelectGroupOwnerVC.swift */; };
+		80B55B4C26969272004C8D3A /* SelectGroupOwnerVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B55B4B26969272004C8D3A /* SelectGroupOwnerVC.storyboard */; };
 		80EDCC962685D46600532366 /* QMUIConfigurationTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */; };
 		80EDCC982689B0E200532366 /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDCC972689B0E200532366 /* SwitchButton.swift */; };
 /* End PBXBuildFile section */
@@ -121,6 +125,8 @@
 		70E6F2279E8108B84E6E02E5 /* Pods_EEChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EEChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8025EC692692A99C00279987 /* EEChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EEChat.entitlements; sourceTree = "<group>"; };
 		803B9CAF2672F98200CF4ED9 /* EEChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EEChatVC.swift; sourceTree = "<group>"; };
+		804663A52696E6F10011A320 /* GroupProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileVC.swift; sourceTree = "<group>"; };
+		804663A72696E6FA0011A320 /* GroupProfileVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GroupProfileVC.storyboard; sourceTree = "<group>"; };
 		805EB954267300740071035E /* SearchUserDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUserDetailsVC.swift; sourceTree = "<group>"; };
 		805EB955267300740071035E /* SearchUserDetailsVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchUserDetailsVC.storyboard; sourceTree = "<group>"; };
 		805EB95926735F570071035E /* FriendSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendSettingVC.swift; sourceTree = "<group>"; };
@@ -225,6 +231,8 @@
 		80B55B3D2695AEC6004C8D3A /* AgreementVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AgreementVC.storyboard; sourceTree = "<group>"; };
 		80B55B432695AEEE004C8D3A /* ReportVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReportVC.storyboard; sourceTree = "<group>"; };
 		80B55B442695AEEE004C8D3A /* ReportVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
+		80B55B4926969245004C8D3A /* SelectGroupOwnerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGroupOwnerVC.swift; sourceTree = "<group>"; };
+		80B55B4B26969272004C8D3A /* SelectGroupOwnerVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SelectGroupOwnerVC.storyboard; sourceTree = "<group>"; };
 		80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMUIConfigurationTemplate.swift; sourceTree = "<group>"; };
 		80EDCC972689B0E200532366 /* SwitchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -257,6 +265,15 @@
 				803B9CAF2672F98200CF4ED9 /* EEChatVC.swift */,
 			);
 			path = EEChatVC;
+			sourceTree = "<group>";
+		};
+		804663A42696E6C20011A320 /* GroupProfileVC */ = {
+			isa = PBXGroup;
+			children = (
+				804663A52696E6F10011A320 /* GroupProfileVC.swift */,
+				804663A72696E6FA0011A320 /* GroupProfileVC.storyboard */,
+			);
+			path = GroupProfileVC;
 			sourceTree = "<group>";
 		};
 		805EB953267300740071035E /* SearchUserDetailsVC */ = {
@@ -643,6 +660,8 @@
 		80B55B1C269547C8004C8D3A /* GroupSettingVC */ = {
 			isa = PBXGroup;
 			children = (
+				804663A42696E6C20011A320 /* GroupProfileVC */,
+				80B55B4826969219004C8D3A /* SelectGroupOwnerVC */,
 				80B55B1D269547E5004C8D3A /* GroupSettingVC.swift */,
 				80B55B1F269547F5004C8D3A /* GroupSettingVC.storyboard */,
 			);
@@ -683,6 +702,15 @@
 				80B55B442695AEEE004C8D3A /* ReportVC.swift */,
 			);
 			path = ReportVC;
+			sourceTree = "<group>";
+		};
+		80B55B4826969219004C8D3A /* SelectGroupOwnerVC */ = {
+			isa = PBXGroup;
+			children = (
+				80B55B4926969245004C8D3A /* SelectGroupOwnerVC.swift */,
+				80B55B4B26969272004C8D3A /* SelectGroupOwnerVC.storyboard */,
+			);
+			path = SelectGroupOwnerVC;
 			sourceTree = "<group>";
 		};
 		80EDCC912685D43C00532366 /* Common */ = {
@@ -768,6 +796,7 @@
 				806FBF282692EDF50002072F /* LaunchGroupChatCell.xib in Resources */,
 				807F6D8A26722D1D0025370B /* LoginRegisterHeaderView.xib in Resources */,
 				80B55B20269547F5004C8D3A /* GroupSettingVC.storyboard in Resources */,
+				804663A82696E6FA0011A320 /* GroupProfileVC.storyboard in Resources */,
 				807F6D8826722D1D0025370B /* RegisterVC.storyboard in Resources */,
 				807F6DC0267235190025370B /* SearchUserVC.storyboard in Resources */,
 				806FBF242692E5170002072F /* AddGroupChatVC.storyboard in Resources */,
@@ -776,6 +805,7 @@
 				807F6DC1267235190025370B /* SearchNextUserVC.storyboard in Resources */,
 				805EB957267300740071035E /* SearchUserDetailsVC.storyboard in Resources */,
 				8094F6AA267C35FF0022D686 /* SessionListCell.xib in Resources */,
+				80B55B4C26969272004C8D3A /* SelectGroupOwnerVC.storyboard in Resources */,
 				80B55B452695AEEE004C8D3A /* ReportVC.storyboard in Resources */,
 				8094F6AC267C35FF0022D686 /* SessionListVC.storyboard in Resources */,
 				807F6DB8267231F70025370B /* NewFriendVC.storyboard in Resources */,
@@ -863,6 +893,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				803B9CB02672F98200CF4ED9 /* EEChatVC.swift in Sources */,
+				80B55B4A26969245004C8D3A /* SelectGroupOwnerVC.swift in Sources */,
 				807F6D2F2671F2530025370B /* DBModule.swift in Sources */,
 				807B3A212680290A00C36249 /* MenuWindow.swift in Sources */,
 				80B55B1E269547E5004C8D3A /* GroupSettingVC.swift in Sources */,
@@ -913,6 +944,7 @@
 				807F6CFD2671F2170025370B /* LoginVC.swift in Sources */,
 				807F6D9D26722FF10025370B /* SwitchView.swift in Sources */,
 				807F6DAE2672310F0025370B /* AddressBookCell.swift in Sources */,
+				804663A62696E6F10011A320 /* GroupProfileVC.swift in Sources */,
 				807F6D8926722D1D0025370B /* LoginRegisterHeaderView.swift in Sources */,
 				807B3A2626802E9400C36249 /* LocalSearchUserVC.swift in Sources */,
 				807F6D382671F2530025370B /* Function.swift in Sources */,

@@ -12,7 +12,7 @@ public struct NavigationModule {
     private init() {}
     
     public var keyWindow: UIWindow {
-        return UIApplication.shared.windows.filter {$0.isKeyWindow}.first!
+        return UIApplication.shared.windows.filter {$0.isKeyWindow}[0]
     }
     
     public var rootViewController: UIViewController {

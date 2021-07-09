@@ -112,7 +112,7 @@ class RegisterNextVC: BaseViewController {
 
     @IBAction func loginAction() {
         if self.relay.value.joined(separator: " ") != self.mnemonic {
-            MessageModule.showMessage(text: LocalizedString("The order of the mnemonic words is incorrect!"))
+            MessageModule.showMessage(LocalizedString("The order of the mnemonic words is incorrect!"))
             return
         }
         

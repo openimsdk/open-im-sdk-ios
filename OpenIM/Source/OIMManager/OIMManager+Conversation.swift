@@ -81,9 +81,9 @@ extension OIMManager {
     }
     
     
-    public static func getConversation(uid: String,
-                                       groupID: String) {
-//        Open_im_sdkGetConversationIDBySessionType(<#T##sourceID: String?##String?#>, <#T##sessionType: Int##Int#>)
+    public static func getConversation(type: OIMConversationType,
+                                       id: String) -> String {
+        return Open_im_sdkGetConversationIDBySessionType(id, type.rawValue)
     }
     
     public static func getConversationList(callback: @escaping (Result<[OIMConversation], Error>) -> Void) {
@@ -105,6 +105,7 @@ extension OIMManager {
     public static func setConversationDraft(_ conversationID: String, draftText: String, callback: ((Result<Void, Error>) -> Void)? = nil) {
         Open_im_sdkSetConversationDraft(conversationID, draftText, CallbackProxy(callback))
     }
+    
 }
 
 extension OIMManager {
@@ -115,13 +116,15 @@ extension OIMManager {
 
 extension OIMManager: Open_im_sdkOnConversationListenerProtocol {
     public func onConversationChanged(_ str: String?) {
-        let array: [OIMConversation] = decodeModel(str)
-        conversationListener?.onConversationChanged(array)
+        if let array: [OIMConversation] = decodeModel(str) {
+            conversationListener?.onConversationChanged(array)
+        }
     }
     
     public func onNewConversation(_ str: String?) {
-        let array: [OIMConversation] = decodeModel(str)
-        conversationListener?.onNewConversation(array)
+        if let array: [OIMConversation] = decodeModel(str) {
+            conversationListener?.onNewConversation(array)
+        }
     }
     
     public func onSyncServerFailed() {

@@ -102,7 +102,7 @@ open class IMConversationViewController: UIViewController,
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         responseKeyboard = false
-        OIMManager.markMessageAsRead(uid: conversation.userID, groupID: conversation.groupID)
+        OIMManager.markMessageHasRead(uid: conversation.userID, gid: conversation.groupID)
         
         if let attributedText = inputVC.inputBarView.textView.attributedText {
             let text = attributedText.string.isEmpty ? "" : attributedText.toBase64String()

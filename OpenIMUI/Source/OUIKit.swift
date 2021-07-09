@@ -28,9 +28,9 @@ public class OUIKit: NSObject {
         OIMManager.setFriendListener(self)
     }
     
-    private var users: [String: OIMUserInfo] = [:]
+    private var users: [String: OIMUser] = [:]
     
-    internal func update(user: OIMUserInfo) {
+    internal func update(user: OIMUser) {
         self.users[user.uid] = user
     }
     
@@ -41,7 +41,7 @@ public class OUIKit: NSObject {
     }
     
     @discardableResult
-    public func getUser(_ uid: String, isForce: Bool = false, callback: ((OIMUserInfo?) -> Void)? = nil) -> OIMUserInfo? {
+    public func getUser(_ uid: String, isForce: Bool = false, callback: ((OIMUser?) -> Void)? = nil) -> OIMUser? {
         let user = users[uid]
         if !isForce, let user = users[uid] {
             return user
@@ -63,7 +63,7 @@ public class OUIKit: NSObject {
         return user
     }
     
-    public func getUsers(_ uids: [String], callback: ((Result<[OIMUserInfo], Error>) -> Void)? = nil ) {
+    public func getUsers(_ uids: [String], callback: ((Result<[OIMUser], Error>) -> Void)? = nil ) {
         OIMManager.getUsers(uids: uids) { result in
             if case let .success(array) = result {
                 array.forEach { user in
@@ -73,6 +73,12 @@ public class OUIKit: NSObject {
             callback?(result)
         }
     }
+    
+    func post(name: Notification.Name, object: Any? = nil, userInfo: [AnyHashable : Any]? = nil) {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: name, object: object, userInfo: userInfo)
+        }
+    }
 }
 
 extension OUIKit: OIMConversationListener {
@@ -80,49 +86,37 @@ extension OUIKit: OIMConversationListener {
     public static let onConversationChangedNotification = NSNotification.Name("OUIKit.onConversationChangedNotification")
     
     public func onConversationChanged(_ conversations: [OIMConversation]) {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onConversationChangedNotification, object: conversations)
-        }
+        post(name: OUIKit.onConversationChangedNotification, object: conversations)
     }
     
     public static let onNewConversationNotification = NSNotification.Name("OUIKit.onNewConversationNotification")
     
     public func onNewConversation(_ conversations: [OIMConversation]) {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onNewConversationNotification, object: conversations)
-        }
+        post(name: OUIKit.onNewConversationNotification, object: conversations)
     }
     
     public static let onSyncServerFailedNotification = NSNotification.Name("OUIKit.onSyncServerFailedNotification")
     
     public func onSyncServerFailed() {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onSyncServerFailedNotification, object: nil)
-        }
+        post(name: OUIKit.onSyncServerFailedNotification, object: nil)
     }
     
     public static let onSyncServerFinishNotification = NSNotification.Name("OUIKit.onSyncServerFinishNotification")
     
     public func onSyncServerFinish() {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onSyncServerFinishNotification, object: nil)
-        }
+        post(name: OUIKit.onSyncServerFinishNotification, object: nil)
     }
     
     public static let onSyncServerStartNotification = NSNotification.Name("OUIKit.onSyncServerStartNotification")
     
     public func onSyncServerStart() {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onSyncServerStartNotification, object: nil)
-        }
+        post(name: OUIKit.onSyncServerStartNotification, object: nil)
     }
     
     public static let onTotalUnreadMessageCountChangedNotification = NSNotification.Name("OUIKit.onTotalUnreadMessageCountChangedNotification")
     
     public func onTotalUnreadMessageCountChanged(_ count: Int32) {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onTotalUnreadMessageCountChangedNotification, object: count)
-        }
+        post(name: OUIKit.onTotalUnreadMessageCountChangedNotification, object: count)
     }
 }
 
@@ -130,85 +124,136 @@ extension OUIKit: OIMFriendshipListener {
     
     public static let onFriendApplicationListAddedNotification = NSNotification.Name("OUIKit.onFriendApplicationListAddedNotification")
     
-    public func onFriendApplicationListAdded(_ user: OIMUserInfo) {
+    public func onFriendApplicationListAdded(_ user: OIMUser) {
         self.update(user: user)
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: OUIKit.onFriendApplicationListAddedNotification, object: user)
         }
+        post(name: OUIKit.onFriendApplicationListAddedNotification, object: user)
     }
     
     public static let onFriendApplicationListDeletedNotification = NSNotification.Name("OUIKit.onFriendApplicationListDeletedNotification")
     
     public func onFriendApplicationListDeleted(_ uid: String) {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onFriendApplicationListDeletedNotification, object: uid)
-        }
+        post(name: OUIKit.onFriendApplicationListDeletedNotification, object: uid)
     }
     
     public static let onFriendApplicationListReadNotification = NSNotification.Name("OUIKit.onFriendApplicationListReadNotification")
     
     public func onFriendApplicationListRead() {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onFriendApplicationListReadNotification, object: nil)
-        }
+        post(name: OUIKit.onFriendApplicationListReadNotification, object: nil)
     }
     
     public static let onFriendApplicationListRejectNotification = NSNotification.Name("OUIKit.onFriendApplicationListRejectNotification")
     
     public func onFriendApplicationListReject(_ uid: String) {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onFriendApplicationListReadNotification, object: uid)
-        }
+        post(name: OUIKit.onFriendApplicationListReadNotification, object: uid)
     }
     
     public static let onFriendApplicationListAcceptNotification = NSNotification.Name("OUIKit.onFriendApplicationListAcceptNotification")
     
-    public func onFriendApplicationListAccept(_ user: OIMUserInfo) {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onFriendApplicationListAcceptNotification, object: user)
-        }
+    public func onFriendApplicationListAccept(_ user: OIMUser) {
+        post(name: OUIKit.onFriendApplicationListAcceptNotification, object: user)
     }
     
     public static let onFriendListAddedNotification = NSNotification.Name("OUIKit.onFriendListAddedNotification")
     
     public func onFriendListAdded() {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onFriendListAddedNotification, object: nil)
-        }
+        post(name: OUIKit.onFriendListAddedNotification, object: nil)
     }
     
     public static let onFriendListDeletedNotification = NSNotification.Name("OUIKit.onFriendListDeletedNotification")
     
     public func onFriendListDeleted(_ uid: String) {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onFriendListDeletedNotification, object: uid)
-        }
+        post(name: OUIKit.onFriendListDeletedNotification, object: uid)
     }
     
     public static let onBlackListAddedNotification = NSNotification.Name("OUIKit.onBlackListAddedNotification")
     
-    public func onBlackListAdded(_ user: OIMUserInfo) {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onBlackListAddedNotification, object: user)
-        }
+    public func onBlackListAdded(_ user: OIMUser) {
+        post(name: OUIKit.onBlackListAddedNotification, object: user)
     }
     
     public static let onBlackListDeletedNotification = NSNotification.Name("OUIKit.onBlackListDeletedNotification")
     
     public func onBlackListDeleted(_ uid: String) {
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onBlackListDeletedNotification, object: uid)
-        }
+        post(name: OUIKit.onBlackListDeletedNotification, object: uid)
     }
     
     public static let onFriendProfileChangedNotification = NSNotification.Name("OUIKit.onFriendProfileChangedNotification")
     
-    public func onFriendProfileChanged(_ user: OIMUserInfo) {
+    public func onFriendProfileChanged(_ user: OIMUser) {
         update(user: user)
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: OUIKit.onFriendProfileChangedNotification, object: user)
-        }
+        post(name: OUIKit.onFriendProfileChangedNotification, object: user)
     }
     
+}
+
+extension OUIKit: OIMGroupListener {
+    
+    public static let onApplicationProcessedNotification = NSNotification.Name("OUIKit.onApplicationProcessedNotification")
+    
+    public func onApplicationProcessed(_ groupId: String, opUser: OIMGroupMember, agreeOrReject AgreeOrReject: Int32, opReason: String) {
+        post(name: OUIKit.onApplicationProcessedNotification, object: [
+            "groupId": groupId,
+            "opUser": opUser,
+            "opReason": opReason,
+        ])
+    }
+    
+    public static let onGroupCreatedNotification = NSNotification.Name("OUIKit.onGroupCreated")
+    
+    public func onGroupCreated(_ groupId: String) {
+        post(name: OUIKit.onGroupCreatedNotification, object: groupId)
+    }
+    
+    public static let onGroupInfoChangedNotification = NSNotification.Name("OUIKit.onGroupInfoChangedNotification")
+    
+    public func onGroupInfoChanged(_ groupId: String, groupInfo: OIMGroupInfo) {
+        post(name: OUIKit.onGroupInfoChangedNotification, object: groupInfo)
+    }
+    
+    public static let onMemberEnterNotification = NSNotification.Name("OUIKit.onMemberEnterNotification")
+    
+    public func onMemberEnter(_ groupId: String, memberList: [OIMGroupMember]) {
+        post(name: OUIKit.onMemberEnterNotification, object: memberList)
+    }
+    
+    public static let onMemberInvitedNotification = NSNotification.Name("OUIKit.onMemberInvitedNotification")
+    
+    public func onMemberInvited(_ groupId: String, opUser: OIMGroupMember, memberList: [OIMGroupMember]) {
+        post(name: OUIKit.onMemberInvitedNotification, object: [
+            "groupId": groupId,
+            "memberList": memberList,
+        ])
+    }
+    
+    public static let onMemberKickedNotification = NSNotification.Name("OUIKit.onMemberKickedNotification")
+    
+    public func onMemberKicked(_ groupId: String, opUser: OIMGroupMember, memberList: [OIMGroupMember]) {
+        post(name: OUIKit.onMemberKickedNotification, object: [
+            "groupId": groupId,
+            "opUser": opUser,
+            "memberList": memberList,
+        ])
+    }
+    
+    public static let onMemberLeaveNotification = NSNotification.Name("OUIKit.onMemberLeaveNotification")
+    
+    public func onMemberLeave(_ groupId: String, member: OIMGroupMember) {
+        post(name: OUIKit.onMemberLeaveNotification, object: [
+            "groupId": groupId,
+            "member": member,
+        ])
+    }
+    
+    public static let onReceiveJoinApplicationNotification = NSNotification.Name("OUIKit.onReceiveJoinApplicationNotification")
+    
+    public func onReceiveJoinApplication(_ groupId: String, member: OIMGroupMember, opReason: String) {
+        post(name: OUIKit.onMemberLeaveNotification, object: [
+            "groupId": groupId,
+            "opReason": opReason,
+        ])
+    }
     
 }

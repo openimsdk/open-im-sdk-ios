@@ -37,7 +37,7 @@ class FriendSettingVC: BaseViewController {
         topButton.isSelected = model.isPinned
     }
     
-    private func set(user: OIMUserInfo?) {
+    private func set(user: OIMUser?) {
         guard let user = user else { return }
         blacklistButton.isSelected = user.isInBlackList
     }
@@ -56,9 +56,9 @@ class FriendSettingVC: BaseViewController {
         { (text) in
             let model = self.model
             
-            rxRequest(showLoading: true, callback: { OIMManager.setFriendInfo(model.userID, comment: text, callback: $0) })
+            rxRequest(showLoading: true, action: { OIMManager.setFriendInfo(model.userID, comment: text, callback: $0) })
                 .subscribe(onSuccess: { _ in
-                    MessageModule.showMessage(text: LocalizedString("Modify the success"))
+                    MessageModule.showMessage(LocalizedString("Modify the success"))
                     self.model.showName = text
                     self.refreshUI()
                 })
@@ -82,8 +82,8 @@ class FriendSettingVC: BaseViewController {
         let uid = model.userID
         let isInBlackList = blacklistButton.isSelected
         let observe = isInBlackList
-            ? rxRequest(showLoading: true, callback: { OIMManager.deleteFromBlackList(uid: uid, callback: $0) })
-            : rxRequest(showLoading: true, callback: { OIMManager.addToBlackList(uid: uid, callback: $0) })
+            ? rxRequest(showLoading: true, action: { OIMManager.deleteFromBlackList(uid: uid, callback: $0) })
+            : rxRequest(showLoading: true, action: { OIMManager.addToBlackList(uid: uid, callback: $0) })
         
         observe
             .subscribe(onSuccess: { _ in
@@ -126,7 +126,7 @@ class FriendSettingVC: BaseViewController {
     
     private func delFriend() {
         let uid = model.userID
-        rxRequest(showLoading: true, callback: { OIMManager.deleteFromFriendList(uid, callback: $0) })
+        rxRequest(showLoading: true, action: { OIMManager.deleteFromFriendList(uid, callback: $0) })
             .subscribe(onSuccess: { _ in
                 NavigationModule.shared.pop(popCount: 2)
             })

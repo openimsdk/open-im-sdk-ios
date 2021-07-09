@@ -40,11 +40,11 @@ class GroupMemberCell: UICollectionViewCell {
         didSet {
             avatarImageView.eec_setRadius = bounds.width / 2
             switch model {
-            case let model as OIMUserInfo:
+            case let model as OIMUser:
                 avatarImageView.setImage(with: model.icon,
                                          placeholder: UIImage(named: "icon_default_avatar"))
             case let model as OIMGroupMember:
-                nameLabel.text = model.nickName
+                nameLabel.text = model.getName()
                 avatarImageView.setImage(with: model.faceUrl,
                                          placeholder: UIImage(named: "icon_default_avatar"))
             case let image as UIImage:

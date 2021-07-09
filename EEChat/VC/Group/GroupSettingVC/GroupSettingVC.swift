@@ -6,8 +6,9 @@
 //
 
 import UIKit
-import OpenIM
 import RxSwift
+import OpenIM
+import OpenIMUI
 
 class GroupSettingVC: BaseViewController {
     
@@ -15,7 +16,7 @@ class GroupSettingVC: BaseViewController {
         assert(param is OIMConversation)
         let conversation = param as! OIMConversation
         var members: [OIMGroupMember] = []
-        _ = rxRequest(showLoading: true, callback: { OIMManager.getGroupMemberList(gid: conversation.groupID,
+        _ = rxRequest(showLoading: true, action: { OIMManager.getGroupMemberList(gid: conversation.groupID,
                                                                                    filter: .all,
                                                                                    next: 0,
                                                                                    callback: $0) })
@@ -24,7 +25,7 @@ class GroupSettingVC: BaseViewController {
             })
             .flatMap({ _ -> Single<[OIMGroupInfo]> in
                 return rxRequest(showLoading: true,
-                                 callback: { OIMManager.getGroupsInfo(gids: [conversation.groupID], callback: $0) })
+                                 action: { OIMManager.getGroupsInfo(gids: [conversation.groupID], callback: $0) })
             })
             .subscribe(onSuccess: { array in
                 if let groupInfo = array.first {
@@ -34,7 +35,11 @@ class GroupSettingVC: BaseViewController {
     }
     
     private var conversation: OIMConversation!
-    private var groupInfo: OIMGroupInfo!
+    private var groupInfo: OIMGroupInfo! {
+        didSet {
+            refreshUI()
+        }
+    }
     private var members: [OIMGroupMember] = []
 
     @IBOutlet var avatarImageView: ImageView!
@@ -45,30 +50,25 @@ class GroupSettingVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        bindAction()
+    }
+    
+    private func bindAction() {
         assert(param is (OIMConversation, OIMGroupInfo, [OIMGroupMember]))
-        let (conversation, groupInfo, members) = param as! (OIMConversation, OIMGroupInfo, [OIMGroupMember])
-        self.conversation = conversation
-        self.groupInfo = groupInfo
-        self.members = members
+        (conversation, groupInfo, members) = param as! (OIMConversation, OIMGroupInfo, [OIMGroupMember])
         
         memberView.layout.itemSize = CGSize(width: 34, height: 54)
         memberView.members = members
         
-        memberView.addBlock = {
-            
+        memberView.addBlock = { [weak self] in
+            guard let self = self else { return }
+            LaunchGroupChatVC.show(param: self.groupInfo.groupID)
         }
         
-        memberView.removeBlock = {
+        memberView.removeBlock = { [weak self] in
+            guard let self = self else { return }
             
         }
-        
-        bindAction()
-        refreshUI()
-    }
-    
-    private func bindAction() {
-        
     }
     
     private func refreshUI() {
@@ -79,7 +79,17 @@ class GroupSettingVC: BaseViewController {
         
         pinBtn.isSelected = conversation.isPinned
     }
-
+    
+    @IBAction func profileAction() {
+        checkPermissions()
+            .subscribe(onSuccess: { [unowned self] member in
+                GroupProfileVC.show(param: (member, self.groupInfo)) { any in
+                    self.groupInfo = (any as! OIMGroupInfo)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
     @IBAction func memberListAction() {
         GroupMemberVC.show(param: groupInfo.groupID) { [weak self] any in
             let members = any as! [OIMGroupMember]
@@ -87,26 +97,96 @@ class GroupSettingVC: BaseViewController {
         }
     }
     
-    @IBAction func transferAction() {
-        let groupID = self.conversation.groupID
+    private func checkPermissions(_ roles: [OIMGroupRole] = [], tips: String = "") -> Single<OIMGroupMember> {
+        let groupID = conversation.groupID
         let uid = OIMManager.getLoginUser()
-        rxRequest(showLoading: true, callback: { OIMManager.getGroupMembersInfo(gid: groupID,
+        return rxRequest(showLoading: true, action: { OIMManager.getGroupMembersInfo(gid: groupID,
                                                                                 uids: [uid],
                                                                                 callback: $0) })
-            .flatMap({ members -> Single<Void> in
-                if let member = members.first, member.role == .owner {
-                    return .just(Void())
+            .flatMap({ members -> Single<OIMGroupMember> in
+                if let member = members.first {
+                    if roles.isEmpty || roles.contains(member.role) {
+                        return .just(member)
+                    }
+                    throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: tips])
                 }
-                throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "You're not an administrator."])
+                throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "You're not in the group."])
             })
+            .do(onError: { error in
+                MessageModule.showMessage(error)
+            })
+    }
+    
+    
+    @IBAction func announcementAction() {
+        let groupID = conversation.groupID
+        checkPermissions([.administrator, .owner], tips: "You're not an administrator.")
+            .flatMap({ _ -> Single<OIMGroupInfo> in
+                return rxRequest(showLoading: true, action: { OIMManager.getGroupsInfo(gids: [groupID],
+                                                                                         callback: $0) })
+                    .map { array -> OIMGroupInfo in
+                        return array[0]
+                    }
+            })
+            .subscribe(onSuccess: { [weak self] groupInfo in
+                UIAlertController.show(title: "Modify group announcement?",
+                                       message: nil,
+                                       text: groupInfo.introduction,
+                                       placeholder: "")
+                { text in
+                    guard let self = self else { return }
+                    let param = OIMGroupInfoParam(groupInfo: groupInfo,
+                                                  introduction: text)
+                    rxRequest(showLoading: true, action: { OIMManager.setGroupInfo(param, callback: $0) })
+                        .subscribe(onSuccess: {
+                            MessageModule.showMessage("Modify the announcement successfully.")
+                        })
+                        .disposed(by: self.disposeBag)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    @IBAction func transferAction() {
+        let groupID = conversation.groupID
+        checkPermissions([.owner], tips: "You are not the owner of the group.")
             .subscribe(onSuccess: { _ in
-                
+                SelectGroupOwnerVC.show(param: groupID)
             })
             .disposed(by: disposeBag)
     }
     
     @IBAction func changeNicknameAction() {
-        
+        let groupID = conversation.groupID
+        checkPermissions(tips: "You're not in the group.")
+            .subscribe(onSuccess: { [weak self] member in
+                UIAlertController.show(title: "Modify group nicknames?",
+                                       message: nil,
+                                       text: member.getName(),
+                                       placeholder: "")
+                { text in
+                    guard let self = self else { return }
+                    
+                }
+            })
+            .disposed(by: disposeBag)
+            
+    }
+    
+    @IBAction func clearHistoryAction() {
+        UIAlertController.show(title: LocalizedString("Clear the chat history?"),
+                               message: nil,
+                               buttons: [LocalizedString("Yes")],
+                               cancel: LocalizedString("No"))
+        { (index) in
+            if index == 1 {
+                OIMManager.deleteConversation(self.conversation.conversationID) { result in
+                    if case .success = result {
+                        NavigationModule.shared.pop(popCount: 2)
+                    }
+                }
+            }
+        }
     }
     
     @IBOutlet var muteBtn: SwitchButton!
@@ -124,7 +204,10 @@ class GroupSettingVC: BaseViewController {
     
     @IBAction func leaveAction() {
         let groupID = groupInfo.groupID
-        rxRequest(showLoading: true, callback: { OIMManager.quitGroup(gid: groupID, callback: $0) })
+        checkPermissions([.administrator, .none], tips: "The group owner cannot quit the group.")
+            .flatMap{ _ -> Single<Void> in
+                return rxRequest(showLoading: true, action: { OIMManager.quitGroup(gid: groupID, callback: $0) })
+            }
             .subscribe(onSuccess: {
                 NavigationModule.shared.pop(popCount: 2)
             })

@@ -13,7 +13,7 @@ class BlacklistCell: UITableViewCell {
     @IBOutlet var avatarImageView: ImageView!
     @IBOutlet var nameLabel: UILabel!
     
-    var model: OIMUserInfo! {
+    var model: OIMUser! {
         didSet {
             avatarImageView.setImage(with: model.icon,
                                      placeholder: UIImage(named: "icon_default_avatar"))

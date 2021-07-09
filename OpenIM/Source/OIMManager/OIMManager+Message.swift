@@ -118,7 +118,7 @@ public protocol OIMAdvancedMsgListener: AnyObject {
 
 extension OIMManager: Open_im_sdkOnAdvancedMsgListenerProtocol {
     public func onRecvNewMessage(_ msg: String?) {
-        let message: OIMMessage = decodeModel(msg)
+        guard let message: OIMMessage = decodeModel(msg) else { return }
         DispatchQueue.main.async {
             self.advancedMsgListeners.forEach { ref in
                 if let listener = ref.value as? OIMAdvancedMsgListener {
@@ -226,11 +226,12 @@ extension OIMManager {
         Open_im_sdkGetHistoryMessageList(CallbackArgsProxy(callback), param.toString())
     }
     
-    public static func markMessageAsRead(uid: String,
-                                         groupID: String,
-                                         callback: ((Result<Void, Error>) -> Void)? = nil) {
-        if uid != "" {
+    public static func markMessageHasRead(uid: String = "", gid: String = "", callback: @escaping (Result<Void, Error>) -> Void = { _ in }) {
+        if gid.isEmpty {
             Open_im_sdkMarkSingleMessageHasRead(CallbackProxy(callback), uid)
+        } else {
+            Open_im_sdkMarkGroupMessageHasRead(CallbackProxy(callback), gid)
         }
     }
+
 }

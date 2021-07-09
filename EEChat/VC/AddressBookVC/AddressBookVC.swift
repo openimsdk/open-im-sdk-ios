@@ -48,9 +48,9 @@ class AddressBookVC: BaseViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    private let relay = BehaviorRelay<[SectionModel<String, OIMUserInfo>]>(value: [])
+    private let relay = BehaviorRelay<[SectionModel<String, OIMUser>]>(value: [])
     private func bindAction() {
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, OIMUserInfo>>(
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, OIMUser>>(
             configureCell: { _, tv, _, element in
                 let cell = tv.dequeueReusableCell(withIdentifier: "cell")! as! AddressBookCell
                 cell.model = element
@@ -70,7 +70,7 @@ class AddressBookVC: BaseViewController {
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
-        tableView.rx.modelSelected(OIMUserInfo.self)
+        tableView.rx.modelSelected(OIMUser.self)
             .subscribe(onNext: { model in
                 SearchUserDetailsVC.show(param: model.uid)
             })
@@ -88,7 +88,7 @@ class AddressBookVC: BaseViewController {
     
     @objc
     private func reqFriend() {
-        rxRequest(showError: false, callback: { OIMManager.getFriendList($0) })
+        rxRequest(showError: false, action: { OIMManager.getFriendList($0) })
             .subscribe(onSuccess: { [unowned self] array in
                 self.refresh(array: array)
             })
@@ -97,7 +97,7 @@ class AddressBookVC: BaseViewController {
     
     @objc
     private func reqFriendApplicationList() {
-        rxRequest(showError: false, callback: { OIMManager.getFriendApplicationList($0) })
+        rxRequest(showError: false, action: { OIMManager.getFriendApplicationList($0) })
             .subscribe(onSuccess: { [unowned self] array in
                 let filter = array.filter{ $0.flag == .default }
                 self.redLabel.text = filter.count.description
@@ -106,12 +106,12 @@ class AddressBookVC: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func refresh(array: [OIMUserInfo]) {
+    private func refresh(array: [OIMUser]) {
         let items = array
             .sorted(by: { (model0, model1) -> Bool in
                 return model0.getName() < model1.getName()
             })
-            .reduce(into: [String: SectionModel<String, OIMUserInfo>](), { (result, model) in
+            .reduce(into: [String: SectionModel<String, OIMUser>](), { (result, model) in
                 let key: String = {
                     let name = model.getName()
                     if name.count > 0 {
@@ -124,11 +124,11 @@ class AddressBookVC: BaseViewController {
                 }()
 
                 if result[key] == nil {
-                    result[key] = SectionModel<String, OIMUserInfo>(model: key, items: [])
+                    result[key] = SectionModel<String, OIMUser>(model: key, items: [])
                 }
                 result[key]!.items.append(model)
             })
-            .reduce(into: [SectionModel<String, OIMUserInfo>]()) { (result, args) in
+            .reduce(into: [SectionModel<String, OIMUser>]()) { (result, args) in
                 let (_, value) = args
                 result.append(value)
             }

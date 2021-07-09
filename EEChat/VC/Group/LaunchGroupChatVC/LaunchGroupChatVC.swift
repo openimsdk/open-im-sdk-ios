@@ -12,6 +12,11 @@ import OpenIM
 import OpenIMUI
 
 class LaunchGroupChatVC: BaseViewController {
+    
+    lazy var groupID: String? = {
+        return param as? String
+    }()
+    lazy var addMember: Bool = groupID != nil
 
     @IBOutlet var memberView: GroupMemberView!
     @IBOutlet var tableView: UITableView!
@@ -37,10 +42,10 @@ class LaunchGroupChatVC: BaseViewController {
     }
     
     
-    private let relay = BehaviorRelay<[SectionModel<String, OIMUserInfo>]>(value: [])
+    private let relay = BehaviorRelay<[SectionModel<String, OIMUser>]>(value: [])
     
     private func bindAction() {
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, OIMUserInfo>>(
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, OIMUser>>(
             configureCell: { _, tv, _, element in
                 let cell = tv.dequeueReusableCell(withIdentifier: "cell")! as! LaunchGroupChatCell
                 cell.model = element
@@ -66,13 +71,13 @@ class LaunchGroupChatVC: BaseViewController {
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        tableView.rx.modelSelected(OIMUserInfo.self)
+        tableView.rx.modelSelected(OIMUser.self)
             .subscribe(onNext: { [unowned self] model in
                 self.memberView.add(user: model)
             })
             .disposed(by: disposeBag)
         
-        tableView.rx.modelDeselected(OIMUserInfo.self)
+        tableView.rx.modelDeselected(OIMUser.self)
             .subscribe(onNext: { model in
                 self.memberView.remove(user: model)
             })
@@ -80,19 +85,19 @@ class LaunchGroupChatVC: BaseViewController {
     }
     
     private func reqFriend() {
-        rxRequest(showError: false, callback: { OIMManager.getFriendList($0) })
+        rxRequest(showError: false, action: { OIMManager.getFriendList($0) })
             .subscribe(onSuccess: { [unowned self] array in
                 self.refresh(array: array)
             })
             .disposed(by: disposeBag)
     }
     
-    private func refresh(array: [OIMUserInfo]) {
+    private func refresh(array: [OIMUser]) {
         let items = array
             .sorted(by: { (model0, model1) -> Bool in
                 return model0.getName() < model1.getName()
             })
-            .reduce(into: [String: SectionModel<String, OIMUserInfo>](), { (result, model) in
+            .reduce(into: [String: SectionModel<String, OIMUser>](), { (result, model) in
                 let key: String = {
                     let name = model.getName()
                     if name.count > 0 {
@@ -105,11 +110,11 @@ class LaunchGroupChatVC: BaseViewController {
                 }()
 
                 if result[key] == nil {
-                    result[key] = SectionModel<String, OIMUserInfo>(model: key, items: [])
+                    result[key] = SectionModel<String, OIMUser>(model: key, items: [])
                 }
                 result[key]!.items.append(model)
             })
-            .reduce(into: [SectionModel<String, OIMUserInfo>]()) { (result, args) in
+            .reduce(into: [SectionModel<String, OIMUser>]()) { (result, args) in
                 let (_, value) = args
                 result.append(value)
             }
@@ -120,7 +125,7 @@ class LaunchGroupChatVC: BaseViewController {
         relay.accept(items)
     }
     
-    @IBAction func completeAction() {
+    @IBAction func submitAction() {
         guard let indexPaths = tableView.indexPathsForSelectedRows else {
             return
         }
@@ -128,13 +133,23 @@ class LaunchGroupChatVC: BaseViewController {
             let section = relay.value[indexPath.section]
             return section.items[indexPath.row].uid
         }
-        let param = OIMGroupInfoParam(groupName: "", notification: "", introduction: "", faceUrl: "")
-        rxRequest(showLoading: true, callback: { OIMManager.createGroup(param, uids: uids, callback: $0) })
-            .subscribe(onSuccess: { gid in
-                EEChatVC.show(groupID: gid, popCount: 1)
-            })
-            .disposed(by: disposeBag)
-        
+        if let groupID = groupID, !groupID.isEmpty {
+            rxRequest(showLoading: true, action: { OIMManager.inviteUserToGroup(gid: groupID,
+                                                                                reason: "",
+                                                                                uids: uids,
+                                                                                callback: $0) })
+                .subscribe(onSuccess: { 
+                    
+                })
+                .disposed(by: disposeBag)
+        } else {
+            let param = OIMGroupInfoParam()
+            rxRequest(showLoading: true, action: { OIMManager.createGroup(param, uids: uids, callback: $0) })
+                .subscribe(onSuccess: { gid in
+                    EEChatVC.show(groupID: gid, popCount: 1)
+                })
+                .disposed(by: disposeBag)
+        }
     }
     
 }

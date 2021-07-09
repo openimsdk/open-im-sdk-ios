@@ -32,17 +32,17 @@ class GroupMemberView: UIView {
         return collectionView
     }()
     
-    var didSelectUser: ((OIMUserInfo) -> Void)?
-    private var users: [OIMUserInfo] = []
+    var didSelectUser: ((OIMUser) -> Void)?
+    private var users: [OIMUser] = []
     
-    func add(user: OIMUserInfo) {
+    func add(user: OIMUser) {
         collectionView.performBatchUpdates {
             users.append(user)
             collectionView.insertItems(at: [IndexPath(row: users.count - 1, section: 0)])
         }
     }
     
-    func remove(user: OIMUserInfo) {
+    func remove(user: OIMUser) {
         if let index = users.firstIndex(of: user) {
             collectionView.performBatchUpdates {
                 users.remove(at: index)
@@ -86,10 +86,10 @@ extension GroupMemberView: UICollectionViewDelegate {
 
 extension GroupMemberView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if !users.isEmpty {
-            return users.count
+        if !members.isEmpty {
+            return members.count + 2
         }
-        return members.count + 2
+        return users.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

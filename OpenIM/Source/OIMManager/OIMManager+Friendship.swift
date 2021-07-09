@@ -9,16 +9,16 @@ import Foundation
 import OpenIMCore
 
 public protocol OIMFriendshipListener: AnyObject {
-    func onFriendApplicationListAdded(_ user: OIMUserInfo)
+    func onFriendApplicationListAdded(_ user: OIMUser)
     func onFriendApplicationListDeleted(_ uid: String)
     func onFriendApplicationListRead()
     func onFriendApplicationListReject(_ uid: String)
-    func onFriendApplicationListAccept(_ user: OIMUserInfo)
+    func onFriendApplicationListAccept(_ user: OIMUser)
     func onFriendListAdded()
     func onFriendListDeleted(_ uid: String)
-    func onBlackListAdded(_ user: OIMUserInfo)
+    func onBlackListAdded(_ user: OIMUser)
     func onBlackListDeleted(_ uid: String)
-    func onFriendProfileChanged(_ user: OIMUserInfo)
+    func onFriendProfileChanged(_ user: OIMUser)
 }
 
 extension OIMManager {
@@ -33,11 +33,11 @@ extension OIMManager {
         Open_im_sdkCheckFriend(CallbackArgsProxy(callback), uids.toString())
     }
     
-    public static func getFriendList(_ callback: @escaping (Result<[OIMUserInfo], Error>) -> Void) {
+    public static func getFriendList(_ callback: @escaping (Result<[OIMUser], Error>) -> Void) {
         Open_im_sdkGetFriendList(CallbackArgsProxy(callback))
     }
     
-    public static func getFriendsInfo(_ uids: [String], callback: @escaping (Result<[OIMUserInfo], Error>) -> Void) {
+    public static func getFriendsInfo(_ uids: [String], callback: @escaping (Result<[OIMUser], Error>) -> Void) {
         Open_im_sdkGetFriendsInfo(CallbackArgsProxy(callback), uids.toString())
     }
     
@@ -76,7 +76,7 @@ extension OIMManager {
     
     // MARK: - BlackList
     
-    public static func getBlackList(_ callback: @escaping (Result<[OIMUserInfo], Error>) -> Void) {
+    public static func getBlackList(_ callback: @escaping (Result<[OIMUser], Error>) -> Void) {
         Open_im_sdkGetBlackList(CallbackArgsProxy(callback))
     }
     
@@ -106,33 +106,39 @@ public class OIMFriendAddApplication: NSObject, Encodable {
 extension OIMManager: Open_im_sdkOnFriendshipListenerProtocol {
     
     public func onBlackListAdd(_ info: String?) {
-        let model: OIMUserInfo = decodeModel(info)
-        self.friendshipListener?.onBlackListAdded(model)
+        if let model: OIMUser = decodeModel(info) {
+            self.friendshipListener?.onBlackListAdded(model)
+        }
     }
     
     public func onBlackListDeleted(_ info: String?) {
-        let model: OIMUserInfo = decodeModel(info)
-        self.friendshipListener?.onBlackListDeleted(model.uid)
+        if let model: OIMUser = decodeModel(info) {
+            self.friendshipListener?.onBlackListDeleted(model.uid)
+        }
     }
     
     public func onFriendApplicationListAccept(_ info: String?) {
-        let model: OIMUserInfo = decodeModel(info)
-        self.friendshipListener?.onFriendApplicationListAccept(model)
+        if let model: OIMUser = decodeModel(info) {
+            self.friendshipListener?.onFriendApplicationListAccept(model)
+        }
     }
     
     public func onFriendApplicationListAdded(_ info: String?) {
-        let model: OIMUserInfo = decodeModel(info)
-        self.friendshipListener?.onFriendApplicationListAdded(model)
+        if let model: OIMUser = decodeModel(info) {
+            self.friendshipListener?.onFriendApplicationListAdded(model)
+        }
     }
     
     public func onFriendApplicationListDeleted(_ info: String?) {
-        let model: OIMUserInfo = decodeModel(info)
-        self.friendshipListener?.onFriendApplicationListDeleted(model.uid)
+        if let model: OIMUser = decodeModel(info) {
+            self.friendshipListener?.onFriendApplicationListDeleted(model.uid)
+        }
     }
     
     public func onFriendApplicationListReject(_ info: String?) {
-        let model: OIMUserInfo = decodeModel(info)
-        self.friendshipListener?.onFriendApplicationListReject(model.uid)
+        if let model: OIMUser = decodeModel(info) {
+            self.friendshipListener?.onFriendApplicationListReject(model.uid)
+        }
     }
     
     public func onFriendListAdded(_ info: String?) {
@@ -140,8 +146,9 @@ extension OIMManager: Open_im_sdkOnFriendshipListenerProtocol {
     }
     
     public func onFriendInfoChanged(_ info: String?) {
-        let model: OIMUserInfo = decodeModel(info)
-        self.friendshipListener?.onFriendProfileChanged(model)
+        if let model: OIMUser = decodeModel(info) {
+            self.friendshipListener?.onFriendProfileChanged(model)
+        }
     }
     
     public func onFriendListAdded() {
@@ -149,7 +156,8 @@ extension OIMManager: Open_im_sdkOnFriendshipListenerProtocol {
     }
     
     public func onFriendListDeleted(_ info: String?) {
-        let model: OIMUserInfo = decodeModel(info)
-        self.friendshipListener?.onFriendListDeleted(model.uid)
+        if let model: OIMUser = decodeModel(info) {
+            self.friendshipListener?.onFriendListDeleted(model.uid)
+        }
     }
 }

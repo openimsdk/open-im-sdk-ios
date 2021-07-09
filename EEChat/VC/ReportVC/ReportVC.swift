@@ -49,17 +49,17 @@ class ReportVC: BaseViewController {
     
     @IBAction func submitAction() {
         guard let reason = self.reason else {
-            MessageModule.showMessage(text: "Please select the reason!")
+            MessageModule.showMessage("Please select the reason!")
             return
         }
         guard let iamge = self.iamge else {
-            MessageModule.showMessage(text: "Please select the iamge!")
+            MessageModule.showMessage("Please select the iamge!")
             return
         }
         MessageModule.showHUD()
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             MessageModule.hideHUD()
-            MessageModule.showMessage(text: "Feedback success")
+            MessageModule.showMessage("Feedback success")
         }
     }
 }

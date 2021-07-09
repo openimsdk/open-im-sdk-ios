@@ -27,7 +27,7 @@ public enum ContentType: CustomStringConvertible {
         case .video:
             return "[Video]"
         case .system(_, let item):
-            return item.defaultTips
+            return item.isDisplay != 0 ? item.defaultTips : ""
         case .unknown:
             return "[Unknown]"
         }

@@ -48,7 +48,7 @@ class NewFriendCell: UITableViewCell {
     
     @IBAction func addAction() {
         let uid = model.info.uid
-        _ = rxRequest(showLoading: true, callback: { OIMManager.acceptFriendApplication(uid: uid, callback: $0) })
+        _ = rxRequest(showLoading: true, action: { OIMManager.acceptFriendApplication(uid: uid, callback: $0) })
             .subscribe(onSuccess: { _ in
                 self.model.flag = .agree
                 self.refresh()

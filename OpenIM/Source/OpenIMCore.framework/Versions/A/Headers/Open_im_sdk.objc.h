@@ -484,7 +484,6 @@
 @end
 
 FOUNDATION_EXPORT const int64_t Open_im_sdkAcceptFriendApplicationTip;
-FOUNDATION_EXPORT const int64_t Open_im_sdkAcceptGroupApplicationResultTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkAcceptGroupApplicationTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkAddConOrUpLatMsg;
 FOUNDATION_EXPORT const int64_t Open_im_sdkAddFriendTip;
@@ -558,7 +557,6 @@ FOUNDATION_EXPORT const int64_t Open_im_sdkNotRead;
 FOUNDATION_EXPORT const int64_t Open_im_sdkPicture;
 FOUNDATION_EXPORT const int64_t Open_im_sdkQuitGroupTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkRefuseFriendApplicationTip;
-FOUNDATION_EXPORT const int64_t Open_im_sdkRefuseGroupApplicationResultTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkRefuseGroupApplicationTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkRevokeMessageTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkSetGroupInfoTip;
@@ -654,17 +652,19 @@ FOUNDATION_EXPORT void Open_im_sdkDeleteFromFriendList(NSString* _Nullable delet
 
 FOUNDATION_EXPORT void Open_im_sdkDeleteMessageFromLocalStorage(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable message);
 
-FOUNDATION_EXPORT void Open_im_sdkDoAcceptGroupApplication(NSString* _Nullable application);
+FOUNDATION_EXPORT void Open_im_sdkDoAcceptGroupApplication(NSString* _Nullable uid);
 
 FOUNDATION_EXPORT NSString* _Nonnull Open_im_sdkDoGetGroupApplicationList(void);
 
 FOUNDATION_EXPORT void Open_im_sdkDoGetGroupsInfo(void);
 
+FOUNDATION_EXPORT void Open_im_sdkDoGroupApplicationList(void);
+
 FOUNDATION_EXPORT void Open_im_sdkDoJoinGroup(void);
 
 FOUNDATION_EXPORT void Open_im_sdkDoQuitGroup(void);
 
-FOUNDATION_EXPORT void Open_im_sdkDoRefuseGroupApplication(NSString* _Nullable application);
+FOUNDATION_EXPORT void Open_im_sdkDoRefuseGroupApplication(NSString* _Nullable uid);
 
 FOUNDATION_EXPORT void Open_im_sdkDoSetGroupInfo(void);
 
@@ -886,18 +886,9 @@ FOUNDATION_EXPORT void Open_im_sdkUnInitSDK(void);
 - (void)onApplicationProcessed:(NSString* _Nullable)groupId opUser:(NSString* _Nullable)opUser AgreeOrReject:(int32_t)AgreeOrReject opReason:(NSString* _Nullable)opReason;
 - (void)onGroupCreated:(NSString* _Nullable)groupId;
 - (void)onGroupInfoChanged:(NSString* _Nullable)groupId groupInfo:(NSString* _Nullable)groupInfo;
-/**
- * list->group
- */
 - (void)onMemberEnter:(NSString* _Nullable)groupId memberList:(NSString* _Nullable)memberList;
-/**
- * list->opUser->groupId
- */
 - (void)onMemberInvited:(NSString* _Nullable)groupId opUser:(NSString* _Nullable)opUser memberList:(NSString* _Nullable)memberList;
 - (void)onMemberKicked:(NSString* _Nullable)groupId opUser:(NSString* _Nullable)opUser memberList:(NSString* _Nullable)memberList;
-/**
- * group->one
- */
 - (void)onMemberLeave:(NSString* _Nullable)groupId member:(NSString* _Nullable)member;
 - (void)onReceiveJoinApplication:(NSString* _Nullable)groupId member:(NSString* _Nullable)member opReason:(NSString* _Nullable)opReason;
 @end

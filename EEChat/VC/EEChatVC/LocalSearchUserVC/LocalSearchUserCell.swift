@@ -16,7 +16,7 @@ class LocalSearchUserCell: UITableViewCell {
     
     var model: Any! {
         didSet {
-            func config(user: OIMUserInfo?) {
+            func config(user: OIMUser?) {
                 if let user = user {
                     nameLabel.text = user.getName()
                     avatarView.setImage(with: user.icon,
@@ -24,7 +24,7 @@ class LocalSearchUserCell: UITableViewCell {
                 }
             }
             switch model {
-            case let model as OIMUserInfo:
+            case let model as OIMUser:
                 config(user: model)
             case let model as OIMConversation:
                 if model.userID != "" {

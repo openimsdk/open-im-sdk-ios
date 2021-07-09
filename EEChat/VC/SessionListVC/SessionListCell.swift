@@ -19,17 +19,9 @@ class SessionListCell: UITableViewCell {
 
     var model: OIMConversation! {
         didSet {
-            if model.userID != "" {
-                if let user = OUIKit.shared.getUser(model.userID) {
-                    avatarView.setImage(with: user.icon,
-                                        placeholder: UIImage(named: "icon_default_avatar"))
-                    nameLabel.text = user.getName()
-                }
-            } else {
-                avatarView.setImage(with: URL(string: model.faceUrl),
-                                    placeholder: UIImage(named: "icon_default_avatar"))
-                nameLabel.text = model.showName
-            }
+            avatarView.setImage(with: URL(string: model.faceUrl),
+                                placeholder: UIImage(named: "icon_default_avatar"))
+            nameLabel.text = model.showName
             
             let (timestamp, text): (TimeInterval, String) = {
                 if let text = NSAttributedString.from(base64Encoded: model.draftText)?.string, !text.isEmpty {

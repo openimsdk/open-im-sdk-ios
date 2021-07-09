@@ -13,7 +13,7 @@ class EEChatVC: IMConversationViewController {
     
     class func show(uid: String = "", groupID: String = "", popCount: Int = 0) {
         let type: OIMConversationType = uid != "" ? .c2c : .group
-        _ = rxRequest(showLoading: true, callback: { OIMManager.getConversation(type: type,
+        _ = rxRequest(showLoading: true, action: { OIMManager.getConversation(type: type,
                                                                                 id: uid != "" ? uid : groupID,
                                                                                 callback: $0) })
             .subscribe(onSuccess: { conversation in
@@ -58,7 +58,7 @@ class EEChatVC: IMConversationViewController {
                                     image: UIImage(named: "chat_popup_icon_copy"))
             {
                 UIPasteboard.general.string = text
-                MessageModule.showMessage(text: LocalizedString("Copied"))
+                MessageModule.showMessage(LocalizedString("Copied"))
             }
             items = [copyItem]
         }

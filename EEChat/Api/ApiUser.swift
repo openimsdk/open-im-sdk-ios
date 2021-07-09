@@ -127,7 +127,7 @@ struct ApiUserLogin: ApiType {
             DispatchQueue.main.async {
                 MessageModule.hideHUD()
                 guard let address = keystore?.addresses?.first?.address else {
-                    MessageModule.showMessage(text: LocalizedString("Mnemonic word error."))
+                    MessageModule.showMessage(LocalizedString("Mnemonic word error."))
                     return
                 }
                 
@@ -138,7 +138,7 @@ struct ApiUserLogin: ApiType {
                     .map(type: ApiUserLogin.Model.self)
                     .subscribe(onSuccess: { model in
                         _ = rxRequest(showLoading: true,
-                                  callback: { OIMManager.login(uid: model.openImToken.uid,
+                                  action: { OIMManager.login(uid: model.openImToken.uid,
                                                                token: model.openImToken.token,
                                                                callback: $0) })
                             .subscribe(onSuccess: { _ in

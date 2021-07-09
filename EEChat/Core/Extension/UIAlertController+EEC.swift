@@ -46,6 +46,7 @@ extension UIAlertController {
             textField.font = UIFont.systemFont(ofSize: 14)
             textField.textColor = UIColor.eec.rgb(0x333333)
             textField.text = text
+            textField.selectAll(nil)
         }
         alertController.addAction(UIAlertAction(title: LocalizedString("Yes"),
                                                 style: .default,

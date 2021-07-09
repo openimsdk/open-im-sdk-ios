@@ -14,7 +14,7 @@ class AddressBookCell: UITableViewCell {
     @IBOutlet var avatarImageView: ImageView!
     @IBOutlet var nameLabel: UILabel!
     
-    var model: OIMUserInfo! {
+    var model: OIMUser! {
         didSet {
             nameLabel.text = model.getName()
             avatarImageView.setImage(with: model.icon,

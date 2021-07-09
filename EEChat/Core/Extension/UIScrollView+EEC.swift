@@ -36,33 +36,31 @@ public extension Namespace where Base: UIScrollView {
     }
 
     // 自动高度 nil 则自动为当前contentSize高度
-    func autoHeight(maxHeight: CGFloat? = nil) -> Disposable {
-        if objc_getAssociatedObject(base, &AssociatedKey) == nil {
-            objc_setAssociatedObject(base, &AssociatedKey, true, .OBJC_ASSOCIATION_ASSIGN)
-            let constraint = base.constraints.first { (constraint) -> Bool in
-                constraint.relation == .equal && (constraint.firstItem as? UIView) == base
-            }
-            if let constraint = constraint {
-                base.removeConstraint(constraint)
-            }
-            base.snp.makeConstraints { make in
-                make.height.equalTo(0)
-            }
+    func autoHeight(minHeight: CGFloat? = nil, maxHeight: CGFloat? = nil) -> Disposable {
+        var layoutConstraint = base.constraints.first { constraint in
+            return constraint.firstItem === base && constraint.secondItem == nil && constraint.relation == .equal
+        }
+        if layoutConstraint == nil {
+            
         }
         return base.rx.observe(CGSize.self, #keyPath(UIScrollView.contentSize))
             .take(until: base.superview!.rx.deallocating)
             .map { (size) -> CGFloat in
-                if let maxHeight = maxHeight {
-                    return size!.height > maxHeight ? maxHeight : size!.height
-                } else {
-                    return size!.height
+                let height = size?.height ?? 0
+                
+                if let minHeight = minHeight, height < minHeight {
+                    return minHeight
                 }
+                
+                if let maxHeight = maxHeight, height > maxHeight {
+                    return maxHeight
+                }
+                
+                return height
             }
             .distinctUntilChanged()
             .subscribe(onNext: { [unowned base] height in
-                base.snp.updateConstraints { make in
-                    make.height.equalTo(height)
-                }
+                layoutConstraint?.constant = height
             })
     }
 }

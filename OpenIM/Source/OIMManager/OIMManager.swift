@@ -13,7 +13,7 @@ public protocol OIMSDKListener: AnyObject {
     func onConnectSuccess()
     func onConnecting()
     func onKickedOffline()
-    func onSelfInfoUpdated(_ userInfo: OIMUserInfo)
+    func onSelfInfoUpdated(_ userInfo: OIMUser)
     func onUserTokenExpired()
 }
 
@@ -46,6 +46,7 @@ public class OIMManager: NSObject {
         Open_im_sdkSetFriendListener(self)
         Open_im_sdkSetConversationListener(self)
         Open_im_sdkAddAdvancedMsgListener(self)
+        Open_im_sdkSetGroupListener(self)
     }
     
     public static func initSDK() {
@@ -60,15 +61,22 @@ public class OIMManager: NSObject {
     internal weak var friendshipListener: OIMFriendshipListener?
     internal weak var conversationListener: OIMConversationListener?
     internal var advancedMsgListeners: [WeakRef<AnyObject>] = []
+    internal weak var groupListener: OIMGroupListener?
     
     internal func decodeModel<ModelType: Decodable>(_ str: String?) -> ModelType {
-        let data = (str ?? "").data(using: .utf8)!
-        return try! JSONDecoder().decode(ModelType.self, from: data)
+        if let data = str?.data(using: .utf8),
+           let result = try? JSONDecoder().decode(ModelType.self, from: data) {
+            return result
+        }
+        fatalError("\(ModelType.self): \(str ?? "")")
     }
     
     internal static func decodeModel<ModelType: Decodable>(_ str: String?) -> ModelType {
-        let data = (str ?? "").data(using: .utf8)!
-        return try! JSONDecoder().decode(ModelType.self, from: data)
+        if let data = str?.data(using: .utf8),
+           let result = try? JSONDecoder().decode(ModelType.self, from: data) {
+            return result
+        }
+        fatalError("\(ModelType.self): \(str ?? "")")
     }
 }
 
@@ -133,8 +141,8 @@ extension OIMManager {
 
 extension OIMManager {
     
-    public static func getUsers(uids: [String], callback: @escaping (Result<[OIMUserInfo], Error>) -> Void) {
-        Open_im_sdkGetUsersInfo(uids.toString(), CallbackArgsProxy<[OIMUserInfo]>({ result in
+    public static func getUsers(uids: [String], callback: @escaping (Result<[OIMUser], Error>) -> Void) {
+        Open_im_sdkGetUsersInfo(uids.toString(), CallbackArgsProxy<[OIMUser]>({ result in
             switch result {
             case .success(let users):
                 getFriendList { result in
@@ -174,7 +182,10 @@ extension OIMManager: Open_im_sdkIMSDKListenerProtocol {
     }
     
     public func onSelfInfoUpdated(_ userInfo: String?) {
-        let model: OIMUserInfo = decodeModel(userInfo)
+        guard let model: OIMUser = decodeModel(userInfo) else {
+            return
+        }
+        
         sdkListener?.onSelfInfoUpdated(model)
     }
     

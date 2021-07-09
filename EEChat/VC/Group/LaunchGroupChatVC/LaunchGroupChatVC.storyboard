@@ -47,7 +47,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="completeAction" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Fff-dF-yrI"/>
+                                            <action selector="submitAction" destination="Y6W-OH-hqX" eventType="touchUpInside" id="CAI-pg-0Vw"/>
                                         </connections>
                                     </button>
                                 </subviews>

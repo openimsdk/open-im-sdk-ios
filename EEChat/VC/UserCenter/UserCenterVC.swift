@@ -28,7 +28,7 @@ class UserCenterVC: BaseViewController {
             .when(.ended)
             .subscribe(onNext: { _ in
                 UIPasteboard.general.string = AccountManager.shared.model.userInfo.uid
-                MessageModule.showMessage(text: LocalizedString("The account has been copied!"))
+                MessageModule.showMessage(LocalizedString("The account has been copied!"))
             })
             .disposed(by: disposeBag)
     }
@@ -56,7 +56,7 @@ class UserCenterVC: BaseViewController {
                 }
                 .subscribe(onSuccess: { resp in
                     AccountManager.shared.model.userInfo.icon = URL(string: icon)
-                    MessageModule.showMessage(text: LocalizedString("Modify the success"))
+                    MessageModule.showMessage(LocalizedString("Modify the success"))
                     self.refresh()
                 })
                 .disposed(by: self.disposeBag)
@@ -72,7 +72,7 @@ class UserCenterVC: BaseViewController {
             rxRequest(showLoading: true) { OIMManager.setSelfInfo([.name: text], callback: $0) }
                 .subscribe(onSuccess: { _ in
                     AccountManager.shared.model.userInfo.name = text
-                    MessageModule.showMessage(text: LocalizedString("Modify the success"))
+                    MessageModule.showMessage(LocalizedString("Modify the success"))
                     self.refresh()
                 })
                 .disposed(by: self.disposeBag)

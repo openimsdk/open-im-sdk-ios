@@ -58,7 +58,7 @@ class RegisterVC: BaseViewController {
     
     @IBAction func copyAction() {
         UIPasteboard.general.string = mnemonic
-        MessageModule.showMessage(text: LocalizedString("The mnemonic phrase has been copied, please keep it in a safe place!"))
+        MessageModule.showMessage(LocalizedString("The mnemonic phrase has been copied, please keep it in a safe place!"))
     }
     
     @IBAction func nextAction() {

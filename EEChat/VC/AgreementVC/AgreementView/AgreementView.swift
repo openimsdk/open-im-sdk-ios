@@ -13,7 +13,7 @@ class AgreementView: ResuableCustomView {
     var agree: Bool {
         let agree = agreeBtn.isSelected
         if !agree {
-            MessageModule.showMessage(text: "You have to agree \"user registration and use of APP privacy agreement\"")
+            MessageModule.showMessage("You have to agree \"user registration and use of APP privacy agreement\"")
         }
         return agree
     }

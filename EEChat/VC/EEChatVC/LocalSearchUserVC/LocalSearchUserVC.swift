@@ -32,7 +32,7 @@ class LocalSearchUserVC: BaseViewController {
             tableView.rx.modelSelected(Any.self)
                 .subscribe(onNext: { model in
                     switch model {
-                    case let model as OIMUserInfo:
+                    case let model as OIMUser:
                         SearchUserDetailsVC.show(param: model.uid)
                     case let model as OIMConversation:
                         if model.groupID != "" {
@@ -113,7 +113,7 @@ class LocalSearchUserVC: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func reload(users: [OIMUserInfo]) {
+    private func reload(users: [OIMUser]) {
         var array: [SectionModel<String, Any>] = [SectionModel(model: "", items: users as [Any])]
         if conversationList.count > 0 {
             array.append(SectionModel(model: LocalizedString("Recent Session"), items: conversationList as [Any]))
@@ -124,7 +124,7 @@ class LocalSearchUserVC: BaseViewController {
     private func forward(model: Any, messages: [MessageType]) {
         let (uid, groupID, name): (String, String, String) = {
             switch model {
-            case let model as OIMUserInfo:
+            case let model as OIMUser:
                 return (model.uid, "", model.getName())
             case let model as OIMConversation:
                 return (model.userID, model.groupID, model.showName)
@@ -141,7 +141,7 @@ class LocalSearchUserVC: BaseViewController {
                 for message in messages {
 
                 }
-                MessageModule.showMessage(text: LocalizedString("Sent"))
+                MessageModule.showMessage(LocalizedString("Sent"))
             }
         }
     }

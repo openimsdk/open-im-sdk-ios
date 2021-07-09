@@ -18,7 +18,7 @@ public enum OIMGender: Int, Codable {
     case female = 2
 }
 
-public class OIMUserInfo: Codable, Hashable {
+public class OIMUser: Codable, Hashable {
     public var uid = ""
     public var name = ""
     public var icon: URL?
@@ -55,7 +55,7 @@ public class OIMUserInfo: Codable, Hashable {
         }
     }
     
-    public static func == (lhs: OIMUserInfo, rhs: OIMUserInfo) -> Bool {
+    public static func == (lhs: OIMUser, rhs: OIMUser) -> Bool {
         return lhs.uid == rhs.uid
     }
     
@@ -75,7 +75,7 @@ public class OIMFriendApplicationModel: Decodable {
         case agree = 1
     }
     
-    public var info = OIMUserInfo()
+    public var info = OIMUser()
     public var applyTime = TimeInterval.zero
     public var reqMessage = ""
     public var flag = Flag.default
@@ -87,7 +87,7 @@ public class OIMFriendApplicationModel: Decodable {
     }
     
     required public init(from decoder: Decoder) throws {
-        info = try OIMUserInfo(from: decoder)
+        info = try OIMUser(from: decoder)
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         if let value = try? container.decode(String.self, forKey: .applyTime),

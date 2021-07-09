@@ -57,7 +57,7 @@ class SearchNextUserVC: BaseViewController {
     @IBAction func searchAction() {
         textField.isUserInteractionEnabled = false
         let uid = textField.text!
-        rxRequest(showLoading: true, callback: { OIMManager.getUsers(uids: [uid], callback: $0) })
+        rxRequest(showLoading: true, action: { OIMManager.getUsers(uids: [uid], callback: $0) })
             .subscribe(onSuccess: { [unowned self] array in
                 if array.isEmpty {
                     self.refresh(isSearch: false)

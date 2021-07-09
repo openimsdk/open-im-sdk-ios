@@ -195,7 +195,7 @@ class QCloudModule: NSObject {
                 MessageModule.hideHUD()
                 if let err = err {
                     observer(.failure(err))
-                    MessageModule.showMessage(error: err)
+                    MessageModule.showMessage(err)
                 } else {
                     observer(.success(keys))
                 }

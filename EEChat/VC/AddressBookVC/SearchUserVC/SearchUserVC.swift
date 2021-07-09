@@ -29,7 +29,7 @@ class SearchUserVC: BaseViewController {
                         SearchNextUserVC.show()
                     case 1:
                         UIPasteboard.general.string = AccountManager.shared.model.userInfo.uid
-                        MessageModule.showMessage(text: LocalizedString("The account has been copied!"))
+                        MessageModule.showMessage(LocalizedString("The account has been copied!"))
                     default:
                         break
                     }

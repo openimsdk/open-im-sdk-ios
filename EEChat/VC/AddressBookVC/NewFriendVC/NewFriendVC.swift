@@ -13,7 +13,7 @@ import OpenIMUI
 class NewFriendVC: BaseViewController {
     
     override class func show(param: Any? = nil, callback: BaseViewController.Callback? = nil) {
-        _ = rxRequest(showLoading: true, callback: { OIMManager.getFriendApplicationList($0) })
+        _ = rxRequest(showLoading: true, action: { OIMManager.getFriendApplicationList($0) })
             .subscribe(onSuccess: { array in
                 super.show(param: array, callback: callback)
             })

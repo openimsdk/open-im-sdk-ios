@@ -12,7 +12,7 @@ import OpenIM
 class BlacklistVC: BaseViewController {
     
     override class func show(param: Any? = nil, callback: BaseViewController.Callback? = nil) {
-        _ = rxRequest(showLoading: true, callback: { OIMManager.getBlackList($0) })
+        _ = rxRequest(showLoading: true, action: { OIMManager.getBlackList($0) })
             .subscribe(onSuccess: { array in
                 super.show(param: array, callback: callback)
             })
@@ -25,10 +25,10 @@ class BlacklistVC: BaseViewController {
     
     @IBOutlet var tableView: UITableView!
     
-    private let relay = BehaviorRelay<[OIMUserInfo]>(value: [])
+    private let relay = BehaviorRelay<[OIMUser]>(value: [])
     private func bindAction() {
-        assert(param is [OIMUserInfo])
-        let array = param as! [OIMUserInfo]
+        assert(param is [OIMUser])
+        let array = param as! [OIMUser]
         relay.accept(array)
         
         relay
@@ -43,8 +43,8 @@ class BlacklistVC: BaseViewController {
             .disposed(by: disposeBag)
     }
 
-    func removeAction(model: OIMUserInfo, row: Int) {
-        rxRequest(showLoading: true, callback: { OIMManager.deleteFromBlackList(uid: model.uid, callback: $0) })
+    func removeAction(model: OIMUser, row: Int) {
+        rxRequest(showLoading: true, action: { OIMManager.deleteFromBlackList(uid: model.uid, callback: $0) })
             .subscribe(onSuccess: { [unowned self] _ in
                 var array = self.relay.value
                 array.remove(at: row)

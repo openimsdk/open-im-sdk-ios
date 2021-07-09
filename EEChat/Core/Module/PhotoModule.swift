@@ -80,7 +80,7 @@ public final class PhotoModule: NSObject {
                     vc.sourceType = .camera
                     NavigationModule.shared.present(vc: vc)
                 } else {
-                    MessageModule.showMessage(text: LocalizedString("Permission denied"))
+                    MessageModule.showMessage(LocalizedString("Permission denied"))
                 }
             }
         }
@@ -232,9 +232,9 @@ extension PhotoModule: UIImagePickerControllerDelegate {
 extension PhotoModule {
     @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
         if error != nil {
-            MessageModule.showMessage(text: LocalizedString("Save failed"))
+            MessageModule.showMessage(LocalizedString("Save failed"))
         } else {
-            MessageModule.showMessage(text: LocalizedString("Save success"))
+            MessageModule.showMessage(LocalizedString("Save success"))
         }
     }
 }

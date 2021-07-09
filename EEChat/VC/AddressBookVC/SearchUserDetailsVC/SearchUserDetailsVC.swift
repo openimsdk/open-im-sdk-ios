@@ -14,11 +14,11 @@ class SearchUserDetailsVC: BaseViewController {
     override class func show(param: Any? = nil, callback: BaseViewController.Callback? = nil) {
         switch param {
         case let uid as String:
-            _ = rxRequest(showLoading: true, callback: { OIMManager.getUsers(uids: [uid], callback: $0) })
+            _ = rxRequest(showLoading: true, action: { OIMManager.getUsers(uids: [uid], callback: $0) })
                 .subscribe(onSuccess: { array in
                     super.show(param: array.first, callback: callback)
                 })
-        case is OIMUserInfo:
+        case is OIMUser:
             super.show(param: param, callback: callback)
         default:
             fatalError()
@@ -50,9 +50,9 @@ class SearchUserDetailsVC: BaseViewController {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var accountLabel: UILabel!
     
-    lazy var model: OIMUserInfo = {
-        assert(param is OIMUserInfo)
-        return param as! OIMUserInfo
+    lazy var model: OIMUser = {
+        assert(param is OIMUser)
+        return param as! OIMUser
     }()
     
     private func bindAction() {
@@ -66,7 +66,7 @@ class SearchUserDetailsVC: BaseViewController {
             .when(.ended)
             .subscribe(onNext: { [unowned self] _ in
                 UIPasteboard.general.string = self.model.uid
-                MessageModule.showMessage(text: LocalizedString("The account has been copied!"))
+                MessageModule.showMessage(LocalizedString("The account has been copied!"))
             })
             .disposed(by: disposeBag)
     }
@@ -100,16 +100,16 @@ class SearchUserDetailsVC: BaseViewController {
         }
         
         let param = OIMFriendAddApplication(uid: model.uid, reqMessage: "")
-        rxRequest(showLoading: true, callback: { OIMManager.addFriend(param, callback: $0) })
+        rxRequest(showLoading: true, action: { OIMManager.addFriend(param, callback: $0) })
             .subscribe(onSuccess: { _ in
-                MessageModule.showMessage(text: LocalizedString("Sent friend request"))
+                MessageModule.showMessage(LocalizedString("Sent friend request"))
             })
             .disposed(by: disposeBag)
     }
     
     @objc
     func onFriendApplicationListAcceptNotification(_ notification: Notification) {
-        guard let user = notification.object as? OIMUserInfo else {
+        guard let user = notification.object as? OIMUser else {
             return
         }
         if self.model == user {
