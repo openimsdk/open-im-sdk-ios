@@ -15,6 +15,7 @@ class AddressBookVC: BaseViewController {
 
     @IBOutlet var tableView: UITableView!
     @IBOutlet var redLabel: UILabel!
+    @IBOutlet var groupRedLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +42,19 @@ class AddressBookVC: BaseViewController {
                                                name: OUIKit.onFriendProfileChangedNotification,
                                                object: nil)
         
-        request()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reqGroupApplicationList),
+                                               name: OUIKit.onReceiveJoinApplicationNotification,
+                                               object: nil)
+        
+        
+        reqFriend()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        reqFriendApplicationList()
+        reqGroupApplicationList()
     }
     
     deinit {
@@ -81,11 +94,6 @@ class AddressBookVC: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    private func request() {
-        reqFriend()
-        reqFriendApplicationList()
-    }
-    
     @objc
     private func reqFriend() {
         rxRequest(showError: false, action: { OIMManager.getFriendList($0) })
@@ -104,6 +112,18 @@ class AddressBookVC: BaseViewController {
                 self.redLabel.superview?.isHidden = filter.isEmpty
             })
             .disposed(by: disposeBag)
+    }
+    
+    @objc
+    private func reqGroupApplicationList() {
+        OIMManager.getGroupApplicationList { [weak self] result in
+            guard let self = self else { return }
+            if case let .success(array) = result {
+                let filter = array.filter{ $0.flag == .none }
+                self.groupRedLabel.text = filter.count.description
+                self.groupRedLabel.superview?.isHidden = filter.isEmpty
+            }
+        }
     }
     
     private func refresh(array: [OIMUser]) {

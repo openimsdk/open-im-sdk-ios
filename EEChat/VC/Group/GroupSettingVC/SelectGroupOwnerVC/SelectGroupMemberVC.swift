@@ -1,5 +1,5 @@
 //
-//  SelectGroupOwnerVC.swift
+//  SelectGroupMemberVC.swift
 //  EEChat
 //
 //  Created by Snow on 2021/7/8.
@@ -9,11 +9,12 @@ import UIKit
 import RxCocoa
 import OpenIM
 
-class SelectGroupOwnerVC: BaseViewController {
+class SelectGroupMemberVC: BaseViewController {
     
     enum Operation {
         case transferOwner
         case removeMember
+        case at
     }
     
     static func show(op: Operation, groupID: String, callback: BaseViewController.Callback? = nil) {
@@ -37,6 +38,9 @@ class SelectGroupOwnerVC: BaseViewController {
         (op, result) = param as! (Operation, OIMManager.GroupMemberListResult)
         
         bindAction()
+        if op == .at {
+            title = "Please select an at member"
+        }
     }
     
     private lazy var relay = BehaviorRelay(value: result.data)
@@ -53,10 +57,14 @@ class SelectGroupOwnerVC: BaseViewController {
         tableView.delegate = self
         tableView.rx.modelSelected(OIMGroupMember.self)
             .subscribe(onNext: { [unowned self] member in
-                if self.op == .transferOwner {
+                switch self.op! {
+                case .transferOwner:
                     self.transferOwner(member: member)
-                } else {
-                    
+                case .removeMember:
+                    break
+                case .at:
+                    self.callback?(member)
+                    NavigationModule.shared.pop()
                 }
             })
             .disposed(by: disposeBag)
@@ -126,7 +134,7 @@ class SelectGroupOwnerVC: BaseViewController {
     
 }
 
-extension SelectGroupOwnerVC: UITableViewDelegate {
+extension SelectGroupMemberVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let member: OIMGroupMember = try! tableView.rx.model(at: indexPath)
         switch op! {
@@ -138,11 +146,15 @@ extension SelectGroupOwnerVC: UITableViewDelegate {
         case .removeMember:
             if member.userId == OIMManager.getLoginUser() {
                 MessageModule.showMessage("You can't delete yourself.")
-                tableView.deselectRow(at: indexPath, animated: true)
                 return nil
             }
             if member.role == .owner {
                 MessageModule.showMessage("The group owner could not be removed.")
+                return nil
+            }
+        case .at:
+            if member.userId == OIMManager.getLoginUser() {
+                MessageModule.showMessage("Don't allow at yourself.")
                 return nil
             }
         }

@@ -252,6 +252,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="groupRedLabel" destination="qBk-98-4nh" id="UPG-UN-Cji"/>
                         <outlet property="redLabel" destination="HcP-WL-0sK" id="adh-gf-jec"/>
                         <outlet property="tableView" destination="jiA-th-odt" id="83A-an-Jgm"/>
                     </connections>

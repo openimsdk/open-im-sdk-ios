@@ -14,10 +14,10 @@ class EEChatVC: IMConversationViewController {
     class func show(uid: String = "", groupID: String = "", popCount: Int = 0) {
         let type: OIMConversationType = uid != "" ? .c2c : .group
         _ = rxRequest(showLoading: true, action: { OIMManager.getConversation(type: type,
-                                                                                id: uid != "" ? uid : groupID,
-                                                                                callback: $0) })
+                                                                              id: uid != "" ? uid : groupID,
+                                                                              callback: $0) })
             .subscribe(onSuccess: { conversation in
-                let vc = EEChatVC.init(conversation: conversation)
+                let vc = EEChatVC(conversation: conversation)
                 NavigationModule.shared.push(vc, popCount: popCount, animated: true)
             })
     }
@@ -90,6 +90,16 @@ class EEChatVC: IMConversationViewController {
         
         items.append(contentsOf: [deleteItem])
         menuWindow.show(targetView: cell.messageContainerView, items: items)
+    }
+    
+    override func inputViewController(_ inputViewController: IMInputViewController, didInputAt completionHandler: @escaping (String, String) -> Void) {
+        guard !conversation.groupID.isEmpty else {
+            return
+        }
+        SelectGroupMemberVC.show(op: .at, groupID: conversation.groupID) { any in
+            let member = any as! OIMGroupMember
+            completionHandler(member.getName(), member.userId)
+        }
     }
     
     // MARK: - Action

@@ -18,19 +18,23 @@ class GroupNoticeCell: UITableViewCell {
     
     var model: OIMGroupApplication! {
         didSet {
-            avatarImageView.setImage(with: model.toUserFaceURL,
-                                     placeholder: UIImage(named: "icon_default_avatar"))
-            nameLabel.text = model.toUserNickName
-            tipsLabel.text = model.reqMsg
-            tipsLabel.superview?.isHidden = model.flag == .none
-            switch model.flag {
-            case .none:
-                break
-            case .agree:
-                tipsLabel.text = "Agreed"
-            case .refuse:
-                tipsLabel.text = "Refused"
-            }
+            refreshUI()
+        }
+    }
+    
+    private func refreshUI() {
+        avatarImageView.setImage(with: model.fromUserFaceURL,
+                                 placeholder: UIImage(named: "icon_default_avatar"))
+        nameLabel.text = model.fromUserNickName
+        msgLabel.text = model.reqMsg
+        tipsLabel.superview?.isHidden = model.flag == .none
+        switch model.flag {
+        case .none:
+            break
+        case .agree:
+            tipsLabel.text = "Agreed"
+        case .refuse:
+            tipsLabel.text = "Refused"
         }
     }
     
@@ -40,6 +44,7 @@ class GroupNoticeCell: UITableViewCell {
                                                                                      callback: $0) })
             .subscribe(onSuccess: {
                 self.model.flag = .agree
+                self.refreshUI()
             })
     }
     
@@ -49,6 +54,7 @@ class GroupNoticeCell: UITableViewCell {
                                                                                      callback: $0) })
             .subscribe(onSuccess: {
                 self.model.flag = .refuse
+                self.refreshUI()
             })
     }
 

@@ -110,8 +110,8 @@
 		80B55B412695AEC6004C8D3A /* AgreementVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B55B3D2695AEC6004C8D3A /* AgreementVC.storyboard */; };
 		80B55B452695AEEE004C8D3A /* ReportVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B55B432695AEEE004C8D3A /* ReportVC.storyboard */; };
 		80B55B462695AEEE004C8D3A /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55B442695AEEE004C8D3A /* ReportVC.swift */; };
-		80B55B4A26969245004C8D3A /* SelectGroupOwnerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55B4926969245004C8D3A /* SelectGroupOwnerVC.swift */; };
-		80B55B4C26969272004C8D3A /* SelectGroupOwnerVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B55B4B26969272004C8D3A /* SelectGroupOwnerVC.storyboard */; };
+		80B55B4A26969245004C8D3A /* SelectGroupMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55B4926969245004C8D3A /* SelectGroupMemberVC.swift */; };
+		80B55B4C26969272004C8D3A /* SelectGroupMemberVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80B55B4B26969272004C8D3A /* SelectGroupMemberVC.storyboard */; };
 		80EDCC962685D46600532366 /* QMUIConfigurationTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */; };
 		80EDCC982689B0E200532366 /* SwitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDCC972689B0E200532366 /* SwitchButton.swift */; };
 		80F88F4B269836DE00061410 /* GroupMemberVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 80F88F4A269836DE00061410 /* GroupMemberVC.storyboard */; };
@@ -231,8 +231,8 @@
 		80B55B3D2695AEC6004C8D3A /* AgreementVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AgreementVC.storyboard; sourceTree = "<group>"; };
 		80B55B432695AEEE004C8D3A /* ReportVC.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReportVC.storyboard; sourceTree = "<group>"; };
 		80B55B442695AEEE004C8D3A /* ReportVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
-		80B55B4926969245004C8D3A /* SelectGroupOwnerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGroupOwnerVC.swift; sourceTree = "<group>"; };
-		80B55B4B26969272004C8D3A /* SelectGroupOwnerVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SelectGroupOwnerVC.storyboard; sourceTree = "<group>"; };
+		80B55B4926969245004C8D3A /* SelectGroupMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGroupMemberVC.swift; sourceTree = "<group>"; };
+		80B55B4B26969272004C8D3A /* SelectGroupMemberVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SelectGroupMemberVC.storyboard; sourceTree = "<group>"; };
 		80EDCC952685D46600532366 /* QMUIConfigurationTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QMUIConfigurationTemplate.swift; sourceTree = "<group>"; };
 		80EDCC972689B0E200532366 /* SwitchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
 		80F88F4A269836DE00061410 /* GroupMemberVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GroupMemberVC.storyboard; sourceTree = "<group>"; };
@@ -635,10 +635,10 @@
 		8094F6A5267C35FF0022D686 /* SessionListVC */ = {
 			isa = PBXGroup;
 			children = (
-				8094F6A6267C35FF0022D686 /* SessionListCell.xib */,
 				8094F6A7267C35FF0022D686 /* SessionListVC.swift */,
 				8094F6A8267C35FF0022D686 /* SessionListVC.storyboard */,
 				8094F6A9267C35FF0022D686 /* SessionListCell.swift */,
+				8094F6A6267C35FF0022D686 /* SessionListCell.xib */,
 			);
 			path = SessionListVC;
 			sourceTree = "<group>";
@@ -703,8 +703,8 @@
 		80B55B4826969219004C8D3A /* SelectGroupOwnerVC */ = {
 			isa = PBXGroup;
 			children = (
-				80B55B4926969245004C8D3A /* SelectGroupOwnerVC.swift */,
-				80B55B4B26969272004C8D3A /* SelectGroupOwnerVC.storyboard */,
+				80B55B4926969245004C8D3A /* SelectGroupMemberVC.swift */,
+				80B55B4B26969272004C8D3A /* SelectGroupMemberVC.storyboard */,
 			);
 			path = SelectGroupOwnerVC;
 			sourceTree = "<group>";
@@ -810,7 +810,7 @@
 				807F6DC1267235190025370B /* SearchNextUserVC.storyboard in Resources */,
 				805EB957267300740071035E /* SearchUserDetailsVC.storyboard in Resources */,
 				8094F6AA267C35FF0022D686 /* SessionListCell.xib in Resources */,
-				80B55B4C26969272004C8D3A /* SelectGroupOwnerVC.storyboard in Resources */,
+				80B55B4C26969272004C8D3A /* SelectGroupMemberVC.storyboard in Resources */,
 				80B55B452695AEEE004C8D3A /* ReportVC.storyboard in Resources */,
 				8094F6AC267C35FF0022D686 /* SessionListVC.storyboard in Resources */,
 				807F6DB8267231F70025370B /* NewFriendVC.storyboard in Resources */,
@@ -900,7 +900,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				803B9CB02672F98200CF4ED9 /* EEChatVC.swift in Sources */,
-				80B55B4A26969245004C8D3A /* SelectGroupOwnerVC.swift in Sources */,
+				80B55B4A26969245004C8D3A /* SelectGroupMemberVC.swift in Sources */,
 				807F6D2F2671F2530025370B /* DBModule.swift in Sources */,
 				807B3A212680290A00C36249 /* MenuWindow.swift in Sources */,
 				80B55B1E269547E5004C8D3A /* GroupSettingVC.swift in Sources */,

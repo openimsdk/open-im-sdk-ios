@@ -69,6 +69,7 @@ public struct OIMMessage: Codable {
         public static let image = ContentType(rawValue: 102)
         public static let audio = ContentType(rawValue: 103)
         public static let video = ContentType(rawValue: 104)
+        public static let atText = ContentType(rawValue: 106)
     }
     
     public enum Status: Int, Codable {

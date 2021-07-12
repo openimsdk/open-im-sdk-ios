@@ -15,23 +15,27 @@ class GroupProfileVC: BaseViewController {
         assert(param is String)
         let groupID = param as! String
         let uid = OIMManager.getLoginUser()
-        var member: OIMGroupMember!
-        _ = rxRequest(showLoading: true, action: { OIMManager.getGroupMembersInfo(gid: groupID,
-                                                                                  uids: [uid],
-                                                                                  callback: $0) })
-            .flatMap({ array -> Single<[OIMGroupInfo]> in
-                if let first = array.first {
-                    member = first
-                    return rxRequest(showLoading: true, action: { OIMManager.getGroupsInfo(gids: [groupID], callback: $0) })
-                }
-                throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "You're not in the group."])
-            })
+        _ = rxRequest(showLoading: true, action: { OIMManager.getGroupsInfo(gids: [groupID], callback: $0) })
             .subscribe(onSuccess: { array in
-                super.show(param: (array[0], member), callback: callback)
+                guard let groupInfo = array.first else {
+                    MessageModule.showError("The group was not found")
+                    return
+                }
+                _ = rxRequest(showLoading: true,
+                              showError: false,
+                              action: { OIMManager.getGroupMembersInfo(gid: groupID,
+                                                                       uids: [uid],
+                                                                       callback: $0) })
+                    .subscribe(onSuccess: { members in
+                        super.show(param: (groupInfo, members.first?.role), callback: callback)
+                    }, onFailure: { error in
+                        let role: OIMGroupRole? = nil
+                        super.show(param: (groupInfo, role), callback: callback)
+                    })
             })
     }
     
-    var member: OIMGroupMember!
+    var role: OIMGroupRole?
     var groupInfo: OIMGroupInfo!
 
     @IBOutlet var avatarImageView: ImageView!
@@ -52,16 +56,20 @@ class GroupProfileVC: BaseViewController {
     }
     
     private func bindAction() {
-        assert(param is (OIMGroupInfo, OIMGroupMember))
-        (groupInfo, member) = param as! (OIMGroupInfo, OIMGroupMember)
-        textView.isEditable = false
+        assert(param is (OIMGroupInfo, OIMGroupRole?))
+        (groupInfo, role) = param as! (OIMGroupInfo, OIMGroupRole?)
         textView.eec.autoHeight(minHeight: 200)
             .disposed(by: disposeBag)
         textView.returnKeyType = .done
         textView.delegate = self
         
-        if member.role == .none {
-            modifyBtn.eec_collapsed = true
+        switch role {
+        case .none:
+            modifyBtn.setTitle("Add group chat", for: .normal)
+        case .some(let value):
+            if value == .general {
+                modifyBtn.eec_collapsed = true
+            }
         }
     }
     
@@ -83,6 +91,16 @@ class GroupProfileVC: BaseViewController {
     
     @IBOutlet var modifyBtn: UIButton!
     @IBAction func modifyAction() {
+        if role == nil {
+            let groupID = groupInfo.groupID
+            rxRequest(showLoading: true, action: { OIMManager.joinGroup(gid: groupID, message: "", callback: $0) })
+                .subscribe(onSuccess: {
+                    MessageModule.showMessage("The application has been sent.")
+                })
+                .disposed(by: disposeBag)
+            return
+        }
+        
         UIAlertController.show(title: "Modify group data",
                                message: nil,
                                buttons: [

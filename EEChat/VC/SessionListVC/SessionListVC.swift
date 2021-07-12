@@ -19,12 +19,7 @@ class SessionListVC: BaseViewController {
         super.viewDidLoad()
         bindAction()
      
-        OIMManager.getConversationList { [weak self] result in
-            guard let self = self else { return }
-            if case let .success(array) = result {
-                self.config(array: array)
-            }
-        }
+        updateConversation()
     }
     
     private var array: [OIMConversation] = []
@@ -53,7 +48,18 @@ class SessionListVC: BaseViewController {
     }
     
     private func config(array: [OIMConversation]) {
-        self.array = array
+        self.array = array.sorted { lhs, rhs in
+            func timestamp(_ model: OIMConversation) -> TimeInterval {
+                if let text = NSAttributedString.from(base64Encoded: model.draftText)?.string, !text.isEmpty {
+                    return model.draftTimestamp
+                }
+                if let message = model.latestMsg?.toUIMessage() {
+                    return message.sendTime
+                }
+                return model.draftTimestamp
+            }
+            return timestamp(lhs) > timestamp(rhs)
+        }
         self.tableView.reloadData()
     }
     
@@ -63,9 +69,13 @@ class SessionListVC: BaseViewController {
     }
     
     @objc
-    func updateConversation(_ notification: Notification) {
-        guard let array = notification.object as? [OIMConversation] else { return }
-        config(array: array)
+    func updateConversation() {
+        OIMManager.getConversationList { [weak self] result in
+            guard let self = self else { return }
+            if case let .success(array) = result {
+                self.config(array: array)
+            }
+        }
     }
 
 }

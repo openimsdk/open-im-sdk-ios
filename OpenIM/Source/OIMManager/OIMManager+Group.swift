@@ -84,7 +84,7 @@ public struct OIMGroupMember: Decodable, Equatable {
 }
 
 public enum OIMGroupRole: Int32, Codable {
-    case none = 0
+    case general = 0
     case owner = 1
     case admin = 2
 }
@@ -162,7 +162,7 @@ extension OIMManager {
             let setRole: OIMGroupRole
         }
         
-        let roles = uids.map{ MemberRole(uid: $0, setRole: .none) }
+        let roles = uids.map{ MemberRole(uid: $0, setRole: .general) }
         Open_im_sdkCreateGroup(groupInfo.toJson(), roles.toJson(), CallbackProxy(callback))
     }
     

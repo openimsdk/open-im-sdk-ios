@@ -156,7 +156,11 @@ class LaunchGroupChatVC: BaseViewController {
                 })
                 .disposed(by: disposeBag)
         } else {
-            let param = OIMGroupInfoParam()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let dateStr = dateFormatter.string(from: Date())
+            
+            let param = OIMGroupInfoParam(groupName: "Group " + dateStr)
             rxRequest(showLoading: true, action: { OIMManager.createGroup(param, uids: uids, callback: $0) })
                 .subscribe(onSuccess: { gid in
                     EEChatVC.show(groupID: gid, popCount: 1)

@@ -162,7 +162,7 @@ class GroupSettingVC: BaseViewController {
         let groupID = conversation.groupID
         checkPermissions([.owner], tips: "You are not the owner of the group.")
             .subscribe(onSuccess: { _ in
-                SelectGroupOwnerVC.show(op: .transferOwner, groupID: groupID)
+                SelectGroupMemberVC.show(op: .transferOwner, groupID: groupID)
             })
             .disposed(by: disposeBag)
     }
@@ -215,7 +215,7 @@ class GroupSettingVC: BaseViewController {
     
     @IBAction func leaveAction() {
         let groupID = groupInfo.groupID
-        checkPermissions([.admin, .none], tips: "The group owner cannot quit the group.")
+        checkPermissions([.admin, .general], tips: "The group owner cannot quit the group.")
             .flatMap{ _ -> Single<Void> in
                 return rxRequest(showLoading: true, action: { OIMManager.quitGroup(gid: groupID, callback: $0) })
             }

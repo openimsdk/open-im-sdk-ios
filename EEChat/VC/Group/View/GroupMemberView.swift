@@ -94,7 +94,7 @@ extension GroupMemberView: UICollectionViewDelegate {
                     MessageModule.showMessage(error)
                 })
                 .subscribe(onSuccess: { _ in
-                    SelectGroupOwnerVC.show(op: .removeMember, groupID: groupID)
+                    SelectGroupMemberVC.show(op: .removeMember, groupID: groupID)
                 })
         default:
             fatalError()

@@ -184,7 +184,7 @@ public class MessageType: Hashable {
         }
         
         switch message.contentType {
-        case .text:
+        case .text, .atText:
             content = .text(message.content)
         case .image:
             let data = message.pictureElem
