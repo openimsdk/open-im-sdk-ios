@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxCocoa
 import OpenIM
 
 class GroupNoticeVC: BaseViewController {
@@ -16,10 +17,27 @@ class GroupNoticeVC: BaseViewController {
                 super.show(param: array, callback: callback)
             })
     }
+    
+    lazy var applications: [OIMGroupApplication] = {
+        assert(param is [OIMGroupApplication])
+        return param as! [OIMGroupApplication]
+    }()
 
+    @IBOutlet var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        bindAction()
     }
     
+    lazy var relay = BehaviorRelay(value: applications)
+    
+    private func bindAction() {
+        relay
+            .bind(to: tableView.rx.items(cellIdentifier: "cell", cellType: GroupNoticeCell.self))
+            { _, model, cell in
+                cell.model = model
+            }
+            .disposed(by: disposeBag)
+    }
 }

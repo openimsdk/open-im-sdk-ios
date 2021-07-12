@@ -8,14 +8,12 @@
 import Foundation
 
 extension Encodable {
-    func toData() -> Data {
-        return try! JSONEncoder().encode(self)
-    }
     
-    func toString() -> String {
+    func toJson() -> String {
         let data = try! JSONEncoder().encode(self)
         return String(data: data, encoding: .utf8)!
     }
+    
 }
 
 

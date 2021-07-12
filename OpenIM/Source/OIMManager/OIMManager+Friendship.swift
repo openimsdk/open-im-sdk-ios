@@ -30,7 +30,7 @@ extension OIMManager {
     // MARK: - Friend
     
     public static func checkFriend(uids: [String], callback: @escaping (Result<[OIMCheckFriend], Error>) -> Void) {
-        Open_im_sdkCheckFriend(CallbackArgsProxy(callback), uids.toString())
+        Open_im_sdkCheckFriend(CallbackArgsProxy(callback), uids.toJson())
     }
     
     public static func getFriendList(_ callback: @escaping (Result<[OIMUser], Error>) -> Void) {
@@ -38,7 +38,7 @@ extension OIMManager {
     }
     
     public static func getFriendsInfo(_ uids: [String], callback: @escaping (Result<[OIMUser], Error>) -> Void) {
-        Open_im_sdkGetFriendsInfo(CallbackArgsProxy(callback), uids.toString())
+        Open_im_sdkGetFriendsInfo(CallbackArgsProxy(callback), uids.toJson())
     }
     
     public static func setFriendInfo(_ uid: String, comment: String, callback: @escaping (Result<Void, Error>) -> Void) {
@@ -46,15 +46,15 @@ extension OIMManager {
             let uid: String
             let comment: String
         }
-        Open_im_sdkSetFriendInfo(Param(uid: uid, comment: comment).toString(), CallbackProxy(callback))
+        Open_im_sdkSetFriendInfo(Param(uid: uid, comment: comment).toJson(), CallbackProxy(callback))
     }
     
     public static func addFriend(_ param: OIMFriendAddApplication, callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkAddFriend(CallbackProxy(callback), param.toString())
+        Open_im_sdkAddFriend(CallbackProxy(callback), param.toJson())
     }
     
     public static func deleteFromFriendList(_ uid: String, callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkDeleteFromFriendList(uid.toString(), CallbackProxy(callback))
+        Open_im_sdkDeleteFromFriendList(uid.toJson(), CallbackProxy(callback))
     }
      
     // MARK: - FriendApplication
@@ -64,11 +64,11 @@ extension OIMManager {
     }
     
     public static func acceptFriendApplication(uid: String, callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkAcceptFriendApplication(CallbackProxy(callback), uid.toString())
+        Open_im_sdkAcceptFriendApplication(CallbackProxy(callback), uid.toJson())
     }
     
     public static func refuseFriendApplication(uid: String, callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkRefuseFriendApplication(CallbackProxy(callback), uid.toString())
+        Open_im_sdkRefuseFriendApplication(CallbackProxy(callback), uid.toJson())
     }
     
     // deleteFriendApplication
@@ -81,11 +81,11 @@ extension OIMManager {
     }
     
     public static func addToBlackList(uid: String, callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkAddToBlackList(CallbackProxy(callback), uid.toString())
+        Open_im_sdkAddToBlackList(CallbackProxy(callback), uid.toJson())
     }
     
     public static func deleteFromBlackList(uid: String, callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkDeleteFromBlackList(CallbackProxy(callback), uid.toString())
+        Open_im_sdkDeleteFromBlackList(CallbackProxy(callback), uid.toJson())
     }
     
 }

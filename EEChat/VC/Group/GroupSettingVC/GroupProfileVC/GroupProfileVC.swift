@@ -46,6 +46,11 @@ class GroupProfileVC: BaseViewController {
         refreshUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
     private func bindAction() {
         assert(param is (OIMGroupInfo, OIMGroupMember))
         (groupInfo, member) = param as! (OIMGroupInfo, OIMGroupMember)

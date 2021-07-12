@@ -149,13 +149,13 @@ extension OIMManager: Open_im_sdkOnAdvancedMsgListenerProtocol {
 
 extension OIMManager {
     public static func deleteMessageFromLocalStorage(_ messages: [OIMMessage], callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkDeleteMessageFromLocalStorage(CallbackProxy(callback), messages.toString())
+        Open_im_sdkDeleteMessageFromLocalStorage(CallbackProxy(callback), messages.toJson())
     }
     
     public static func createTextMessage(_ text: String, at uids: [String] = []) -> OIMMessage {
         let str = uids.isEmpty
             ? Open_im_sdkCreateTextMessage(text)
-            : Open_im_sdkCreateTextAtMessage(text, uids.toString())
+            : Open_im_sdkCreateTextAtMessage(text, uids.toJson())
         
         let message: OIMMessage = decodeModel(str)
         return message
@@ -204,7 +204,7 @@ extension OIMManager {
                                    callback: @escaping (Result<Void, Error>) -> Void) {
         DispatchQueue.global().async {
             Open_im_sdkSendMessage(ProgressCallbackProxy(progress, callback: callback),
-                                   message.toString(),
+                                   message.toJson(),
                                    receiver,
                                    groupID,
                                    onlineUserOnly)
@@ -223,7 +223,7 @@ extension OIMManager {
             let count: Int
         }
         let param = Param(userID: uid, groupID: groupID, startMsg: firstMsg, count: count)
-        Open_im_sdkGetHistoryMessageList(CallbackArgsProxy(callback), param.toString())
+        Open_im_sdkGetHistoryMessageList(CallbackArgsProxy(callback), param.toJson())
     }
     
     public static func markMessageHasRead(uid: String = "", gid: String = "", callback: @escaping (Result<Void, Error>) -> Void = { _ in }) {

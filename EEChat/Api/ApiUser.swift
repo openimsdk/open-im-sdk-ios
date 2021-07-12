@@ -138,9 +138,9 @@ struct ApiUserLogin: ApiType {
                     .map(type: ApiUserLogin.Model.self)
                     .subscribe(onSuccess: { model in
                         _ = rxRequest(showLoading: true,
-                                  action: { OIMManager.login(uid: model.openImToken.uid,
-                                                               token: model.openImToken.token,
-                                                               callback: $0) })
+                                      action: { OIMManager.login(uid: model.openImToken.uid,
+                                                                 token: model.openImToken.token,
+                                                                 callback: $0) })
                             .subscribe(onSuccess: { _ in
                                 DBModule.shared.set(key: LoginVC.cacheKey, value: mnemonic)
                                 AccountManager.shared.login(model: model)

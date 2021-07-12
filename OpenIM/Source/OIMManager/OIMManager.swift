@@ -42,7 +42,7 @@ public class OIMManager: NSObject {
         try? FileManager.default.createDirectory(atPath: dbPath, withIntermediateDirectories: true, attributes: nil)
         
         let config = Config(ipApi: api, ipWs: ws, dbDir: dbPath)
-        Open_im_sdkInitSDK(config.toString(), self)
+        Open_im_sdkInitSDK(config.toJson(), self)
         Open_im_sdkSetFriendListener(self)
         Open_im_sdkSetConversationListener(self)
         Open_im_sdkAddAdvancedMsgListener(self)
@@ -142,7 +142,7 @@ extension OIMManager {
 extension OIMManager {
     
     public static func getUsers(uids: [String], callback: @escaping (Result<[OIMUser], Error>) -> Void) {
-        Open_im_sdkGetUsersInfo(uids.toString(), CallbackArgsProxy<[OIMUser]>({ result in
+        Open_im_sdkGetUsersInfo(uids.toJson(), CallbackArgsProxy<[OIMUser]>({ result in
             switch result {
             case .success(let users):
                 getFriendList { result in

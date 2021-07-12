@@ -85,6 +85,9 @@
                                                                             <real key="value" value="6"/>
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
+                                                                    <connections>
+                                                                        <action selector="agreeAction" destination="B8K-hW-2OI" eventType="touchUpInside" id="h6m-EK-uiq"/>
+                                                                    </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qO6-Uy-rxW">
                                                                     <rect key="frame" x="0.0" y="32" width="47" height="27"/>
@@ -98,7 +101,23 @@
                                                                             <real key="value" value="6"/>
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
+                                                                    <connections>
+                                                                        <action selector="refuseAction" destination="B8K-hW-2OI" eventType="touchUpInside" id="XEB-UC-dXP"/>
+                                                                    </connections>
                                                                 </button>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4yd-SI-Pqc">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="47" height="86"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Agreed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CJT-dP-FXd">
+                                                                            <rect key="frame" x="2" y="32.5" width="41" height="15"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                </view>
                                                             </subviews>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <constraints>
@@ -108,6 +127,10 @@
                                                                 <constraint firstItem="qO6-Uy-rxW" firstAttribute="leading" secondItem="II1-0u-o3T" secondAttribute="leading" id="GgN-ht-O2P"/>
                                                                 <constraint firstAttribute="width" constant="47" id="J2c-eJ-K1f"/>
                                                                 <constraint firstAttribute="trailing" secondItem="qO6-Uy-rxW" secondAttribute="trailing" id="O4G-mW-Zo8"/>
+                                                                <constraint firstAttribute="trailing" secondItem="4yd-SI-Pqc" secondAttribute="trailing" id="fjS-KJ-5mW"/>
+                                                                <constraint firstItem="4yd-SI-Pqc" firstAttribute="leading" secondItem="II1-0u-o3T" secondAttribute="leading" id="gJk-an-maI"/>
+                                                                <constraint firstAttribute="bottom" secondItem="4yd-SI-Pqc" secondAttribute="bottom" id="oY1-BJ-V3L"/>
+                                                                <constraint firstItem="4yd-SI-Pqc" firstAttribute="top" secondItem="II1-0u-o3T" secondAttribute="top" id="wJe-9U-Rb1"/>
                                                                 <constraint firstItem="qO6-Uy-rxW" firstAttribute="top" secondItem="dyX-W7-SFM" secondAttribute="bottom" constant="5" id="zHz-D3-l8Y"/>
                                                             </constraints>
                                                         </view>
@@ -135,8 +158,9 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="avatarImageView" destination="DZO-B2-CPt" id="1eV-XD-Yfj"/>
+                                            <outlet property="msgLabel" destination="rAA-nU-Fvr" id="Y1d-Eu-81j"/>
                                             <outlet property="nameLabel" destination="aBY-ND-89X" id="k5h-aK-EYG"/>
-                                            <outlet property="tipsLabel" destination="rAA-nU-Fvr" id="q4o-Ik-siN"/>
+                                            <outlet property="tipsLabel" destination="CJT-dP-FXd" id="idi-KR-JM4"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -151,6 +175,9 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="j58-Cf-eEL" secondAttribute="bottom" id="URB-BE-q38"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="j58-Cf-eEL" id="4f5-9d-fnP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

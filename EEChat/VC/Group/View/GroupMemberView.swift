@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 import OpenIM
 
 class GroupMemberView: UIView {
@@ -58,9 +59,6 @@ class GroupMemberView: UIView {
         }
     }
     
-    var addBlock: (() -> Void)?
-    var removeBlock: (() -> Void)?
-    
 }
 
 extension GroupMemberView: UICollectionViewDelegate {
@@ -75,9 +73,29 @@ extension GroupMemberView: UICollectionViewDelegate {
         case indexPath.row < members.count:
             break
         case indexPath.row == members.count:
-            addBlock?()
+            let groupID = members[0].groupID
+            LaunchGroupChatVC.show(param: groupID)
         case indexPath.row == members.count + 1:
-            removeBlock?()
+            let groupID = members[0].groupID
+            let uid = OIMManager.getLoginUser()
+            _ = rxRequest(showLoading: true, action: { OIMManager.getGroupMembersInfo(gid: groupID,
+                                                                                      uids: [uid],
+                                                                                      callback: $0) })
+                .flatMap({ members -> Single<OIMGroupMember> in
+                    if let member = members.first {
+                        if member.role == .owner || member.role == .admin {
+                            return .just(member)
+                        }
+                        throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "You're not an administrator."])
+                    }
+                    throw NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "You're not in the group."])
+                })
+                .do(onError: { error in
+                    MessageModule.showMessage(error)
+                })
+                .subscribe(onSuccess: { _ in
+                    SelectGroupOwnerVC.show(op: .removeMember, groupID: groupID)
+                })
         default:
             fatalError()
         }

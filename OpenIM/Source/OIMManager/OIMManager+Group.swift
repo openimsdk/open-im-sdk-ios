@@ -86,44 +86,55 @@ public struct OIMGroupMember: Decodable, Equatable {
 public enum OIMGroupRole: Int32, Codable {
     case none = 0
     case owner = 1
-    case administrator = 2
+    case admin = 2
 }
 
-public class OIMGroupApplication: Decodable {
-    var id: String
-    var groupID: String
-    var fromUserID: String
-    var toUserID: String
-    var flag: Int
-    var reqMsg: String
-    var handledMsg: String
-    var createTime: TimeInterval
-    var fromUserNickName: String
-    var toUserNickName: String
-    var fromUserFaceURL: String
-    var toUserFaceURL: String
-    var handledUser: String
-    var type: Int
-    var handleStatus: Int
-    var handleResult: Int
+public class OIMGroupApplication: Codable {
+    public enum `Type`: Int, Codable {
+        case application = 0,
+             invite = 1
+    }
+    
+    public enum Flag: Int, Codable {
+        case none = 0,
+             agree = 1,
+             refuse = -1
+    }
+    
+    public var id: String
+    public var groupID: String
+    public var fromUserID: String
+    public var toUserID: String
+    public var flag: Flag
+    public var reqMsg: String
+    public var handledMsg: String
+    public var createTime: TimeInterval
+    public var fromUserNickName: String
+    public var toUserNickName: String
+    public var fromUserFaceURL: String
+    public var toUserFaceURL: String
+    public var handledUser: String
+    public var type: `Type`
+    public var handleStatus: Int
+    public var handleResult: Int
 }
 
 extension OIMManager {
     
     public static func joinGroup(gid: String, reason: String, uids: [String], callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkInviteUserToGroup(gid, reason, uids.toString(), CallbackProxy(callback))
+        Open_im_sdkInviteUserToGroup(gid, reason, uids.toJson(), CallbackProxy(callback))
     }
     
     public static func inviteUserToGroup(gid: String, reason: String, uids: [String], callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkInviteUserToGroup(gid, reason, uids.toString(), CallbackProxy(callback))
+        Open_im_sdkInviteUserToGroup(gid, reason, uids.toJson(), CallbackProxy(callback))
     }
     
     public static func kickGroupMember(gid: String, reason: String, uids: [String], callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkKickGroupMember(gid, reason, uids.toString(), CallbackProxy(callback))
+        Open_im_sdkKickGroupMember(gid, reason, uids.toJson(), CallbackProxy(callback))
     }
     
     public static func getGroupMembersInfo(gid: String, uids: [String], callback: @escaping (Result<[OIMGroupMember], Error>) -> Void) {
-        Open_im_sdkGetGroupMembersInfo(gid, uids.toString(), CallbackArgsProxy(callback))
+        Open_im_sdkGetGroupMembersInfo(gid, uids.toJson(), CallbackArgsProxy(callback))
     }
     
     public enum GroupFilter: Int32 {
@@ -152,15 +163,15 @@ extension OIMManager {
         }
         
         let roles = uids.map{ MemberRole(uid: $0, setRole: .none) }
-        Open_im_sdkCreateGroup(groupInfo.toString(), roles.toString(), CallbackProxy(callback))
+        Open_im_sdkCreateGroup(groupInfo.toJson(), roles.toJson(), CallbackProxy(callback))
     }
     
     public static func setGroupInfo(_ groupInfo: OIMGroupInfoParam, callback: @escaping (Result<Void, Error>) -> Void) {
-        Open_im_sdkSetGroupInfo(groupInfo.toString(), CallbackProxy(callback))
+        Open_im_sdkSetGroupInfo(groupInfo.toJson(), CallbackProxy(callback))
     }
     
     public static func getGroupsInfo(gids: [String], callback: @escaping (Result<[OIMGroupInfo], Error>) -> Void) {
-        Open_im_sdkGetGroupsInfo(gids.toString(), CallbackArgsProxy(callback))
+        Open_im_sdkGetGroupsInfo(gids.toJson(), CallbackArgsProxy(callback))
     }
     
     public static func joinGroup(gid: String, message: String, callback: @escaping (Result<Void, Error>) -> Void) {
@@ -176,7 +187,26 @@ extension OIMManager {
     }
     
     public static func getGroupApplicationList(callback: @escaping (Result<[OIMGroupApplication], Error>) -> Void) {
-        Open_im_sdkGetGroupApplicationList(CallbackArgsProxy(callback))
+        struct Result: Decodable {
+            let count: Int
+            let user: [OIMGroupApplication]
+        }
+        Open_im_sdkGetGroupApplicationList(CallbackArgsProxy<Result>({ result in
+            switch result {
+            case .success(let result):
+                callback(.success(result.user))
+            case .failure(let err):
+                callback(.failure(err))
+            }
+        }))
+    }
+    
+    public static func acceptGroupApplication(_ application: OIMGroupApplication, reason: String, callback: @escaping (Result<Void, Error>) -> Void) {
+        Open_im_sdkAcceptGroupApplication(application.toJson(), reason, CallbackProxy(callback))
+    }
+    
+    public static func refuseGroupApplication(_ application: OIMGroupApplication, reason: String, callback: @escaping (Result<Void, Error>) -> Void) {
+        Open_im_sdkRefuseGroupApplication(application.toJson(), reason, CallbackProxy(callback))
     }
 }
 

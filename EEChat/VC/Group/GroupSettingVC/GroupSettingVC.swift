@@ -42,7 +42,7 @@ class GroupSettingVC: BaseViewController {
     }
     private var members: [OIMGroupMember] = [] {
         didSet {
-            memberView.members = members
+            memberView.members = members.count <= 5 ? members : Array(members[0..<5])
         }
     }
 
@@ -68,19 +68,6 @@ class GroupSettingVC: BaseViewController {
         
         memberView.layout.itemSize = CGSize(width: 34, height: 54)
         
-        memberView.addBlock = { [weak self] in
-            guard let self = self else { return }
-            LaunchGroupChatVC.show(param: self.groupInfo.groupID)
-        }
-        
-        memberView.removeBlock = { [weak self] in
-            guard let self = self else { return }
-            self.checkPermissions([.administrator, .owner], tips: "You're not an administrator.")
-                .subscribe(onSuccess: { _ in
-                    SelectGroupOwnerVC.show(op: .removeMember, groupID: self.groupInfo.groupID)
-                })
-                .disposed(by: self.disposeBag)
-        }
     }
     
     private func request() {
@@ -104,10 +91,11 @@ class GroupSettingVC: BaseViewController {
     }
     
     @IBAction func profileAction() {
+        let groupID = groupInfo.groupID
         checkPermissions()
-            .subscribe(onSuccess: { [unowned self] member in
-                GroupProfileVC.show(param: self.groupInfo.groupID) { any in
-                    self.groupInfo = (any as! OIMGroupInfo)
+            .subscribe(onSuccess: { [weak self] member in
+                GroupProfileVC.show(param: groupID) { any in
+                    self?.groupInfo = (any as! OIMGroupInfo)
                 }
             })
             .disposed(by: disposeBag)
@@ -143,7 +131,7 @@ class GroupSettingVC: BaseViewController {
     
     @IBAction func announcementAction() {
         let groupID = conversation.groupID
-        checkPermissions([.administrator, .owner], tips: "You're not an administrator.")
+        checkPermissions([.admin, .owner], tips: "You're not an administrator.")
             .flatMap({ _ -> Single<OIMGroupInfo> in
                 return rxRequest(showLoading: true, action: { OIMManager.getGroupsInfo(gids: [groupID],
                                                                                          callback: $0) })
@@ -159,7 +147,7 @@ class GroupSettingVC: BaseViewController {
                 { text in
                     guard let self = self else { return }
                     let param = OIMGroupInfoParam(groupInfo: groupInfo,
-                                                  introduction: text)
+                                                  notification: text)
                     rxRequest(showLoading: true, action: { OIMManager.setGroupInfo(param, callback: $0) })
                         .subscribe(onSuccess: {
                             MessageModule.showMessage("Modify the announcement successfully.")
@@ -227,7 +215,7 @@ class GroupSettingVC: BaseViewController {
     
     @IBAction func leaveAction() {
         let groupID = groupInfo.groupID
-        checkPermissions([.administrator, .none], tips: "The group owner cannot quit the group.")
+        checkPermissions([.admin, .none], tips: "The group owner cannot quit the group.")
             .flatMap{ _ -> Single<Void> in
                 return rxRequest(showLoading: true, action: { OIMManager.quitGroup(gid: groupID, callback: $0) })
             }

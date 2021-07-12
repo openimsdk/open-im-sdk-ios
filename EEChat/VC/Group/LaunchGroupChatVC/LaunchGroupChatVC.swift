@@ -137,8 +137,10 @@ class LaunchGroupChatVC: BaseViewController {
     @IBOutlet var submitBtn: UIButton!
     @IBAction func submitAction() {
         guard let indexPaths = tableView.indexPathsForSelectedRows else {
+            MessageModule.showMessage("Group chat members have not yet been selected.")
             return
         }
+        
         let uids = indexPaths.map { indexPath -> String in
             let section = relay.value[indexPath.section]
             return section.items[indexPath.row].uid
@@ -149,7 +151,7 @@ class LaunchGroupChatVC: BaseViewController {
                                                                                 uids: uids,
                                                                                 callback: $0) })
                 .subscribe(onSuccess: {
-                    MessageModule.showMessage("Invitation sent!")
+                    MessageModule.showMessage("Invitation sent.")
                     NavigationModule.shared.pop()
                 })
                 .disposed(by: disposeBag)
