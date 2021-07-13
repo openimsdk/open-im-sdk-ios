@@ -52,6 +52,23 @@ public struct OIMFileElem: Codable {
     public var fileSize: Int = 0
 }
 
+public struct OIMAtElem: Codable {
+    public var text: String = ""
+    public var atUserList: [String] = []
+    public var isAtSelf: Bool = false
+    
+    private enum CodingKeys: String, CodingKey {
+        case text, atUserList, isAtSelf
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        text = try container.decode(String.self, forKey: .text)
+        atUserList = (try? container.decode([String].self, forKey: .atUserList)) ?? []
+        isAtSelf = try container.decode(Bool.self, forKey: .isAtSelf)
+    }
+}
+
 public struct OIMSystemElem: Codable {
     public let isDisplay: Int
     public let id: String
@@ -100,6 +117,7 @@ public struct OIMMessage: Codable {
     public var status = Status.none
     public var remark: String = ""
     
+    public let atElem: OIMAtElem
     public let pictureElem: OIMPictureElem
     public let soundElem: OIMSoundElem
     public let videoElem: OIMVideoElem

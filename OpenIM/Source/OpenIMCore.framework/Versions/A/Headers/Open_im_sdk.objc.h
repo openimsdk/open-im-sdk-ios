@@ -377,6 +377,8 @@
 
 // skipped field MsgStruct.MergeElem with unsupported type: struct{Title string "json:\"title\""; AbstractList []string "json:\"abstractList\""; MultiMessage []*open_im_sdk/open_im_sdk.MsgStruct "json:\"multiMessage\""}
 
+// skipped field MsgStruct.AtElem with unsupported type: struct{Text string "json:\"text\""; AtUserList []string "json:\"atUserList\""; IsAtSelf bool "json:\"isAtSelf\""}
+
 // skipped field MsgStruct.RevokeMessage with unsupported type: struct{ServerMsgID string "json:\"serverMsgID\""; SendID string "json:\"sendID\""; SenderNickname string "json:\"senderNickname\""; RecvID string "json:\"recvID\""; GroupID string "json:\"groupID\""; ContentType int32 "json:\"contentType\""; SendTime int64 "json:\"sendTime\""}
 
 @end
@@ -526,7 +528,6 @@ FOUNDATION_EXPORT const int64_t Open_im_sdkGroupActionQuitGroup;
 FOUNDATION_EXPORT const int64_t Open_im_sdkGroupActionRefuseGroupApplication;
 FOUNDATION_EXPORT const int64_t Open_im_sdkGroupActionSetGroupInfo;
 FOUNDATION_EXPORT const int64_t Open_im_sdkGroupActionTransferGroupOwner;
-FOUNDATION_EXPORT const int64_t Open_im_sdkGroupApplicationResponseTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkGroupChatType;
 /**
  * ///////////////////////////////////////

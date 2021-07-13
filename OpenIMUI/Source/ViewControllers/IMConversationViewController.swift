@@ -364,13 +364,25 @@ open class IMConversationViewController: UIViewController,
         avatarView.layer.cornerRadius = avatarView.bounds.height * 0.5
         avatarView.image = ImageCache.named("openim_icon_default_avatar")
         
-        let user = OUIKit.shared.getUser(message.sendID) { user in
-            if user != nil {
-                self.messageVC.collectionView.reloadData()
+        if !conversation.userID.isEmpty {
+            let user = OUIKit.shared.getUser(message.sendID) { user in
+                if user != nil {
+                    self.messageVC.collectionView.reloadData()
+                }
             }
-        }
-        if let user = user {
-            avatarView.setImage(with: user.icon, placeholder: avatarView.image)
+            if let user = user {
+                avatarView.setImage(with: user.icon, placeholder: avatarView.image)
+            }
+        } else {
+            OIMManager.getGroupMembersInfo(gid: conversation.groupID,
+                                           uids: [message.userID])
+            { result in
+                if case .success(let members) = result {
+                    if let member = members.first {
+                        avatarView.setImage(with: member.faceUrl, placeholder: avatarView.image)
+                    }
+                }
+            }
         }
     }
     

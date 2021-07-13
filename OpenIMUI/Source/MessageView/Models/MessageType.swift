@@ -113,7 +113,7 @@ public class MessageType: Hashable {
     
     public var isRead: Bool
     
-    public let at: [String]
+    public var at: [String] = []
     
     public let innerMessage: OIMMessage
     
@@ -145,7 +145,6 @@ public class MessageType: Hashable {
     
     public init(message: OIMMessage) {
         innerMessage = message
-        at = message.forceList ?? []
         messageId = message.serverMsgID != "" ? message.serverMsgID : message.clientMsgID
         sendTime = message.sendTime != 0 ? message.sendTime : message.createTime
         let loginUID = OIMManager.getLoginUser()
@@ -184,8 +183,11 @@ public class MessageType: Hashable {
         }
         
         switch message.contentType {
-        case .text, .atText:
+        case .text:
             content = .text(message.content)
+        case .atText:
+            content = .text(message.atElem.text)
+            at = message.atElem.atUserList
         case .image:
             let data = message.pictureElem
             let url = getURL(data.sourcePath, url: data.sourcePicture.url)

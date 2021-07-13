@@ -24,7 +24,7 @@ public class OIMManager: NSObject {
     }
     
     public static var cachePath: String {
-        return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! + "/cn.rentsoft.openIM/"
+        return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] + "/cn.rentsoft.openIM/"
     }
     
     private func initSDK(

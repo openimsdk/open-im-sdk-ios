@@ -10,6 +10,10 @@ import Kingfisher
 
 open class MessageImageView: AnimatedImageView {
     
+    open func setImage(with string: String?, placeholder: UIImage? = nil) {
+        kf.setImage(with: URL(string: string ?? ""), placeholder: placeholder)
+    }
+    
     open func setImage(with url: URL?, placeholder: UIImage? = nil) {
         kf.setImage(with: url, placeholder: placeholder)
     }
