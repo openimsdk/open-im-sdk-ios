@@ -27,12 +27,9 @@ class LocalSearchUserCell: UITableViewCell {
             case let model as OIMUser:
                 config(user: model)
             case let model as OIMConversation:
-                if model.userID != "" {
-                    let user = OUIKit.shared.getUser(model.userID) { user in
-                        config(user: user)
-                    }
-                    config(user: user)
-                }
+                nameLabel.text = model.showName
+                avatarView.setImage(with: model.faceUrl,
+                                    placeholder: UIImage(named: "icon_default_avatar"))
             default:
                 break
             }

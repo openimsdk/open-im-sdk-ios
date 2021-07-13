@@ -35,8 +35,10 @@ class LocalSearchUserVC: BaseViewController {
                     case let model as OIMUser:
                         SearchUserDetailsVC.show(param: model.uid)
                     case let model as OIMConversation:
-                        if model.groupID != "" {
+                        if !model.userID.isEmpty {
                             SearchUserDetailsVC.show(param: model.userID)
+                        } else {
+                            GroupProfileVC.show(param: model.groupID)
                         }
                     default:
                         break
