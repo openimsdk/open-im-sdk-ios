@@ -234,7 +234,8 @@ open class IMConversationViewController: UIViewController,
     
     public func selectPhotoForSend() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary),
-           let mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary) {
+           let mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)?.filter({ $0 == kUTTypeImage as String }),
+           !mediaTypes.isEmpty {
             let vc = UIImagePickerController()
             vc.sourceType = .photoLibrary
             vc.mediaTypes = mediaTypes
