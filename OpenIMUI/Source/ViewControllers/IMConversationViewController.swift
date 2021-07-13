@@ -376,7 +376,7 @@ open class IMConversationViewController: UIViewController,
             }
         } else {
             OIMManager.getGroupMembersInfo(gid: conversation.groupID,
-                                           uids: [message.userID])
+                                           uids: [message.sendID])
             { result in
                 if case .success(let members) = result {
                     if let member = members.first {
@@ -424,10 +424,7 @@ open class IMConversationViewController: UIViewController,
     }
     
     open func nameLabelIsHidden(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool {
-        if !conversation.userID.isEmpty {
-            return true
-        }
-        return message.isSelf
+        return true
     }
     
     // MARK: - MessagesDataSource

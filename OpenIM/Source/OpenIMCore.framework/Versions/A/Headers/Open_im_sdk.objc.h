@@ -487,6 +487,7 @@
 
 FOUNDATION_EXPORT const int64_t Open_im_sdkAcceptFriendApplicationTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkAcceptGroupApplicationTip;
+FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkAcceptGroupTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkAddConOrUpLatMsg;
 FOUNDATION_EXPORT const int64_t Open_im_sdkAddFriendTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkAtText;
