@@ -424,7 +424,10 @@ open class IMConversationViewController: UIViewController,
     }
     
     open func nameLabelIsHidden(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool {
-        return true
+        if !conversation.userID.isEmpty {
+            return true
+        }
+        return message.isSelf
     }
     
     // MARK: - MessagesDataSource
@@ -442,6 +445,13 @@ open class IMConversationViewController: UIViewController,
     }
 
     open func nameLabelAttributedText(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> NSAttributedString? {
+        if conversation.userID.isEmpty, !message.isSelf  {
+            return NSAttributedString(string: message.innerMessage.senderNickName,
+                                      attributes: [
+                                        .font: UIFont.systemFont(ofSize: 12),
+                                        .foregroundColor: UIColor(red: 0x66 / 255.0, green: 0x66 / 255.0, blue: 0x66 / 255.0, alpha: 0)
+                                      ])
+        }
         return nil
     }
     

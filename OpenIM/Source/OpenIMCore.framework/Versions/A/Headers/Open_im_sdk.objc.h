@@ -706,6 +706,8 @@ FOUNDATION_EXPORT void Open_im_sdkForceSyncMsg(void);
 
 FOUNDATION_EXPORT void Open_im_sdkFriendApplication(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable uid, long flag);
 
+FOUNDATION_EXPORT void Open_im_sdkFroceReConn(void);
+
 FOUNDATION_EXPORT void Open_im_sdkGetAllConversationList(id<Open_im_sdkBase> _Nullable callback);
 
 FOUNDATION_EXPORT void Open_im_sdkGetBlackList(id<Open_im_sdkBase> _Nullable callback);

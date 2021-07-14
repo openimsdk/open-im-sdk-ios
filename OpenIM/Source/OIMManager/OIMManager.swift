@@ -47,6 +47,11 @@ public class OIMManager: NSObject {
         Open_im_sdkSetConversationListener(self)
         Open_im_sdkAddAdvancedMsgListener(self)
         Open_im_sdkSetGroupListener(self)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didBecomeActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
     }
     
     public static func initSDK() {
@@ -77,6 +82,13 @@ public class OIMManager: NSObject {
             return result
         }
         fatalError("\(ModelType.self): \(str ?? "")")
+    }
+    
+    @objc
+    private func didBecomeActive() {
+        if !OIMManager.getLoginUser().isEmpty {
+            Open_im_sdkFroceReConn()
+        }
     }
 }
 
