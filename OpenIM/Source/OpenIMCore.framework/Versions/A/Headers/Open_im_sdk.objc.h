@@ -686,6 +686,8 @@ FOUNDATION_EXPORT void Open_im_sdkDotesttestInviteUserToGroup(void);
 
 FOUNDATION_EXPORT void Open_im_sdkFindMessages(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable messageIDList);
 
+FOUNDATION_EXPORT void Open_im_sdkForceReConn(void);
+
 FOUNDATION_EXPORT void Open_im_sdkForceSyncApplyGroupRequest(void);
 
 FOUNDATION_EXPORT void Open_im_sdkForceSyncBlackList(void);
@@ -705,8 +707,6 @@ FOUNDATION_EXPORT void Open_im_sdkForceSyncLoginUerInfo(void);
 FOUNDATION_EXPORT void Open_im_sdkForceSyncMsg(void);
 
 FOUNDATION_EXPORT void Open_im_sdkFriendApplication(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable uid, long flag);
-
-FOUNDATION_EXPORT void Open_im_sdkFroceReConn(void);
 
 FOUNDATION_EXPORT void Open_im_sdkGetAllConversationList(id<Open_im_sdkBase> _Nullable callback);
 
@@ -797,6 +797,8 @@ FOUNDATION_EXPORT void Open_im_sdkSetGroupListener(id<Open_im_sdkOnGroupListener
 FOUNDATION_EXPORT void Open_im_sdkSetSelfInfo(NSString* _Nullable info, id<Open_im_sdkBase> _Nullable cb);
 
 FOUNDATION_EXPORT void Open_im_sdkTencentOssCredentials(id<Open_im_sdkBase> _Nullable cb);
+
+FOUNDATION_EXPORT void Open_im_sdkTestUploadVideo(NSString* _Nullable videoPath);
 
 FOUNDATION_EXPORT void Open_im_sdkTransferGroupOwner(NSString* _Nullable groupId, NSString* _Nullable userId, id<Open_im_sdkBase> _Nullable callback);
 

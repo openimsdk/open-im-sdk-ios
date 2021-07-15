@@ -87,7 +87,7 @@ public class OIMManager: NSObject {
     @objc
     private func didBecomeActive() {
         if !OIMManager.getLoginUser().isEmpty {
-            Open_im_sdkFroceReConn()
+            Open_im_sdkForceReConn()
         }
     }
 }
