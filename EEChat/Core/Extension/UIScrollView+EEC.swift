@@ -41,7 +41,14 @@ public extension Namespace where Base: UIScrollView {
             return constraint.firstItem === base && constraint.secondItem == nil && constraint.relation == .equal
         }
         if layoutConstraint == nil {
-            
+            layoutConstraint = NSLayoutConstraint(item: base,
+                                                  attribute: .height,
+                                                  relatedBy: .equal,
+                                                  toItem: nil,
+                                                  attribute: .height,
+                                                  multiplier: 1,
+                                                  constant: minHeight ?? 0)
+            NSLayoutConstraint.activate([layoutConstraint!])
         }
         return base.rx.observe(CGSize.self, #keyPath(UIScrollView.contentSize))
             .take(until: base.superview!.rx.deallocating)
@@ -59,7 +66,7 @@ public extension Namespace where Base: UIScrollView {
                 return height
             }
             .distinctUntilChanged()
-            .subscribe(onNext: { [unowned base] height in
+            .subscribe(onNext: { height in
                 layoutConstraint?.constant = height
             })
     }
