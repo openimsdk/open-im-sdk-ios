@@ -40,7 +40,7 @@ target 'EEChat' do
   
   pod 'Toast', '~> 4.0.0'
   
-  pod 'TPNS-iOS', '~> 1.3.0.0'
+  pod 'TPNS-iOS', '~> 1.3.4.1'
   pod 'QCloudCOSXML/Slim', '~> 5.8.4'
   
   pod 'TZImagePickerController', '~> 3.6.0'
