@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import TPNSInAppMessage
 import OpenIM
 
 final class PushManager: NSObject {
