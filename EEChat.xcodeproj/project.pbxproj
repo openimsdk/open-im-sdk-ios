@@ -766,7 +766,6 @@
 				807F6CD82671E73E0025370B /* Frameworks */,
 				807F6CD92671E73E0025370B /* Resources */,
 				AF2030AD247C41A1C1C1B671 /* [CP] Embed Pods Frameworks */,
-				C16E2216BAE77821C22607A7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -891,23 +890,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EEChat/Pods-EEChat-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C16E2216BAE77821C22607A7 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EEChat/Pods-EEChat-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-EEChat/Pods-EEChat-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EEChat/Pods-EEChat-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

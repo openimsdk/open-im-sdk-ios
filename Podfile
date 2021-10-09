@@ -9,9 +9,9 @@ def sharedUILibs()
 end
 
 def sharedLibs()
-  pod 'GRDB.swift', '~> 5.7.3'
-  pod 'RxSwift', '~> 6.1.0'
-  pod 'Alamofire', '~> 5.2'
+  pod 'GRDB.swift', '~> 5.12.0'
+  pod 'RxSwift', '~> 6.2.0'
+  pod 'Alamofire', '~> 5.4'
 end
 
 target 'EEChat' do
@@ -25,22 +25,21 @@ target 'EEChat' do
   
   pod 'MBProgressHUD', '~> 1.2.0'
   
-  pod 'RxCocoa', '~> 6.1.0'
+  pod 'RxCocoa', '~> 6.2.0'
   pod 'RxGesture', '~> 4.0.2'
   pod 'RxDataSources', '~> 5.0.0'
 
   pod 'SnapKit', '~> 5.0.0'
+  pod 'SteviaLayout', '~> 4.7'
   
   pod 'IQKeyboardManagerSwift', '~> 6.5.0'
-  
-#  pod 'MBProgressHUD', :git => 'https://github.com/jdg/MBProgressHUD.git', :commit => '8df5e8ca98a89473385cd66543435de114f166bd'
 
   pod 'CryptoSwift', '~> 1.4.0'
-  pod 'web3swift', git: "https://github.com/BeeModule/web3swift.git", :commit => '7cc049ffb7409ccbf15dde7a7021527bd961f6cc'
+  pod 'web3swift', :git => "https://github.com/skywinder/web3swift.git", :branch => 'develop'
   
   pod 'Toast', '~> 4.0.0'
   
-  pod 'TPNS-iOS', '~> 1.3.0.0'
+  pod 'TPNS-iOS', '~> 1.3.4.1'
   pod 'QCloudCOSXML/Slim', '~> 5.8.4'
   
   pod 'TZImagePickerController', '~> 3.6.0'
@@ -50,7 +49,7 @@ target 'EEChat' do
   pod 'YBImageBrowser', '~> 3.0.9'
   pod 'YBImageBrowser/Video', '~> 3.0.9'
   
-  pod 'QMUIKit', '~> 4.2.3'
+  pod 'QMUIKit', '~> 4.3.0'
   
   pod 'Bugly', '~> 2.5.90'
   pod 'Reveal-SDK', '~> 21', :configurations => ['Debug']
