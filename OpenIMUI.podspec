@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name = "OpenIMUI"
 
-  s.version = '0.0.1'
+  s.version = '0.0.2'
 
   s.source = {
     :git => "https://github.com/OpenIMSDK/Open-IM-SDK-iOS.git",
