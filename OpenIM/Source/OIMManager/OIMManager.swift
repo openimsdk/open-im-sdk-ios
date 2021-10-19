@@ -27,10 +27,7 @@ public class OIMManager: NSObject {
         return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] + "/cn.rentsoft.openIM/"
     }
     
-    private func initSDK(
-        api: String = "https://open-im.rentsoft.cn",
-        ws: String = "wss://open-im.rentsoft.cn/wss"
-    ) {
+    private func initSDK(api: String, ws: String) {
         let dbPath = OIMManager.cachePath
         struct Config: Encodable {
             let platform = 1
@@ -54,8 +51,8 @@ public class OIMManager: NSObject {
                                                object: nil)
     }
     
-    public static func initSDK() {
-        shared.initSDK()
+    public static func initSDK(api: String = "https://open-im.rentsoft.cn", ws: String = "wss://open-im.rentsoft.cn/wss") {
+        shared.initSDK(api: api, ws: ws)
     }
     
     struct WeakRef<T: AnyObject> {
