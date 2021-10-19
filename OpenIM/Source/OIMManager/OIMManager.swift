@@ -173,6 +173,12 @@ extension OIMManager {
     }
 }
 
+extension OIMManager {
+    public static func setSDKListener(_ listener: OIMSDKListener) {
+        shared.sdkListener = listener
+    }
+}
+
 extension OIMManager: Open_im_sdkIMSDKListenerProtocol {
     public func onConnectFailed(_ errCode: Int, errMsg: String?) {
         sdkListener?.onConnectFailed(NSError(domain: "", code: errCode, userInfo: [NSLocalizedDescriptionKey: errMsg ?? ""]))

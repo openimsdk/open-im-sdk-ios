@@ -210,6 +210,11 @@ extension OIMManager {
     }
 }
 
+extension OIMManager {
+    public static func setGroupListener(_ listener: OIMGroupListener) {
+        shared.groupListener = listener
+    }
+}
 
 // MARK: - Open_im_sdkOnGroupListenerProtocol
 
