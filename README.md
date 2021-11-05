@@ -1,91 +1,29 @@
-# EEChat: OpenIM Messaging Client for iOS
+# Open-IM-SDK-iOS
 
-iOS client for [OpenIM](https://github.com/OpenIMSDK/Open-IM-Server) in Swift.
+[![CI Status](https://img.shields.io/travis/xpg/Open-IM-SDK-iOS.svg?style=flat)](https://travis-ci.org/xpg/Open-IM-SDK-iOS)
+[![Version](https://img.shields.io/cocoapods/v/Open-IM-SDK-iOS.svg?style=flat)](https://cocoapods.org/pods/Open-IM-SDK-iOS)
+[![License](https://img.shields.io/cocoapods/l/Open-IM-SDK-iOS.svg?style=flat)](https://cocoapods.org/pods/Open-IM-SDK-iOS)
+[![Platform](https://img.shields.io/cocoapods/p/Open-IM-SDK-iOS.svg?style=flat)](https://cocoapods.org/pods/Open-IM-SDK-iOS)
 
-Status: beta. Usable and mostly stable but bugs may happen.
+## Example
 
-
-
-## Features
-
-### Completed
-
-* Login
-* Register new accounts.
-* Start new chats.
-* Edit personal details.
-* Edit chat parameters.
-* View the list of active chats
-* Send and receive plain text messages one-on-one or in group chats.
-* In-app presence notifications.
-* Unread message counters.
-* Local data persistence.
-* Transport Level Security - https/wss.
-* Viewing attachments and inline images.
-* Delivery and received/read indicators for messages (little check marks in messages).
-* Muting/un-muting conversations and other permission management.
-* Push notifications.
-* Attachments and inline images.
-
-### Not Done Yet
-
-* Group chats.
-
-* Previews not generated for videos, audio, links or docs.
-* Typing indicators.
-* No support for switching between multiple backends.
-* Mentions, hashtags.
-* Replying or forwarding messages.
-* End-to-End encryption.
-
-
-
-## Screenshots
-
-<img src="Images/1.jpeg" alt="App screenshot - chat list" width="207" /><img src="Images/2.jpeg" alt="App screenshot - conversation" width="207" /><img src="Images/3.jpeg" alt="App screenshot - account settings" width="207" />
-
-
-
-## Installation
-
-### [CocoaPods](https://cocoapods.org/) **Recommended**
-
-```ruby
-# Swift 5.3
-pod 'OpenIM', git: "https://github.com/OpenIMSDK/Open-IM-SDK-iOS.git" #, :commit => ''
-pod 'OpenIMUI', git: "https://github.com/OpenIMSDK/Open-IM-SDK-iOS.git" #, :commit => ''
-```
-
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
 
-- **iOS 11** or later
-- **Swift 5.3** or later
+## Installation
 
+Open-IM-SDK-iOS is available through [CocoaPods](https://cocoapods.org). To install
+it, simply add the following line to your Podfile:
 
-## OpenIM
-
-### Login
-
-```swift
-class OIMManager.login(uid:token:callback:)
+```ruby
+pod 'Open-IM-SDK-iOS'
 ```
 
+## Author
 
+xpg, xpg@xpg.cn
 
-### Create a message 
-```swift
-class OIMManager.createTextMessage(_:at:)
-class OIMManager.createImageMessage(_:)
-class OIMManager.createSoundMessage(_:duration:)
-class OIMManager.createVideoMessage(_:videoType:duration:snapshotPath:)
-```
+## License
 
-### Send a message 
-
-```swift
-class OIMManager.sendMessage(_:receiver:groupID:onlineUserOnly:progress:callback:)
-```
-
-
-
+Open-IM-SDK-iOS is available under the MIT license. See the LICENSE file for more info.

@@ -1,163 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
-    <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
-    </dependencies>
-    <scenes>
-        <!--Agreement-->
-        <scene sceneID="s0d-6b-0kx">
-            <objects>
-                <viewController title="Agreement" id="Y6W-OH-hqX" customClass="AgreementVC" customModule="EEChat" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OYS-PW-dF2">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mG7-jn-lf0">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="2233"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User registration and app privacy agreement" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="soH-Qc-FVp">
-                                                <rect key="frame" x="22" y="20" width="370" height="17"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AXs-kq-qXO">
-                                                <rect key="frame" x="22" y="47" width="370" height="2166"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment>
-                                                        <mutableString key="content">In particular, please read this user agreement (hereinafter referred to as the "agreement") carefully before you register as a user to ensure that you fully understand the terms of this agreement. Please read carefully and choose to accept or not to accept this agreement. Your registration, login, use and other behaviors will be regarded as acceptance of this agreement, and agree to be bound by the terms of this agreement. This agreement stipulates the rights and obligations of "openim" software service (hereinafter referred to as "service") between Tuoyun information technology (Chengdu) Co., Ltd. (hereinafter referred to as "Tuoyun") and users“ "User" refers to the individual who registers, logs in and uses the service. This agreement can be updated by Tuoyun at any time. Once the updated agreement terms are published, they will replace the original agreement terms without further notice. Users can check the latest version of the agreement terms in this app. After modifying the terms of the agreement, if the user does not accept the modified terms, please immediately stop using the service provided by openim. If the user continues to use the service, it will be regarded as accepting the modified agreement.   1</mutableString>
-                                                        <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" metaFont="system" size="11"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="、">
-                                                        <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" size="11" name=".PingFangSC-Regular"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment>
-                                                        <mutableString key="content"> Account registration1. Users need to register an "openim" account before using the service“ The "openim" account shall be registered with the mobile phone number binding. Users are requested to register the "openim" account with the mobile phone number that has not been bound with the "openim" account and the mobile phone number that has not been blocked by the service according to this agreement. The service can change the way of account registration and binding according to user needs or product needs without prior notice to users.  2. "Openim" is an app product based on "Tuoyun". When registering, users should authorize Tuoyun and use their personal information to successfully register "openim" account. Therefore, the user's registration indicates that the user agrees to extract, disclose and use the user's information.  3. In view of the binding registration method of "openim" account, you agree that the service will allow your mobile phone number, mobile device ID and other information to be used for registration.  4. When users register and use the service, Tuoyun needs to collect personal information that can identify users, so that the service can contact users when necessary, or provide users with better experience. The information collected by Tuoyun includes but is not limited to the user's name and address; Tuoyun agrees that the use of such information will be limited by Article 3 of the user's personal privacy information protection.   2</mutableString>
-                                                        <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" metaFont="system" size="11"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="、">
-                                                        <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" size="11" name=".PingFangSC-Regular"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment>
-                                                        <mutableString key="content"> Protection of user's personal privacy information1. If Tuoyun finds or receives reports or complaints from others about the user's violation of this agreement, it has the right to review and delete the relevant contents, including but not limited to user information and chat records, at any time without notice, and impose penalties, including but not limited to warning, account blocking, device blocking and function blocking, on the account violating the agreement according to the seriousness of the case, And inform the user of the processing result.  2. Users who are banned due to violation of the user agreement can contact Tuoyun on their own. Among them, users who have been banned will automatically resume the banned functions after the expiration of the ban period. Blocked users can submit a complaint, and Tuoyun will review the complaint and decide whether to change the punishment measures.  3. The user understands and agrees that Tuoyun has the right to punish those who violate the relevant laws and regulations or the provisions of this agreement in accordance with reasonable judgment, take appropriate legal actions against any user who violates the law and regulations, keep relevant information in accordance with the laws and regulations, and report to the relevant departments. The user shall bear all legal liabilities arising therefrom.  4. User understands and agrees that in case of any claim, demand or loss claimed by any third party, including reasonable attorney's fees, arising from user's breach of this agreement, user shall compensate and hold Tuoyun, cooperative company and affiliated company harmless.   3</mutableString>
-                                                        <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" metaFont="system" size="11"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="、">
-                                                        <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" size="11" name=".PingFangSC-Regular"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment>
-                                                        <mutableString key="content"> User published content specification1. The content mentioned in this article refers to any content produced, uploaded, copied, published and disseminated by the user in the process of using the service, including but not limited to the registration information such as account avatar and name, or the sending and reply messages and related link pages such as text, voice, picture, video and text, as well as other content generated by using the account or the service.  2. Users are not allowed to use "openim" account or this service to produce, upload, copy, publish or disseminate the following contents prohibited by laws, regulations and policies:  (1) Opposing the basic principles established by the constitution;  (2) Endangering national security, divulging state secrets, subverting state power and undermining national unity;  (3) Damaging the honor and interests of the state;  (4) Inciting national hatred or discrimination and undermining national unity;  (5) Sabotaging the state's religious policies and propagating heresy and feudal superstition;  (6) Spreading rumors, disrupting social order or undermining social stability;  (7) Spreading obscenity, pornography, gambling, violence, murder, terror or abetting a crime;  (8) Insulting or slandering others and infringing upon their legitimate rights and interests;  (9) Information containing other contents prohibited by laws and administrative regulations.  3. The user shall not use the "openim" account or the service to produce, upload, copy, publish or disseminate the following contents that interfere with the normal operation of the service and infringe upon the legitimate rights and interests of other users or third parties:  (1) Containing any sexual or sexual suggestion; suggestive;  (2) Containing abusive, threatening or threatening contents;  (3) Contains harassment, spam, malicious information, deception information;  (4) Involving other people's privacy, personal information or data;  (5) Infringing upon other people's legitimate rights such as reputation right, portrait right, intellectual property right and trade secret;  (6) It contains other information that interferes with the normal operation of the service and infringes upon the legitimate rights and interests of other users or third parties.   4</mutableString>
-                                                        <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" metaFont="system" size="11"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="、">
-                                                        <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" size="11" name=".PingFangSC-Regular"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment>
-                                                        <mutableString key="content"> Rules of use1. Any content transmitted or released by users in or through this service does not reflect or represent, nor shall it be deemed to reflect or represent the views, positions or policies of Tuoyun, and Tuoyun shall not bear any responsibility for this.  2. Users are not allowed to use the "openim" account or the service to do the following:  (1) Submitting or publishing false information, or stealing other people's avatars or materials, pretending or using other people's names;  (2) Forcing or inducing other users to pay attention to, click on the link page or share information;  (3) Making up facts or concealing the truth to mislead or deceive others;  (4) Using technical means to establish false accounts in batches;  (5) Using "openim" account or this service to engage in any illegal and criminal activities;  (6) Produce, publish, operate or disseminate methods and tools related to the above behaviors, whether or not these behaviors are for commercial purposes;  (7) Other behaviors that violate laws and regulations, infringe the legitimate rights and interests of other users, interfere with the normal operation of "openim" or the service is not explicitly authorized.  3. The user shall be fully responsible for the authenticity, legality, harmlessness, accuracy and effectiveness of the information transmitted by using the "openim" account or this service. Any legal liability related to the information transmitted by the user shall be borne by the user, and has nothing to do with Tuoyun.  If any damage is caused to Tuoyun or a third party, the user shall make compensation according to law.   5</mutableString>
-                                                        <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" metaFont="system" size="11"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="、">
-                                                        <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" size="11" name=".PingFangSC-Regular"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment>
-                                                        <mutableString key="content"> Others1. Tuoyun solemnly reminds users to pay attention to the clauses in this agreement which exempt Tuoyun from liability and restrict users' rights. Please read them carefully and consider the risks independently. Minors should read this agreement accompanied by their legal guardian.  2. The validity, interpretation and dispute settlement of this Agreement shall be governed by the laws of the people's Republic of China. If there is any dispute or dispute between the user and Tuoyun, it should be settled through friendly negotiation. If the negotiation fails, the user agrees to submit the dispute or dispute to the people's court with jurisdiction in the place of Tuoyun's residence.  3. No matter any provision of this agreement is invalid or unenforceable for any reason, the remaining provisions shall remain valid and binding on both parties.The copyright of this agreement is owned by Tuoyun. Tuoyun reserves all rights to interpret this agreement.Tuoyun information technology (Chengdu) Co., Ltd</mutableString>
-                                                        <attributes>
-                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <font key="NSFont" metaFont="system" size="11"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstItem="soH-Qc-FVp" firstAttribute="leading" secondItem="mG7-jn-lf0" secondAttribute="leading" constant="22" id="Exh-HA-xLR"/>
-                                            <constraint firstAttribute="trailing" secondItem="soH-Qc-FVp" secondAttribute="trailing" constant="22" id="I5N-79-TqH"/>
-                                            <constraint firstItem="AXs-kq-qXO" firstAttribute="top" secondItem="soH-Qc-FVp" secondAttribute="bottom" constant="10" id="UZR-PD-htN"/>
-                                            <constraint firstItem="soH-Qc-FVp" firstAttribute="top" secondItem="mG7-jn-lf0" secondAttribute="top" constant="20" id="rA2-A2-0se"/>
-                                            <constraint firstAttribute="bottom" secondItem="AXs-kq-qXO" secondAttribute="bottom" constant="20" id="uNY-El-xKF"/>
-                                            <constraint firstAttribute="trailing" secondItem="AXs-kq-qXO" secondAttribute="trailing" constant="22" id="ujQ-ac-dRv"/>
-                                            <constraint firstItem="AXs-kq-qXO" firstAttribute="leading" secondItem="mG7-jn-lf0" secondAttribute="leading" constant="22" id="xz2-6C-XNs"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="mG7-jn-lf0" firstAttribute="leading" secondItem="OYS-PW-dF2" secondAttribute="leading" id="T34-ae-Bj9"/>
-                                    <constraint firstAttribute="trailing" secondItem="mG7-jn-lf0" secondAttribute="trailing" id="eGt-VO-5cC"/>
-                                    <constraint firstItem="mG7-jn-lf0" firstAttribute="top" secondItem="OYS-PW-dF2" secondAttribute="top" id="hYM-v1-hP8"/>
-                                    <constraint firstAttribute="bottom" secondItem="mG7-jn-lf0" secondAttribute="bottom" id="yl8-na-P22"/>
-                                </constraints>
-                            </scrollView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="OYS-PW-dF2" secondAttribute="trailing" id="5FV-K1-KMa"/>
-                            <constraint firstItem="OYS-PW-dF2" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="8iF-8n-wAq"/>
-                            <constraint firstItem="mG7-jn-lf0" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" id="QKF-gu-zcX"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="OYS-PW-dF2" secondAttribute="bottom" id="j8z-G9-mLj"/>
-                            <constraint firstItem="OYS-PW-dF2" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="wZ6-bB-7Sy"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="131.8840579710145" y="71.651785714285708"/>
-        </scene>
-    </scenes>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
-</document>
