@@ -1,9 +1,9 @@
-# Open-IM-SDK-iOS
+# OpenIMSDKiOS
 
-[![CI Status](https://img.shields.io/travis/xpg/Open-IM-SDK-iOS.svg?style=flat)](https://travis-ci.org/xpg/Open-IM-SDK-iOS)
-[![Version](https://img.shields.io/cocoapods/v/Open-IM-SDK-iOS.svg?style=flat)](https://cocoapods.org/pods/Open-IM-SDK-iOS)
-[![License](https://img.shields.io/cocoapods/l/Open-IM-SDK-iOS.svg?style=flat)](https://cocoapods.org/pods/Open-IM-SDK-iOS)
-[![Platform](https://img.shields.io/cocoapods/p/Open-IM-SDK-iOS.svg?style=flat)](https://cocoapods.org/pods/Open-IM-SDK-iOS)
+[![CI Status](https://img.shields.io/travis/xpg/OpenIMSDKiOS.svg?style=flat)](https://travis-ci.org/xpg/OpenIMSDKiOS)
+[![Version](https://img.shields.io/cocoapods/v/OpenIMSDKiOS.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDKiOS)
+[![License](https://img.shields.io/cocoapods/l/OpenIMSDKiOS.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDKiOS)
+[![Platform](https://img.shields.io/cocoapods/p/OpenIMSDKiOS.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDKiOS)
 
 ## Example
 
@@ -13,11 +13,11 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-Open-IM-SDK-iOS is available through [CocoaPods](https://cocoapods.org). To install
+OpenIMSDKiOS is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Open-IM-SDK-iOS'
+pod 'OpenIMSDKiOS'
 ```
 
 ## Author
@@ -26,4 +26,4 @@ xpg, xpg@xpg.cn
 
 ## License
 
-Open-IM-SDK-iOS is available under the MIT license. See the LICENSE file for more info.
+OpenIMSDKiOS is available under the MIT license. See the LICENSE file for more info.

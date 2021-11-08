@@ -1,8 +1,8 @@
 //
-//  Open-IM-SDK-iOSTests.m
-//  Open-IM-SDK-iOSTests
+//  OpenIMSDKiOSTests.m
+//  OpenIMSDKiOSTests
 //
-//  Created by xpg on 11/04/2021.
+//  Created by xpg on 11/08/2021.
 //  Copyright (c) 2021 xpg. All rights reserved.
 //
 

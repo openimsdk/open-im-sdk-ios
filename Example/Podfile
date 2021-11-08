@@ -2,10 +2,10 @@ use_frameworks!
 
 platform :ios, '9.0'
 
-target 'Open-IM-SDK-iOS_Example' do
-  pod 'Open-IM-SDK-iOS', :path => '../'
+target 'OpenIMSDKiOS_Example' do
+  pod 'OpenIMSDKiOS', :path => '../'
 
-  target 'Open-IM-SDK-iOS_Tests' do
+  target 'OpenIMSDKiOS_Tests' do
     inherit! :search_paths
 
     
