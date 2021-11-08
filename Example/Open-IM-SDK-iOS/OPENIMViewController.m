@@ -19,7 +19,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    [OpenIMiOSSDK.shared initSDK:IOS ipApi:@"127.0.0.1" ipWs:@"ws://128.123.12.3" dbPath:@"" onConnecting:^{
+    [OpenIMiOSSDK.shared initSDK:IOS ipApi:@"127.0.0.1" ipWs:@"ws://128.123.12.3" dbPath:NSTemporaryDirectory() onConnecting:^{
         NSLog(@"onConnecting");
     } onConnectFailed:^(long ErrCode, NSString * _Nullable ErrMsg) {
         NSLog(@"onConnectFailed");
@@ -31,6 +31,12 @@
         NSLog(@"onUserTokenExpired");
     } onSelfInfoUpdated:^(UserInfo* _Nullable userInfo) {
         NSLog(@"onSelfInfoUpdated");
+    }];
+    
+    [OpenIMiOSSDK.shared login:@"1" token:@"1" onSuccess:^(NSString * _Nullable data) {
+        NSLog(@"onSuccess");
+    } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
+        NSLog(@"onError %@",ErrMsg);
     }];
 }
 

@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithDictionary:(NSDictionary*)dictionary;
 - (NSDictionary *)dict;
+- (NSString *) className;
+- (void)objectFromDictionary:(NSDictionary*) dict;
 
 @end
 
