@@ -32,7 +32,7 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'Open-IM-SDK-iOS/Classes/**/*'
   
-  s.vendored_frameworks = 'Framework/*.framework'
+  s.vendored_frameworks = 'Framework/*.xcframework'
   
   # s.resource_bundles = {
   #   'Open-IM-SDK-iOS' => ['Open-IM-SDK-iOS/Assets/*.png']
