@@ -31,10 +31,18 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'OpenIMSDKiOS/Classes/**/*'
-  
-  s.vendored_frameworks = 'Framework/*.xcframework'
+    
+  s.vendored_frameworks = 'Framework/*.framework'
   
   s.public_header_files = 'OpenIMSDKiOS/Classes/**/*.h'
+  
+  valid_archs = ['armv7s','arm64',]
+  s.xcconfig = {
+    'VALID_ARCHS' =>  valid_archs.join(' '),
+  }
+  s.pod_target_xcconfig = {
+      'ARCHS[sdk=iphonesimulator*]' => '$(ARCHS_STANDARD_64_BIT)'
+  }
   
   # s.resource_bundles = {
   #   'OpenIMSDKiOS' => ['OpenIMSDKiOS/Assets/*.png']
