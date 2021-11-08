@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OpenIMSDKiOS'
-  s.version          = '1.0.3'
+  s.version          = '1.0.4'
   s.summary          = 'OpenIM'
 
 # This description is used to generate tags and improve search results.
@@ -32,7 +32,7 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'OpenIMSDKiOS/Classes/**/*'
     
-  s.vendored_frameworks = 'Framework/*.framework'
+  s.vendored_frameworks = 'Framework/*.xcframework'
   
   s.public_header_files = 'OpenIMSDKiOS/Classes/**/*.h'
   

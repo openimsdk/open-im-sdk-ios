@@ -60,11 +60,11 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		917822F92B8B656CE8969994 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		917822F92B8B656CE8969994 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B6AC3F85F72574407C2BA6CB /* Pods-OpenIMSDKiOS_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenIMSDKiOS_Example.release.xcconfig"; path = "Target Support Files/Pods-OpenIMSDKiOS_Example/Pods-OpenIMSDKiOS_Example.release.xcconfig"; sourceTree = "<group>"; };
 		BEFA913FDF1A7FB751CB50D8 /* Pods-OpenIMSDKiOS_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenIMSDKiOS_Tests.release.xcconfig"; path = "Target Support Files/Pods-OpenIMSDKiOS_Tests/Pods-OpenIMSDKiOS_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		C135DC982D1E9959C06734F7 /* OpenIMSDKiOS.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = OpenIMSDKiOS.podspec; path = ../OpenIMSDKiOS.podspec; sourceTree = "<group>"; };
-		C216D48844413EE37C6FFAE4 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		C135DC982D1E9959C06734F7 /* OpenIMSDKiOS.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = OpenIMSDKiOS.podspec; path = ../OpenIMSDKiOS.podspec; sourceTree = "<group>"; };
+		C216D48844413EE37C6FFAE4 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		C927ACC53F8B5F1B7B2BC3F7 /* Pods-OpenIMSDKiOS_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenIMSDKiOS_Tests.debug.xcconfig"; path = "Target Support Files/Pods-OpenIMSDKiOS_Tests/Pods-OpenIMSDKiOS_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		DE514ADDF9BBEB5BEB909A8B /* Pods_OpenIMSDKiOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenIMSDKiOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -103,7 +103,6 @@
 				C927ACC53F8B5F1B7B2BC3F7 /* Pods-OpenIMSDKiOS_Tests.debug.xcconfig */,
 				BEFA913FDF1A7FB751CB50D8 /* Pods-OpenIMSDKiOS_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -248,6 +247,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = xpg;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = BDLHL8GNFV;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -258,6 +260,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -494,6 +497,7 @@
 			baseConfigurationReference = 4EF995546887F96AC6C32E5F /* Pods-OpenIMSDKiOS_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BDLHL8GNFV;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenIMSDKiOS/OpenIMSDKiOS-Prefix.pch";
 				INFOPLIST_FILE = "OpenIMSDKiOS/OpenIMSDKiOS-Info.plist";
@@ -510,6 +514,7 @@
 			baseConfigurationReference = B6AC3F85F72574407C2BA6CB /* Pods-OpenIMSDKiOS_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BDLHL8GNFV;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenIMSDKiOS/OpenIMSDKiOS-Prefix.pch";
 				INFOPLIST_FILE = "OpenIMSDKiOS/OpenIMSDKiOS-Info.plist";
