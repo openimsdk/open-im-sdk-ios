@@ -162,27 +162,27 @@
 // MARK: - Open_im_sdkIMSDKListener
 
 - (void)onConnectFailed:(long)ErrCode ErrMsg:(NSString* _Nullable)ErrMsg {
-    _onConnectFailed(ErrCode,ErrMsg);
+    _onConnectFailed ? _onConnectFailed(ErrCode,ErrMsg) : nil;
 }
 
 - (void)onConnectSuccess {
-    _onConnectSuccess();
+    _onConnectSuccess ? _onConnectSuccess() : nil;
 }
 
 - (void)onConnecting {
-    _onConnecting();
+    _onConnecting ? _onConnecting() : nil;
 }
 
 - (void)onKickedOffline {
-    _onKickedOffline();
+    _onKickedOffline ? _onKickedOffline() : nil;
 }
 
 - (void)onSelfInfoUpdated:(NSString* _Nullable)userInfo {
-    _onSelfInfoUpdated([[UserInfo alloc] initWithDictionary:[userInfo dict]]);
+    _onSelfInfoUpdated ? _onSelfInfoUpdated([[UserInfo alloc] initWithDictionary:[userInfo dict]]) : nil;
 }
 
 - (void)onUserTokenExpired {
-    _onUserTokenExpired();
+    _onUserTokenExpired ? _onUserTokenExpired() : nil;
 }
 
 // MARK: - User
@@ -201,9 +201,9 @@
         for (NSDictionary *dt in uList) {
             [userList addObject:[[UserInfo alloc] initWithDictionary:dt]];
         }
-        onSuccess(userList);
+        onSuccess ? onSuccess(userList) : nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError ? onError(ErrCode,ErrMsg) : nil;
     }];
     Open_im_sdkGetUsersInfo([uidList json], proxy);
 }
@@ -224,9 +224,9 @@
    */
 - (void)setSelfInfo:(NSString *)name icon:(NSString*)icon gender:(NSNumber*)gender mobile:(NSString*)mobile birth:(NSString*)birth email:(NSString*)email onSuccess:(onSuccess)onSuccess onError:(onError)onError{
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess ? onSuccess(data) : nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError ? onError(ErrCode,ErrMsg) : nil;
     }];
     NSMutableDictionary *param = [NSMutableDictionary new];
     if(name != nil) {
@@ -265,9 +265,9 @@
     */
 - (void)login:(NSString *)uid token:(NSString *)token onSuccess:(onSuccess)onSuccess onError:(onError)onError{
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess ? onSuccess(data) : nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError ? onError(ErrCode,ErrMsg) : nil;
     }];
     Open_im_sdkLogin(uid, token, proxy);
 }
@@ -284,9 +284,9 @@
    */
 - (void)logout:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess ? onSuccess(data) : nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError ? onError(ErrCode,ErrMsg) : nil;
     }];
     Open_im_sdkLogout(proxy);
 }
@@ -329,9 +329,9 @@
         for (NSDictionary* dt in jsonList) {
             [userList addObject:[[UserInfo alloc] initWithDictionary:dt]];
         }
-        onSuccess(userList);
+        onSuccess ? onSuccess(userList) : nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError ? onError(ErrCode,ErrMsg) : nil;
     }];
     Open_im_sdkGetFriendsInfo(proxy, [uidList json]);
 }
@@ -346,9 +346,9 @@
  */
 - (void)addFriend:(NSString*)uid reqMessage:(NSString*)reqMessage onSuccess:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess ? onSuccess(data) : nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError ? onError(ErrCode,ErrMsg) : nil;
     }];
     NSMutableDictionary *param = [NSMutableDictionary new];
     if(uid != nil) {
@@ -372,9 +372,9 @@
         for (NSDictionary* dt in JsonList) {
             [userList addObject:[[UserInfo alloc] initWithDictionary:dt]];
         }
-        onSuccess(userList);
+        onSuccess ? onSuccess(userList) : nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError ? onError(ErrCode,ErrMsg) : nil;
     }];
     Open_im_sdkGetFriendApplicationList(proxy);
 }
@@ -393,9 +393,9 @@
         for (NSDictionary *dt in jsonList) {
             [userList addObject:[[UserInfo alloc] initWithDictionary:dt]];
         }
-        onSuccess(userList);
+        onSuccess ? onSuccess(userList) : nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError ? onError(ErrCode,ErrMsg)  : nil;
     }];
     Open_im_sdkGetFriendList(proxy);
 }
@@ -409,9 +409,9 @@
    */
 - (void)setFriendInfo:(NSString *)uid comment:(NSString*)comment onSuccess:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess ? onSuccess(data) : nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError ? onError(ErrCode,ErrMsg) : nil;
     }];
     NSMutableDictionary *param = [NSMutableDictionary new];
     if(uid != nil) {
@@ -431,9 +431,9 @@
  */
 - (void)addToBlackList:(NSString *)uid onSuccess:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess?onSuccess(data):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkAddToBlackList(proxy, [uid json]);
 }
@@ -450,9 +450,9 @@
         for (NSDictionary *dt in jsonList) {
             [userList addObject:[[UserInfo alloc] initWithDictionary:dt]];
         }
-        onSuccess(userList);
+        onSuccess?onSuccess(userList):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkGetBlackList(proxy);
 }
@@ -465,9 +465,9 @@
  */
 - (void)deleteFromBlackList:(NSString *)uid onSuccess:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess?onSuccess(data):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkDeleteFromBlackList(proxy, [uid json]);
 }
@@ -486,9 +486,9 @@
         for (NSDictionary *dt in jsonLiat) {
             [userList addObject:[[UserInfo alloc] initWithDictionary:dt]];
         }
-        onSuccess(userList);
+        onSuccess?onSuccess(userList):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkCheckFriend(proxy, [uidList json]);
 }
@@ -501,9 +501,9 @@
   */
 - (void)acceptFriendApplication:(NSString *)uid onSuccess:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess?onSuccess(data):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkAcceptFriendApplication(proxy, [uid json]);
 }
@@ -516,9 +516,9 @@
  */
 - (void)refuseFriendApplication:(NSString *)uid onSuccess:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess?onSuccess(data):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkRefuseFriendApplication(proxy, [uid json]);
 }
@@ -531,9 +531,9 @@
  */
 - (void)deleteFromFriendList:(NSString *)uid onSuccess:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess?onSuccess(data):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkDeleteFromFriendList([uid json], proxy);
 }
@@ -757,11 +757,11 @@
  */
 - (void)sendMessage:(Message *)message recvUid:(NSString *)recvUid recvGid:(NSString *)recvGid onlineUserOnly:(BOOL)onlineUserOnly onSuccess:(onSuccess)onSuccess onProgress:(void(^)(long progress))onProgress onError:(onError)onError {
     SendMessageCallbackProxy *proxy = [[SendMessageCallbackProxy alloc] initWithMessage:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess?onSuccess(data):nil;
     } onProgress:^(long progress) {
-        onProgress(progress);
+        onProgress?onProgress(progress):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkSendMessage(proxy, [[message dict] json], recvUid, recvGid, onlineUserOnly);
 }
@@ -782,16 +782,16 @@
  * @param count    一次拉取count条
  * @param onSuccess     callback List<{@link Message}>
  */
-- (void)getHistoryMessageList:(NSString *)userID groupID:(NSString*)groupID startMsg:(NSString*)startMsg count:(NSInteger)count onSuccess:(void(^)(NSArray* messageList))onSuccess onError:(onError)onError {
+- (void)getHistoryMessageList:(NSString *)userID groupID:(NSString*)groupID startMsg:(Message*)startMsg count:(NSInteger)count onSuccess:(void(^)(NSArray* messageList))onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
         NSArray *jsonList = [data array];
         NSMutableArray *msgList = [NSMutableArray new];
         for (NSDictionary *dt in jsonList) {
             [msgList addObject:[[Message alloc] initWithDictionary:dt]];
         }
-        onSuccess(msgList);
+        onSuccess?onSuccess(msgList):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     NSMutableDictionary *param = [NSMutableDictionary new];
     if(userID != nil) {
@@ -801,7 +801,7 @@
         param[@"groupID"] = groupID;
     }
     if(startMsg != nil) {
-        param[@"startMsg"] = startMsg;
+        param[@"startMsg"] = [startMsg dict];
     }
     param[@"count"] = @(count);
     Open_im_sdkGetHistoryMessageList(proxy, [param json]);
@@ -816,9 +816,9 @@
  */
 - (void)revokeMessage:(Message *)message onSuccess:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess?onSuccess(data):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkRevokeMessage(proxy, [[message dict] json]);
 }
@@ -833,9 +833,9 @@
  */
 - (void)markC2CMessageAsRead:(NSString*)userID msgIds:(NSArray*)messageIDList onSuccess:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess?onSuccess(data):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkMarkC2CMessageAsRead(proxy, userID, [messageIDList json]);
 }
@@ -859,9 +859,9 @@
  */
 - (void)deleteMessageFromLocalStorage:(Message *)message onSuccess:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess?onSuccess(data):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkDeleteMessageFromLocalStorage(proxy, [[message dict] json]);
 }
@@ -874,9 +874,9 @@
  */
 - (void)markSingleMessageHasRead:(NSString *)userID onSuccess:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess?onSuccess(data):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkMarkSingleMessageHasRead(proxy, userID);
 }
@@ -891,9 +891,9 @@
  */
 - (void)insertSingleMessageToLocalStorage:(Message *)message args1:(NSString *)receiver args2:(NSString *)sender onSuccess:(onSuccess)onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess(data);
+        onSuccess?onSuccess(data):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkInsertSingleMessageToLocalStorage(proxy, [[message dict] json], receiver, sender);
 }
@@ -911,9 +911,9 @@
         for (NSDictionary *dt in jsonList) {
             [msgList addObject:[[Message alloc] initWithDictionary:dt]];
         }
-        onSuccess(msgList);
+        onSuccess?onSuccess(msgList):nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        onError(ErrCode,ErrMsg);
+        onError?onError(ErrCode,ErrMsg):nil;
     }];
     Open_im_sdkFindMessages(proxy, [messageIDList json]);
 }
@@ -932,7 +932,7 @@
         for (NSDictionary *dt in jsonList) {
             [msgList addObject:[[ConversationInfo alloc] initWithDictionary:dt]];
         }
-        onSuccess(msgList);
+        onSuccess?onSuccess(msgList):nil;
     } onError:onError];
     Open_im_sdkGetAllConversationList(proxy);
 }
@@ -947,7 +947,7 @@
 - (void)getOneConversation:(NSString *)sourceId session:(long)sessionType onSuccess:(void(^)(ConversationInfo *conversationInfo))onSuccess onError:(onError)onError{
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
         ConversationInfo *conversationInfo = [[ConversationInfo alloc] initWithDictionary:[data dict]];
-        onSuccess(conversationInfo);
+        onSuccess?onSuccess(conversationInfo):nil;
     } onError:onError];
     Open_im_sdkGetOneConversation(sourceId, sessionType, proxy);
 }
@@ -965,7 +965,7 @@
         for (NSDictionary *dt in jsonList) {
             [msgList addObject:[[ConversationInfo alloc] initWithDictionary:dt]];
         }
-        onSuccess(msgList);
+        onSuccess?onSuccess(msgList):nil;
     } onError:onError];
     Open_im_sdkGetMultipleConversation([conversationIDs json], proxy);
 }
@@ -1032,7 +1032,7 @@
         for (NSDictionary *dt in jsonList) {
             [msgList addObject:[[GroupInviteResult alloc] initWithDictionary:dt]];
         }
-        onSuccess(msgList);
+        onSuccess?onSuccess(msgList):nil;
     } onError:onError];
     Open_im_sdkInviteUserToGroup(groupId, reason, [uidList json], proxy);
 }
@@ -1063,7 +1063,7 @@
         for (NSDictionary *dt in jsonList) {
             [msgList addObject:[[GroupInviteResult alloc] initWithDictionary:dt]];
         }
-        onSuccess(msgList);
+        onSuccess?onSuccess(msgList):nil;
     } onError:onError];
     Open_im_sdkKickGroupMember(groupId, reason, [uidList json], proxy);
 }
@@ -1082,7 +1082,7 @@
         for (NSDictionary *dt in jsonList) {
             [msgList addObject:[[GroupInviteResult alloc] initWithDictionary:dt]];
         }
-        onSuccess(msgList);
+        onSuccess?onSuccess(msgList):nil;
     } onError:onError];
     Open_im_sdkGetGroupMembersInfo(groupId, [uidList json], proxy);
 }
@@ -1096,7 +1096,7 @@
  */
 - (void)getGroupMemberList:(NSString *)groupId args1:(int)filter args2:(int)next onSuccess:(void(^)(GroupMembersList *groupMembersList))onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess([[GroupMembersList alloc] initWithDictionary:[data dict]]);
+        onSuccess?onSuccess([[GroupMembersList alloc] initWithDictionary:[data dict]]):nil;
     } onError:onError];
     Open_im_sdkGetGroupMemberList(groupId, filter, next, proxy);
 }
@@ -1108,7 +1108,7 @@
  */
 - (void)getJoinedGroupList:(void(^)(GroupInfo *groupInfo))onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess([[GroupInfo alloc] initWithDictionary:[data dict]]);
+        onSuccess?onSuccess([[GroupInfo alloc] initWithDictionary:[data dict]]):nil;
     } onError:onError];
     Open_im_sdkGetJoinedGroupList(proxy);
 }
@@ -1184,7 +1184,7 @@
         for (NSDictionary *dt in jsonList) {
             [msgList addObject:[[GroupInfo alloc] initWithDictionary:dt]];
         }
-        onSuccess(msgList);
+        onSuccess?onSuccess(msgList):nil;
     } onError:onError];
     Open_im_sdkGetGroupsInfo([gidList json], proxy);
 }
@@ -1231,7 +1231,7 @@
  */
 - (void)getGroupApplicationList:(void(^)(GroupApplicationList *groupApplicationList))onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess([[GroupApplicationList alloc] initWithDictionary:[data dict]]);
+        onSuccess?onSuccess([[GroupApplicationList alloc] initWithDictionary:[data dict]]):nil;
     } onError:onError];
     Open_im_sdkGetGroupApplicationList(proxy);
 }

@@ -414,7 +414,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param count    一次拉取count条
  * @param onSuccess     callback List<{@link Message}>
  */
-- (void)getHistoryMessageList:(NSString *)userID groupID:(NSString*)groupID startMsg:(NSString*)startMsg count:(NSInteger)count onSuccess:(void(^)(NSArray* messageList))onSuccess onError:(onError)onError;
+- (void)getHistoryMessageList:(NSString *)userID groupID:(NSString*)groupID startMsg:(Message*)startMsg count:(NSInteger)count onSuccess:(void(^)(NSArray* messageList))onSuccess onError:(onError)onError;
 
 /**
  * 撤回消息
