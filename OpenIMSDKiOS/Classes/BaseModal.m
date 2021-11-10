@@ -25,19 +25,18 @@
   unsigned int propCount, i;
   objc_property_t* properties = class_copyPropertyList([self class], &propCount);
   for (i = 0; i < propCount; i++) {
-    objc_property_t prop = properties;
-    const char *propName = property_getName(prop);
+      NSString *propName = [NSString stringWithUTF8String:property_getName(properties[i])];
     if(propName) {
-      NSString *name = [NSString stringWithCString:propName encoding:NSUTF8StringEncoding];
+        NSString *name = propName;
       id obj = [dict objectForKey:name];
       if (!obj)
         continue;
-      if ([[obj className] isEqualToString:@"__NSCFString"] || [[obj className] isEqualToString:@"__NSCFNumber"]) {
-        [self setValue:obj forKeyPath:name];
-      } else if ([obj isKindOfClass:[NSDictionary class]]) {
+    if ([obj isKindOfClass:[NSDictionary class]]) {
         id subObj = [self valueForKey:name];
         if (subObj)
           [subObj objectFromDictionary:obj];
+      }else{
+          [self setValue:obj forKeyPath:name];
       }
     }
   }
@@ -55,9 +54,10 @@
 
         NSString *key = [NSString stringWithUTF8String:property_getName(properties[i])];
         id value = [self valueForKey:key];
-        
         if (value == nil) {
             // nothing todo
+        }
+        else if ([value isKindOfClass:[NSNull class]]) {
         }
         else if ([value isKindOfClass:[NSNumber class]]
             || [value isKindOfClass:[NSString class]]

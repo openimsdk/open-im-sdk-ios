@@ -97,7 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
     /**
      * 是否已读
      */
-@property Boolean isRead;
+@property bool isRead;
     /**
      * 消息状态 1:发送中 2:发送成功 3:发送失败 4:已删除 5:已撤回
      */

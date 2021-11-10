@@ -846,7 +846,7 @@
  * @param userID 用户ID
  * @param typing true：输入中 false：输入停止
  */
-- (void)typingStatusUpdate:(NSString*)userID typing:(Boolean)typing {
+- (void)typingStatusUpdate:(NSString*)userID typing:(bool)typing {
     Open_im_sdkTypingStatusUpdate(userID, typing ? @"YES" : @"NO");
 }
 

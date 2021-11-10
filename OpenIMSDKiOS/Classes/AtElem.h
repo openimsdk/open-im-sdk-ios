@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * 自己是否被@了
  */
-@property Boolean isAtSelf;
+@property bool isAtSelf;
 
 @end
 
