@@ -111,10 +111,10 @@
 {
     self = [super init];
     if (self) {
-        Open_im_sdkSetFriendListener(self);
-        Open_im_sdkSetConversationListener(self);
-        Open_im_sdkSetGroupListener(self);
-        Open_im_sdkAddAdvancedMsgListener(self);
+//        Open_im_sdkSetFriendListener(self);
+//        Open_im_sdkSetConversationListener(self);
+//        Open_im_sdkSetGroupListener(self);
+//        Open_im_sdkAddAdvancedMsgListener(self);
     }
     return self;
 }
@@ -1289,15 +1289,21 @@
     for (NSDictionary *dt in jsonList) {
         [haveReadInfoList addObject:[[HaveReadInfo alloc] initWithDictionary:dt]];
     }
-    _onRecvC2CReadReceipt(haveReadInfoList);
+    if(_onRecvC2CReadReceipt != nil) {
+        _onRecvC2CReadReceipt(haveReadInfoList);
+    }
 }
 
 - (void)onRecvMessageRevoked:(NSString* _Nullable)msgId {
-    _onRecvMessageRevoked(msgId);
+    if(_onRecvMessageRevoked != nil) {
+        _onRecvMessageRevoked(msgId);
+    }
 }
 
 - (void)onRecvNewMessage:(NSString* _Nullable)message {
-    _onRecvNewMessage([[Message alloc] initWithDictionary:[message dict]]);
+    if(_onRecvNewMessage != nil) {
+        _onRecvNewMessage([[Message alloc] initWithDictionary:[message dict]]);
+    }
 }
 
 
@@ -1330,39 +1336,57 @@
 }
 
 - (void)onBlackListAdd:(NSString* _Nullable)info {
-    _onBlackListAdd([[UserInfo alloc] initWithDictionary:[info dict]]);
+    if(_onBlackListAdd != nil) {
+        _onBlackListAdd([[UserInfo alloc] initWithDictionary:[info dict]]);
+    }
 }
 
 - (void)onBlackListDeleted:(NSString* _Nullable)info {
-    _onBlackListDeleted([[UserInfo alloc] initWithDictionary:[info dict]]);
+    if(_onBlackListDeleted != nil) {
+        _onBlackListDeleted([[UserInfo alloc] initWithDictionary:[info dict]]);
+    }
 }
 
 - (void)onFriendApplicationListAccept:(NSString* _Nullable)info {
-    _onFriendApplicationListAccept([[UserInfo alloc] initWithDictionary:[info dict]]);
+    if(_onFriendApplicationListAccept != nil) {
+        _onFriendApplicationListAccept([[UserInfo alloc] initWithDictionary:[info dict]]);
+    }
 }
 
 - (void)onFriendApplicationListAdded:(NSString* _Nullable)info {
-    _onFriendApplicationListAdded([[UserInfo alloc] initWithDictionary:[info dict]]);
+    if(_onFriendApplicationListAdded != nil) {
+        _onFriendApplicationListAdded([[UserInfo alloc] initWithDictionary:[info dict]]);
+    }
 }
 
 - (void)onFriendApplicationListDeleted:(NSString* _Nullable)info {
-    _onFriendApplicationListDeleted([[UserInfo alloc] initWithDictionary:[info dict]]);
+    if(_onFriendApplicationListDeleted != nil) {
+        _onFriendApplicationListDeleted([[UserInfo alloc] initWithDictionary:[info dict]]);
+    }
 }
 
 - (void)onFriendApplicationListReject:(NSString* _Nullable)info {
-    _onFriendApplicationListReject([[UserInfo alloc] initWithDictionary:[info dict]]);
+    if(_onFriendApplicationListReject != nil) {
+        _onFriendApplicationListReject([[UserInfo alloc] initWithDictionary:[info dict]]);
+    }
 }
 
 - (void)onFriendInfoChanged:(NSString* _Nullable)info {
-    _onFriendInfoChanged([[UserInfo alloc] initWithDictionary:[info dict]]);
+    if(_onFriendInfoChanged != nil) {
+        _onFriendInfoChanged([[UserInfo alloc] initWithDictionary:[info dict]]);
+    }
 }
 
 - (void)onFriendListAdded:(NSString* _Nullable)info {
-    _onFriendListAdded([[UserInfo alloc] initWithDictionary:[info dict]]);
+    if(_onFriendListAdded != nil) {
+        _onFriendListAdded([[UserInfo alloc] initWithDictionary:[info dict]]);
+    }
 }
 
 - (void)onFriendListDeleted:(NSString* _Nullable)info {
-    _onFriendListDeleted([[UserInfo alloc] initWithDictionary:[info dict]]);
+    if(_onFriendListDeleted != nil) {
+        _onFriendListDeleted([[UserInfo alloc] initWithDictionary:[info dict]]);
+    }
 }
 
 
@@ -1392,7 +1416,9 @@
     for (NSDictionary *dt in jsonList) {
         [conversationInfoList addObject:[[ConversationInfo alloc] initWithDictionary:dt]];
     }
-    _onConversationChanged(conversationInfoList);
+    if(_onConversationChanged != nil) {
+        _onConversationChanged(conversationInfoList);
+    }
 }
 
 - (void)onNewConversation:(NSString* _Nullable)conversationList {
@@ -1401,23 +1427,33 @@
     for (NSDictionary *dt in jsonList) {
         [conversationInfoList addObject:[[ConversationInfo alloc] initWithDictionary:dt]];
     }
-    _onNewConversation(conversationInfoList);
+    if(_onNewConversation != nil) {
+        _onNewConversation(conversationInfoList);
+    }
 }
 
 - (void)onSyncServerFailed {
-    _onSyncServerFailed();
+    if(_onSyncServerFailed != nil) {
+        _onSyncServerFailed();
+    }
 }
 
 - (void)onSyncServerFinish {
-    _onSyncServerFinish();
+    if(_onSyncServerFinish != nil) {
+        _onSyncServerFinish();
+    }
 }
 
 - (void)onSyncServerStart {
-    _onSyncServerStart();
+    if(_onSyncServerStart != nil) {
+        _onSyncServerStart();
+    }
 }
 
 - (void)onTotalUnreadMessageCountChanged:(int)totalUnreadCount {
-    _onTotalUnreadMessageCountChanged(totalUnreadCount);
+    if(_onTotalUnreadMessageCountChanged != nil) {
+        _onTotalUnreadMessageCountChanged(totalUnreadCount);
+    }
 }
 
 
@@ -1449,15 +1485,21 @@
 }
 
 - (void)onApplicationProcessed:(NSString* _Nullable)groupId opUser:(NSString* _Nullable)opUser AgreeOrReject:(int32_t)AgreeOrReject opReason:(NSString* _Nullable)opReason {
-    _onApplicationProcessed(groupId,[[GroupMembersInfo alloc] initWithDictionary:[opUser dict]],AgreeOrReject,opReason);
+    if(_onApplicationProcessed != nil) {
+        _onApplicationProcessed(groupId,[[GroupMembersInfo alloc] initWithDictionary:[opUser dict]],AgreeOrReject,opReason);
+    }
 }
 
 - (void)onGroupCreated:(NSString* _Nullable)groupId {
-    _onGroupCreated(groupId);
+    if(_onGroupCreated != nil) {
+        _onGroupCreated(groupId);
+    }
 }
 
 - (void)onGroupInfoChanged:(NSString* _Nullable)groupId groupInfo:(NSString* _Nullable)groupInfo {
-    _onGroupInfoChanged(groupId,[[GroupInfo alloc] initWithDictionary:[groupInfo dict]]);
+    if(_onGroupInfoChanged != nil) {
+        _onGroupInfoChanged(groupId,[[GroupInfo alloc] initWithDictionary:[groupInfo dict]]);
+    }
 }
 
 - (void)onMemberEnter:(NSString* _Nullable)groupId memberList:(NSString* _Nullable)memberList {
@@ -1466,7 +1508,9 @@
     for (NSDictionary *dt in jsonList) {
         [groupMembersInfolist addObject:[[GroupMembersInfo alloc] initWithDictionary:dt]];
     }
-    _onMemberEnter(groupId,groupMembersInfolist);
+    if(_onMemberEnter != nil) {
+        _onMemberEnter(groupId,groupMembersInfolist);
+    }
 }
 
 - (void)onMemberInvited:(NSString* _Nullable)groupId opUser:(NSString* _Nullable)opUser memberList:(NSString* _Nullable)memberList {
@@ -1475,7 +1519,9 @@
     for (NSDictionary *dt in jsonList) {
         [groupMembersInfolist addObject:[[GroupMembersInfo alloc] initWithDictionary:dt]];
     }
-    _onMemberInvited(groupId,[[GroupMembersInfo alloc] initWithDictionary:[opUser dict]],groupMembersInfolist);
+    if(_onMemberInvited != nil) {
+        _onMemberInvited(groupId,[[GroupMembersInfo alloc] initWithDictionary:[opUser dict]],groupMembersInfolist);
+    }
 }
 
 - (void)onMemberKicked:(NSString* _Nullable)groupId opUser:(NSString* _Nullable)opUser memberList:(NSString* _Nullable)memberList {
@@ -1484,19 +1530,27 @@
     for (NSDictionary *dt in jsonList) {
         [groupMembersInfolist addObject:[[GroupMembersInfo alloc] initWithDictionary:dt]];
     }
-    _onMemberKicked(groupId,[[GroupMembersInfo alloc] initWithDictionary:[opUser dict]],groupMembersInfolist);
+    if(_onMemberKicked != nil) {
+        _onMemberKicked(groupId,[[GroupMembersInfo alloc] initWithDictionary:[opUser dict]],groupMembersInfolist);
+    }
 }
 
 - (void)onMemberLeave:(NSString* _Nullable)groupId member:(NSString* _Nullable)member {
-    _onMemberLeave(groupId,[[GroupMembersInfo alloc] initWithDictionary:[member dict]]);
+    if(_onMemberLeave != nil) {
+        _onMemberLeave(groupId,[[GroupMembersInfo alloc] initWithDictionary:[member dict]]);
+    }
 }
 
 - (void)onReceiveJoinApplication:(NSString* _Nullable)groupId member:(NSString* _Nullable)member opReason:(NSString* _Nullable)opReason {
-    _onReceiveJoinApplication(groupId,[[GroupMembersInfo alloc] initWithDictionary:[member dict]],opReason);
+    if(_onReceiveJoinApplication != nil) {
+        _onReceiveJoinApplication(groupId,[[GroupMembersInfo alloc] initWithDictionary:[member dict]],opReason);
+    }
 }
 
 - (void)onTransferGroupOwner:(NSString* _Nullable)groupId oldUserID:(NSString* _Nullable)oldUserID newUserID:(NSString* _Nullable)newUserID {
-    _onReceiveJoinApplication(groupId,oldUserID,newUserID);
+    if(_onTransferGroupOwner != nil) {
+        _onTransferGroupOwner(groupId,oldUserID,newUserID);
+    }
 }
 
 @end
