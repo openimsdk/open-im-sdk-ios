@@ -21,6 +21,23 @@
   return NSStringFromClass([self class]);
 }
 
+- (NSString *)capitalizedOnlyFirstLetter:(NSString*)str {
+
+    if (str.length < 1) {
+        return @"";
+    }
+    else if (str.length == 1) {
+        return [str capitalizedString];
+    }
+    else {
+
+        NSString *firstChar = [str substringToIndex:1];
+        NSString *otherChars = [str substringWithRange:NSMakeRange(1, str.length - 1)];
+
+        return [NSString stringWithFormat:@"%@%@", [firstChar uppercaseString], otherChars];
+    }
+}
+
 - (void)objectFromDictionary:(NSDictionary*) dict {
   unsigned int propCount, i;
   objc_property_t* properties = class_copyPropertyList([self class], &propCount);
@@ -35,12 +52,24 @@
         id subObj = [self valueForKey:name];
         if (subObj)
           [subObj objectFromDictionary:obj];
+        else{
+            NSString *cs = [self capitalizedOnlyFirstLetter:name];
+            Class c = NSClassFromString(cs);
+            if(c != nil) {
+                id ins = [[c alloc] initWithDictionary:obj];
+                [self setValue:ins forKeyPath:name];
+            }
+        }
       }else{
           [self setValue:obj forKeyPath:name];
       }
     }
   }
   free(properties);
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+    
 }
 
 - (NSDictionary *)dict {

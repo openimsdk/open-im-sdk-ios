@@ -34,6 +34,11 @@
     return (error ? nil : json);
 }
 
+- (NSDictionary *)dict {
+    NSError *error = nil;
+    return [NSJSONSerialization JSONObjectWithData:[[self json] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+}
+
 @end
 
 @implementation NSString (Extensions)
