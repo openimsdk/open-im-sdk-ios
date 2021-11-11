@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OpenIMSDKiOS'
-  s.version          = '1.0.8'
+  s.version          = '1.0.7'
   s.summary          = 'OpenIM'
 
 # This description is used to generate tags and improve search results.
@@ -35,6 +35,14 @@ TODO: Add long description of the pod here.
   s.vendored_frameworks = 'Framework/*.xcframework'
   
   s.public_header_files = 'OpenIMSDKiOS/Classes/**/*.h'
+  
+  valid_archs = ['armv7s','arm64',]
+  s.xcconfig = {
+    'VALID_ARCHS' =>  valid_archs.join(' '),
+  }
+  s.pod_target_xcconfig = {
+      'ARCHS[sdk=iphonesimulator*]' => '$(ARCHS_STANDARD_64_BIT)'
+  }
   
   # s.resource_bundles = {
   #   'OpenIMSDKiOS' => ['OpenIMSDKiOS/Assets/*.png']
