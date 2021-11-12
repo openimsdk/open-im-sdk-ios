@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Message Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/objc/Class/Message" class="dashAnchor"></a>
+    <a title="Message Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">OpenIMSDKiOS 1.0.8 Docs</a> (66% documented)</p>
+        <p class="header-right"><a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">OpenIMSDKiOS Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        Message Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AtElem.html">AtElem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BaseModal.html">BaseModal</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CallbackProxy.html">CallbackProxy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ConversationInfo.html">ConversationInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CustomElem.html">CustomElem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FileElem.html">FileElem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GroupApplicationInfo.html">GroupApplicationInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GroupApplicationList.html">GroupApplicationList</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GroupInfo.html">GroupInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GroupInviteResult.html">GroupInviteResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GroupMemberRole.html">GroupMemberRole</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GroupMembersInfo.html">GroupMembersInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/GroupMembersList.html">GroupMembersList</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/HaveReadInfo.html">HaveReadInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocationElem.html">LocationElem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MergeElem.html">MergeElem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Message.html">Message</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/OpenIMiOSSDK.html">OpenIMiOSSDK</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PictureElem.html">PictureElem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PictureInfo.html">PictureInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/QuoteElem.html">QuoteElem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SendMessageCallbackProxy.html">SendMessageCallbackProxy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SoundElem.html">SoundElem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/UserInfo.html">UserInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/VideoElem.html">VideoElem</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Type%20Definitions.html">Type Definitions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions/Platform.html">Platform</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@VoidCallBack">VoidCallBack</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onApplicationProcessed">onApplicationProcessed</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onBlackListAdd">onBlackListAdd</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onBlackListDeleted">onBlackListDeleted</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onConnectFailed">onConnectFailed</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onConversationChanged">onConversationChanged</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:CallbackProxy.h@T@onError">onError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onFriendApplicationListAccept">onFriendApplicationListAccept</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onFriendApplicationListAdded">onFriendApplicationListAdded</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onFriendApplicationListDeleted">onFriendApplicationListDeleted</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onFriendApplicationListReject">onFriendApplicationListReject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onFriendInfoChanged">onFriendInfoChanged</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onFriendListAdded">onFriendListAdded</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onFriendListDeleted">onFriendListDeleted</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onGroupCreated">onGroupCreated</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onGroupInfoChanged">onGroupInfoChanged</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onMemberEnter">onMemberEnter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onMemberInvited">onMemberInvited</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onMemberKicked">onMemberKicked</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onMemberLeave">onMemberLeave</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onNewConversation">onNewConversation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onReceiveJoinApplication">onReceiveJoinApplication</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onRecvC2CReadReceipt">onRecvC2CReadReceipt</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onRecvMessageRevoked">onRecvMessageRevoked</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onRecvNewMessage">onRecvNewMessage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onSelfInfoUpdated">onSelfInfoUpdated</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:CallbackProxy.h@T@onSuccess">onSuccess</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onSyncServerFailed">onSyncServerFailed</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onSyncServerFinish">onSyncServerFinish</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onSyncServerStart">onSyncServerStart</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onTotalUnreadMessageCountChanged">onTotalUnreadMessageCountChanged</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:OpenIMiOSSDK.h@T@onTransferGroupOwner">onTransferGroupOwner</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Message</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">Message</span> <span class="p">:</span> <span class="nc"><a href="../Classes/BaseModal.html">BaseModal</a></span>
+
+<span class="cm">/**
+     * 消息唯一ID
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">clientMsgID</span><span class="p">;</span>
+    <span class="cm">/**
+     * 消息服务器ID，暂时不使用
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">serverMsgID</span><span class="p">;</span>
+    <span class="cm">/**
+     * 消息创建时间，单位纳秒
+     */</span>
+<span class="k">@property</span> <span class="kt">long</span> <span class="n">createTime</span><span class="p">;</span>
+    <span class="cm">/**
+     * 消息发送时间，单位纳秒
+     */</span>
+<span class="k">@property</span> <span class="kt">long</span> <span class="n">sendTime</span><span class="p">;</span>
+    <span class="cm">/**
+     * 发送者ID
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">sendID</span><span class="p">;</span>
+    <span class="cm">/**
+     * 接收者ID
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">recvID</span><span class="p">;</span>
+    <span class="cm">/**
+     * 标识消息是用户级别还是系统级别 100:用户 200:系统
+     */</span>
+<span class="k">@property</span> <span class="kt">int</span> <span class="n">msgFrom</span><span class="p">;</span>
+    <span class="cm">/**
+     * 消息类型：&lt;br/&gt;
+     * 101:文本消息&lt;br/&gt;
+     * 102:图片消息&lt;br/&gt;
+     * 103:语音消息&lt;br/&gt;
+     * 104:视频消息&lt;br/&gt;
+     * 105:文件消息&lt;br/&gt;
+     * 106:@消息&lt;br/&gt;
+     * 107:合并消息&lt;br/&gt;
+     * 108:转发消息&lt;br/&gt;
+     * 109:位置消息&lt;br/&gt;
+     * 110:自定义消息&lt;br/&gt;
+     * 111:撤回消息回执&lt;br/&gt;
+     * 112:C2C已读回执&lt;br/&gt;
+     * 113:正在输入状态
+     */</span>
+<span class="k">@property</span> <span class="kt">int</span> <span class="n">contentType</span><span class="p">;</span>
+    <span class="cm">/**
+     * 平台类型 1:ios 2:android 3:windows 4:osx 5:web 6:mini 7:linux
+     */</span>
+<span class="k">@property</span> <span class="kt">int</span> <span class="n">platformID</span><span class="p">;</span>
+    <span class="cm">/**
+     * 强制推送列表(被@的用户)
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">forceList</span><span class="p">;</span>
+    <span class="cm">/**
+     * 发送者昵称
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">senderNickName</span><span class="p">;</span>
+    <span class="cm">/**
+     * 发送者头像
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">senderFaceUrl</span><span class="p">;</span>
+    <span class="cm">/**
+     * 群聊ID
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">groupID</span><span class="p">;</span>
+    <span class="cm">/**
+     * 消息内容
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">content</span><span class="p">;</span>
+    <span class="cm">/**
+     * 消息唯一序列号
+     */</span>
+<span class="k">@property</span> <span class="kt">int</span> <span class="n">seq</span><span class="p">;</span>
+    <span class="cm">/**
+     * 是否已读
+     */</span>
+<span class="k">@property</span> <span class="n">bool</span> <span class="n">isRead</span><span class="p">;</span>
+    <span class="cm">/**
+     * 消息状态 1:发送中 2:发送成功 3:发送失败 4:已删除 5:已撤回
+     */</span>
+<span class="k">@property</span> <span class="kt">int</span> <span class="n">status</span><span class="p">;</span>
+    <span class="cm">/**
+     * 消息备注
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">remark</span><span class="p">;</span>
+    <span class="cm">/**
+     *
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">id</span> <span class="n">ext</span><span class="p">;</span>
+    <span class="cm">/**
+     * 会话类型 1:单聊 2:群聊
+     */</span>
+<span class="k">@property</span> <span class="kt">int</span> <span class="n">sessionType</span><span class="p">;</span>
+    <span class="cm">/**
+     * 图片信息
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/PictureElem.html">PictureElem</a></span> <span class="o">*</span><span class="n">pictureElem</span><span class="p">;</span>
+    <span class="cm">/**
+     * 语音信息
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/SoundElem.html">SoundElem</a></span> <span class="o">*</span><span class="n">soundElem</span><span class="p">;</span>
+    <span class="cm">/**
+     * 视频信息
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/VideoElem.html">VideoElem</a></span> <span class="o">*</span><span class="n">videoElem</span><span class="p">;</span>
+    <span class="cm">/**
+     * 文件信息
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/FileElem.html">FileElem</a></span> <span class="o">*</span><span class="n">fileElem</span><span class="p">;</span>
+    <span class="cm">/**
+     * _@信息
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/AtElem.html">AtElem</a></span> <span class="o">*</span><span class="n">atElem</span><span class="p">;</span>
+    <span class="cm">/**
+     * 位置信息
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/LocationElem.html">LocationElem</a></span> <span class="o">*</span><span class="n">locationElem</span><span class="p">;</span>
+    <span class="cm">/**
+     * 引用消息
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/QuoteElem.html">QuoteElem</a></span> <span class="o">*</span><span class="n">quoteElem</span><span class="p">;</span>
+    <span class="cm">/**
+     * 自定义信息
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/CustomElem.html">CustomElem</a></span> <span class="o">*</span><span class="n">customElem</span><span class="p">;</span>
+    <span class="cm">/**
+     * 合并信息
+     */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/MergeElem.html">MergeElem</a></span> <span class="o">*</span><span class="n">mergeElem</span><span class="p">;</span>
+
+<span class="k">@end</span></code></pre>
+
+                </div>
+              </div>
+            <p>Undocumented</p>
+
+              <div class="slightly-smaller">
+                <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L22-L154">Show on GitHub</a>
+              </div>
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)clientMsgID"></a>
+                    <a name="//apple_ref/objc/Property/clientMsgID" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)clientMsgID">clientMsgID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>消息唯一ID</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">clientMsgID</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L27">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)serverMsgID"></a>
+                    <a name="//apple_ref/objc/Property/serverMsgID" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)serverMsgID">serverMsgID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>消息服务器ID，暂时不使用</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">serverMsgID</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L31">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)createTime"></a>
+                    <a name="//apple_ref/objc/Property/createTime" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)createTime">createTime</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>消息创建时间，单位纳秒</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="kt">long</span> <span class="n">createTime</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L35">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)sendTime"></a>
+                    <a name="//apple_ref/objc/Property/sendTime" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)sendTime">sendTime</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>消息发送时间，单位纳秒</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="kt">long</span> <span class="n">sendTime</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L39">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)sendID"></a>
+                    <a name="//apple_ref/objc/Property/sendID" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)sendID">sendID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>发送者ID</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">sendID</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L43">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)recvID"></a>
+                    <a name="//apple_ref/objc/Property/recvID" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)recvID">recvID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>接收者ID</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">recvID</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L47">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)msgFrom"></a>
+                    <a name="//apple_ref/objc/Property/msgFrom" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)msgFrom">msgFrom</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>标识消息是用户级别还是系统级别 100:用户 200:系统</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="kt">int</span> <span class="n">msgFrom</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L51">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)contentType"></a>
+                    <a name="//apple_ref/objc/Property/contentType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)contentType">contentType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>消息类型：<br/>
+101:文本消息<br/>
+102:图片消息<br/>
+103:语音消息<br/>
+104:视频消息<br/>
+105:文件消息<br/>
+106:@消息<br/>
+107:合并消息<br/>
+108:转发消息<br/>
+109:位置消息<br/>
+110:自定义消息<br/>
+111:撤回消息回执<br/>
+112:C2C已读回执<br/>
+113:正在输入状态</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="kt">int</span> <span class="n">contentType</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L68">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)platformID"></a>
+                    <a name="//apple_ref/objc/Property/platformID" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)platformID">platformID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>平台类型 1:ios 2:android 3:windows 4:osx 5:web 6:mini 7:linux</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="kt">int</span> <span class="n">platformID</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L72">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)forceList"></a>
+                    <a name="//apple_ref/objc/Property/forceList" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)forceList">forceList</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>强制推送列表(被@的用户)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">forceList</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L76">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)senderNickName"></a>
+                    <a name="//apple_ref/objc/Property/senderNickName" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)senderNickName">senderNickName</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>发送者昵称</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">senderNickName</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L80">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)senderFaceUrl"></a>
+                    <a name="//apple_ref/objc/Property/senderFaceUrl" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)senderFaceUrl">senderFaceUrl</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>发送者头像</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">senderFaceUrl</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L84">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)groupID"></a>
+                    <a name="//apple_ref/objc/Property/groupID" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)groupID">groupID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>群聊ID</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">groupID</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L88">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)content"></a>
+                    <a name="//apple_ref/objc/Property/content" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)content">content</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>消息内容</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">content</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L92">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)seq"></a>
+                    <a name="//apple_ref/objc/Property/seq" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)seq">seq</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>消息唯一序列号</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="kt">int</span> <span class="n">seq</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L96">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)isRead"></a>
+                    <a name="//apple_ref/objc/Property/isRead" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)isRead">isRead</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>是否已读</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="kt">_Bool</span> <span class="n">isRead</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L100">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)status"></a>
+                    <a name="//apple_ref/objc/Property/status" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)status">status</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>消息状态 1:发送中 2:发送成功 3:发送失败 4:已删除 5:已撤回</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="kt">int</span> <span class="n">status</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L104">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)remark"></a>
+                    <a name="//apple_ref/objc/Property/remark" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)remark">remark</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>消息备注</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">remark</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L108">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)ext"></a>
+                    <a name="//apple_ref/objc/Property/ext" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)ext">ext</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">id</span> <span class="n">ext</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L112">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)sessionType"></a>
+                    <a name="//apple_ref/objc/Property/sessionType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)sessionType">sessionType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>会话类型 1:单聊 2:群聊</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="kt">int</span> <span class="n">sessionType</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L116">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)pictureElem"></a>
+                    <a name="//apple_ref/objc/Property/pictureElem" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)pictureElem">pictureElem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>图片信息</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/PictureElem.html">PictureElem</a></span> <span class="o">*</span><span class="n">pictureElem</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L120">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)soundElem"></a>
+                    <a name="//apple_ref/objc/Property/soundElem" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)soundElem">soundElem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>语音信息</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/SoundElem.html">SoundElem</a></span> <span class="o">*</span><span class="n">soundElem</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L124">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)videoElem"></a>
+                    <a name="//apple_ref/objc/Property/videoElem" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)videoElem">videoElem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>视频信息</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/VideoElem.html">VideoElem</a></span> <span class="o">*</span><span class="n">videoElem</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L128">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)fileElem"></a>
+                    <a name="//apple_ref/objc/Property/fileElem" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)fileElem">fileElem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>文件信息</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/FileElem.html">FileElem</a></span> <span class="o">*</span><span class="n">fileElem</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L132">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)atElem"></a>
+                    <a name="//apple_ref/objc/Property/atElem" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)atElem">atElem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>_@信息</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/AtElem.html">AtElem</a></span> <span class="o">*</span><span class="n">atElem</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L136">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)locationElem"></a>
+                    <a name="//apple_ref/objc/Property/locationElem" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)locationElem">locationElem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>位置信息</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/LocationElem.html">LocationElem</a></span> <span class="o">*</span><span class="n">locationElem</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L140">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)quoteElem"></a>
+                    <a name="//apple_ref/objc/Property/quoteElem" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)quoteElem">quoteElem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>引用消息</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/QuoteElem.html">QuoteElem</a></span> <span class="o">*</span><span class="n">quoteElem</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L144">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)customElem"></a>
+                    <a name="//apple_ref/objc/Property/customElem" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)customElem">customElem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>自定义信息</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/CustomElem.html">CustomElem</a></span> <span class="o">*</span><span class="n">customElem</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L148">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)Message(py)mergeElem"></a>
+                    <a name="//apple_ref/objc/Property/mergeElem" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)Message(py)mergeElem">mergeElem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>合并信息</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/MergeElem.html">MergeElem</a></span> <span class="o">*</span><span class="n">mergeElem</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/Message.h#L152">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="https://openim.io" target="_blank" rel="external noopener">OpenIMSDKiOS</a>. All rights reserved. (Last updated: 2021-11-12)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>
