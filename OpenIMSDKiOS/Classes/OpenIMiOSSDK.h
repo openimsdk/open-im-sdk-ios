@@ -290,7 +290,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param duration  时长
  * @return {@link Message}
  */
-- (Message *)createSoundMessage:(NSString *)soundPath args1:(NSInteger)duration;
+- (Message *)createSoundMessage:(NSString *)soundPath duration:(NSInteger)duration;
 
 /**
  * 创建声音消息
@@ -299,7 +299,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param duration  时长
  * @return {@link Message}
  */
-- (Message *)createSoundMessageFromFullPath:(NSString *)soundPath args1:(NSInteger)duration;
+- (Message *)createSoundMessageFromFullPath:(NSString *)soundPath duration:(NSInteger)duration;
 
 /**
  * 创建视频消息
@@ -311,7 +311,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param snapshotPath 缩略图相对路径
  * @return {@link Message}
  */
-- (Message *)createVideoMessage:(NSString *)videoPath args1:(NSString *)videoType args2:(NSInteger)duration args3:(NSString *)snapshotPath;
+- (Message *)createVideoMessage:(NSString *)videoPath videoType:(NSString *)videoType duration:(NSInteger)duration snapshotPath:(NSString *)snapshotPath;
 
 /**
  * 创建视频消息
@@ -322,7 +322,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param snapshotPath 缩略图绝对路径
  * @return {@link Message}
  */
-- (Message *)createVideoMessageFromFullPath:(NSString *)videoPath args1:(NSString *)videoType args2:(NSInteger)duration args3:(NSString *)snapshotPath;
+- (Message *)createVideoMessageFromFullPath:(NSString *)videoPath videoType:(NSString *)videoType duration:(NSInteger)duration snapshotPath:(NSString *)snapshotPath;
 
 /**
  * 创建文件消息
@@ -332,7 +332,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param fileName 文件名
  * @return {@link Message}
  */
-- (Message *)createFileMessage:(NSString *)filePath args1:(NSString *)fileName;
+- (Message *)createFileMessage:(NSString *)filePath fileName:(NSString *)fileName;
 
 /**
  * 创建文件消息
@@ -342,7 +342,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param fileName 文件名
  * @return {@link Message}
  */
-- (Message *)createFileMessageFromFullPath:(NSString *)filePath args1:(NSString *)fileName;
+- (Message *)createFileMessageFromFullPath:(NSString *)filePath fileName:(NSString *)fileName;
 
 /**
  * 创建合并消息
@@ -352,7 +352,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param messageList 消息列表
  * @return {@link Message}
  */
-- (Message *)createMergerMessage:(NSArray *)messageList args1:(NSString *)title args2:(NSArray*)summaryList;
+- (Message *)createMergerMessage:(NSArray *)messageList title:(NSString *)title summaryList:(NSArray*)summaryList;
 
 /**
  * 创建转发消息
@@ -468,7 +468,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param sender   发送者
  * @param onSuccess     callback String
  */
-- (void)insertSingleMessageToLocalStorage:(Message *)message args1:(NSString *)receiver args2:(NSString *)sender onSuccess:(onSuccess)onSuccess onError:(onError)onError;
+- (void)insertSingleMessageToLocalStorage:(Message *)message receiver:(NSString *)receiver sender:(NSString *)sender onSuccess:(onSuccess)onSuccess onError:(onError)onError;
 
 /**
  * 根据消息id批量查询消息记录
@@ -517,7 +517,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param draft          草稿
  * @param onSuccess           callback String
  **/
-- (void)setConversationDraft:(NSString *)conversationID args1:(NSString *)draft onSuccess:(onSuccess)onSuccess onError:(onError)onError;
+- (void)setConversationDraft:(NSString *)conversationID draft:(NSString *)draft onSuccess:(onSuccess)onSuccess onError:(onError)onError;
 
 /**
  * 置顶会话
@@ -526,7 +526,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param isPinned       true 置顶； false 取消置顶
  * @param onSuccess           callback String
  **/
-- (void)pinConversation:(NSString *)conversationID args1:(BOOL)isPinned onSuccess:(onSuccess)onSuccess onError:(onError)onError;
+- (void)pinConversation:(NSString *)conversationID isPinned:(BOOL)isPinned onSuccess:(onSuccess)onSuccess onError:(onError)onError;
 
 /**
  * 邀请进群
@@ -554,7 +554,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param reason  说明
  * @param onSuccess    callback List<{@link GroupInviteResult}>>
  */
-- (void)kickGroupMember:(NSString *)groupId args1:(NSString *)reason args2:(NSArray *)uidList onSuccess:(void(^)(NSArray *groupInviteResultList))onSuccess onError:(onError)onError;
+- (void)kickGroupMember:(NSString *)groupId reason:(NSString *)reason uidList:(NSArray *)uidList onSuccess:(void(^)(NSArray *groupInviteResultList))onSuccess onError:(onError)onError;
 
 /**
  * 批量获取群成员信息
@@ -563,7 +563,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param uidList 群成员ID
  * @param onSuccess    callback List<{@link GroupMembersInfo}>
  **/
-- (void)getGroupMembersInfo:(NSString *)groupId args1:(NSArray *)uidList onSuccess:(void(^)(NSArray *groupInviteResultList))onSuccess onError:(onError)onError;
+- (void)getGroupMembersInfo:(NSString *)groupId uidList:(NSArray *)uidList onSuccess:(void(^)(NSArray *groupInviteResultList))onSuccess onError:(onError)onError;
 
 /**
  * 获取群成员
@@ -572,7 +572,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param filter  过滤成员，0不过滤，1群的创建者，2管理员；默认值0
  * @param next    分页，从next条开始获取，默认值0。参照{@link GroupMembersList}的nextSeq字段的值。
  */
-- (void)getGroupMemberList:(NSString *)groupId args1:(int)filter args2:(int)next onSuccess:(void(^)(GroupMembersList *groupMembersList))onSuccess onError:(onError)onError;
+- (void)getGroupMemberList:(NSString *)groupId filter:(int)filter next:(int)next onSuccess:(void(^)(GroupMembersList *groupMembersList))onSuccess onError:(onError)onError;
 
 /**
  * 获取已加入的群列表
@@ -636,7 +636,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param uid  被转让的用户ID
  * @param onSuccess callback String
  */
-- (void)transferGroupOwner:(NSString *)gid args1:(NSString *)uid onSuccess:(onSuccess)onSuccess onError:(onError)onError;
+- (void)transferGroupOwner:(NSString *)gid uid:(NSString *)uid onSuccess:(onSuccess)onSuccess onError:(onError)onError;
 
 /**
  * 获取群申请列表
