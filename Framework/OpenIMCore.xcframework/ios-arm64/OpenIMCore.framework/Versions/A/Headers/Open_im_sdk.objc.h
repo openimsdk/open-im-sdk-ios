@@ -52,7 +52,6 @@
 @class Open_im_sdkWsMsgData;
 @class Open_im_sdkWsSendMsgResp;
 @class Open_im_sdkWsSubMsg;
-@class Open_im_sdkXBase;
 @protocol Open_im_sdkBase;
 @class Open_im_sdkBase;
 @protocol Open_im_sdkIMSDKListener;
@@ -795,6 +794,8 @@
 - (void)addFriend:(id<Open_im_sdkBase> _Nullable)callback paramsReq:(NSString* _Nullable)paramsReq;
 - (void)addToBlackList:(id<Open_im_sdkBase> _Nullable)callback blackUid:(NSString* _Nullable)blackUid;
 - (void)checkFriend:(id<Open_im_sdkBase> _Nullable)callback uidList:(NSString* _Nullable)uidList;
+- (void)clearC2CHistoryMessage:(id<Open_im_sdkBase> _Nullable)callback userID:(NSString* _Nullable)userID;
+- (void)clearGroupHistoryMessage:(id<Open_im_sdkBase> _Nullable)callback groupID:(NSString* _Nullable)groupID;
 - (NSString* _Nonnull)createCardMessage:(NSString* _Nullable)cardInfo;
 - (NSString* _Nonnull)createCustomMessage:(NSString* _Nullable)data extension:(NSString* _Nullable)extension description:(NSString* _Nullable)description;
 - (NSString* _Nonnull)createFileMessage:(NSString* _Nullable)filePath fileName:(NSString* _Nullable)fileName;
@@ -1024,17 +1025,6 @@
 @property (nonatomic) NSString* _Nonnull clientMsgID;
 @end
 
-@interface Open_im_sdkXBase : NSObject <goSeqRefInterface, Open_im_sdkBase, Open_im_sdkSendMsgCallBack> {
-}
-@property(strong, readonly) _Nonnull id _ref;
-
-- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
-- (nonnull instancetype)init;
-- (void)onError:(long)errCode errMsg:(NSString* _Nullable)errMsg;
-- (void)onProgress:(long)progress;
-- (void)onSuccess:(NSString* _Nullable)data;
-@end
-
 FOUNDATION_EXPORT const int64_t Open_im_sdkAcceptFriendApplicationTip;
 FOUNDATION_EXPORT const int64_t Open_im_sdkAcceptGroupApplicationTip;
 FOUNDATION_EXPORT NSString* _Nonnull const Open_im_sdkAcceptGroupTip;
@@ -1129,7 +1119,6 @@ FOUNDATION_EXPORT const int64_t Open_im_sdkSingleChatType;
  */
 FOUNDATION_EXPORT const int64_t Open_im_sdkSingleTipBegin;
 FOUNDATION_EXPORT const int64_t Open_im_sdkSingleTipEnd;
-FOUNDATION_EXPORT const int64_t Open_im_sdkSound;
 FOUNDATION_EXPORT const int64_t Open_im_sdkSysMsgType;
 /**
  * ContentType
@@ -1148,6 +1137,7 @@ MsgFrom
  */
 FOUNDATION_EXPORT const int64_t Open_im_sdkUserMsgType;
 FOUNDATION_EXPORT const int64_t Open_im_sdkVideo;
+FOUNDATION_EXPORT const int64_t Open_im_sdkVoice;
 FOUNDATION_EXPORT const int64_t Open_im_sdkWSDataError;
 FOUNDATION_EXPORT const int64_t Open_im_sdkWSGetNewestSeq;
 FOUNDATION_EXPORT const int64_t Open_im_sdkWSPullMsg;
@@ -1179,6 +1169,10 @@ FOUNDATION_EXPORT void Open_im_sdkAddFriend(id<Open_im_sdkBase> _Nullable callba
 FOUNDATION_EXPORT void Open_im_sdkAddToBlackList(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable blackUid);
 
 FOUNDATION_EXPORT void Open_im_sdkCheckFriend(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable uidList);
+
+FOUNDATION_EXPORT void Open_im_sdkClearC2CHistoryMessage(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable userID);
+
+FOUNDATION_EXPORT void Open_im_sdkClearGroupHistoryMessage(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable groupID);
 
 FOUNDATION_EXPORT NSString* _Nonnull Open_im_sdkCreateCardMessage(NSString* _Nullable cardInfo);
 
@@ -1229,36 +1223,6 @@ FOUNDATION_EXPORT void Open_im_sdkDeleteFromBlackList(id<Open_im_sdkBase> _Nulla
 FOUNDATION_EXPORT void Open_im_sdkDeleteFromFriendList(NSString* _Nullable deleteUid, id<Open_im_sdkBase> _Nullable callback);
 
 FOUNDATION_EXPORT void Open_im_sdkDeleteMessageFromLocalStorage(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable message);
-
-FOUNDATION_EXPORT void Open_im_sdkDoAcceptGroupApplication(NSString* _Nullable uid);
-
-FOUNDATION_EXPORT NSString* _Nonnull Open_im_sdkDoGetGroupApplicationList(void);
-
-FOUNDATION_EXPORT void Open_im_sdkDoGetGroupsInfo(void);
-
-FOUNDATION_EXPORT void Open_im_sdkDoGroupApplicationList(void);
-
-FOUNDATION_EXPORT void Open_im_sdkDoJoinGroup(void);
-
-FOUNDATION_EXPORT void Open_im_sdkDoQuitGroup(void);
-
-FOUNDATION_EXPORT void Open_im_sdkDoRefuseGroupApplication(NSString* _Nullable uid);
-
-FOUNDATION_EXPORT void Open_im_sdkDoSetGroupInfo(void);
-
-FOUNDATION_EXPORT void Open_im_sdkDoTestCreateGroup(void);
-
-FOUNDATION_EXPORT void Open_im_sdkDoTransferGroupOwner(NSString* _Nullable groupid, NSString* _Nullable userid);
-
-FOUNDATION_EXPORT void Open_im_sdkDotestGetGroupMemberList(void);
-
-FOUNDATION_EXPORT void Open_im_sdkDotestGetGroupMembersInfo(void);
-
-FOUNDATION_EXPORT void Open_im_sdkDotestGetJoinedGroupList(void);
-
-FOUNDATION_EXPORT void Open_im_sdkDotestKickGroupMember(void);
-
-FOUNDATION_EXPORT void Open_im_sdkDotesttestInviteUserToGroup(void);
 
 FOUNDATION_EXPORT void Open_im_sdkFindMessages(id<Open_im_sdkBase> _Nullable callback, NSString* _Nullable messageIDList);
 

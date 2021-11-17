@@ -116,10 +116,10 @@
 {
     self = [super init];
     if (self) {
-//        Open_im_sdkSetFriendListener(self);
-//        Open_im_sdkSetConversationListener(self);
-//        Open_im_sdkSetGroupListener(self);
-//        Open_im_sdkAddAdvancedMsgListener(self);
+        Open_im_sdkSetFriendListener(self);
+        Open_im_sdkSetConversationListener(self);
+        Open_im_sdkSetGroupListener(self);
+        Open_im_sdkAddAdvancedMsgListener(self);
     }
     return self;
 }
