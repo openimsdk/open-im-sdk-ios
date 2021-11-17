@@ -579,7 +579,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  *
  * @param onSuccess callback List<{@link GroupInfo}></>
  */
-- (void)getJoinedGroupList:(void(^)(GroupInfo *groupInfo))onSuccess onError:(onError)onError;
+- (void)getJoinedGroupList:(void(^)(NSArray<GroupInfo*> *groupInfoList))onSuccess onError:(onError)onError;
 
 /**
  * 创建群

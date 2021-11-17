@@ -1111,9 +1111,14 @@
  *
  * @param onSuccess callback List<{@link GroupInfo}></>
  */
-- (void)getJoinedGroupList:(void(^)(GroupInfo *groupInfo))onSuccess onError:(onError)onError {
+- (void)getJoinedGroupList:(void(^)(NSArray<GroupInfo*> *groupInfoList))onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
-        onSuccess?onSuccess([[GroupInfo alloc] initWithDictionary:[data dict]]):nil;
+        NSArray *jsonList = [data array];
+        NSMutableArray *msgList = [NSMutableArray new];
+        for (NSDictionary *dt in jsonList) {
+            [msgList addObject:[[GroupInfo alloc] initWithDictionary:dt]];
+        }
+        onSuccess?onSuccess(msgList):nil;
     } onError:onError];
     Open_im_sdkGetJoinedGroupList(proxy);
 }
