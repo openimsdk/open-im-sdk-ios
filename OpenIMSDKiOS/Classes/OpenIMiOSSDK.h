@@ -37,7 +37,7 @@ typedef void (^VoidCallBack)(void);
 typedef void (^onConnectFailed)(long ErrCode,NSString* _Nullable ErrMsg);
 typedef void (^onSelfInfoUpdated)(UserInfo* _Nullable userInfo);
 
-typedef void(^onRecvC2CReadReceipt)(NSArray *haveReadInfoList);
+typedef void(^onRecvC2CReadReceipt)(NSArray<HaveReadInfo*> *haveReadInfoList);
 typedef void(^onRecvMessageRevoked)(NSString *msgId);
 typedef void(^onRecvNewMessage)(Message *msg);
 
@@ -51,8 +51,8 @@ typedef void(^onFriendInfoChanged)(UserInfo *user);
 typedef void(^onFriendListAdded)(UserInfo *user);
 typedef void(^onFriendListDeleted)(UserInfo *user);
 
-typedef void(^onConversationChanged)(NSArray *conversationInfoList);
-typedef void(^onNewConversation)(NSArray *conversationInfoList);
+typedef void(^onConversationChanged)(NSArray<ConversationInfo*> *conversationInfoList);
+typedef void(^onNewConversation)(NSArray<ConversationInfo*> *conversationInfoList);
 typedef void(^onSyncServerFailed)(void);
 typedef void(^onSyncServerFinish)(void);
 typedef void(^onSyncServerStart)(void);
@@ -96,7 +96,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
     * @param onSuccess    List<{@link UserInfo}>
     * @param onError
     */
-- (void)getUsersInfo:(NSArray *)uidList onSuccess:(void(^)(NSArray *userInfoList))onSuccess onError:(onError)onError;
+- (void)getUsersInfo:(NSArray *)uidList onSuccess:(void(^)(NSArray<UserInfo*> *userInfoList))onSuccess onError:(onError)onError;
 
 /**
    * 修改当前登录用户信息
@@ -155,7 +155,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
   * @param onSuccess    callback List<{@link UserInfo}>
   * @param onError callback String
   */
-- (void)getFriendsInfo:(NSArray *)uidList onSuccess:(void(^)(NSArray *userList))onSuccess onError:(onError)onError;
+- (void)getFriendsInfo:(NSArray *)uidList onSuccess:(void(^)(NSArray<UserInfo*> *userList))onSuccess onError:(onError)onError;
 
 /**
  * 添加朋友
@@ -172,7 +172,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
     *
     * @param onSuccess callback List<{@link UserInfo}>
     */
-- (void)getFriendApplicationList:(void(^)(NSArray* userList))onSuccess onError:(onError)onError;
+- (void)getFriendApplicationList:(void(^)(NSArray<UserInfo*>* userList))onSuccess onError:(onError)onError;
 
 /**
   * 好友列表
@@ -181,7 +181,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
   *
   * @param onSuccess callback List<{@link UserInfo}>
   */
-- (void)getFriendList:(void(^)(NSArray* userInfoList))onSuccess onError:(onError)onError;
+- (void)getFriendList:(void(^)(NSArray<UserInfo*>* userInfoList))onSuccess onError:(onError)onError;
 
 /**
    * 修改好友资料
@@ -205,7 +205,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
    *
    * @param onSuccess callback List<{@link UserInfo}>
    */
-- (void)getBlackList:(void(^)(NSArray* userInfoList))onSuccess onError:(onError)onError;
+- (void)getBlackList:(void(^)(NSArray<UserInfo*>* userInfoList))onSuccess onError:(onError)onError;
 
 /**
  * 从黑名单删除
@@ -222,7 +222,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
    * @param uidList 用户ID列表
    * @param onSuccess    callback List<{@link UserInfo}>
    */
-- (void)checkFriend:(NSArray *)uidList onSuccess:(void(^)(NSArray* userInfoList))onSuccess onError:(onError)onError;
+- (void)checkFriend:(NSArray *)uidList onSuccess:(void(^)(NSArray<UserInfo*>* userInfoList))onSuccess onError:(onError)onError;
 
 /**
   * 接受好友请求
@@ -414,7 +414,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param count    一次拉取count条
  * @param onSuccess     callback List<{@link Message}>
  */
-- (void)getHistoryMessageList:(NSString *)userID groupID:(NSString*)groupID startMsg:(Message*)startMsg count:(NSInteger)count onSuccess:(void(^)(NSArray* messageList))onSuccess onError:(onError)onError;
+- (void)getHistoryMessageList:(NSString *)userID groupID:(NSString*)groupID startMsg:(Message*)startMsg count:(NSInteger)count onSuccess:(void(^)(NSArray<Message*>* messageList))onSuccess onError:(onError)onError;
 
 /**
  * 撤回消息
@@ -476,14 +476,14 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param messageIDList 消息id(clientMsgID)集合
  * @param onSuccess          callback List<{@link Message}>
  */
-- (void)findMessages:(NSArray *)messageIDList onSuccess:(void(^)(NSArray *messageList))onSuccess onError:(onError)onError;
+- (void)findMessages:(NSArray *)messageIDList onSuccess:(void(^)(NSArray<Message*> *messageList))onSuccess onError:(onError)onError;
 
 /**
  * 获取会话记录
  *
  * @param onSuccess callback List<{@link ConversationInfo}>
  */
-- (void)getAllConversationList:(void(^)(NSArray *conversationInfoList))onSuccess on:(onError)onError;
+- (void)getAllConversationList:(void(^)(NSArray<ConversationInfo*> *conversationInfoList))onSuccess on:(onError)onError;
 
 /**
  * 获取单个会话
@@ -500,7 +500,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param conversationIDs 会话ID 集合
  * @param onSuccess            callback List<{@link ConversationInfo}>
  */
-- (void)getMultipleConversation:(NSArray *)conversationIDs onSuccess:(void(^)(NSArray *conversationInfoList))onSuccess onError:(onError)onError;
+- (void)getMultipleConversation:(NSArray *)conversationIDs onSuccess:(void(^)(NSArray<ConversationInfo*> *conversationInfoList))onSuccess onError:(onError)onError;
 
 /**
  * 删除草稿
@@ -536,7 +536,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param reason  邀请说明
  * @param onSuccess    callback List<{@link GroupInviteResult}>>
  */
-- (void)inviteUserToGroup:(NSString *)groupId reason:(NSString *)reason uidList:(NSArray *)uidList onSuccess:(void(^)(NSArray *groupInviteResultList))onSuccess onError:(onError)onError;
+- (void)inviteUserToGroup:(NSString *)groupId reason:(NSString *)reason uidList:(NSArray *)uidList onSuccess:(void(^)(NSArray<GroupInviteResult*> *groupInviteResultList))onSuccess onError:(onError)onError;
 
 /**
  * 标记群组会话已读
@@ -554,7 +554,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param reason  说明
  * @param onSuccess    callback List<{@link GroupInviteResult}>>
  */
-- (void)kickGroupMember:(NSString *)groupId reason:(NSString *)reason uidList:(NSArray *)uidList onSuccess:(void(^)(NSArray *groupInviteResultList))onSuccess onError:(onError)onError;
+- (void)kickGroupMember:(NSString *)groupId reason:(NSString *)reason uidList:(NSArray *)uidList onSuccess:(void(^)(NSArray<GroupInviteResult*> *groupInviteResultList))onSuccess onError:(onError)onError;
 
 /**
  * 批量获取群成员信息
@@ -563,7 +563,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param uidList 群成员ID
  * @param onSuccess    callback List<{@link GroupMembersInfo}>
  **/
-- (void)getGroupMembersInfo:(NSString *)groupId uidList:(NSArray *)uidList onSuccess:(void(^)(NSArray *groupInviteResultList))onSuccess onError:(onError)onError;
+- (void)getGroupMembersInfo:(NSString *)groupId uidList:(NSArray *)uidList onSuccess:(void(^)(NSArray<GroupMembersInfo*> *groupMembersInfoList))onSuccess onError:(onError)onError;
 
 /**
  * 获取群成员
@@ -590,7 +590,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param faceUrl      群icon
  * @param list         List<{@link GroupMemberRole}> 创建群是选择的成员. setRole：0:普通成员 2:管理员；1：群主
  */
-- (void)createGroup:(NSString *)groupName notification:(NSString*)notification introduction:(NSString*)introduction faceUrl:(NSString*)faceUrl list:(NSArray *)list onSuccess:(onSuccess)onSuccess onError:(onError)onError;
+- (void)createGroup:(NSString *)groupName notification:(NSString*)notification introduction:(NSString*)introduction faceUrl:(NSString*)faceUrl list:(NSArray<GroupMemberRole*> *)list onSuccess:(onSuccess)onSuccess onError:(onError)onError;
 
 /**
  * 设置或更新群资料
@@ -610,7 +610,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param gidList 群ID集合
  * @param onSuccess    callback List<{@link GroupInfo}>
  */
-- (void)getGroupsInfo:(NSArray *)gidList onSuccess:(void(^)(NSArray* groupInfoList))onSuccess onError:(onError)onError;
+- (void)getGroupsInfo:(NSArray *)gidList onSuccess:(void(^)(NSArray<GroupInfo*>* groupInfoList))onSuccess onError:(onError)onError;
 
 /**
  * 申请加入群组
