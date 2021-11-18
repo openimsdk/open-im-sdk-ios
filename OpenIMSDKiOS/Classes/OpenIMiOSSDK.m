@@ -1085,7 +1085,7 @@
         NSArray *jsonList = [data array];
         NSMutableArray *msgList = [NSMutableArray new];
         for (NSDictionary *dt in jsonList) {
-            [msgList addObject:[[GroupInviteResult alloc] initWithDictionary:dt]];
+            [msgList addObject:[[GroupMembersInfo alloc] initWithDictionary:dt]];
         }
         onSuccess?onSuccess(msgList):nil;
     } onError:onError];
