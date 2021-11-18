@@ -711,6 +711,13 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  */
 - (void)setGroupListenerWithonApplicationProcessed:(onApplicationProcessed)onApplicationProcessed onGroupCreated:(onGroupCreated)onGroupCreated onGroupInfoChanged:(onGroupInfoChanged)onGroupInfoChanged onMemberEnter:(onMemberEnter)onMemberEnter onMemberInvited:(onMemberInvited)onMemberInvited onMemberKicked:(onMemberKicked)onMemberKicked onMemberLeave:(onMemberLeave)onMemberLeave onReceiveJoinApplication:(onReceiveJoinApplication)onReceiveJoinApplication onTransferGroupOwner:(onTransferGroupOwner)onTransferGroupOwner;
 
+/**
+ * 得到消息未读总数
+ *
+ * @param onSuccess String
+ */
+- (void)getTotalUnreadMsgCount:(onSuccess)onSuccess onError:(onError)onError;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -8,5 +8,5 @@
 #import "LocationElem.h"
 
 @implementation LocationElem
-
+@synthesize description;
 @end

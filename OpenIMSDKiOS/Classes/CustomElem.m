@@ -8,5 +8,5 @@
 #import "CustomElem.h"
 
 @implementation CustomElem
-
+@synthesize description;
 @end
