@@ -23,7 +23,7 @@
 
     NSString *docDir = [paths objectAtIndex:0];
     
-    [OpenIMiOSSDK.shared initSDK:IOS ipApi:@"http://im.fbang.com:10000" ipWs:@"ws://im.fbang.com:17778" dbPath:docDir onConnecting:^{
+    [OpenIMiOSSDK.shared initSDK:IOS ipApi:@"http://im.fbang.com:10000" ipWs:@"ws://im.fbang.com:17778" dbPath:[docDir stringByAppendingString:@"/"] onConnecting:^{
         NSLog(@"onConnecting");
     } onConnectFailed:^(long ErrCode, NSString * _Nullable ErrMsg) {
         NSLog(@"onConnectFailed");
