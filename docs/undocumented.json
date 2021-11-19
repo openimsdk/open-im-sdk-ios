@@ -611,7 +611,7 @@
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 149,
+      "line": 155,
       "symbol": "OpenIMiOSSDK.-getLoginUser",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
