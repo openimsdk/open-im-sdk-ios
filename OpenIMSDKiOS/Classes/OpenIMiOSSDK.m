@@ -227,7 +227,7 @@
    * @param onSuccess   callback String
    * @param onError   callback String
    */
-- (void)setSelfInfo:(NSString *)name icon:(NSString*)icon gender:(NSNumber*)gender mobile:(NSString*)mobile birth:(NSString*)birth email:(NSString*)email onSuccess:(onSuccess)onSuccess onError:(onError)onError{
+- (void)setSelfInfo:(NSString *_Nullable)name icon:(NSString*_Nullable)icon gender:(NSNumber*_Nullable)gender mobile:(NSString*_Nullable)mobile birth:(NSString*_Nullable)birth email:(NSString*_Nullable)email onSuccess:(onSuccess)onSuccess onError:(onError)onError{
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
         onSuccess ? onSuccess(data) : nil;
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
@@ -299,7 +299,13 @@
 /**
  * 获取登录状态
  *
- * @return 1:success
+ * @return const (
+ LoginSuccess = 101
+ Logining     = 102
+ LoginFailed  = 103
+
+ LogoutCmd = 201
+)
  */
 - (long)getLoginStatus {
     return Open_im_sdkGetLoginStatus();
@@ -1023,7 +1029,7 @@
 // MARK: - Group
 
 /**
- * 邀请进群
+ * 邀请进群Status
  *
  * @param groupId 群组ID
  * @param uidList 被要用的用户id列表
