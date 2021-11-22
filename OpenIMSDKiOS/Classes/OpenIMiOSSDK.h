@@ -596,7 +596,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param faceUrl      群icon
  * @param list         List<{@link GroupMemberRole}> 创建群是选择的成员. setRole：0:普通成员 2:管理员；1：群主
  */
-- (void)createGroup:(NSString *)groupName notification:(NSString*)notification introduction:(NSString*)introduction faceUrl:(NSString*)faceUrl list:(NSArray<GroupMemberRole*> *)list onSuccess:(onSuccess)onSuccess onError:(onError)onError;
+- (void)createGroup:(NSString *_Nullable)groupName notification:(NSString*_Nullable)notification introduction:(NSString*_Nullable)introduction faceUrl:(NSString*_Nullable)faceUrl list:(NSArray<GroupMemberRole*> *)list onSuccess:(onSuccess)onSuccess onError:(onError)onError;
 
 /**
  * 设置或更新群资料
@@ -608,7 +608,7 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  * @param faceUrl      群icon
  * @param onSuccess         callback String
  */
-- (void)setGroupInfo:(NSString *)groupID groupName:(NSString*)groupName notification:(NSString*)notification introduction:(NSString*)introduction faceUrl:(NSString*)faceUrl onSuccess:(onSuccess)onSuccess onError:(onError)onError;
+- (void)setGroupInfo:(NSString *_Nullable)groupID groupName:(NSString*_Nullable)groupName notification:(NSString*_Nullable)notification introduction:(NSString*_Nullable)introduction faceUrl:(NSString*_Nullable)faceUrl onSuccess:(onSuccess)onSuccess onError:(onError)onError;
 
 /**
  * 批量获取群资料
