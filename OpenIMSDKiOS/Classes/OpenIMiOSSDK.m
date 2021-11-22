@@ -793,7 +793,7 @@
  * @param count    一次拉取count条
  * @param onSuccess     callback List<{@link Message}>
  */
-- (void)getHistoryMessageList:(NSString *)userID groupID:(NSString*)groupID startMsg:(Message*)startMsg count:(NSInteger)count onSuccess:(void(^)(NSArray<Message*>* messageList))onSuccess onError:(onError)onError {
+- (void)getHistoryMessageList:(NSString *)userID groupID:(NSString*)groupID startMsg:(Message*_Nullable)startMsg count:(NSInteger)count onSuccess:(void(^)(NSArray<Message*>* messageList))onSuccess onError:(onError)onError {
     CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
         NSArray *jsonList = [data array];
         NSMutableArray *msgList = [NSMutableArray new];
