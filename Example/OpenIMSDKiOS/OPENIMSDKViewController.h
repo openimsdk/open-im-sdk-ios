@@ -8,6 +8,6 @@
 
 @import UIKit;
 
-@interface OPENIMSDKViewController : UIViewController<UIImagePickerControllerDelegate>
+@interface OPENIMSDKViewController : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @end

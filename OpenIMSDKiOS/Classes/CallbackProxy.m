@@ -29,14 +29,14 @@
     if (errMsg == nil) {
         errMsg = @"";
     }
-    _onError(eCode,errMsg);
+    _onError?_onError(eCode,errMsg):nil;
 }
 
 - (void)onSuccess:(NSString * _Nullable)data {
     if (data == nil) {
         data = @"";
     }
-    _onSuccess(data);
+    _onSuccess?_onSuccess(data):nil;
 }
 
 @end

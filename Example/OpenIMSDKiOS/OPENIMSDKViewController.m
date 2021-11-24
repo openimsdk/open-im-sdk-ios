@@ -23,7 +23,7 @@
 
     NSString *docDir = [paths objectAtIndex:0];
     
-    [OpenIMiOSSDK.shared initSDK:IOS ipApi:@"http://im.fbang.com:10000" ipWs:@"ws://im.fbang.com:17778" dbPath:[docDir stringByAppendingString:@"/"] onConnecting:^{
+    [OpenIMiOSSDK.shared initSDK:IOS ipApi:@"http://47.112.160.66:10000" ipWs:@"ws://47.112.160.66:17778" dbPath:[docDir stringByAppendingString:@"/"] onConnecting:^{
         NSLog(@"onConnecting");
     } onConnectFailed:^(long ErrCode, NSString * _Nullable ErrMsg) {
         NSLog(@"onConnectFailed");
@@ -38,8 +38,11 @@
     }];
     
     
-    [OpenIMiOSSDK.shared login:@"868326518" token:@"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVSUQiOiI4NjgzMjY0MzAiLCJQbGF0Zm9ybSI6IldlYiIsImV4cCI6MTYzNzU2MDA2NSwiaWF0IjoxNjM2OTU1MjY1LCJuYmYiOjE2MzY5NTUyNjV9.IEYTwYfVza1IbNh-hUIk0METkg6aDEWrZOvRfOfQPEs" onSuccess:^(NSString * _Nullable data) {
+    [OpenIMiOSSDK.shared login:@"iostest" token:@"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVSUQiOiJpb3N0ZXN0IiwiUGxhdGZvcm0iOiJJT1MiLCJleHAiOjE2MzgzMjQ4NjIsIm5iZiI6MTYzNzcyMDA2MiwiaWF0IjoxNjM3NzIwMDYyfQ.QUNzY_jHgtzzSamCE1rY8uVMBENJdkfocHhfjwjUMPw" onSuccess:^(NSString * _Nullable data) {
         NSLog(@"onSuccess");
+        
+        [OpenIMiOSSDK.shared getTotalUnreadMsgCount:nil onError:nil];
+        
         [OpenIMiOSSDK.shared getFriendList:^(NSArray * _Nonnull userInfoList) {
             NSLog(@"getFriendList - %@",userInfoList);
         } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
@@ -60,7 +63,7 @@
             
         }];
         
-        [OpenIMiOSSDK.shared getHistoryMessageList:@"1" groupID:@"" startMsg:@"" count:100 onSuccess:^(NSArray * _Nonnull messageList) {
+        [OpenIMiOSSDK.shared getHistoryMessageList:@"1" groupID:@"" startMsg:nil count:100 onSuccess:^(NSArray * _Nonnull messageList) {
             
         } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
             
@@ -76,24 +79,6 @@
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
         NSLog(@"onError %@",ErrMsg);
     }];
-    
-    UserInfo *u = [OpenIMiOSSDK.shared getLoginUser];
-    NSLog(@"-----   %@",[u dict]);
-    
-    [OpenIMiOSSDK.shared getGroupApplicationList:^(GroupApplicationList * _Nonnull groupApplicationList) {
-        NSLog(@"getGroupApplicationList getGroupApplicationList %@",[groupApplicationList dict]);
-    } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        NSLog(@"getGroupApplicationList onError %@",ErrMsg);
-    }];
-    
-//    [OpenIMiOSSDK.shared getFriendList:^(NSArray * _Nonnull userInfoList) {
-//        NSLog(@"getFriendList userInfoList");
-//        for (UserInfo *u in userInfoList) {
-//            NSLog(@"%@",[u dict]);
-//        }
-//    } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-//        NSLog(@"getFriendList onError");
-//    }];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -103,7 +88,6 @@
     //当选择的类型是图片
     if ([type isEqualToString:@"public.image"])
     {
-        NSString *key = nil;
         //获取图片
         NSURL *imgUrl = [info objectForKey:UIImagePickerControllerReferenceURL];
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
