@@ -1153,7 +1153,11 @@
     if(faceUrl != nil) {
         param[@"faceUrl"] = faceUrl;
     }
-    Open_im_sdkCreateGroup([param json], [list json], proxy);
+    NSMutableArray *dictArr = [NSMutableArray new];
+    for (GroupMemberRole *role in list) {
+        [dictArr addObject:[role dict]];
+    }
+    Open_im_sdkCreateGroup([param json], [dictArr json], proxy);
 }
 
 /**
