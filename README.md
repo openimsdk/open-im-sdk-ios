@@ -1,3 +1,6 @@
+
+## 可以免费使用，必须在app启动页加上 (由OpenIM提供技术支持)
+
 # OpenIMSDKiOS
 
 [![CI Status](https://img.shields.io/travis/xpg/OpenIMSDKiOS.svg?style=flat)](https://travis-ci.org/xpg/OpenIMSDKiOS)
