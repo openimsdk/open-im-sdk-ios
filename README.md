@@ -1,5 +1,5 @@
 
-## 可以免费使用，必须在app启动页加上 (由OpenIM提供技术支持)
+## 可以免费商用，必须在app启动页加上 (由OpenIM提供技术支持)
 
 # OpenIMSDKiOS
 
