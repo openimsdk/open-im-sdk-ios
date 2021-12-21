@@ -25,10 +25,18 @@
 @implementation NSArray (Extensions)
 
 - (NSString *)json {
+    NSMutableArray *dictArr = [NSMutableArray new];
+    for (id m in self) {
+        if([m isKindOfClass:[BaseModal class]]) {
+            [dictArr addObject:[m dict]];
+        }else{
+            [dictArr addObject:m];
+        }
+    }
     NSString *json = nil;
 
     NSError *error = nil;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:self options:NSJSONWritingPrettyPrinted error:&error];
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dictArr options:NSJSONWritingPrettyPrinted error:&error];
     json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 
     return (error ? nil : json);
