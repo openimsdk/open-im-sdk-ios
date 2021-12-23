@@ -65,7 +65,7 @@
         for(NSDictionary *dic in obj) {
             if([[self className] isEqualToString:@"GroupApplicationList"]) {
                 if([name isEqualToString:@"user"]) {
-                    Class c = NSClassFromString(@"GroupApplicationList");
+                    Class c = NSClassFromString(@"GroupApplicationInfo");
                     [arr addObject:[[c alloc] initWithDictionary:dic]];
                 }
             }else if([[self className] isEqualToString:@"GroupMembersList"]) {
