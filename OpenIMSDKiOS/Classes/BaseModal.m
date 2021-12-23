@@ -60,7 +60,30 @@
                 [self setValue:ins forKeyPath:name];
             }
         }
-      }else{
+    }else if([obj isKindOfClass:[NSArray class]]){
+        NSMutableArray *arr = [NSMutableArray new];
+        for(NSDictionary *dic in obj) {
+            if([[self className] isEqualToString:@"GroupApplicationList"]) {
+                if([name isEqualToString:@"user"]) {
+                    Class c = NSClassFromString(@"GroupApplicationList");
+                    [arr addObject:[[c alloc] initWithDictionary:dic]];
+                }
+            }else if([[self className] isEqualToString:@"GroupMembersList"]) {
+                if([name isEqualToString:@"data"]) {
+                    Class c = NSClassFromString(@"GroupMembersInfo");
+                    [arr addObject:[[c alloc] initWithDictionary:dic]];
+                }
+            }else if([[self className] isEqualToString:@"MergeElem"]) {
+                if([name isEqualToString:@"multiMessage"]) {
+                    Class c = NSClassFromString(@"Message");
+                    [arr addObject:[[c alloc] initWithDictionary:dic]];
+                }
+            }else{
+                [arr addObject:dic];
+            }
+        }
+        [self setValue:arr forKeyPath:name];
+    }else{
           [self setValue:obj forKeyPath:name];
       }
     }
