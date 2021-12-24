@@ -724,6 +724,8 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
  */
 - (void)getTotalUnreadMsgCount:(onSuccess)onSuccess onError:(onError)onError;
 
+- (void)setSdkLog:(Boolean)enable;
+
 @end
 
 NS_ASSUME_NONNULL_END

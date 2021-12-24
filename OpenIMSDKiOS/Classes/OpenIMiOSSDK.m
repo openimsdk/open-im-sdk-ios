@@ -124,10 +124,7 @@
 {
     self = [super init];
     if (self) {
-        Open_im_sdkSetFriendListener(self);
-        Open_im_sdkSetConversationListener(self);
-        Open_im_sdkSetGroupListener(self);
-        Open_im_sdkAddAdvancedMsgListener(self);
+        Open_im_sdkSetSdkLog(1);
     }
     return self;
 }
@@ -282,6 +279,12 @@
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
         onError ? onError(ErrCode,ErrMsg) : nil;
     }];
+    
+    Open_im_sdkSetFriendListener(self);
+    Open_im_sdkSetConversationListener(self);
+    Open_im_sdkSetGroupListener(self);
+    Open_im_sdkAddAdvancedMsgListener(self);
+    
     Open_im_sdkLogin(uid, token, proxy);
 }
 
@@ -1484,6 +1487,11 @@
     }
 }
 
+// MARK: - Open_im_sdkSetSdkLog
+
+- (void)setSdkLog:(Boolean)enable{
+    Open_im_sdkSetSdkLog(enable?0:1);
+}
 
 // MARK: - Open_im_sdkOnGroupListener
 
