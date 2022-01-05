@@ -19,6 +19,7 @@
 #import "GroupApplicationList.h"
 #import "HaveReadInfo.h"
 #import "UserInfo.h"
+#import "NotDisturbInfo.h"
 
 @import OpenIMCore;
 
@@ -725,6 +726,20 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
 - (void)getTotalUnreadMsgCount:(onSuccess)onSuccess onError:(onError)onError;
 
 - (void)setSdkLog:(Boolean)enable;
+
+/**
+     * 设置会话免打扰状态
+     *
+     * @param status 1:屏蔽消息; 2:接收消息但不提示; 0:正常
+     */
+- (void)setConversationRecvMessageOpt:(NSArray<NSString*>*)conversationIDs status:(long)status onSuccess:(onSuccess)onSuccess onError:(onError)onError;
+
+/**
+     * 获取会话免打扰状态
+     * 1: Do not receive messages, 2: Do not notify when messages are received; 0: Normal
+     * [{"conversationId":"single_13922222222","result":0}]
+     */
+- (void)getConversationRecvMessageOpt:(NSArray<NSString*>*)conversationIDs onSuccess:(void(^)(NSArray<NotDisturbInfo*>* notDisturbInfoList))onSuccess onError:(onError)onError;
 
 @end
 

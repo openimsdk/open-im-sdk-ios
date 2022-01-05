@@ -1589,4 +1589,38 @@
     }
 }
 
+
+// MARK: -other
+
+/**
+     * 设置会话免打扰状态
+     *
+     * @param status 1:屏蔽消息; 2:接收消息但不提示; 0:正常
+     */
+- (void)setConversationRecvMessageOpt:(NSArray<NSString*>*)conversationIDs status:(long)status onSuccess:(onSuccess)onSuccess onError:(onError)onError {
+    CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
+        onSuccess?onSuccess(data):nil;
+    } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
+        onError?onError(ErrCode,ErrMsg):nil;
+    }];
+    Open_im_sdkSetConversationRecvMessageOpt(proxy, [conversationIDs json],status);
+}
+
+/**
+     * 获取会话免打扰状态
+     * 1: Do not receive messages, 2: Do not notify when messages are received; 0: Normal
+     * [{"conversationId":"single_13922222222","result":0}]
+     */
+- (void)getConversationRecvMessageOpt:(NSArray<NSString*>*)conversationIDs onSuccess:(void(^)(NSArray<NotDisturbInfo*>* notDisturbInfoList))onSuccess onError:(onError)onError {
+    CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
+        NSArray *jsonList = [data array];
+        NSMutableArray *msgList = [NSMutableArray new];
+        for (NSDictionary *dt in jsonList) {
+            [msgList addObject:[[NotDisturbInfo alloc] initWithDictionary:dt]];
+        }
+        onSuccess?onSuccess(msgList):nil;
+    } onError:onError];
+    Open_im_sdkGetConversationRecvMessageOpt(proxy,[conversationIDs json]);
+}
+
 @end
