@@ -281,338 +281,366 @@
       "warning": "undocumented"
     },
     {
+      "file": "OpenIMSDKiOS/Classes/NotDisturbInfo.h",
+      "line": 13,
+      "symbol": "NotDisturbInfo",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "OpenIMSDKiOS/Classes/NotDisturbInfo.h",
+      "line": 19,
+      "symbol": "NotDisturbInfo.conversationId",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "OpenIMSDKiOS/Classes/NotDisturbInfo.h",
+      "line": 24,
+      "symbol": "NotDisturbInfo.result",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 25,
+      "line": 26,
       "symbol": "",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 25,
+      "line": 26,
       "symbol": "Platform",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 25,
+      "line": 26,
       "symbol": "Platform.",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 26,
+      "line": 27,
       "symbol": ".IOS",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 26,
+      "line": 27,
       "symbol": "Platform..IOS",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 27,
+      "line": 28,
       "symbol": ".ANDROID",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 27,
+      "line": 28,
       "symbol": "Platform..ANDROID",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 28,
+      "line": 29,
       "symbol": ".WIN",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 28,
+      "line": 29,
       "symbol": "Platform..WIN",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 29,
+      "line": 30,
       "symbol": ".XOS",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 29,
+      "line": 30,
       "symbol": "Platform..XOS",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 30,
+      "line": 31,
       "symbol": ".WEB",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 30,
+      "line": 31,
       "symbol": "Platform..WEB",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 31,
+      "line": 32,
       "symbol": ".MINI_WEB",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 31,
+      "line": 32,
       "symbol": "Platform..MINI_WEB",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 36,
+      "line": 37,
       "symbol": "VoidCallBack",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 37,
+      "line": 38,
       "symbol": "onConnectFailed",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 38,
+      "line": 39,
       "symbol": "onSelfInfoUpdated",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 40,
+      "line": 41,
       "symbol": "onRecvC2CReadReceipt",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 41,
+      "line": 42,
       "symbol": "onRecvMessageRevoked",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 42,
+      "line": 43,
       "symbol": "onRecvNewMessage",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 44,
+      "line": 45,
       "symbol": "onBlackListAdd",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 45,
+      "line": 46,
       "symbol": "onBlackListDeleted",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 46,
+      "line": 47,
       "symbol": "onFriendApplicationListAccept",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 47,
+      "line": 48,
       "symbol": "onFriendApplicationListAdded",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 48,
+      "line": 49,
       "symbol": "onFriendApplicationListDeleted",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 49,
+      "line": 50,
       "symbol": "onFriendApplicationListReject",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 50,
+      "line": 51,
       "symbol": "onFriendInfoChanged",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 51,
+      "line": 52,
       "symbol": "onFriendListAdded",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 52,
+      "line": 53,
       "symbol": "onFriendListDeleted",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 54,
+      "line": 55,
       "symbol": "onConversationChanged",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 55,
+      "line": 56,
       "symbol": "onNewConversation",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 56,
+      "line": 57,
       "symbol": "onSyncServerFailed",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 57,
+      "line": 58,
       "symbol": "onSyncServerFinish",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 58,
+      "line": 59,
       "symbol": "onSyncServerStart",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 59,
+      "line": 60,
       "symbol": "onTotalUnreadMessageCountChanged",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 61,
+      "line": 62,
       "symbol": "onApplicationProcessed",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 62,
+      "line": 63,
       "symbol": "onGroupCreated",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 63,
+      "line": 64,
       "symbol": "onGroupInfoChanged",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 64,
+      "line": 65,
       "symbol": "onMemberEnter",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 65,
+      "line": 66,
       "symbol": "onMemberInvited",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 66,
+      "line": 67,
       "symbol": "onMemberKicked",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 67,
+      "line": 68,
       "symbol": "onMemberLeave",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 68,
+      "line": 69,
       "symbol": "onReceiveJoinApplication",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 69,
+      "line": 70,
       "symbol": "onTransferGroupOwner",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 71,
+      "line": 72,
       "symbol": "OpenIMiOSSDK",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 73,
+      "line": 74,
       "symbol": "OpenIMiOSSDK.+shared",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
-      "line": 155,
+      "line": 156,
       "symbol": "OpenIMiOSSDK.-getLoginUser",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "OpenIMSDKiOS/Classes/OpenIMiOSSDK.h",
+      "line": 728,
+      "symbol": "OpenIMiOSSDK.-setSdkLog:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },

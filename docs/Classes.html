@@ -91,6 +91,9 @@
                 <a href="Classes/Message.html">Message</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/NotDisturbInfo.html">NotDisturbInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/OpenIMiOSSDK.html">OpenIMiOSSDK</a>
               </li>
               <li class="nav-group-task">
@@ -398,12 +401,12 @@
     * 用户头像或群聊头像
     */</span>
 <span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">faceUrl</span><span class="p">;</span>
-   <span class="cm">/**
-    * 接收消息选项：&lt;br/&gt;
-    * 1:在线正常接收消息，离线时进行推送&lt;br/&gt;
-    * 2:不会接收到消息&lt;br/&gt;
-    * 3:在线正常接收消息，离线不会有推送
-    */</span>
+<span class="cm">/**
+     * 接收消息选项：&lt;br/&gt;
+     * 0:在线正常接收消息，离线时进行推送&lt;br/&gt;
+     * 1:不会接收到消息&lt;br/&gt;
+     * 2:在线正常接收消息，离线不会有推送
+     */</span>
 <span class="k">@property</span> <span class="kt">int</span> <span class="n">recvMsgOpt</span><span class="p">;</span>
    <span class="cm">/**
     * 未读消息数量
@@ -1215,6 +1218,50 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:objc(cs)NotDisturbInfo"></a>
+                    <a name="//apple_ref/objc/Class/NotDisturbInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)NotDisturbInfo">NotDisturbInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/NotDisturbInfo.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">NotDisturbInfo</span> <span class="p">:</span> <span class="nc"><a href="Classes/BaseModal.html">BaseModal</a></span>
+
+<span class="c1">//    {"conversationId":"single_13922222222","result":0}</span>
+   <span class="cm">/*
+    * 会话id
+    * */</span>
+<span class="k">@property</span><span class="p">(</span><span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">conversationId</span><span class="p">;</span>
+   <span class="cm">/*
+    * 免打扰状态
+    * 1:屏蔽消息; 2:接收消息但不提示; 3:正常
+    * */</span>
+<span class="k">@property</span> <span class="kt">int</span> <span class="n">result</span><span class="p">;</span>
+
+<span class="k">@end</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/NotDisturbInfo.h#L13-L26">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:objc(cs)OpenIMiOSSDK"></a>
                     <a name="//apple_ref/objc/Class/OpenIMiOSSDK" class="dashAnchor"></a>
                     <a class="token" href="#/c:objc(cs)OpenIMiOSSDK">OpenIMiOSSDK</a>
@@ -1585,7 +1632,7 @@
  * @param count    一次拉取count条
  * @param onSuccess     callback List&lt;{@link Message}&gt;
  */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">getHistoryMessageList</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">userID</span> <span class="nf">groupID</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">groupID</span> <span class="nf">startMsg</span><span class="p">:(</span><span class="n"><a href="Classes/Message.html">Message</a></span><span class="o">*</span><span class="p">)</span><span class="nv">startMsg</span> <span class="nf">count</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">count</span> <span class="nf">onSuccess</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n"><a href="Classes/Message.html">Message</a></span><span class="o">*&gt;*</span> <span class="n">messageList</span><span class="p">))</span><span class="nv">onSuccess</span> <span class="nf">onError</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onError">onError</a></span><span class="p">)</span><span class="nv">onError</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">getHistoryMessageList</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">userID</span> <span class="nf">groupID</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">groupID</span> <span class="nf">startMsg</span><span class="p">:(</span><span class="n"><a href="Classes/Message.html">Message</a></span><span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">startMsg</span> <span class="nf">count</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">count</span> <span class="nf">onSuccess</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n"><a href="Classes/Message.html">Message</a></span><span class="o">*&gt;*</span> <span class="n">messageList</span><span class="p">))</span><span class="nv">onSuccess</span> <span class="nf">onError</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onError">onError</a></span><span class="p">)</span><span class="nv">onError</span><span class="p">;</span>
 
 <span class="cm">/**
  * 撤回消息
@@ -1761,7 +1808,7 @@
  * @param faceUrl      群icon
  * @param list         List&lt;{@link GroupMemberRole}&gt; 创建群是选择的成员. setRole：0:普通成员 2:管理员；1：群主
  */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">createGroup</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">groupName</span> <span class="nf">notification</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">notification</span> <span class="nf">introduction</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">introduction</span> <span class="nf">faceUrl</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">faceUrl</span> <span class="nf">list</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n"><a href="Classes/GroupMemberRole.html">GroupMemberRole</a></span><span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">list</span> <span class="nf">onSuccess</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onSuccess">onSuccess</a></span><span class="p">)</span><span class="nv">onSuccess</span> <span class="nf">onError</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onError">onError</a></span><span class="p">)</span><span class="nv">onError</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">createGroup</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">groupName</span> <span class="nf">notification</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">notification</span> <span class="nf">introduction</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">introduction</span> <span class="nf">faceUrl</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">faceUrl</span> <span class="nf">list</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n"><a href="Classes/GroupMemberRole.html">GroupMemberRole</a></span><span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">list</span> <span class="nf">onSuccess</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onSuccess">onSuccess</a></span><span class="p">)</span><span class="nv">onSuccess</span> <span class="nf">onError</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onError">onError</a></span><span class="p">)</span><span class="nv">onError</span><span class="p">;</span>
 
 <span class="cm">/**
  * 设置或更新群资料
@@ -1773,7 +1820,7 @@
  * @param faceUrl      群icon
  * @param onSuccess         callback String
  */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setGroupInfo</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">groupID</span> <span class="nf">groupName</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">groupName</span> <span class="nf">notification</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">notification</span> <span class="nf">introduction</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">introduction</span> <span class="nf">faceUrl</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="p">)</span><span class="nv">faceUrl</span> <span class="nf">onSuccess</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onSuccess">onSuccess</a></span><span class="p">)</span><span class="nv">onSuccess</span> <span class="nf">onError</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onError">onError</a></span><span class="p">)</span><span class="nv">onError</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setGroupInfo</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">groupID</span> <span class="nf">groupName</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">groupName</span> <span class="nf">notification</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">notification</span> <span class="nf">introduction</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">introduction</span> <span class="nf">faceUrl</span><span class="p">:(</span><span class="n">NSString</span><span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">faceUrl</span> <span class="nf">onSuccess</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onSuccess">onSuccess</a></span><span class="p">)</span><span class="nv">onSuccess</span> <span class="nf">onError</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onError">onError</a></span><span class="p">)</span><span class="nv">onError</span><span class="p">;</span>
 
 <span class="cm">/**
  * 批量获取群资料
@@ -1889,12 +1936,28 @@
  */</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">getTotalUnreadMsgCount</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onSuccess">onSuccess</a></span><span class="p">)</span><span class="nv">onSuccess</span> <span class="nf">onError</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onError">onError</a></span><span class="p">)</span><span class="nv">onError</span><span class="p">;</span>
 
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setSdkLog</span><span class="p">:(</span><span class="n">Boolean</span><span class="p">)</span><span class="nv">enable</span><span class="p">;</span>
+
+<span class="cm">/**
+     * 设置会话免打扰状态
+     *
+     * @param status 1:屏蔽消息; 2:接收消息但不提示; 0:正常
+     */</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setConversationRecvMessageOpt</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">NSString</span><span class="o">*&gt;*</span><span class="p">)</span><span class="nv">conversationIDs</span> <span class="nf">status</span><span class="p">:(</span><span class="kt">long</span><span class="p">)</span><span class="nv">status</span> <span class="nf">onSuccess</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onSuccess">onSuccess</a></span><span class="p">)</span><span class="nv">onSuccess</span> <span class="nf">onError</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onError">onError</a></span><span class="p">)</span><span class="nv">onError</span><span class="p">;</span>
+
+<span class="cm">/**
+     * 获取会话免打扰状态
+     * 1: Do not receive messages, 2: Do not notify when messages are received; 0: Normal
+     * [{"conversationId":"single_13922222222","result":0}]
+     */</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">getConversationRecvMessageOpt</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">NSString</span><span class="o">*&gt;*</span><span class="p">)</span><span class="nv">conversationIDs</span> <span class="nf">onSuccess</span><span class="p">:(</span><span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n"><a href="Classes/NotDisturbInfo.html">NotDisturbInfo</a></span><span class="o">*&gt;*</span> <span class="n">notDisturbInfoList</span><span class="p">))</span><span class="nv">onSuccess</span> <span class="nf">onError</span><span class="p">:(</span><span class="n"><a href="Type%20Definitions.html#/c:CallbackProxy.h@T@onError">onError</a></span><span class="p">)</span><span class="nv">onError</span><span class="p">;</span>
+
 <span class="k">@end</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/OpenIMiOSSDK.h#L71-L727">Show on GitHub</a>
+                        <a href="https://github.com/OpenIMSDK/Open-IM-SDK-iOS/OpenIMSDKiOS/Classes/OpenIMiOSSDK.h#L72-L744">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -2306,7 +2369,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2021 <a class="link" href="https://openim.io" target="_blank" rel="external noopener">OpenIMSDKiOS</a>. All rights reserved. (Last updated: 2021-11-19)</p>
+          <p>&copy; 2022 <a class="link" href="https://openim.io" target="_blank" rel="external noopener">OpenIMSDKiOS</a>. All rights reserved. (Last updated: 2022-01-06)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
