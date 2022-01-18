@@ -741,6 +741,30 @@ typedef void(^onTransferGroupOwner)(NSString *groupId,NSString *oldUserID,NSStri
      */
 - (void)getConversationRecvMessageOpt:(NSArray<NSString*>*)conversationIDs onSuccess:(void(^)(NSArray<NotDisturbInfo*>* notDisturbInfoList))onSuccess onError:(onError)onError;
 
+/**
+     * 创建名片消息
+     *
+     * @param content json String
+     * @return {@link Message}
+     */
+- (Message *)createCardMessage:(NSString*)content;
+
+- (void)forceSyncMsg;
+
+/**
+ * 聊天设置里清除聊天记录
+ *
+ * @param uid 用户id
+ */
+- (void)clearC2CHistoryMessage:(NSString*)uid onSuccess:(onSuccess)onSuccess onError:(onError)onError;
+
+/**
+ * 聊天设置里清除聊天记录
+ *
+ * @param gid 群id
+ */
+- (void)clearGroupHistoryMessage:(NSString*)gid onSuccess:(onSuccess)onSuccess onError:(onError)onError;
+
 @end
 
 NS_ASSUME_NONNULL_END

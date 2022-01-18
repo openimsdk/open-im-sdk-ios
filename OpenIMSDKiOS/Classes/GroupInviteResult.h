@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GroupInviteResult : BaseModal
 
 @property(nullable) NSString *uid;
-@property int result;
+@property int result; // 0成功 -1失败
 
 @end
 

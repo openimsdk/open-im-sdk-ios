@@ -45,7 +45,7 @@
       NSString *propName = [NSString stringWithUTF8String:property_getName(properties[i])];
     if(propName) {
         NSString *name = propName;
-      id obj = [dict objectForKey:name];
+      id obj = dict[name];
       if (!obj)
         continue;
     if ([obj isKindOfClass:[NSDictionary class]]) {
@@ -56,7 +56,7 @@
             NSString *cs = [self capitalizedOnlyFirstLetter:name];
             Class c = NSClassFromString(cs);
             if(c != nil) {
-                id ins = [[c alloc] initWithDictionary:obj];
+                id ins = [(BaseModal *) [c alloc] initWithDictionary:obj];
                 [self setValue:ins forKeyPath:name];
             }
         }
@@ -66,17 +66,22 @@
             if([[self className] isEqualToString:@"GroupApplicationList"]) {
                 if([name isEqualToString:@"user"]) {
                     Class c = NSClassFromString(@"GroupApplicationInfo");
-                    [arr addObject:[[c alloc] initWithDictionary:dic]];
+                    [arr addObject:[(BaseModal *) [c alloc] initWithDictionary:dic]];
                 }
             }else if([[self className] isEqualToString:@"GroupMembersList"]) {
                 if([name isEqualToString:@"data"]) {
                     Class c = NSClassFromString(@"GroupMembersInfo");
-                    [arr addObject:[[c alloc] initWithDictionary:dic]];
+                    [arr addObject:[(BaseModal *) [c alloc] initWithDictionary:dic]];
                 }
             }else if([[self className] isEqualToString:@"MergeElem"]) {
                 if([name isEqualToString:@"multiMessage"]) {
                     Class c = NSClassFromString(@"Message");
-                    [arr addObject:[[c alloc] initWithDictionary:dic]];
+                    [arr addObject:[(BaseModal *) [c alloc] initWithDictionary:dic]];
+                }
+            }else if([[self className] isEqualToString:@"QuoteElem"]) {
+                if([name isEqualToString:@"quoteMessage"]) {
+                    Class c = NSClassFromString(@"Message");
+                    [arr addObject:[(BaseModal *) [c alloc] initWithDictionary:dic]];
                 }
             }else{
                 [arr addObject:dic];
@@ -114,10 +119,10 @@
         else if ([value isKindOfClass:[NSNumber class]]
             || [value isKindOfClass:[NSString class]]
             || [value isKindOfClass:[NSDictionary class]]) {
-            [dictionary setObject:value forKey:key];
+            dictionary[key] = value;
         }
         else if ([value isKindOfClass:[NSObject class]]) {
-            [dictionary setObject:[value dict] forKey:key];
+            dictionary[key] = [value dict];
         }
         else {
             NSLog(@"Invalid type for %@ (%@)", NSStringFromClass([self class]), key);

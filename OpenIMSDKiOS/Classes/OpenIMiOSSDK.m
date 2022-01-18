@@ -768,6 +768,49 @@
 }
 
 /**
+     * 创建名片消息
+     *
+     * @param content json String
+     * @return {@link Message}
+     */
+- (Message *)createCardMessage:(NSString*)content {
+    NSString *json = Open_im_sdkCreateCardMessage(content);
+    return [[Message alloc] initWithDictionary:[json dict]];
+}
+
+- (void)forceSyncMsg {
+    Open_im_sdkForceSyncMsg();
+}
+
+    /**
+     * 聊天设置里清除聊天记录
+     *
+     * @param uid 用户id
+     */
+- (void)clearC2CHistoryMessage:(NSString*)uid onSuccess:(onSuccess)onSuccess onError:(onError)onError {
+    CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
+        onSuccess?onSuccess(data):nil;
+    } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
+        onError?onError(ErrCode,ErrMsg):nil;
+    }];
+    Open_im_sdkClearC2CHistoryMessage(proxy, uid);
+}
+
+    /**
+     * 聊天设置里清除聊天记录
+     *
+     * @param gid 群id
+     */
+- (void)clearGroupHistoryMessage:(NSString*)gid onSuccess:(onSuccess)onSuccess onError:(onError)onError {
+    CallbackProxy *proxy = [[CallbackProxy alloc] initWithCallback:^(NSString * _Nullable data) {
+        onSuccess?onSuccess(data):nil;
+    } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
+        onError?onError(ErrCode,ErrMsg):nil;
+    }];
+    Open_im_sdkClearGroupHistoryMessage(proxy, gid);
+}
+
+/**
  * 发送消息
  *
  * @param message        消息体{@link Message}

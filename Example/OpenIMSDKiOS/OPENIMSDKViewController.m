@@ -23,7 +23,9 @@
 
     NSString *docDir = [paths objectAtIndex:0];
     
-    [OpenIMiOSSDK.shared initSDK:IOS ipApi:@"http://47.112.160.66:10000" ipWs:@"ws://47.112.160.66:17778" dbPath:[docDir stringByAppendingString:@"/"] onConnecting:^{
+    [OpenIMiOSSDK.shared setSdkLog:true];
+    
+    [OpenIMiOSSDK.shared initSDK:IOS ipApi:@"http://121.37.25.71:10000" ipWs:@"ws://121.37.25.71:17778" dbPath:[docDir stringByAppendingString:@"/"] onConnecting:^{
         NSLog(@"onConnecting");
     } onConnectFailed:^(long ErrCode, NSString * _Nullable ErrMsg) {
         NSLog(@"onConnectFailed");
@@ -37,11 +39,23 @@
         NSLog(@"onSelfInfoUpdated");
     }];
     
+    [OpenIMiOSSDK.shared setConversationRecvMessageOpt:@[@"13123123"] status:2 onSuccess:^(NSString * _Nullable data) {
+        
+    } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
+        
+    }];
     
-    [OpenIMiOSSDK.shared login:@"iostest" token:@"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVSUQiOiJpb3N0ZXN0IiwiUGxhdGZvcm0iOiJJT1MiLCJleHAiOjE2MzgzMjQ4NjIsIm5iZiI6MTYzNzcyMDA2MiwiaWF0IjoxNjM3NzIwMDYyfQ.QUNzY_jHgtzzSamCE1rY8uVMBENJdkfocHhfjwjUMPw" onSuccess:^(NSString * _Nullable data) {
+    
+    [OpenIMiOSSDK.shared login:@"15678900987" token:@"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVSUQiOiIxNTY3ODkwMDk4NyIsIlBsYXRmb3JtIjoiSU9TIiwiZXhwIjoxNjQwODQ2NjAzLCJuYmYiOjE2NDAyNDE4MDMsImlhdCI6MTY0MDI0MTgwM30.lPMUH9kqO9ZB2KDnH6MeXniQChVthXxVM4iSLj_Invo" onSuccess:^(NSString * _Nullable data) {
         NSLog(@"onSuccess");
         
         [OpenIMiOSSDK.shared getTotalUnreadMsgCount:nil onError:nil];
+        
+        [OpenIMiOSSDK.shared getAllConversationList:^(NSArray<ConversationInfo *> * _Nonnull conversationInfoList) {
+            
+        } on:^(long ErrCode, NSString * _Nullable ErrMsg) {
+            
+        }];
         
         [OpenIMiOSSDK.shared getFriendList:^(NSArray * _Nonnull userInfoList) {
             NSLog(@"getFriendList - %@",userInfoList);
@@ -55,7 +69,7 @@
         }];
         
         Message *msg = [OpenIMiOSSDK.shared createTextMessage:@"test message"];
-        [OpenIMiOSSDK.shared sendMessage:msg recvUid:@"1" recvGid:@"1" onlineUserOnly:NO onSuccess:^(NSString * _Nullable data) {
+        [OpenIMiOSSDK.shared sendMessage:msg recvUid:@"1442969940624670720" recvGid:@"1" onlineUserOnly:NO onSuccess:^(NSString * _Nullable data) {
             
         } onProgress:^(long progress) {
             
@@ -69,16 +83,56 @@
             
         }];
         
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-                picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                picker.delegate = self;
-                picker.allowsEditing = YES;
-                [self presentViewController:picker animated:YES completion:nil];
-        });
+//        dispatch_sync(dispatch_get_main_queue(), ^{
+//            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+//                picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//                picker.delegate = self;
+//                picker.allowsEditing = YES;
+//                [self presentViewController:picker animated:YES completion:nil];
+//        });
+        GroupMemberRole *r = [GroupMemberRole new];
+        r.uid = @"15678900987";
+        r.setRole = 1;
+        [OpenIMiOSSDK.shared createGroup:@"1" notification:nil introduction:nil faceUrl:nil list:@[r] onSuccess:^(NSString * _Nullable data) {
+            
+        } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
+            
+        }];
+        [OpenIMiOSSDK.shared getGroupApplicationList:^(GroupApplicationList * _Nonnull groupApplicationList) {
+            NSLog(@"groupApplicationListgroupApplicationListgroupApplicationListgroupApplicationList------");
+            NSLog(@"%d",groupApplicationList.count);
+            NSLog(@"%@",groupApplicationList.user.debugDescription);
+        } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
+            
+        }];
+        
+        [OpenIMiOSSDK.shared markC2CMessageAsRead:@"1" msgIds:@[@"1",@"2",@"3",@"4"] onSuccess:^(NSString * _Nullable data) {
+            
+        } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
+            
+        }];
     } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
         NSLog(@"onError %@",ErrMsg);
     }];
+    
+//    GroupMemberRole *g = [GroupMemberRole new];
+//    g.uid = @"1";
+//    g.setRole = 0;
+//    [OpenIMiOSSDK.shared createGroup:@"" notification:@"" introduction:@"" faceUrl:nil list:@[g] onSuccess:^(NSString * _Nullable data) {
+//
+//    } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
+//
+//    }];
+    
+//    Message *msg = [Message new];
+//    NSArray *arr = @[msg];
+//    Message *m = [OpenIMiOSSDK.shared createMergerMessage:arr title:@"" summaryList:@[@"123"]];
+//
+//    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+//        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//        picker.delegate = self;
+//        picker.allowsEditing = YES;
+//        [self presentViewController:picker animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -104,8 +158,8 @@
         NSData* data = UIImagePNGRepresentation(image);
         [data writeToFile:localPath atomically:YES];
         
-        Message *m = [OpenIMiOSSDK.shared createImageMessageFromFullPath:localPath];
-        [OpenIMiOSSDK.shared sendMessage:m recvUid:@"1" recvGid:@"1" onlineUserOnly:NO onSuccess:^(NSString * _Nullable data) {
+        Message *m = [OpenIMiOSSDK.shared createSoundMessageFromFullPath:localPath duration:123];
+        [OpenIMiOSSDK.shared sendMessage:m recvUid:@"iostest" recvGid:@"1" onlineUserOnly:NO onSuccess:^(NSString * _Nullable data) {
             
         } onProgress:^(long progress) {
             NSLog(@"%@",@(progress));

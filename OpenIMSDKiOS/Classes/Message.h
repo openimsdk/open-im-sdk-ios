@@ -58,12 +58,32 @@ NS_ASSUME_NONNULL_BEGIN
      * 105:文件消息<br/>
      * 106:@消息<br/>
      * 107:合并消息<br/>
-     * 108:转发消息<br/>
+     * 108:名片消息<br/>
      * 109:位置消息<br/>
      * 110:自定义消息<br/>
      * 111:撤回消息回执<br/>
      * 112:C2C已读回执<br/>
      * 113:正在输入状态
+     * Quote          = 114
+     * //////////////////////////////////////////
+     * SingleTipBegin             = 200
+     * AcceptFriendApplicationTip = 201
+     * AddFriendTip               = 202
+     * RefuseFriendApplicationTip = 203
+     * SetSelfInfoTip             = 204
+     *
+     * SingleTipEnd = 399
+     * /////////////////////////////////////////
+     * GroupTipBegin             = 500
+     * TransferGroupOwnerTip     = 501
+     * CreateGroupTip            = 502
+     * JoinGroupTip              = 504
+     * QuitGroupTip              = 505
+     * SetGroupInfoTip           = 506
+     * AcceptGroupApplicationTip = 507
+     * RefuseGroupApplicationTip = 508
+     * KickGroupMemberTip        = 509
+     * InviteUserToGroupTip      = 510
      */
 @property int contentType;
     /**
