@@ -53,37 +53,29 @@
         if (subObj)
           [subObj objectFromDictionary:obj];
         else{
-            if([[self className] isEqualToString:@"QuoteElem"]) {
-                if([name isEqualToString:@"quoteMessage"]) {
-                    Class c = NSClassFromString(@"Message");
-                    if(c != nil) {
-                        id ins = [(BaseModal *) [c alloc] initWithDictionary:obj];
-                        [self setValue:ins forKeyPath:name];
-                    }
+            if([[self className] isEqualToString:@"QuoteElem"] && [name isEqualToString:@"quoteMessage"]) {
+                Class c = NSClassFromString(@"Message");
+                if(c != nil) {
+                    id ins = [(BaseModal *) [c alloc] initWithDictionary:obj];
+                    [self setValue:ins forKeyPath:name];
                 }
-            }else if([[self className] isEqualToString:@"PictureElem"]) {
-                if([name isEqualToString:@"sourcePicture"]) {
-                    Class c = NSClassFromString(@"PictureInfo");
-                    if(c != nil) {
-                        id ins = [(BaseModal *) [c alloc] initWithDictionary:obj];
-                        [self setValue:ins forKeyPath:name];
-                    }
+            }else if([[self className] isEqualToString:@"PictureElem"] && [name isEqualToString:@"sourcePicture"]) {
+                Class c = NSClassFromString(@"PictureInfo");
+                if(c != nil) {
+                    id ins = [(BaseModal *) [c alloc] initWithDictionary:obj];
+                    [self setValue:ins forKeyPath:name];
                 }
-            }else if([[self className] isEqualToString:@"PictureElem"]) {
-                if([name isEqualToString:@"bigPicture"]) {
-                    Class c = NSClassFromString(@"PictureInfo");
-                    if(c != nil) {
-                        id ins = [(BaseModal *) [c alloc] initWithDictionary:obj];
-                        [self setValue:ins forKeyPath:name];
-                    }
+            }else if([[self className] isEqualToString:@"PictureElem"] && [name isEqualToString:@"bigPicture"]) {
+                Class c = NSClassFromString(@"PictureInfo");
+                if(c != nil) {
+                    id ins = [(BaseModal *) [c alloc] initWithDictionary:obj];
+                    [self setValue:ins forKeyPath:name];
                 }
-            }else if([[self className] isEqualToString:@"PictureElem"]) {
-                if([name isEqualToString:@"snapshotPicture"]) {
-                    Class c = NSClassFromString(@"PictureInfo");
-                    if(c != nil) {
-                        id ins = [(BaseModal *) [c alloc] initWithDictionary:obj];
-                        [self setValue:ins forKeyPath:name];
-                    }
+            }else if([[self className] isEqualToString:@"PictureElem"] && [name isEqualToString:@"snapshotPicture"]) {
+                Class c = NSClassFromString(@"PictureInfo");
+                if(c != nil) {
+                    id ins = [(BaseModal *) [c alloc] initWithDictionary:obj];
+                    [self setValue:ins forKeyPath:name];
                 }
             }else{
                 NSString *cs = [self capitalizedOnlyFirstLetter:name];
