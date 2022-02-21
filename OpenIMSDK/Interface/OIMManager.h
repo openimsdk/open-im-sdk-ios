@@ -1,0 +1,32 @@
+//
+//  OIMManager.h
+//  OpenIMSDK
+//
+//  Created by x on 2022/2/15.
+//
+
+#import <Foundation/Foundation.h>
+#import "OIMCallbacker.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface OIMManager : NSObject 
+
++ (instancetype)manager;
+
+/*
+ *  监听设置皆在此 (User、Friend、Group、Conversation、AdvancedMsg)
+ */
+@property (nonatomic, strong, class, readonly) OIMCallbacker *callbacker;
+
+/*
+ * sdk 版本号
+ */
++ (NSString *)sdkSdkVersion;
+
+
+
+- (NSString *)operationId;
+@end
+
+NS_ASSUME_NONNULL_END

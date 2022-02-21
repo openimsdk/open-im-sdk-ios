@@ -5,11 +5,51 @@
 //  Created by xpg on 11/08/2021.
 //  Copyright (c) 2021 xpg. All rights reserved.
 //
+//  Modify by x on 21/02/2022
 
 #import "OPENIMSDKViewController.h"
-@import OpenIMSDKiOS;
+#import "OPENIMSDKTableViewCell.h"
 
-@interface OPENIMSDKViewController ()
+@import OpenIMSDK;
+
+static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIdentifier";
+
+#define OIM_LIST_CELL_TITLE @"title"
+#define OIM_LIST_CELL_FUNC @"func"
+
+
+/*
+ *  LOGIN_USER_ID 注册以后生成
+ *  LOGIN_USER_TOKEN 注册以后生成
+ *  OTHER_USER_ID 注册以后生成
+ *  GROUP_ID 创建群以后生成
+ *  CONVERSASTION_ID 有会话以后生成
+ *  注意：部分API只能设置other_user_id 或者 group_id 其中之一，例如发送消息
+ */
+#define API_ADDRESS         @"http://x.x.x.x:10000"
+#define WS_ADDRESS          @"ws://x.x.x.x:10086"
+
+#define LOGIN_USER_ID       @""
+#define LOGIN_USER_TOKEN    @""
+#define OTHER_USER_ID       @""
+
+#define GROUP_ID            @""
+#define CONVERSASTION_ID    @""
+
+@interface OPENIMSDKViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@property (weak, nonatomic) IBOutlet UITableView *funcTableView;
+
+@property (nonatomic, copy) NSArray <NSString *> *titles;
+
+@property (nonatomic, copy) NSArray <NSArray <NSDictionary *> *> *funcs;
+
+
+@property (weak, nonatomic) IBOutlet UIView *errorView;
+@property (weak, nonatomic) IBOutlet UITextView *errorTipsView;
+
+
+@property (nonatomic, strong) OIMMessageInfo *testMessage;
 
 @end
 
@@ -19,168 +59,1037 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-
-    NSString *docDir = [paths objectAtIndex:0];
     
-    [OpenIMiOSSDK.shared setSdkLog:true];
+    self.titles = @[@"登陆", @"用户信息", @"好友", @"群", @"消息", @"会话"];
+    self.funcs = @[
+        @[@{OIM_LIST_CELL_TITLE: @"登陆", OIM_LIST_CELL_FUNC: @"login"},
+          @{OIM_LIST_CELL_TITLE: @"登陆状态", OIM_LIST_CELL_FUNC: @"loginStatus"},
+          @{OIM_LIST_CELL_TITLE: @"登出", OIM_LIST_CELL_FUNC: @"logout"}],
+        
+        @[@{OIM_LIST_CELL_TITLE: @"登录用户信息", OIM_LIST_CELL_FUNC: @"getSelfInfo"},
+          @{OIM_LIST_CELL_TITLE: @"修改登录用户信息", OIM_LIST_CELL_FUNC: @"setSelfInfo"},
+          @{OIM_LIST_CELL_TITLE: @"获取指定用户信息", OIM_LIST_CELL_FUNC: @"getUsersInfo"}],
+        
+        @[@{OIM_LIST_CELL_TITLE: @"添加好友", OIM_LIST_CELL_FUNC: @"addFriend"},
+          @{OIM_LIST_CELL_TITLE: @"获取好友申请列表", OIM_LIST_CELL_FUNC: @"getFriendApplicationList"},
+          @{OIM_LIST_CELL_TITLE: @"同意好友申请", OIM_LIST_CELL_FUNC: @"acceptFriendApplication"},
+          @{OIM_LIST_CELL_TITLE: @"拒绝好友申请", OIM_LIST_CELL_FUNC: @"refuseFriendApplication"},
+          @{OIM_LIST_CELL_TITLE: @"加黑名单", OIM_LIST_CELL_FUNC: @"addToBlackList"},
+          @{OIM_LIST_CELL_TITLE: @"黑名单", OIM_LIST_CELL_FUNC: @"getBlackList"},
+          @{OIM_LIST_CELL_TITLE: @"从黑名单移除", OIM_LIST_CELL_FUNC: @"removeFromBlackList"},
+          @{OIM_LIST_CELL_TITLE: @"获取指定好友信息", OIM_LIST_CELL_FUNC: @"getDesignatedFriendsInfo"},
+          @{OIM_LIST_CELL_TITLE: @"获取好友列表", OIM_LIST_CELL_FUNC: @"getFriendList"},
+          @{OIM_LIST_CELL_TITLE: @"验证是否好友关系", OIM_LIST_CELL_FUNC: @"checkFriend"},
+          @{OIM_LIST_CELL_TITLE: @"设置好友备注", OIM_LIST_CELL_FUNC: @"setFriendRemark"},
+          @{OIM_LIST_CELL_TITLE: @"删除好友", OIM_LIST_CELL_FUNC: @"deleteFriend"}],
+        
+        @[@{OIM_LIST_CELL_TITLE: @"创建群聊", OIM_LIST_CELL_FUNC: @"createGroup"},
+          @{OIM_LIST_CELL_TITLE: @"加入群聊", OIM_LIST_CELL_FUNC: @"joinGroup"},
+          @{OIM_LIST_CELL_TITLE: @"退出群聊", OIM_LIST_CELL_FUNC: @"quitGroup"},
+          @{OIM_LIST_CELL_TITLE: @"群列表", OIM_LIST_CELL_FUNC: @"getJoinedGroupList"},
+          @{OIM_LIST_CELL_TITLE: @"获取指定群信息", OIM_LIST_CELL_FUNC: @"getGroupsInfo"},
+          @{OIM_LIST_CELL_TITLE: @"设置群信息", OIM_LIST_CELL_FUNC: @"setGroupInfo"},
+          @{OIM_LIST_CELL_TITLE: @"获取群成员列表", OIM_LIST_CELL_FUNC: @"getGroupMemberList"},
+          @{OIM_LIST_CELL_TITLE: @"获取指定群成员列表", OIM_LIST_CELL_FUNC: @"getGroupMembersInfo"},
+          @{OIM_LIST_CELL_TITLE: @"踢出群", OIM_LIST_CELL_FUNC: @"kickGroupMember"},
+          @{OIM_LIST_CELL_TITLE: @"转让群主", OIM_LIST_CELL_FUNC: @"transferGroupOwner"},
+          @{OIM_LIST_CELL_TITLE: @"邀请某些人进群", OIM_LIST_CELL_FUNC: @"inviteUserToGroup"},
+          @{OIM_LIST_CELL_TITLE: @"获取申请进群列表", OIM_LIST_CELL_FUNC: @"getGroupApplicationList"},
+          @{OIM_LIST_CELL_TITLE: @"同意某人进群", OIM_LIST_CELL_FUNC: @"acceptGroupApplication"},
+          @{OIM_LIST_CELL_TITLE: @"拒绝某人进群", OIM_LIST_CELL_FUNC: @"refuseGroupApplication"}],
+        
+        @[@{OIM_LIST_CELL_TITLE: @"发送消息", OIM_LIST_CELL_FUNC: @"sendMessage"},
+          @{OIM_LIST_CELL_TITLE: @"获取聊天历史", OIM_LIST_CELL_FUNC: @"getHistoryMessageList"},
+          @{OIM_LIST_CELL_TITLE: @"撤销消息", OIM_LIST_CELL_FUNC: @"revokeMessage"},
+          @{OIM_LIST_CELL_TITLE: @"输入状态", OIM_LIST_CELL_FUNC: @"typingStatusUpdate"},
+          @{OIM_LIST_CELL_TITLE: @"单聊已读", OIM_LIST_CELL_FUNC: @"markC2CMessageAsRead"},
+          @{OIM_LIST_CELL_TITLE: @"清空历史消息", OIM_LIST_CELL_FUNC: @"clearC2CHistoryMessage"},
+          @{OIM_LIST_CELL_TITLE: @"本地插入消息", OIM_LIST_CELL_FUNC: @"insertSingleMessageToLocalStorage"}],
+        
+        @[@{OIM_LIST_CELL_TITLE: @"会话列表", OIM_LIST_CELL_FUNC: @"getAllConversationList"},
+          @{OIM_LIST_CELL_TITLE: @"分页获取会话", OIM_LIST_CELL_FUNC: @"getConversationListSplit"},
+          @{OIM_LIST_CELL_TITLE: @"获取一个会话", OIM_LIST_CELL_FUNC: @"getOneConversation"},
+          @{OIM_LIST_CELL_TITLE: @"获取多个会话", OIM_LIST_CELL_FUNC: @"getMultipleConversation"},
+          @{OIM_LIST_CELL_TITLE: @"删除会话", OIM_LIST_CELL_FUNC: @"deleteConversation"},
+          @{OIM_LIST_CELL_TITLE: @"设置会话草稿", OIM_LIST_CELL_FUNC: @"setConversationDraft"},
+          @{OIM_LIST_CELL_TITLE: @"置顶会话", OIM_LIST_CELL_FUNC: @"pinConversation"},
+          @{OIM_LIST_CELL_TITLE: @"获取未读数", OIM_LIST_CELL_FUNC: @"getTotalUnreadMsgCount"},
+          @{OIM_LIST_CELL_TITLE: @"标记已读", OIM_LIST_CELL_FUNC: @"markGroupMessageHasRead"},
+          @{OIM_LIST_CELL_TITLE: @"免打扰状态", OIM_LIST_CELL_FUNC: @"getConversationRecvMessageOpt"},
+          @{OIM_LIST_CELL_TITLE: @"设置免打扰", OIM_LIST_CELL_FUNC: @"setConversationRecvMessageOpt"},
+          @{OIM_LIST_CELL_TITLE: @"本地插入群消息", OIM_LIST_CELL_FUNC: @"insertGroupMessageToLocalStorage"},
+          @{OIM_LIST_CELL_TITLE: @"查找本地消息", OIM_LIST_CELL_FUNC: @"searchLocalMessages"}],
+    ];
     
-    [OpenIMiOSSDK.shared initSDK:IOS ipApi:@"http://121.37.25.71:10000" ipWs:@"ws://121.37.25.71:17778" dbPath:[docDir stringByAppendingString:@"/"] onConnecting:^{
-        NSLog(@"onConnecting");
-    } onConnectFailed:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        NSLog(@"onConnectFailed");
-    } onConnectSuccess:^{
-        NSLog(@"onConnectSuccess");
-    } onKickedOffline:^{
-        NSLog(@"onKickedOffline");
-    } onUserTokenExpired:^{
-        NSLog(@"onUserTokenExpired");
-    } onSelfInfoUpdated:^(UserInfo* _Nullable userInfo) {
-        NSLog(@"onSelfInfoUpdated");
-    }];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hiddenErrorView)];
     
-    [OpenIMiOSSDK.shared setConversationRecvMessageOpt:@[@"13123123"] status:2 onSuccess:^(NSString * _Nullable data) {
-        
-    } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        
-    }];
+    [self.errorView addGestureRecognizer:tap];
     
+    [self initSDK];
     
-    [OpenIMiOSSDK.shared login:@"15678900987" token:@"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVSUQiOiIxNTY3ODkwMDk4NyIsIlBsYXRmb3JtIjoiSU9TIiwiZXhwIjoxNjQwODQ2NjAzLCJuYmYiOjE2NDAyNDE4MDMsImlhdCI6MTY0MDI0MTgwM30.lPMUH9kqO9ZB2KDnH6MeXniQChVthXxVM4iSLj_Invo" onSuccess:^(NSString * _Nullable data) {
-        NSLog(@"onSuccess");
-        
-        [OpenIMiOSSDK.shared getTotalUnreadMsgCount:nil onError:nil];
-        
-        [OpenIMiOSSDK.shared getAllConversationList:^(NSArray<ConversationInfo *> * _Nonnull conversationInfoList) {
-            
-        } on:^(long ErrCode, NSString * _Nullable ErrMsg) {
-            
-        }];
-        
-        [OpenIMiOSSDK.shared getFriendList:^(NSArray * _Nonnull userInfoList) {
-            NSLog(@"getFriendList - %@",userInfoList);
-        } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-            
-        }];
-        [OpenIMiOSSDK.shared getAllConversationList:^(NSArray * _Nonnull conversationInfoList) {
-            NSLog(@"getAllConversationList - %@",conversationInfoList);
-        } on:^(long ErrCode, NSString * _Nullable ErrMsg) {
-            
-        }];
-        
-        Message *msg = [OpenIMiOSSDK.shared createTextMessage:@"test message"];
-        [OpenIMiOSSDK.shared sendMessage:msg recvUid:@"1442969940624670720" recvGid:@"1" onlineUserOnly:NO onSuccess:^(NSString * _Nullable data) {
-            
-        } onProgress:^(long progress) {
-            
-        } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-            
-        }];
-        
-        [OpenIMiOSSDK.shared getHistoryMessageList:@"1" groupID:@"" startMsg:nil count:100 onSuccess:^(NSArray * _Nonnull messageList) {
-            
-        } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-            
-        }];
-        
-//        dispatch_sync(dispatch_get_main_queue(), ^{
-//            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-//                picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-//                picker.delegate = self;
-//                picker.allowsEditing = YES;
-//                [self presentViewController:picker animated:YES completion:nil];
-//        });
-        GroupMemberRole *r = [GroupMemberRole new];
-        r.uid = @"15678900987";
-        r.setRole = 1;
-        [OpenIMiOSSDK.shared createGroup:@"1" notification:nil introduction:nil faceUrl:nil list:@[r] onSuccess:^(NSString * _Nullable data) {
-            
-        } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-            
-        }];
-        [OpenIMiOSSDK.shared getGroupApplicationList:^(GroupApplicationList * _Nonnull groupApplicationList) {
-            NSLog(@"groupApplicationListgroupApplicationListgroupApplicationListgroupApplicationList------");
-            NSLog(@"%d",groupApplicationList.count);
-            NSLog(@"%@",groupApplicationList.user.debugDescription);
-        } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-            
-        }];
-        
-        [OpenIMiOSSDK.shared markC2CMessageAsRead:@"1" msgIds:@[@"1",@"2",@"3",@"4"] onSuccess:^(NSString * _Nullable data) {
-            
-        } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-            
-        }];
-    } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-        NSLog(@"onError %@",ErrMsg);
-    }];
+    [self login];
     
-//    GroupMemberRole *g = [GroupMemberRole new];
-//    g.uid = @"1";
-//    g.setRole = 0;
-//    [OpenIMiOSSDK.shared createGroup:@"" notification:@"" introduction:@"" faceUrl:nil list:@[g] onSuccess:^(NSString * _Nullable data) {
-//
-//    } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-//
-//    }];
-    
-//    Message *msg = [Message new];
-//    NSArray *arr = @[msg];
-//    Message *m = [OpenIMiOSSDK.shared createMergerMessage:arr title:@"" summaryList:@[@"123"]];
-//
-//    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-//        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-//        picker.delegate = self;
-//        picker.allowsEditing = YES;
-//        [self presentViewController:picker animated:YES completion:nil];
+    [self callback];
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
-    
-    //当选择的类型是图片
-    if ([type isEqualToString:@"public.image"])
-    {
-        //获取图片
-        NSURL *imgUrl = [info objectForKey:UIImagePickerControllerReferenceURL];
-        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-        
-        NSString* imgName = [imgUrl lastPathComponent];
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+- (void)hiddenErrorView {
+    self.errorView.hidden = YES;
+}
 
-        NSString *docDir = [paths objectAtIndex:0];
-        
-        NSString* localPath = [docDir stringByAppendingString:[NSString stringWithFormat:@"/%@",imgName]];
+- (void)showErrorMsg:(NSString *)msg {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.errorView.hidden = NO;
+        self.errorTipsView.text = msg;
+    });
+}
 
-        NSData* data = UIImagePNGRepresentation(image);
-        [data writeToFile:localPath atomically:YES];
-        
-        Message *m = [OpenIMiOSSDK.shared createSoundMessageFromFullPath:localPath duration:123];
-        [OpenIMiOSSDK.shared sendMessage:m recvUid:@"iostest" recvGid:@"1" onlineUserOnly:NO onSuccess:^(NSString * _Nullable data) {
-            
-        } onProgress:^(long progress) {
-            NSLog(@"%@",@(progress));
-        } onError:^(long ErrCode, NSString * _Nullable ErrMsg) {
-            
-        }];
-        
-        
-        //上传到服务器
-        //[self doAddPhoto:image];
-        //关闭相册界面
-        [picker dismissViewControllerAnimated:YES completion:^{
-            
-        }];
-    }
+- (void)operate:(SEL)selector todo:(void (NS_NOESCAPE ^)(void (^callback)(NSNumber *code, NSString *msg) ))todo {
+    NSLog(@"\n\n ----- %@ -----", NSStringFromSelector(selector));
+    todo(^(NSNumber *code, NSString *msg) {
+        if (msg.length > 0) {
+            NSString *errMsg = [NSString stringWithFormat:@"error msg:%@, code:%@", msg, code];
+            [self showErrorMsg:errMsg];
+            NSLog(@"\n\n -----%@ Failure -----\n \n%@", NSStringFromSelector(selector), errMsg);
+        } else {
+            NSLog(@"\n\n -----%@ Success -----\n \n", NSStringFromSelector(selector));
+        }
+    });
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+#pragma mark - UITableViewDelegate, UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.titles.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.funcs[section].count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    OPENIMSDKTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:OPENIMSDKTableViewCellIdentifier forIndexPath:indexPath];
+    
+    NSDictionary *item = self.funcs[indexPath.section][indexPath.row];
+    
+    [cell.funcButton setTitle:[@"点我" stringByAppendingString:item[OIM_LIST_CELL_TITLE]] forState:UIControlStateNormal];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [cell funcButtonAction:^{
+        
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+                
+        SEL selector = NSSelectorFromString(item[OIM_LIST_CELL_FUNC]);
+        IMP imp = [strongSelf methodForSelector:selector];
+        void (*func)(id, SEL) = (void *)imp;
+        func(strongSelf, selector);
+    }];
+    
+    return cell;
+}
+
+
+- (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section  {
+    return self.titles[section];
+}
+
+
+#pragma mark -
+#pragma mark - function
+
+- (void)callback {
+    
+    [OIMManager.callbacker setSelfUserInfoUpdateListener:^(OIMUserInfo * _Nullable userInfo) {
+        
+    }];
+    
+    [OIMManager.callbacker setConversationListenerWithOnSyncServerStart:^{
+        
+    } onSyncServerFinish:^{
+        
+    } onSyncServerFailed:^{
+        
+    } onConversationChanged:^(NSArray<OIMConversationInfo *> * _Nullable conversations) {
+        
+    } onNewConversation:^(NSArray<OIMConversationInfo *> * _Nullable conversations) {
+        
+    } onTotalUnreadMessageCountChanged:^(NSInteger number) {
+        
+    }];
+    
+    [OIMManager.callbacker setFriendListenerWithOnBlackAdded:^(OIMBlackInfo * _Nullable blackInfo) {
+        
+    } onBlackDeleted:^(OIMBlackInfo * _Nullable blackInfo) {
+        
+    } onFriendApplicationAccepted:^(OIMFriendApplication * _Nullable friendApplication) {
+        
+    } onFriendApplicationAdded:^(OIMFriendApplication * _Nullable friendApplication) {
+        
+    } onFriendApplicationDeleted:^(OIMFriendApplication * _Nullable friendApplication) {
+        
+    } onFriendApplicationRejected:^(OIMFriendApplication * _Nullable friendApplication) {
+        
+    } onFriendInfoChanged:^(OIMFriendInfo * _Nullable friendInfo) {
+        
+    } onFriendAdded:^(OIMFriendInfo * _Nullable friendInfo) {
+        
+    } onFriendDeleted:^(OIMFriendInfo * _Nullable friendInfo) {
+        
+    }];
+    
+    [OIMManager.callbacker setGroupListenerWithOnGroupInfoChanged:^(OIMGroupInfo * _Nullable groupInfo) {
+        
+    } onJoinedGroupAdded:^(OIMGroupInfo * _Nullable groupInfo) {
+        
+    } onJoinedGroupDeleted:^(OIMGroupInfo * _Nullable groupInfo) {
+        
+    } onGroupMemberAdded:^(OIMGroupMemberInfo * _Nullable groupMemberInfo) {
+        
+    } onGroupMemberDeleted:^(OIMGroupMemberInfo * _Nullable groupMemberInfo) {
+        
+    } onGroupMemberInfoChanged:^(OIMGroupMemberInfo * _Nullable groupMemberInfo) {
+        
+    } onGroupApplicationAdded:^(OIMGroupApplicationInfo * _Nullable groupApplication) {
+        
+    } onGroupApplicationDeleted:^(OIMGroupApplicationInfo * _Nullable groupApplication) {
+        
+    } onGroupApplicationAccepted:^(OIMGroupApplicationInfo * _Nullable groupApplication) {
+        
+    } onGroupApplicationRejected:^(OIMGroupApplicationInfo * _Nullable groupApplication) {
+        
+    }];
+    
+    [OIMManager.callbacker setAdvancedMsgListenerWithOnRecvMessageRevoked:^(NSString * _Nullable item) {
+        
+    } onRecvC2CReadReceipt:^(NSArray<OIMReceiptInfo *> * _Nullable msgReceiptList) {
+        
+    } onRecvNewMessage:^(OIMMessageInfo * _Nullable message) {
+    }];
+}
+
+- (void)initSDK {
+    
+    NSLog(@"\n\n-----初始化------");
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    BOOL initSuccess = [OIMManager.manager initSDK:iOS
+                                           apiAdrr:API_ADDRESS
+                                            wsAddr:WS_ADDRESS
+                                           dataDir:[paths.firstObject stringByAppendingString:@"/"]
+                                          logLevel:6
+                                     objectStorage:nil
+                                      onConnecting:^{
+        NSLog(@"\nconnecting");
+    } onConnectFailure:^(NSInteger code, NSString * _Nullable msg) {
+        NSLog(@"\n connect failure");
+    } onConnectSuccess:^{
+        NSLog(@"\nconnect success");
+    } onKickedOffline:^{
+        NSLog(@"\nkicked offline");
+    } onUserTokenExpired:^{
+        NSLog(@"\nuser token expired");
+    }];
+    
+    NSLog(@"初始化成功与否：%d", initSuccess);
+}
+
+- (void)login {
+    
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        [OIMManager.manager login:LOGIN_USER_ID
+                            token:LOGIN_USER_TOKEN
+                        onSuccess:^(NSString * _Nullable data) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)logout {
+    
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        [OIMManager.manager logoutWithOnSuccess:^(NSString * _Nullable data) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)loginStatus {
+    NSLog(@"\n\n -----%@:%d ----- \n", NSStringFromSelector(_cmd), [OIMManager.manager getLoginStatus]);
+}
+
+- (void)getSelfInfo {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getSelfInfoWithOnSuccess:^(OIMUserInfo * _Nullable userInfo) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)setSelfInfo {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        
+        OIMUserInfo *info = [OIMUserInfo new];
+        info.nickname = @"x";
+        info.email = @"qqx@qq.com";
+        
+        [OIMManager.manager setSelfInfo:info
+                              onSuccess:^(NSString * _Nullable data) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getUsersInfo {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        
+        [OIMManager.manager getUsersInfo:@[OTHER_USER_ID]
+                               onSuccess:^(NSArray<OIMUserInfo *> * _Nullable userInfos) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+#pragma mark -
+#pragma mark - Friend
+
+- (void)addFriend {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager addFriend:OTHER_USER_ID
+                           reqMessage:nil
+                            onSuccess:^(NSString * _Nullable data) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getFriendApplicationList {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getFriendApplicationListWithOnSuccess:^(NSArray<OIMFriendApplication *> * _Nullable friendApplications) {
+        
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)acceptFriendApplication {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager acceptFriendApplication:OTHER_USER_ID
+                                          handleMsg:@"ok"
+                                          onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)refuseFriendApplication {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager refuseFriendApplication:OTHER_USER_ID
+                                          handleMsg:@"no"
+                                          onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)addToBlackList {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager addToBlackList:OTHER_USER_ID
+                                 onSuccess:^(NSString * _Nullable data) {
+        
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getBlackList {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getBlackListWithOnSuccess:^(NSArray<OIMFullUserInfo *> * _Nullable userInfos) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)removeFromBlackList {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager removeFromBlackList:OTHER_USER_ID
+                                      onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getDesignatedFriendsInfo {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getDesignatedFriendsInfo:@[OTHER_USER_ID]
+                                           onSuccess:^(NSArray<OIMFullUserInfo *> * _Nullable userInfos) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getFriendList {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getFriendListWithOnSuccess:^(NSArray<OIMFullUserInfo *> * _Nullable userInfos) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)checkFriend {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager checkFriend:@[OTHER_USER_ID]
+                              onSuccess:^(NSArray<OIMSimpleResultInfo *> * _Nullable results) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)setFriendRemark {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager setFriendRemark:OTHER_USER_ID
+                                     remark:@"玲子"
+                                  onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)deleteFriend {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager deleteFriend:OTHER_USER_ID
+                                  onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+#pragma mark -
+#pragma mark - group
+
+- (void)createGroup {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        OIMGroupCreateInfo *t = [OIMGroupCreateInfo new];
+        t.groupName = @"x的群";
+        t.groupType = 0;
+        t.introduction = @"群的简介";
+        
+        OIMGroupMemberBaseInfo *m1 = [OIMGroupMemberBaseInfo new];
+        m1.userID = OTHER_USER_ID;
+        m1.roleLevel = 1;
+        
+        [OIMManager.manager createGroup:t
+                             memberList:@[m1]
+                              onSuccess:^(OIMGroupInfo * _Nullable groupInfo) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)joinGroup {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager joinGroup:GROUP_ID
+                               reqMsg:nil
+                            onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)quitGroup {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager quitGroup:GROUP_ID
+                            onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getJoinedGroupList {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getJoinedGroupListWithOnSuccess:^(NSArray<OIMGroupInfo *> * _Nullable groupsInfo) {
+
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getGroupsInfo {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getGroupsInfo:@[GROUP_ID]
+                                onSuccess:^(NSArray<OIMGroupInfo *> * _Nullable groupsInfo) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)setGroupInfo {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        OIMGroupBaseInfo *t = [OIMGroupBaseInfo new];
+        t.introduction = @"这是一个大群";
+        
+        [OIMManager.manager setGroupInfo:GROUP_ID
+                               groupInfo:t
+                               onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getGroupMemberList {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getGroupMemberList:GROUP_ID
+                                        filter:1
+                                        offset:0
+                                         count:20
+                                     onSuccess:^(NSArray<OIMGroupMemberInfo *> * _Nullable groupMembersInfo) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getGroupMembersInfo {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getGroupMembersInfo:GROUP_ID
+                                           uids:@[OTHER_USER_ID]
+                                      onSuccess:^(NSArray<OIMGroupMemberInfo *> * _Nullable groupMembersInfo) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)kickGroupMember {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager kickGroupMember:GROUP_ID
+                                     reason:@"没有理由"
+                                       uids:@[OTHER_USER_ID]
+                                  onSuccess:^(NSArray<OIMSimpleResultInfo *> * _Nullable results) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)transferGroupOwner {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager transferGroupOwner:GROUP_ID
+                                      newOwner:OTHER_USER_ID
+                                     onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)inviteUserToGroup {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager inviteUserToGroup:GROUP_ID
+                                       reason:@"邀请不"
+                                         uids:@[OTHER_USER_ID]
+                                    onSuccess:^(NSArray<OIMSimpleResultInfo *> * _Nullable results) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getGroupApplicationList {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getGroupApplicationListWithOnSuccess:^(NSArray<OIMGroupApplicationInfo *> * _Nullable groupsInfo) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)acceptGroupApplication {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager acceptGroupApplication:GROUP_ID
+                                        fromUserId:OTHER_USER_ID
+                                         handleMsg:@"ok"
+                                         onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)refuseGroupApplication {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager refuseGroupApplication:GROUP_ID
+                                        fromUserId:OTHER_USER_ID
+                                         handleMsg:@"ok"
+                                         onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+#pragma mark -
+#pragma mark - Message
+
+- (void)sendMessage {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        self.testMessage = [OIMMessageInfo createTextMessage:@"测试消息2"];
+        
+        [OIMManager.manager sendMessage:self.testMessage
+                                 recvID:nil
+                                groupID:GROUP_ID
+                        offlinePushInfo:nil
+                              onSuccess:^(NSString * _Nullable data) {
+            callback(nil, nil);
+        } onProgress:^(NSInteger number) {
+            NSLog(@"progress:%d", number);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getHistoryMessageList {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getHistoryMessageListWithUserId:OTHER_USER_ID
+                                                    groupID:nil
+                                           startClientMsgID:nil
+                                                      count:20
+                                                  onSuccess:^(NSArray<OIMMessageInfo *> * _Nullable messages) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)revokeMessage {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager revokeMessage:self.testMessage
+                                onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)typingStatusUpdate {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager typingStatusUpdate:OTHER_USER_ID
+                                        msgTip:@"正在输入消息"
+                                     onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)markC2CMessageAsRead {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager markC2CMessageAsRead:OTHER_USER_ID
+                                       msgIDList:@[]
+                                       onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)deleteMessageFromLocalStorage {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager deleteMessageFromLocalStorage:self.testMessage
+                                                onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)clearC2CHistoryMessage {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager clearC2CHistoryMessage:OTHER_USER_ID
+                                         onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)insertSingleMessageToLocalStorage {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager insertSingleMessageToLocalStorage:self.testMessage
+                                                       recvID:OTHER_USER_ID
+                                                       sendID:LOGIN_USER_ID
+                                                    onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)insertGroupMessageToLocalStorage {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        OIMMessageInfo *t = [OIMMessageInfo createTextMessage:@"插入群消息到本地"];
+        
+        [OIMManager.manager insertGroupMessageToLocalStorage:t
+                                                     groupID:GROUP_ID
+                                                      sendID:LOGIN_USER_ID
+                                                   onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)searchLocalMessages {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        OIMSearchParam *t = [OIMSearchParam new];
+        t.sourceID = OTHER_USER_ID;
+        t.sessionType = 1;
+        t.keywordList = @[@"x"];
+        
+        [OIMManager.manager searchLocalMessages:t
+                                      onSuccess:^(OIMSearchResultInfo * _Nullable result) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+#pragma mark -
+#pragma mark - conversation
+
+- (void)getAllConversationList {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getAllConversationListWithOnSuccess:^(NSArray<OIMConversationInfo *> * _Nullable conversations) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getConversationListSplit {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getConversationListSplitWithOffset:0
+                                                         count:20
+                                                     onSuccess:^(NSArray<OIMConversationInfo *> * _Nullable conversations) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getOneConversation {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getOneConversationWithSessionType:1
+                                                     sourceID:OTHER_USER_ID
+                                                    onSuccess:^(OIMConversationInfo * _Nullable conversation) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getMultipleConversation {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getMultipleConversation:@[CONVERSASTION_ID]
+                                          onSuccess:^(NSArray<OIMConversationInfo *> * _Nullable conversations) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)deleteConversation {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager deleteConversation:CONVERSASTION_ID
+                                     onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)setConversationDraft {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager setConversationDraft:CONVERSASTION_ID
+                                        sourceID:OTHER_USER_ID
+                                       onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)pinConversation {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager pinConversation:CONVERSASTION_ID
+                                   isPinned:YES
+                                  onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getTotalUnreadMsgCount {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getTotalUnreadMsgCountWithOnSuccess:^(NSInteger number) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)markGroupMessageHasRead {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager markGroupMessageHasRead:CONVERSASTION_ID
+                                          onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getConversationRecvMessageOpt {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getConversationRecvMessageOpt:@[CONVERSASTION_ID]
+                                                onSuccess:^(NSArray<OIMConversationNotDisturbInfo *> * _Nullable conversations) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)setConversationRecvMessageOpt {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager setConversationRecvMessageOpt:@[CONVERSASTION_ID]
+                                                   status:1307
+                                                onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
 }
 
 @end
