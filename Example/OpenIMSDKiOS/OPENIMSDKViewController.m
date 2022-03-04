@@ -19,6 +19,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
 
 
 /*
+ *  端口是固定的，勿动
  *  LOGIN_USER_ID 注册以后生成
  *  LOGIN_USER_TOKEN 注册以后生成
  *  OTHER_USER_ID 注册以后生成
