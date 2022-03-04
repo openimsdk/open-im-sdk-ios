@@ -7,6 +7,14 @@
 
 #import "OIMCallbacker.h"
 
+@interface OIMCallbacker ()
+
+@property (nonatomic, strong) NSMutableArray <id<OIMFriendshipListener>> *friendshipListener;
+@property (nonatomic, strong) NSMutableArray <id<OIMGroupListener>> *groupListeners;
+@property (nonatomic, strong) NSMutableArray <id<OIMConversationListener>> *conversationListeners;
+@property (nonatomic, strong) NSMutableArray <id<OIMAdvancedMsgListener>> *advancedMsgListeners;
+@end
+
 @implementation OIMCallbacker
 
 + (instancetype)callbacker {
@@ -21,190 +29,566 @@
     Open_im_sdkSetAdvancedMsgListener(self);
 }
 
+- (void)dispatchMainThread:(void (NS_NOESCAPE ^)(void))todo {
+    if ([NSThread isMainThread]) {
+        todo();
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            todo();
+        });
+    }
+}
+
+#pragma mark -
+#pragma mark - Listeners getter
+
+- (NSMutableArray<id<OIMFriendshipListener>> *)friendshipListener {
+    if (_friendshipListener == nil) {
+        _friendshipListener = [NSMutableArray new];
+    }
+    
+    return _friendshipListener;
+}
+
+- (NSMutableArray<id<OIMGroupListener>> *)groupListeners {
+    if (_groupListeners == nil) {
+        _groupListeners = [NSMutableArray new];
+    }
+    
+    return _groupListeners;
+}
+
+- (NSArray<id<OIMConversationListener>> *)conversationListeners {
+    if (_conversationListeners == nil) {
+        _conversationListeners = [NSMutableArray new];
+    }
+    
+    return _conversationListeners;
+}
+
+- (NSMutableArray<id<OIMAdvancedMsgListener>> *)advancedMsgListeners {
+    if (_advancedMsgListeners == nil) {
+        _advancedMsgListeners = [NSMutableArray new];
+    }
+    
+    return _advancedMsgListeners;
+}
+
+#pragma mark -
+#pragma mark - Add/Remove listener
+
+- (void)addFriendListener:(id<OIMFriendshipListener>)listener {
+    if (listener != nil && ![self.friendshipListener containsObject:listener]) {
+        [self.friendshipListener addObject:listener];
+    }
+}
+
+- (void)removeFriendListener:(id<OIMFriendshipListener>)listener {
+    if (listener != nil && self.friendshipListener.count > 0) {
+        [self.friendshipListener removeObject:listener];
+    }
+}
+
+- (void)addGroupListener:(id<OIMGroupListener>)listener {
+    if (listener != nil && ![self.groupListeners containsObject:listener]) {
+        [self.groupListeners addObject:listener];
+    }
+}
+
+- (void)removeGroupListener:(id<OIMGroupListener>)listener {
+    if (listener != nil && self.groupListeners.count > 0) {
+        [self.groupListeners removeObject:listener];
+    }
+}
+
+- (void)addConversationListener:(id<OIMConversationListener>)listener {
+    if (listener != nil && ![self.conversationListeners containsObject:listener]) {
+        [self.conversationListeners addObject:listener];
+    }
+}
+
+- (void)removeConversationListener:(id<OIMConversationListener>)listener {
+    if (listener != nil && self.conversationListeners.count > 0) {
+        [self.conversationListeners removeObject:listener];
+    }
+}
+
+- (void)addAdvancedMsgListener:(id<OIMAdvancedMsgListener>)listener {
+    if (listener != nil && ![self.advancedMsgListeners containsObject:listener]) {
+        [self.advancedMsgListeners addObject:listener];
+    }
+}
+
+- (void)removeAdvancedMsgListener:(id<OIMAdvancedMsgListener>)listener {
+    if (listener != nil && self.advancedMsgListeners.count > 0) {
+        [self.advancedMsgListeners removeObject:listener];
+    }
+}
+
 #pragma mark -
 #pragma mark - User
 
 - (void)onSelfInfoUpdated:(NSString * _Nullable)userInfo {
-    if (self.onSelfInfoUpdated) {
-        self.onSelfInfoUpdated([OIMUserInfo mj_objectWithKeyValues:userInfo]);
-    }
+    
+    [self dispatchMainThread:^{
+        if (self.onSelfInfoUpdated) {
+            self.onSelfInfoUpdated([OIMUserInfo mj_objectWithKeyValues:userInfo]);
+        }
+    }];
 }
 
 #pragma mark -
 #pragma mark - Friend
 
-- (void)onBlackAdded:(NSString* _Nullable)blackInfo {
-    if (self.onBlackAdded) {
-        self.onBlackAdded([OIMBlackInfo mj_objectWithKeyValues:blackInfo]);
-    }
-}
-
-- (void)onFriendAdded:(NSString * _Nullable)friendInfo {
-    if (self.onFriendAdded) {
-        self.onFriendAdded([OIMFriendInfo mj_objectWithKeyValues:friendInfo]);
-    }
-}
-
 - (void)onFriendApplicationAdded:(NSString * _Nullable)friendApplication {
-    if (self.onFriendApplicationAdded) {
-        self.onFriendApplicationAdded([OIMFriendApplication mj_objectWithKeyValues:friendApplication]);
-    }
+    OIMFriendApplication *info = [OIMFriendApplication mj_objectWithKeyValues:friendApplication];
+    
+    [self dispatchMainThread:^{
+        if (self.onFriendApplicationAdded) {
+            self.onFriendApplicationAdded(info);
+        }
+        
+        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onFriendApplicationAdded:)]) {
+                [obj onFriendApplicationAdded:info];
+            }
+        }];
+    }];
 }
 
 - (void)onFriendApplicationRejected:(NSString * _Nullable)friendApplication {
-    if (self.onFriendApplicationRejected) {
-        self.onFriendApplicationRejected([OIMFriendApplication mj_objectWithKeyValues:friendApplication]);
-    }
-}
-
-- (void)onBlackDeleted:(NSString * _Nullable)blackInfo {
-    if (self.onBlackAdded) {
-        self.onBlackAdded([OIMBlackInfo mj_objectWithKeyValues:blackInfo]);
-    }
+    OIMFriendApplication *info = [OIMFriendApplication mj_objectWithKeyValues:friendApplication];
+    
+    [self dispatchMainThread:^{
+        if (self.onFriendApplicationRejected) {
+            self.onFriendApplicationRejected(info);
+        }
+        
+        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onFriendApplicationRejected:)]) {
+                [obj onFriendApplicationRejected:info];
+            }
+        }];
+    }];
 }
 
 - (void)onFriendApplicationAccepted:(NSString * _Nullable)friendApplication {
-    if (self.onFriendApplicationDeleted) {
-        self.onFriendApplicationDeleted([OIMFriendApplication mj_objectWithKeyValues:friendApplication]);
-    }
+    OIMFriendApplication *info = [OIMFriendApplication mj_objectWithKeyValues:friendApplication];
+    
+    [self dispatchMainThread:^{
+        if (self.onFriendApplicationDeleted) {
+            self.onFriendApplicationDeleted(info);
+        }
+        
+        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onFriendApplicationAccepted:)]) {
+                [obj onFriendApplicationAccepted:info];
+            }
+        }];
+        
+    }];
 }
 
 - (void)onFriendApplicationDeleted:(NSString * _Nullable)friendApplication {
-    if (self.onFriendApplicationDeleted) {
-        self.onFriendApplicationDeleted([OIMFriendApplication mj_objectWithKeyValues:friendApplication]);
-    }
+    OIMFriendApplication *info = [OIMFriendApplication mj_objectWithKeyValues:friendApplication];
+
+    [self dispatchMainThread:^{
+        if (self.onFriendApplicationDeleted) {
+            self.onFriendApplicationDeleted(info);
+        }
+        
+        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onFriendApplicationDeleted:)]) {
+                [obj onFriendApplicationDeleted:info];
+            }
+        }];
+    }];
 }
 
-- (void)onFriendInfoChanged:(NSString * _Nullable)friendInfo {
-    if (self.onFriendAdded) {
-        self.onFriendAdded([OIMFriendInfo mj_objectWithKeyValues:friendInfo]);
-    }
+- (void)onFriendAdded:(NSString * _Nullable)friendInfo {
+    OIMFriendInfo *info = [OIMFriendInfo mj_objectWithKeyValues:friendInfo];
+    
+    [self dispatchMainThread:^{
+        if (self.onFriendAdded) {
+            self.onFriendAdded(info);
+        }
+        
+        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onFriendAdded:)]) {
+                [obj onFriendAdded:info];
+            }
+        }];
+    }];
 }
 
 - (void)onFriendDeleted:(NSString * _Nullable)friendInfo {
-    if (self.onFriendAdded) {
-        self.onFriendAdded([OIMFriendInfo mj_objectWithKeyValues:friendInfo]);
-    }
+    OIMFriendInfo *info = [OIMFriendInfo mj_objectWithKeyValues:friendInfo];
+    
+    [self dispatchMainThread:^{
+        if (self.onFriendAdded) {
+            self.onFriendAdded(info);
+        }
+        
+        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onFriendDeleted:)]) {
+                [obj onFriendDeleted:info];
+            }
+        }];
+    }];
+}
+
+- (void)onFriendInfoChanged:(NSString * _Nullable)friendInfo {
+    OIMFriendInfo *info = [OIMFriendInfo mj_objectWithKeyValues:friendInfo];
+    
+    [self dispatchMainThread:^{
+        if (self.onFriendAdded) {
+            self.onFriendAdded(info);
+        }
+        
+        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onFriendInfoChanged:)]) {
+                [obj onFriendInfoChanged:info];
+            }
+        }];
+    }];
+}
+
+- (void)onBlackAdded:(NSString* _Nullable)blackInfo {
+    OIMBlackInfo *info = [OIMBlackInfo mj_objectWithKeyValues:blackInfo];
+    
+    [self dispatchMainThread:^{
+        if (self.onBlackAdded) {
+            self.onBlackAdded(info);
+        }
+        
+        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onBlackAdded:)]) {
+                [obj onBlackAdded:info];
+            }
+        }];
+    }];
+}
+
+- (void)onBlackDeleted:(NSString * _Nullable)blackInfo {
+    OIMBlackInfo *info = [OIMBlackInfo mj_objectWithKeyValues:blackInfo];
+    
+    [self dispatchMainThread:^{
+        if (self.onBlackAdded) {
+            self.onBlackAdded(info);
+        }
+        
+        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onBlackDeleted:)]) {
+                [obj onBlackDeleted:info];
+            }
+        }];
+    }];
 }
 
 #pragma mark -
 #pragma mark - Group
 
-- (void)onGroupApplicationAccepted:(NSString * _Nullable)groupApplication {
-    if (self.onGroupApplicationAccepted) {
-        self.onGroupApplicationAccepted([OIMGroupApplicationInfo mj_objectWithKeyValues:groupApplication]);
-    }
-}
-- (void)onGroupApplicationAdded:(NSString * _Nullable)groupApplication {
-    if (self.onGroupApplicationAdded) {
-        self.onGroupApplicationAdded([OIMGroupApplicationInfo mj_objectWithKeyValues:groupApplication]);
-    }
-}
-- (void)onGroupApplicationDeleted:(NSString * _Nullable)groupApplication {
-    if (self.onGroupApplicationDeleted) {
-        self.onGroupApplicationDeleted([OIMGroupApplicationInfo mj_objectWithKeyValues:groupApplication]);
-    }
-}
-- (void)onGroupApplicationRejected:(NSString * _Nullable)groupApplication {
-    if (self.onGroupApplicationRejected) {
-        self.onGroupApplicationRejected([OIMGroupApplicationInfo mj_objectWithKeyValues:groupApplication]);
-    }
-}
-- (void)onGroupInfoChanged:(NSString * _Nullable)groupInfo {
-    if (self.onGroupInfoChanged) {
-        self.onGroupInfoChanged([OIMGroupInfo mj_objectWithKeyValues:groupInfo]);
-    }
-}
-
 - (void)onGroupMemberAdded:(NSString * _Nullable)groupMemberInfo {
-    if (self.onGroupMemberAdded) {
-        self.onGroupMemberAdded([OIMGroupMemberInfo mj_objectWithKeyValues:groupMemberInfo]);
-    }
+    OIMGroupMemberInfo *info = [OIMGroupMemberInfo mj_objectWithKeyValues:groupMemberInfo];
+    
+    [self dispatchMainThread:^{
+        if (self.onGroupMemberAdded) {
+            self.onGroupMemberAdded(info);
+        }
+        
+        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onGroupMemberAdded:)]) {
+                [obj onGroupMemberAdded:info];
+            }
+        }];
+    }];
 }
 
 - (void)onGroupMemberDeleted:(NSString * _Nullable)groupMemberInfo {
-    if (self.onGroupMemberDeleted) {
-        self.onGroupMemberDeleted([OIMGroupMemberInfo mj_objectWithKeyValues:groupMemberInfo]);
-    }
+    OIMGroupMemberInfo *info = [OIMGroupMemberInfo mj_objectWithKeyValues:groupMemberInfo];
+    
+    [self dispatchMainThread:^{
+        if (self.onGroupMemberDeleted) {
+            self.onGroupMemberDeleted(info);
+        }
+        
+        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onGroupMemberDeleted:)]) {
+                [obj onGroupMemberDeleted:info];
+            }
+        }];
+    }];
 }
 
 - (void)onGroupMemberInfoChanged:(NSString * _Nullable)groupMemberInfo {
-    if (self.onGroupMemberInfoChanged) {
-        self.onGroupMemberInfoChanged([OIMGroupMemberInfo mj_objectWithKeyValues:groupMemberInfo]);
-    }
+    OIMGroupMemberInfo *info = [OIMGroupMemberInfo mj_objectWithKeyValues:groupMemberInfo];
+    
+    [self dispatchMainThread:^{
+        if (self.onGroupMemberInfoChanged) {
+            self.onGroupMemberInfoChanged(info);
+        }
+        
+        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onGroupMemberInfoChanged:)]) {
+                [obj onGroupMemberInfoChanged:info];
+            }
+        }];
+    }];
+}
+
+- (void)onGroupInfoChanged:(NSString * _Nullable)groupInfo {
+    OIMGroupInfo *info = [OIMGroupInfo mj_objectWithKeyValues:groupInfo];
+
+    [self dispatchMainThread:^{
+        if (self.onGroupInfoChanged) {
+            self.onGroupInfoChanged(info);
+        }
+        
+        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onGroupInfoChanged:)]) {
+                [obj onGroupInfoChanged:info];
+            }
+        }];
+    }];
 }
 
 - (void)onJoinedGroupAdded:(NSString * _Nullable)groupInfo {
-    if (self.onJoinedGroupAdded) {
-        self.onJoinedGroupAdded([OIMGroupInfo mj_objectWithKeyValues:groupInfo]);
-    }
+    OIMGroupInfo *info = [OIMGroupInfo mj_objectWithKeyValues:groupInfo];
+    
+    [self dispatchMainThread:^{
+        if (self.onJoinedGroupAdded) {
+            self.onJoinedGroupAdded(info);
+        }
+        
+        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onJoinedGroupAdded:)]) {
+                [obj onJoinedGroupAdded:info];
+            }
+        }];
+    }];
 }
 
 - (void)onJoinedGroupDeleted:(NSString * _Nullable)groupInfo {
-    if (self.onJoinedGroupDeleted) {
-        self.onJoinedGroupDeleted([OIMGroupInfo mj_objectWithKeyValues:groupInfo]);
-    }
+    OIMGroupInfo *info = [OIMGroupInfo mj_objectWithKeyValues:groupInfo];
+    
+    [self dispatchMainThread:^{
+        if (self.onJoinedGroupDeleted) {
+            self.onJoinedGroupDeleted(info);
+        }
+        
+        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onJoinedGroupDeleted:)]) {
+                [obj onJoinedGroupDeleted:info];
+            }
+        }];
+    }];
 }
 
+- (void)onGroupApplicationAccepted:(NSString * _Nullable)groupApplication {
+    OIMGroupApplicationInfo *info = [OIMGroupApplicationInfo mj_objectWithKeyValues:groupApplication];
+    
+    [self dispatchMainThread:^{
+        if (self.onGroupApplicationAccepted) {
+            self.onGroupApplicationAccepted(info);
+        }
+        
+        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onGroupApplicationAccepted:)]) {
+                [obj onGroupApplicationAccepted:info];
+            }
+        }];
+    }];
+}
+
+- (void)onGroupApplicationAdded:(NSString * _Nullable)groupApplication {
+    OIMGroupApplicationInfo *info = [OIMGroupApplicationInfo mj_objectWithKeyValues:groupApplication];
+    
+    [self dispatchMainThread:^{
+        if (self.onGroupApplicationAdded) {
+            self.onGroupApplicationAdded(info);
+        }
+        
+        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onGroupApplicationAdded:)]) {
+                [obj onGroupApplicationAdded:info];
+            }
+        }];
+    }];
+}
+
+- (void)onGroupApplicationDeleted:(NSString * _Nullable)groupApplication {
+    OIMGroupApplicationInfo *info = [OIMGroupApplicationInfo mj_objectWithKeyValues:groupApplication];
+    
+    [self dispatchMainThread:^{
+        if (self.onGroupApplicationDeleted) {
+            self.onGroupApplicationDeleted(info);
+        }
+        
+        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onGroupApplicationDeleted:)]) {
+                [obj onGroupApplicationDeleted:info];
+            }
+        }];
+    }];
+}
+
+- (void)onGroupApplicationRejected:(NSString * _Nullable)groupApplication {
+    OIMGroupApplicationInfo *info = [OIMGroupApplicationInfo mj_objectWithKeyValues:groupApplication];
+    
+    [self dispatchMainThread:^{
+        if (self.onGroupApplicationRejected) {
+            self.onGroupApplicationRejected(info);
+        }
+        
+        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onGroupApplicationRejected:)]) {
+                [obj onGroupApplicationRejected:info];
+            }
+        }];
+    }];
+}
 
 #pragma mark -
 #pragma mark - Message
 
 - (void)onRecvC2CReadReceipt:(NSString * _Nullable)msgReceiptList {
-    if (self.onRecvC2CReadReceipt) {
-        self.onRecvC2CReadReceipt([OIMReceiptInfo mj_objectArrayWithKeyValuesArray:msgReceiptList]);
-    }
+    NSArray *receipts = [OIMReceiptInfo mj_objectArrayWithKeyValuesArray:msgReceiptList];
+    
+    [self dispatchMainThread:^{
+        if (self.onRecvC2CReadReceipt) {
+            self.onRecvC2CReadReceipt(receipts);
+        }
+        
+        [self.advancedMsgListeners enumerateObjectsUsingBlock:^(id<OIMAdvancedMsgListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onRecvC2CReadReceipt:)]) {
+                [obj onRecvC2CReadReceipt:receipts];
+            }
+        }];
+    }];
 }
 
 - (void)onRecvMessageRevoked:(NSString * _Nullable)msgId {
-    if (self.onRecvMessageRevoked) {
-        self.onRecvMessageRevoked(msgId);
-    }
+    
+    [self dispatchMainThread:^{
+        if (self.onRecvMessageRevoked) {
+            self.onRecvMessageRevoked(msgId);
+        }
+        
+        [self.advancedMsgListeners enumerateObjectsUsingBlock:^(id<OIMAdvancedMsgListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onRecvMessageRevoked:)]) {
+                [obj onRecvMessageRevoked:msgId];
+            }
+        }];
+    }];
 }
 
 - (void)onRecvNewMessage:(NSString * _Nullable)message {
-    if (self.onRecvNewMessage) {
-        self.onRecvNewMessage([OIMMessageInfo mj_objectWithKeyValues:message]);
-    }
+    OIMMessageInfo *msg = [OIMMessageInfo mj_objectWithKeyValues:message];
+    
+    [self dispatchMainThread:^{
+        if (self.onRecvNewMessage) {
+            self.onRecvNewMessage(msg);
+        }
+        
+        [self.advancedMsgListeners enumerateObjectsUsingBlock:^(id<OIMAdvancedMsgListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onRecvNewMessage:)]) {
+                [obj onRecvNewMessage:msg];
+            }
+        }];
+    }];
 }
 
 #pragma mark -
 #pragma mark - Conversation
 
 - (void)onConversationChanged:(NSString * _Nullable)conversationList {
-    if (self.onConversationChanged) {
-        self.onConversationChanged([OIMConversationInfo mj_objectArrayWithKeyValuesArray:conversationList]);
-    }
+    
+    NSArray *tConversations = [OIMConversationInfo mj_objectArrayWithKeyValuesArray:conversationList];
+    
+    [self dispatchMainThread:^{
+        if (self.onConversationChanged) {
+            self.onConversationChanged(tConversations);
+        }
+        
+        [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onConversationChanged:)]) {
+                [obj onConversationChanged:tConversations];
+            }
+        }];
+    }];
 }
 
 - (void)onNewConversation:(NSString * _Nullable)conversationList {
-    if (self.onNewConversation) {
-        self.onNewConversation([OIMConversationInfo mj_objectArrayWithKeyValuesArray:conversationList]);
-    }
+    
+    NSArray *tConversations = [OIMConversationInfo mj_objectArrayWithKeyValuesArray:conversationList];
+    
+    [self dispatchMainThread:^{
+        if (self.onNewConversation) {
+            self.onNewConversation(tConversations);
+        }
+        
+        [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onNewConversation:)]) {
+                [obj onNewConversation:tConversations];
+            }
+        }];
+    }];
 }
 
 - (void)onSyncServerFailed {
-    if (self.syncServerFailed) {
-        self.syncServerFailed();
-    }
+    [self dispatchMainThread:^{
+        if (self.syncServerFailed) {
+            self.syncServerFailed();
+        }
+        
+        [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onSyncServerFailed)]) {
+                [obj onSyncServerFailed];
+            }
+        }];
+    }];
 }
 
 - (void)onSyncServerFinish {
-    if (self.syncServerFinish) {
-        self.syncServerFinish();
-    }
+    [self dispatchMainThread:^{
+        if (self.syncServerFinish) {
+            self.syncServerFinish();
+        }
+        
+        [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onSyncServerFinish)]) {
+                [obj onSyncServerFinish];
+            }
+        }];
+    }];
 }
 
 - (void)onSyncServerStart {
-    if (self.syncServerStart) {
-        self.syncServerStart();
-    }
+    [self dispatchMainThread:^{
+        if (self.syncServerStart) {
+            self.syncServerStart();
+        }
+        
+        [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onSyncServerStart)]) {
+                [obj onSyncServerStart];
+            }
+        }];
+    }];
 }
 
 - (void)onTotalUnreadMessageCountChanged:(int32_t)totalUnreadCount {
-    if (self.onTotalUnreadMessageCountChanged) {
-        self.onTotalUnreadMessageCountChanged(totalUnreadCount);
-    }
+    [self dispatchMainThread:^{
+        if (self.onTotalUnreadMessageCountChanged) {
+            self.onTotalUnreadMessageCountChanged(totalUnreadCount);
+        }
+        
+        [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onTotalUnreadMessageCountChanged:)]) {
+                [obj onTotalUnreadMessageCountChanged:totalUnreadCount];
+            }
+        }];
+    }];
 }
 
 @end

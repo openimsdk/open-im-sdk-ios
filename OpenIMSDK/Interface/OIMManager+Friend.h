@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 黑名单
  *
  */
-- (void)getBlackListWithOnSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
+- (void)getBlackListWithOnSuccess:(nullable OIMBlacksInfoCallback)onSuccess
                          onFailure:(nullable OIMFailureCallback)onFailure;
 /*
  * 移除黑名单

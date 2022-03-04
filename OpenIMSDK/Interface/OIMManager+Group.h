@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 创建群
  *
- * @param memberList   创建群是选择的成员. setRole：0:普通成员 2:管理员；1：群主
+ * @param list  创建群是选择的成员.
  */
 - (void)createGroup:(OIMGroupCreateInfo *)groupBaseInfo
          memberList:(NSArray<OIMGroupMemberBaseInfo *> *)list

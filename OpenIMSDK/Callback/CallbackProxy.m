@@ -26,14 +26,30 @@
 }
 
 - (void)onError:(int32_t)errCode errMsg:(NSString * _Nullable)errMsg {
-    if (_onError) {
-        _onError(errCode, errMsg);
-    }
+    
+    [self dispatchMainThread:^{
+        if (_onError) {
+            _onError(errCode, errMsg);
+        }
+    }];
 }
 
 - (void)onSuccess:(NSString * _Nullable)data {
-    if (_onSuccess) {
-        _onSuccess(data);
+    
+    [self dispatchMainThread:^{
+        if (_onSuccess) {
+            _onSuccess(data);
+        }
+    }];
+}
+
+- (void)dispatchMainThread:(void (NS_NOESCAPE ^)(void))todo {
+    if ([NSThread isMainThread]) {
+        todo();
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            todo();
+        });
     }
 }
 

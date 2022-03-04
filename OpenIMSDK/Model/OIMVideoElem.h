@@ -14,22 +14,22 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 视频本地资源地址
  */
-@property(nonatomic, nullable, copy) NSString *videoPath;
+@property (nonatomic, nullable, copy) NSString *videoPath;
 
 /*
  * 视频唯一ID
  */
-@property(nonatomic, nullable, copy) NSString *videoUUID;
+@property (nonatomic, nullable, copy) NSString *videoUUID;
 
 /*
  * 视频oss地址
  */
-@property(nonatomic, nullable, copy) NSString *videoUrl;
+@property (nonatomic, nullable, copy) NSString *videoUrl;
 
 /*
  * 视频类型
  */
-@property(nonatomic, nullable, copy) NSString *videoType;
+@property (nonatomic, nullable, copy) NSString *videoType;
 
 /*
  * 视频大小
@@ -44,12 +44,12 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 视频快照本地地址
  */
-@property(nonatomic, nullable, copy) NSString *snapshotPath;
+@property (nonatomic, nullable, copy) NSString *snapshotPath;
 
 /*
  * 视频快照唯一ID
  */
-@property(nonatomic, nullable, copy) NSString *snapshotUUID;
+@property (nonatomic, nullable, copy) NSString *snapshotUUID;
 
 /*
  * 视频快照大小
@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 视频快照oss地址
  */
-@property(nonatomic, nullable, copy) NSString *snapshotUrl;
+@property (nonatomic, nullable, copy) NSString *snapshotUrl;
 
 /*
  * 视频快照宽度

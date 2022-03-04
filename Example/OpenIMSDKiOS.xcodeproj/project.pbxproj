@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		17918D0727BC8F380040C924 /* OPENIMSDKTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17918D0627BC8F380040C924 /* OPENIMSDKTableViewCell.m */; };
+		17CADD2727C7227F0069C80E /* photo_test.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 17CADD2527C7227F0069C80E /* photo_test.jpeg */; };
+		17CADD2827C7227F0069C80E /* voice_test.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 17CADD2627C7227F0069C80E /* voice_test.m4a */; };
+		17CADD2A27C738630069C80E /* video_test.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 17CADD2927C738630069C80E /* video_test.mp4 */; };
+		17CADD2C27C7781C0069C80E /* file_test.zip in Resources */ = {isa = PBXBuildFile; fileRef = 17CADD2B27C7781C0069C80E /* file_test.zip */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -40,6 +44,10 @@
 /* Begin PBXFileReference section */
 		17918D0527BC8F380040C924 /* OPENIMSDKTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPENIMSDKTableViewCell.h; sourceTree = "<group>"; };
 		17918D0627BC8F380040C924 /* OPENIMSDKTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPENIMSDKTableViewCell.m; sourceTree = "<group>"; };
+		17CADD2527C7227F0069C80E /* photo_test.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo_test.jpeg; sourceTree = "<group>"; };
+		17CADD2627C7227F0069C80E /* voice_test.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = voice_test.m4a; sourceTree = "<group>"; };
+		17CADD2927C738630069C80E /* video_test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_test.mp4; sourceTree = "<group>"; };
+		17CADD2B27C7781C0069C80E /* file_test.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = file_test.zip; sourceTree = "<group>"; };
 		2F1A9931AFDF91761161E1D6 /* Pods_OpenIMSDKiOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenIMSDKiOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EF995546887F96AC6C32E5F /* Pods-OpenIMSDKiOS_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenIMSDKiOS_Example.debug.xcconfig"; path = "Target Support Files/Pods-OpenIMSDKiOS_Example/Pods-OpenIMSDKiOS_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* OpenIMSDKiOS_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenIMSDKiOS_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +150,10 @@
 		6003F593195388D20070C39A /* Example for OpenIMSDKiOS */ = {
 			isa = PBXGroup;
 			children = (
+				17CADD2B27C7781C0069C80E /* file_test.zip */,
+				17CADD2927C738630069C80E /* video_test.mp4 */,
+				17CADD2527C7227F0069C80E /* photo_test.jpeg */,
+				17CADD2627C7227F0069C80E /* voice_test.m4a */,
 				6003F59C195388D20070C39A /* OPENIMSDKAppDelegate.h */,
 				6003F59D195388D20070C39A /* OPENIMSDKAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -273,8 +285,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
+				17CADD2827C7227F0069C80E /* voice_test.m4a in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				17CADD2A27C738630069C80E /* video_test.mp4 in Resources */,
+				17CADD2C27C7781C0069C80E /* file_test.zip in Resources */,
+				17CADD2727C7227F0069C80E /* photo_test.jpeg in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

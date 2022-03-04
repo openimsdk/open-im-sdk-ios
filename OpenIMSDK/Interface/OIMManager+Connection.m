@@ -35,37 +35,60 @@ onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired {
     param[@"ws_addr"]  = wsAddr ?: @"";
     param[@"data_dir"] = dataDir ?: @"";
     param[@"log_level"] = logLevel == 0 ? @6 : @(logLevel);
-    param[@"object_storage"] = os.length == 0 ? @"cos" : @"";
+    param[@"object_storage"] = os.length == 0 ? @"cos" : os;
     
     return Open_im_sdkInitSDK(self, [self operationId], param.mj_JSONString);
 }
 
-- (void)onConnectFailed:(int32_t)errCode errMsg:(NSString * _Nullable)errMsg {
-    if ([self class].callbacker.onConnectFailure) {
-        [self class].callbacker.onConnectFailure(errCode, errMsg);
+- (void)dispatchMainThread:(void (NS_NOESCAPE ^)(void))todo {
+    if ([NSThread isMainThread]) {
+        todo();
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            todo();
+        });
     }
+}
+
+- (void)onConnectFailed:(int32_t)errCode errMsg:(NSString * _Nullable)errMsg {
+    
+    [self dispatchMainThread:^{
+        if ([self class].callbacker.onConnectFailure) {
+            [self class].callbacker.onConnectFailure(errCode, errMsg);
+        }
+    }];
 }
 
 - (void)onConnectSuccess {
-    if ([[self class] class].callbacker.onConnectSuccess) {
-        [[self class] class].callbacker.onConnectSuccess();
-    }
+    [self dispatchMainThread:^{
+        if ([[self class] class].callbacker.onConnectSuccess) {
+            [[self class] class].callbacker.onConnectSuccess();
+        }
+    }];
 }
 
 - (void)onConnecting {
-    if ([self class].callbacker.onConnecting) {
-        [self class].callbacker.onConnecting();
-    }}
+    [self dispatchMainThread:^{
+        if ([self class].callbacker.onConnecting) {
+            [self class].callbacker.onConnecting();
+        }
+    }];
+}
 
 - (void)onKickedOffline {
-    if ([self class].callbacker.onKickedOffline) {
-        [self class].callbacker.onKickedOffline();
-    }}
+    [self dispatchMainThread:^{
+        if ([self class].callbacker.onKickedOffline) {
+            [self class].callbacker.onKickedOffline();
+        }
+    }];
+}
 
 - (void)onUserTokenExpired {
-    if ([self class].callbacker.onUserTokenExpired) {
-        [self class].callbacker.onUserTokenExpired();
-    }
+    [self dispatchMainThread:^{
+        if ([self class].callbacker.onUserTokenExpired) {
+            [self class].callbacker.onUserTokenExpired();
+        }
+    }];
 }
 
 @end

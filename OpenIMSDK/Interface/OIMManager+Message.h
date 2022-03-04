@@ -9,7 +9,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OIMMessageInfo (init)
+@interface OIMMessageInfo (extension)
+
+/*
+ *  是否是发送出去的消息
+ */
+- (BOOL)isSelf;
 
 /*
  * 创建文本消息
@@ -117,17 +122,15 @@ NS_ASSUME_NONNULL_BEGIN
  * @param summaryList 摘要
  * @param messageList 消息列表
  */
-+ (OIMMessageInfo *)createMergerMessage:(NSArray <NSString *> *)messages
-                                  title:(NSString *)title
-                            summaryList:(NSArray <NSString *> *)summarys;
++ (OIMMessageInfo *)createMergeMessage:(NSArray <OIMMessageInfo *> *)messages
+                                 title:(NSString *)title
+                           summaryList:(NSArray <NSString *> *)summarys;
 
 /*
  * 创建转发消息
  *
- * @param messageList 消息列表
- *
  */
-+ (OIMMessageInfo *)createForwardMessage:(NSArray <NSString *> *)messages;
++ (OIMMessageInfo *)createForwardMessage:(OIMMessageInfo *)message;
 
 /*
  * 创建位置消息
@@ -165,8 +168,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @param description 描述
  */
 + (OIMMessageInfo *)createCustomMessage:(NSString *)data
-                              extension:(NSString *)extension
-                            description:(NSString *)description;
+                              extension:(NSString * _Nullable)extension
+                            description:(NSString * _Nullable)description;
 
 @end
 
@@ -175,7 +178,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 发送消息
  *
- * @param message       消息体为通过Create...Message创建的MessageInfo
+ * @param message       消息体为通过Create...Message创建的OIMMessageInfo
  * @param recvID        单聊的用户ID，如果为群聊则为""
  * @param groupID       群聊的群ID，如果为单聊则为""
  * @param offlinePushInfo 离线推送的消息为OIMOfflinePushInfo
@@ -191,7 +194,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 发送消息不通过sdk内置OSS上传多媒体文件
  *
- * @param message       消息体为通过Create...Message创建的MessageInfo
+ * @param message       消息体为通过Create...Message创建的OIMMessageInfo
  * @param recvID        单聊的用户ID，如果为群聊则为""
  * @param groupID       群聊的群ID，如果为单聊则为""
  * @param offlinePushInfo 离线推送的消息为OIMOfflinePushInfo
@@ -222,7 +225,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 撤回一条消息
  *
- * @param message   为MessageInfo
+ * @param message   为OIMMessageInfo
  *
  */
 - (void)revokeMessage:(OIMMessageInfo *)message
@@ -244,7 +247,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 标记已读
  *
  * @param userID    用户ID
- * @param msgIDList 消息ID的列表 ["er4er","3er4"]
+ * @param msgIDList 消息ID的列表 ["er4er","3er4"]，传[]则标记所有
  */
 - (void)markC2CMessageAsRead:(NSString *)userID
                    msgIDList:(NSArray <NSString *> *)msgIDList
@@ -254,7 +257,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 本地删除一条消息，卸载APP后会重新获取到
  *
- * @param message   为MessageInfo
+ * @param message   为OIMMessageInfo
  */
 - (void)deleteMessageFromLocalStorage:(OIMMessageInfo *)message
                             onSuccess:(nullable OIMSuccessCallback)onSuccess
@@ -270,7 +273,7 @@ NS_ASSUME_NONNULL_BEGIN
                      onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
- * 本地删除一条消息，卸载APP后会重新获取到
+ * 清空群聊的历史记录
  *
  * @param groupID   群ID
  */

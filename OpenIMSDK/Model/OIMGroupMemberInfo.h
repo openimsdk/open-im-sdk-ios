@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 @interface OIMGroupMemberBaseInfo : NSObject
 
-@property(nonatomic, nullable, copy) NSString *userID;
-@property(nonatomic, assign) OIMGroupMemberRole roleLevel;
+@property (nonatomic, nullable, copy) NSString *userID;
+@property (nonatomic, assign) OIMGroupMemberRole roleLevel;
 
 @end
 
@@ -24,13 +24,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// 
 @interface OIMGroupMemberInfo : OIMGroupMemberBaseInfo
 
-@property(nonatomic, nullable, copy) NSString *groupID;
-@property(nonatomic, nullable, copy) NSString *nickname;
-@property(nonatomic, nullable, copy) NSString *faceURL;
-@property(nonatomic, assign) NSInteger joinTime;
-@property(nonatomic, assign) NSInteger joinSource;
-@property(nonatomic, nullable, copy) NSString *operatorUserID;
-@property(nonatomic, nullable, copy) NSString *ex;
+@property (nonatomic, nullable, copy) NSString *groupID;
+@property (nonatomic, nullable, copy) NSString *nickname;
+@property (nonatomic, nullable, copy) NSString *faceURL;
+@property (nonatomic, assign) NSInteger joinTime;
+@property (nonatomic, assign) NSInteger joinSource;
+@property (nonatomic, nullable, copy) NSString *operatorUserID;
+@property (nonatomic, nullable, copy) NSString *ex;
 
 @end
 

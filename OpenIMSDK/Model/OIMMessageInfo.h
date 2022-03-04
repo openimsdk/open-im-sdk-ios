@@ -26,70 +26,70 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 @interface OIMMessageInfo : NSObject
 
-@property(nonatomic, nullable, copy) NSString *clientMsgID;
+@property (nonatomic, nullable, copy) NSString *clientMsgID;
 
-@property(nonatomic, nullable, copy) NSString *serverMsgID;
+@property (nonatomic, nullable, copy) NSString *serverMsgID;
 
-@property(nonatomic, assign) NSInteger createTime;
+@property (nonatomic, assign) NSInteger createTime;
 
-@property(nonatomic, assign) NSInteger sendTime;
+@property (nonatomic, assign) NSInteger sendTime;
 
-@property(nonatomic, assign) OIMConversationType sessionType;
+@property (nonatomic, assign) OIMConversationType sessionType;
 
-@property(nonatomic, nullable, copy) NSString *sendID;
+@property (nonatomic, nullable, copy) NSString *sendID;
 
-@property(nonatomic, nullable, copy) NSString *recvID;
+@property (nonatomic, nullable, copy) NSString *recvID;
 
-@property(nonatomic, nullable, copy) NSString *handleMsg;
+@property (nonatomic, nullable, copy) NSString *handleMsg;
 
-@property(nonatomic, assign) OIMMessageLevel msgFrom;
+@property (nonatomic, assign) OIMMessageLevel msgFrom;
 
-@property(nonatomic, assign) OIMMessageContentType contentType;
+@property (nonatomic, assign) OIMMessageContentType contentType;
 
-@property(nonatomic, assign) NSInteger platformID;
+@property (nonatomic, assign) NSInteger platformID;
 
-@property(nonatomic, nullable, copy) NSString *senderNickname;
+@property (nonatomic, nullable, copy) NSString *senderNickname;
 
-@property(nonatomic, nullable, copy) NSString *senderFaceUrl;
+@property (nonatomic, nullable, copy) NSString *senderFaceUrl;
 
-@property(nonatomic, nullable, copy) NSString *groupID;
+@property (nonatomic, nullable, copy) NSString *groupID;
 
-@property(nonatomic, nullable, copy) NSString *content;
+@property (nonatomic, nullable, copy) NSString *content;
 
 /*
  *  消息唯一序列号
  */
-@property(nonatomic, assign) NSInteger seq;
+@property (nonatomic, assign) NSInteger seq;
 
-@property(nonatomic, assign) BOOL isRead;
+@property (nonatomic, assign) BOOL isRead;
 
-@property(nonatomic, assign) OIMMessageStatus status;
+@property (nonatomic, assign) OIMMessageStatus status;
 
-@property(nonatomic, nullable, copy) NSString *attachedInfo;
+@property (nonatomic, nullable, copy) NSString *attachedInfo;
 
-@property(nonatomic, nullable, copy) NSString *ex;
+@property (nonatomic, nullable, copy) NSString *ex;
 
-@property(nonatomic, strong) OIMOfflinePushInfo *offlinePushInfo;
+@property (nonatomic, strong) OIMOfflinePushInfo *offlinePushInfo;
 
-@property(nonatomic, nullable, strong) OIMPictureElem *pictureElem;
+@property (nonatomic, nullable, strong) OIMPictureElem *pictureElem;
 
-@property(nonatomic, nullable, strong) OIMSoundElem *soundElem;
+@property (nonatomic, nullable, strong) OIMSoundElem *soundElem;
 
-@property(nonatomic, nullable, strong) OIMVideoElem *videoElem;
+@property (nonatomic, nullable, strong) OIMVideoElem *videoElem;
 
-@property(nonatomic, nullable, strong) OIMFileElem *fileElem;
+@property (nonatomic, nullable, strong) OIMFileElem *fileElem;
 
-@property(nonatomic, nullable, strong) OIMMergeElem *mergeElem;
+@property (nonatomic, nullable, strong) OIMMergeElem *mergeElem;
 
-@property(nonatomic, nullable, strong) OIMAtElem *atElem;
+@property (nonatomic, nullable, strong) OIMAtElem *atElem;
 
-@property(nonatomic, nullable, strong) OIMLocationElem *locationElem;
+@property (nonatomic, nullable, strong) OIMLocationElem *locationElem;
 
-@property(nonatomic, nullable, strong) OIMQuoteElem *quoteElem;
+@property (nonatomic, nullable, strong) OIMQuoteElem *quoteElem;
 
-@property(nonatomic, nullable, strong) OIMCustomElem *customElem;
+@property (nonatomic, nullable, strong) OIMCustomElem *customElem;
 
-@property(nonatomic, nullable, strong) OIMNotificationElem *notificationElem;
+@property (nonatomic, nullable, strong) OIMNotificationElem *notificationElem;
 
 @end
 

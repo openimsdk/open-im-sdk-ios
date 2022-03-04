@@ -6,7 +6,14 @@
 //
 
 #import "OIMMergeElem.h"
+#import <MJExtension/MJExtension.h>
+#import "OIMMessageInfo.h"
 
 @implementation OIMMergeElem
+
++ (NSDictionary *)mj_objectClassInArray
+{
+    return @{@"multiMessage" : [OIMMessageInfo class]};
+}
 
 @end

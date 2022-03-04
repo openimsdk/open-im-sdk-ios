@@ -16,17 +16,17 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 会话ID
  */
-@property(nonatomic, copy) NSString *conversationID;
+@property (nonatomic, copy) NSString *conversationID;
 
 /*
  * 这个会话下的消息数量
  */
-@property(nonatomic, assign) NSInteger messageCount;
+@property (nonatomic, assign) NSInteger messageCount;
 
 /*
- * MessageInfo的列表
+ * OIMMessageInfo的列表
  */
-@property(nonatomic, copy) NSArray <OIMMessageInfo *> *messageList;
+@property (nonatomic, copy) NSArray <OIMMessageInfo *> *messageList;
 
 @end
 
@@ -35,12 +35,12 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 获取到的总的消息数量
  */
-@property(nonatomic, assign) NSInteger totalCount;
+@property (nonatomic, assign) NSInteger totalCount;
 
 /*
  * 搜索结果
  */
-@property(nonatomic, strong) NSArray <OIMSearchResultItemInfo *> *searchResultItems;
+@property (nonatomic, strong) NSArray <OIMSearchResultItemInfo *> *searchResultItems;
 
 @end
 

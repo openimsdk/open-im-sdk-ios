@@ -26,12 +26,12 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
  *  CONVERSASTION_ID 有会话以后生成
  *  注意：部分API只能设置other_user_id 或者 group_id 其中之一，例如发送消息
  */
-#define API_ADDRESS         @"http://x.x.x.x:10000"
-#define WS_ADDRESS          @"ws://x.x.x.x:10086"
+#define API_ADDRESS         @"http://121.37.25.71:10000"
+#define WS_ADDRESS          @"ws://121.37.25.71:17778"
 
-#define LOGIN_USER_ID       @""
-#define LOGIN_USER_TOKEN    @""
-#define OTHER_USER_ID       @""
+#define LOGIN_USER_ID       @"x2"
+#define LOGIN_USER_TOKEN    @"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVSUQiOiJ4MiIsIlBsYXRmb3JtIjoiSU9TIiwiZXhwIjoxNjQ2MTA0MDYyLCJuYmYiOjE2NDU0OTkyNjIsImlhdCI6MTY0NTQ5OTI2Mn0.XYGVdQPJTQ2U2fEQTpCYb5CWK4FcSknyJ-gcVgT0QwA"
+#define OTHER_USER_ID       @"x1"
 
 #define GROUP_ID            @""
 #define CONVERSASTION_ID    @""
@@ -280,11 +280,12 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     NSLog(@"\n\n-----初始化------");
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [paths.firstObject stringByAppendingString:@"/"];
     
     BOOL initSuccess = [OIMManager.manager initSDK:iOS
                                            apiAdrr:API_ADDRESS
                                             wsAddr:WS_ADDRESS
-                                           dataDir:[paths.firstObject stringByAppendingString:@"/"]
+                                           dataDir:path
                                           logLevel:6
                                      objectStorage:nil
                                       onConnecting:^{
@@ -349,8 +350,9 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
         
         OIMUserInfo *info = [OIMUserInfo new];
-        info.nickname = @"x";
+        info.nickname = LOGIN_USER_ID;
         info.email = @"qqx@qq.com";
+        info.faceURL = @"https://img0.baidu.com/it/u=2359361020,2055583759&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400";
         
         [OIMManager.manager setSelfInfo:info
                               onSuccess:^(NSString * _Nullable data) {
@@ -382,7 +384,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
         [OIMManager.manager addFriend:OTHER_USER_ID
-                           reqMessage:nil
+                           reqMessage:@"添加一个好友呗"
                             onSuccess:^(NSString * _Nullable data) {
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
@@ -648,7 +650,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
         [OIMManager.manager getGroupMemberList:GROUP_ID
-                                        filter:1
+                                        filter:0
                                         offset:0
                                          count:20
                                      onSuccess:^(NSArray<OIMGroupMemberInfo *> * _Nullable groupMembersInfo) {
@@ -774,13 +776,28 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
-        self.testMessage = [OIMMessageInfo createTextMessage:@"测试消息2"];
+        self.testMessage = [OIMMessageInfo createTextMessage:[@"测试消息" stringByAppendingFormat:@"%d", arc4random() % 1000]];
+        
+//        NSString *path1 = [[NSBundle mainBundle]pathForResource:@"photo_test" ofType:@"jpeg"];
+//        self.testMessage = [OIMMessageInfo createImageMessageFromFullPath:path1];
+//
+//        NSString *path2 = [[NSBundle mainBundle]pathForResource:@"voice_test" ofType:@"m4a"];
+//        self.testMessage = [OIMMessageInfo createSoundMessageFromFullPath:path2 duration:8];
+//
+//        NSString *path3 = [[NSBundle mainBundle]pathForResource:@"video_test" ofType:@"mp4"];
+//        self.testMessage = [OIMMessageInfo createVideoMessageFromFullPath:path3 videoType:@"mp4" duration:43 snapshotPath:path1];
+//
+//        NSString *path4 = [[NSBundle mainBundle]pathForResource:@"file_test" ofType:@"zip"];
+//        self.testMessage = [OIMMessageInfo createFileMessageFromFullPath:path4 fileName:@"file_test"];
         
         [OIMManager.manager sendMessage:self.testMessage
-                                 recvID:nil
+                                 recvID:OTHER_USER_ID
                                 groupID:GROUP_ID
                         offlinePushInfo:nil
                               onSuccess:^(NSString * _Nullable data) {
+            // 这里特别注意下，返回的这个message 需要替换创建的消息体。
+            OIMMessageInfo *newMsg = [OIMMessageInfo mj_objectWithKeyValues:data];
+            self.testMessage = newMsg;
             callback(nil, nil);
         } onProgress:^(NSInteger number) {
             NSLog(@"progress:%d", number);
@@ -1011,9 +1028,8 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
         [OIMManager.manager setConversationDraft:CONVERSASTION_ID
-                                        sourceID:OTHER_USER_ID
+                                       draftText:@"草稿"
                                        onSuccess:^(NSString * _Nullable data) {
-            
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
             callback(@(code), msg);

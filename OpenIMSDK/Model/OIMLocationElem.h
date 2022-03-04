@@ -11,9 +11,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMLocationElem : NSObject
 
-@property(nonatomic, nullable, copy) NSString *description;
-@property(nonatomic, assign) double longitude;
-@property(nonatomic, assign) double latitude;
+@property (nonatomic, nullable, copy) NSString *desc;
+@property (nonatomic, assign) double longitude;
+@property (nonatomic, assign) double latitude;
 
 @end
 

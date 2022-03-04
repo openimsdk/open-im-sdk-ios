@@ -15,22 +15,22 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 本地资源地址
  */
-@property(nonatomic, nullable, copy) NSString *sourcePath;
+@property (nonatomic, nullable, copy) NSString *sourcePath;
 
 /*
  * 本地图片详情
  */
-@property(nonatomic, nullable, strong) OIMPictureInfo *sourcePicture;
+@property (nonatomic, nullable, strong) OIMPictureInfo *sourcePicture;
 
 /*
  * 大图详情
  */
-@property(nonatomic, nullable, strong) OIMPictureInfo *bigPicture;
+@property (nonatomic, nullable, strong) OIMPictureInfo *bigPicture;
 
 /*
  * 缩略图详情
  */
-@property(nonatomic, nullable, strong) OIMPictureInfo *snapshotPicture;
+@property (nonatomic, nullable, strong) OIMPictureInfo *snapshotPicture;
 
 @end
 

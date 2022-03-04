@@ -45,6 +45,14 @@
   return Open_im_sdkSdkVersion();
 }
 
+- (NSString *)getLoginUid {
+    return Open_im_sdkGetLoginUser();
+}
+
+- (NSString *)getLoginUser {
+    return Open_im_sdkGetLoginUser();
+}
+
 - (NSString *)operationId {
     return [[NSUUID UUID]UUIDString];
 }

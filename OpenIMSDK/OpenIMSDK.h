@@ -20,10 +20,6 @@
 #import "OIMManager+User.h"
 
 #import "OIMCallbacker.h"
-#import "OIMCallbacker+Conversation.h"
-#import "OIMCallbacker+Friend.h"
-#import "OIMCallbacker+Group.h"
-#import "OIMCallbacker+Message.h"
-#import "OIMCallbacker+User.h"
+#import "OIMCallbacker+Closure.h"
 
 #endif /* OpenIMSDK_h */

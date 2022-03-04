@@ -15,17 +15,17 @@ NS_ASSUME_NONNULL_BEGIN
  * at 消息内容
  */
 
-@property(nonatomic, nullable, copy) NSString *text;
+@property (nonatomic, nullable, copy) NSString *text;
 
 /*
  * 被@的用户id集合
  */
-@property(nonatomic, nullable, copy) NSArray<NSString *> *atUserList;
+@property (nonatomic, nullable, copy) NSArray<NSString *> *atUserList;
 
 /*
  * 自己是否被@了
  */
-@property(nonatomic, assign) BOOL isAtSelf;
+@property (nonatomic, assign) BOOL isAtSelf;
 
 @end
 

@@ -34,7 +34,7 @@
     Open_im_sdkGetConversationListSplit(callback, [self operationId], offset, count);
 }
 
-- (void)getOneConversationWithSessionType:(NSInteger)sessionType
+- (void)getOneConversationWithSessionType:(OIMConversationType)sessionType
                                  sourceID:(NSString *)sourceID
                                 onSuccess:(OIMConversationInfoCallback)onSuccess
                                 onFailure:(OIMFailureCallback)onFailure {
@@ -47,7 +47,7 @@
     Open_im_sdkGetOneConversation(callback, [self operationId], sessionType, sourceID);
 }
 
-- (NSString *)getConversationIDBySessionType:(NSInteger )sessionType
+- (NSString *)getConversationIDBySessionType:(OIMConversationType )sessionType
                                     sourceID:(NSString *)sourceID {
     return Open_im_sdkGetConversationIDBySessionType(sourceID, sessionType);
 }
@@ -73,7 +73,7 @@
 }
 
 - (void)setConversationDraft:(NSString *)conversationID
-                    sourceID:(NSString *)draftText
+                   draftText:(NSString *)draftText
                    onSuccess:(OIMSuccessCallback)onSuccess
                    onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];

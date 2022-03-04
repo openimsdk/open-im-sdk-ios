@@ -24,7 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSString *)sdkSdkVersion;
 
-
+/*
+ * 获取登录用户uid
+ */
+- (NSString *)getLoginUid;
+- (NSString *)getLoginUser;
 
 - (NSString *)operationId;
 @end

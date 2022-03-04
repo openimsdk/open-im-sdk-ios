@@ -14,32 +14,32 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 唯一ID
  */
-@property(nonatomic, nullable, copy) NSString *uuID;
+@property (nonatomic, nullable, copy) NSString *uuID;
 
 /*
  * 图片类型
  */
-@property(nonatomic, nullable, copy) NSString *type;
+@property (nonatomic, nullable, copy) NSString *type;
 
 /*
  * 图片大小
  */
-@property(nonatomic, assign) NSInteger size;
+@property (nonatomic, assign) NSInteger size;
 
 /*
  * 图片宽度
  */
-@property(nonatomic, assign) CGFloat width;
+@property (nonatomic, assign) CGFloat width;
 
 /*
  * 图片高度
  */
-@property(nonatomic, assign) CGFloat height;
+@property (nonatomic, assign) CGFloat height;
 
 /*
  * 图片oss地址
  */
-@property(nonatomic, nullable, copy) NSString *url;
+@property (nonatomic, nullable, copy) NSString *url;
 
 @end
 

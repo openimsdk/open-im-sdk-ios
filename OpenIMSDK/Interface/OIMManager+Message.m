@@ -8,39 +8,56 @@
 #import "OIMManager+Message.h"
 #import "SendMessageCallbackProxy.h"
 
-@implementation OIMMessageInfo (init)
+@implementation OIMMessageInfo (extension)
+
+- (BOOL)isSelf {
+    return [self.sendID isEqualToString:[OIMManager.manager getLoginUid]];
+}
+
++ (OIMMessageInfo *)convertToMessageInfo:(NSString *)json {
+    OIMMessageInfo *msg = [OIMMessageInfo mj_objectWithKeyValues:json];
+    msg.status = OIMMessageStatusUndefine;
+    
+    return msg;
+}
 
 + (OIMMessageInfo *)createTextMessage:(NSString *)text {
     NSString *json = Open_im_sdkCreateTextMessage([OIMManager.manager operationId], text);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createTextAtMessage:(NSString *)text
                               atUidList:(NSArray<NSString *> *)atUidList {
     NSString *json = Open_im_sdkCreateTextAtMessage([OIMManager.manager operationId], text, atUidList.mj_JSONString);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createImageMessage:(NSString *)imagePath {
     NSString *json = Open_im_sdkCreateImageMessage([OIMManager.manager operationId], imagePath);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createImageMessageFromFullPath:(NSString *)imagePath {
     NSString *json = Open_im_sdkCreateImageMessageFromFullPath([OIMManager.manager operationId], imagePath);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createSoundMessage:(NSString *)soundPath
                               duration:(NSInteger)duration {
     NSString *json = Open_im_sdkCreateSoundMessage([OIMManager.manager operationId], soundPath, duration);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createSoundMessageFromFullPath:(NSString *)soundPath
                                           duration:(NSInteger)duration {
     NSString *json = Open_im_sdkCreateSoundMessageFromFullPath([OIMManager.manager operationId], soundPath, duration);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createVideoMessage:(NSString *)videoPath
@@ -48,7 +65,8 @@
                               duration:(NSInteger)duration
                           snapshotPath:(NSString *)snapshotPath {
     NSString *json = Open_im_sdkCreateVideoMessage([OIMManager.manager operationId], videoPath, videoType, duration, snapshotPath);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createVideoMessageFromFullPath:(NSString *)videoPath
@@ -56,56 +74,66 @@
                                           duration:(NSInteger)duration
                                       snapshotPath:(NSString *)snapshotPath {
     NSString *json = Open_im_sdkCreateVideoMessageFromFullPath([OIMManager.manager operationId], videoPath, videoType, duration, snapshotPath);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createFileMessage:(NSString *)filePath
                              fileName:(NSString *)fileName {
     NSString *json = Open_im_sdkCreateFileMessage([OIMManager.manager operationId], filePath, fileName);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createFileMessageFromFullPath:(NSString *)filePath
                                          fileName:(NSString *)fileName {
     NSString *json = Open_im_sdkCreateFileMessageFromFullPath([OIMManager.manager operationId], filePath, fileName);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
-+ (OIMMessageInfo *)createMergerMessage:(NSArray<NSString *> *)messages
++ (OIMMessageInfo *)createMergeMessage:(NSArray<OIMMessageInfo *> *)messages
                                   title:(NSString *)title
                             summaryList:(NSArray<NSString *> *)summarys {
-    NSString *json = Open_im_sdkCreateMergerMessage([OIMManager.manager operationId], messages.mj_JSONString, title, summarys.mj_JSONString);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    NSArray *msgs = [OIMMessageInfo mj_keyValuesArrayWithObjectArray:messages];
+    NSString *json = Open_im_sdkCreateMergerMessage([OIMManager.manager operationId], [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:msgs options:0 error:nil] encoding:NSUTF8StringEncoding], title, summarys.mj_JSONString);
+    
+    return [self convertToMessageInfo:json];
 }
 
-+ (OIMMessageInfo *)createForwardMessage:(NSArray<NSString *> *)messages {
-    NSString *json = Open_im_sdkCreateForwardMessage([OIMManager.manager operationId], messages.mj_JSONString);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
++ (OIMMessageInfo *)createForwardMessage:(OIMMessageInfo *)message {
+    NSString *json = Open_im_sdkCreateForwardMessage([OIMManager.manager operationId], message.mj_JSONString);
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createLocationMessage:(NSString *)description
                                  latitude:(double)latitude
                                 longitude:(double)longitude {
     NSString *json = Open_im_sdkCreateLocationMessage([OIMManager.manager operationId], description, longitude, latitude);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createQuoteMessage:(NSString *)text
                                message:(OIMMessageInfo *)message {
     NSString *json = Open_im_sdkCreateQuoteMessage([OIMManager.manager operationId], text, message.mj_JSONString);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createCardMessage:(NSString *)content {
     NSString *json = Open_im_sdkCreateCardMessage([OIMManager.manager operationId], content);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 + (OIMMessageInfo *)createCustomMessage:(NSString *)data
                               extension:(NSString *)extension
                             description:(NSString *)description {
     NSString *json = Open_im_sdkCreateCustomMessage([OIMManager.manager operationId], data, extension, description);
-    return [OIMMessageInfo mj_objectWithKeyValues:json];
+    
+    return [self convertToMessageInfo:json];
 }
 
 @end

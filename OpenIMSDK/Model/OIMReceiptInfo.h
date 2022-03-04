@@ -16,12 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 用户id
  */
-@property(nonatomic, nullable, copy) NSString *uid;
+@property (nonatomic, nullable, copy) NSString *uid;
 
 /*
  * 已读消息id
  */
-@property(nonatomic, nullable, copy) NSArray<NSString *> *msgIDList;
+@property (nonatomic, nullable, copy) NSArray<NSString *> *msgIDList;
 
 /*
  * 阅读时间

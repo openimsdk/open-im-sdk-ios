@@ -14,17 +14,17 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 唯一ID
  */
-@property(nonatomic, nullable, copy) NSString *uuID;
+@property (nonatomic, nullable, copy) NSString *uuID;
 
 /*
  * 本地资源地址
  */
-@property(nonatomic, nullable, copy) NSString *soundPath;
+@property (nonatomic, nullable, copy) NSString *soundPath;
 
 /*
  * oss地址
  */
-@property(nonatomic, nullable, copy) NSString *sourceUrl;
+@property (nonatomic, nullable, copy) NSString *sourceUrl;
 
 /*
  * 音频大小

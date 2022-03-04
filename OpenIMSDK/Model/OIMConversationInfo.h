@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 @interface OIMConversationBaseInfo : NSObject
 
-@property(nonatomic, nullable, copy) NSString *conversationID;
+@property (nonatomic, nullable, copy) NSString *conversationID;
 
 @end
 
@@ -23,38 +23,38 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 @interface OIMConversationInfo : OIMConversationBaseInfo
 
-@property(nonatomic, assign) OIMConversationType conversationType;
+@property (nonatomic, assign) OIMConversationType conversationType;
 
-@property(nonatomic, nullable, copy) NSString *userID;
+@property (nonatomic, nullable, copy) NSString *userID;
 
-@property(nonatomic, nullable, copy) NSString *groupID;
+@property (nonatomic, nullable, copy) NSString *groupID;
 
-@property(nonatomic, nullable, copy) NSString *showName;
+@property (nonatomic, nullable, copy) NSString *showName;
 
-@property(nonatomic, nullable, copy) NSString *faceURL;
+@property (nonatomic, nullable, copy) NSString *faceURL;
 
-@property(nonatomic, assign) OIMReceiveMessageOpt recvMsgOpt;
+@property (nonatomic, assign) OIMReceiveMessageOpt recvMsgOpt;
 
-@property(nonatomic, assign) NSInteger unreadCount;
+@property (nonatomic, assign) NSInteger unreadCount;
 
 /*
  *  at信息持久展示，暂未使用
  */
-@property(nonatomic, assign) NSInteger groupAtType;
+@property (nonatomic, assign) NSInteger groupAtType;
 
-@property(nonatomic, assign) NSInteger latestMsgSendTime;
+@property (nonatomic, assign) NSInteger latestMsgSendTime;
 
-@property(nonatomic, nullable, copy) NSString *draftText;
+@property (nonatomic, nullable, copy) NSString *draftText;
 
-@property(nonatomic, assign) NSInteger draftTextTime;
+@property (nonatomic, assign) NSInteger draftTextTime;
 
-@property(nonatomic, assign) BOOL isPinned;
+@property (nonatomic, assign) BOOL isPinned;
 
-@property(nonatomic, nullable, copy) NSString *attachedInfo;
+@property (nonatomic, nullable, copy) NSString *attachedInfo;
 
-@property(nonatomic, nullable, strong) OIMMessageInfo *latestMsg;
+@property (nonatomic, nullable, strong) OIMMessageInfo *latestMsg;
 
-@property(nonatomic, nullable, copy) NSString *ex;
+@property (nonatomic, nullable, copy) NSString *ex;
 
 @end
 
@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 免打扰状态
  */
-@property(nonatomic, assign) OIMReceiveMessageOpt result;
+@property (nonatomic, assign) OIMReceiveMessageOpt result;
 
 @end
 

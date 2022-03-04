@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param sessionType   会话的类型，单聊为1，群聊为2
  * @param sourceID  单聊为用户ID，群聊为群ID
  */
-- (void)getOneConversationWithSessionType:(NSInteger)sessionType
+- (void)getOneConversationWithSessionType:(OIMConversationType)sessionType
                                  sourceID:(NSString *)sourceID
                                 onSuccess:(nullable OIMConversationInfoCallback)onSuccess
                                 onFailure:(nullable OIMFailureCallback)onFailure;
@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param sessionType   会话的类型，单聊为1，群聊为2
  * @param sourceID  单聊为用户ID，群聊为群ID
  */
-- (NSString *)getConversationIDBySessionType:(NSInteger)sessionType
+- (NSString *)getConversationIDBySessionType:(OIMConversationType)sessionType
                                     sourceID:(NSString *)sourceID;
 
 /*
@@ -69,7 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param draftText 草稿文本，如果为""则为删除草稿
  */
 - (void)setConversationDraft:(NSString *)conversationID
-                    sourceID:(NSString *)draftText
+                   draftText:(NSString *)draftText
                    onSuccess:(nullable OIMSuccessCallback)onSuccess
                    onFailure:(nullable OIMFailureCallback)onFailure;
 
@@ -101,7 +101,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /*
  * 获取会话免打扰状态
- * 1307:屏蔽消息; 1308:接收消息但不提示; 3:正常
  *
  */
 - (void)getConversationRecvMessageOpt:(NSArray <NSString *> *)conversationIDs
@@ -111,12 +110,12 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 设置会话免打扰状态
  *
- * @param status    1307:屏蔽消息; 1308:接收消息但不提示; 3:正常
  */
 - (void)setConversationRecvMessageOpt:(NSArray <NSString *> *)conversationIDs
                                status:(OIMReceiveMessageOpt)status
                             onSuccess:(nullable OIMSuccessCallback)onSuccess
                             onFailure:(nullable OIMFailureCallback)onFailure;
+
 
 @end
 

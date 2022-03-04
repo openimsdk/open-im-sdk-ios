@@ -10,15 +10,6 @@
 
 @implementation OIMManager (User)
 
-- (NSString *)getLoginUid {
-    return Open_im_sdkGetLoginUser();
-}
-
-- (OIMUserInfo *)getLoginUser {
-    NSString *json = Open_im_sdkGetLoginUser();
-    return [OIMUserInfo mj_objectWithKeyValues:json];
-}
-
 - (void)getUsersInfo:(NSArray <NSString *> *)uids
            onSuccess:(OIMFullUsersInfoCallback)onSuccess
            onFailure:(OIMFailureCallback)onFailure {

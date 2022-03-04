@@ -15,35 +15,35 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 @interface OIMFriendApplication : NSObject
 
-@property(nonatomic, nullable, copy) NSString *fromUserID;
+@property (nonatomic, nullable, copy) NSString *fromUserID;
 
-@property(nonatomic, nullable, copy) NSString *fromNickname;
+@property (nonatomic, nullable, copy) NSString *fromNickname;
 
-@property(nonatomic, nullable, copy) NSString *fromFaceURL;
+@property (nonatomic, nullable, copy) NSString *fromFaceURL;
 
-@property(nonatomic, assign) OIMGender fromGender;
+@property (nonatomic, assign) OIMGender fromGender;
 
-@property(nonatomic, nullable, copy) NSString *toUserID;
+@property (nonatomic, nullable, copy) NSString *toUserID;
 
-@property(nonatomic, nullable, copy) NSString *toNickname;
+@property (nonatomic, nullable, copy) NSString *toNickname;
 
-@property(nonatomic, nullable, copy) NSString *toFaceURL;
+@property (nonatomic, nullable, copy) NSString *toFaceURL;
 
-@property(nonatomic, assign) OIMGender toGender;
+@property (nonatomic, assign) OIMGender toGender;
 
-@property(nonatomic, assign) NSInteger handleResult;
+@property (nonatomic, assign) OIMApplicationStatus handleResult;
 
-@property(nonatomic, nullable, copy) NSString *reqMsg;
+@property (nonatomic, nullable, copy) NSString *reqMsg;
 
-@property(nonatomic, assign) NSInteger createTime;
+@property (nonatomic, assign) NSInteger createTime;
 
-@property(nonatomic, nullable, copy) NSString *handlerUserID;
+@property (nonatomic, nullable, copy) NSString *handlerUserID;
 
-@property(nonatomic, nullable, copy) NSString *handleMsg;
+@property (nonatomic, nullable, copy) NSString *handleMsg;
 
-@property(nonatomic, assign) NSInteger handleTime;
+@property (nonatomic, assign) NSInteger handleTime;
 
-@property(nonatomic, nullable, copy) NSString *ex;
+@property (nonatomic, nullable, copy) NSString *ex;
 
 @end
 

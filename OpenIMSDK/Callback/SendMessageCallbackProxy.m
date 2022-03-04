@@ -30,21 +30,28 @@
 }
 
 - (void)onError:(int32_t)errCode errMsg:(NSString * _Nullable)errMsg {
-    if (_onFailure) {
-        _onFailure(errCode, errMsg);
-    }
+    
+    [self dispatchMainThread:^{
+        if (_onFailure) {
+            _onFailure(errCode, errMsg);
+        }
+    }];
 }
 
 - (void)onProgress:(long)progress {
-    if (_onProgress) {
-        _onProgress(progress);
-    }
+    [self dispatchMainThread:^{
+        if (_onProgress) {
+            _onProgress(progress);
+        }
+    }];
 }
 
 - (void)onSuccess:(NSString * _Nullable)data {
-    if (_onSuccess) {
-        _onSuccess(data);
-    }
+    [self dispatchMainThread:^{
+        if (_onSuccess) {
+            _onSuccess(data);
+        }
+    }];
 }
 
 @end

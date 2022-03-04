@@ -14,6 +14,7 @@
     
     if (self) {
         self.offlinePushInfo = [OIMOfflinePushInfo new];
+        self.status = OIMMessageStatusUndefine;
     }
     
     return self;

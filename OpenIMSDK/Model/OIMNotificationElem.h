@@ -6,14 +6,29 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OIMGroupMemberInfo.h"
+#import "OIMGroupInfo.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMNotificationElem : NSObject
 
-@property(nonatomic, nullable, copy) NSString *detail;
+@property (nonatomic, nullable, copy) NSString *detail;
 
-@property(nonatomic, nullable, copy) NSString *defaultTips;
+@property (nonatomic, nullable, copy) NSString *defaultTips;
+
+/// 以下字段是从detail里面decode出来的
+@property (nonatomic, nullable, strong, readonly) OIMGroupMemberInfo *opUser;
+
+@property (nonatomic, nullable, strong, readonly) OIMGroupMemberInfo *quitUser;
+
+@property (nonatomic, nullable, strong, readonly) OIMGroupMemberInfo *entrantUser;
+
+@property (nonatomic, nullable, strong, readonly) OIMGroupInfo *group;
+
+@property (nonatomic, nullable, strong, readonly) NSArray <OIMGroupMemberInfo *> *kickedUserList;
+
+@property (nonatomic, nullable, strong, readonly) NSArray <OIMGroupMemberInfo *> *invitedUserList;
 
 @end
 

@@ -14,27 +14,27 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 文件本地资源地址
  */
-@property(nonatomic, nullable, copy) NSString *filePath;
+@property (nonatomic, nullable, copy) NSString *filePath;
 
 /*
  *
  */
-@property(nonatomic, nullable, copy) NSString *uuID;
+@property (nonatomic, nullable, copy) NSString *uuID;
 
 /*
  * oss地址
  */
-@property(nonatomic, nullable, copy) NSString *sourceUrl;
+@property (nonatomic, nullable, copy) NSString *sourceUrl;
 
 /*
  * 文件名称
  */
-@property(nonatomic, nullable, copy) NSString *fileName;
+@property (nonatomic, nullable, copy) NSString *fileName;
 
 /*
  * 文件大小
  */
-@property(nonatomic, assign) NSInteger fileSize;
+@property (nonatomic, assign) NSInteger fileSize;
 
 @end
 

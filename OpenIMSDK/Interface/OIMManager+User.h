@@ -12,12 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface OIMManager (User)
 
 /*
- * 获取登录用户uid
- */
-- (NSString *)getLoginUid;
-- (OIMUserInfo *)getLoginUser;
-
-/*
  * 根据uid批量查询用户信息
  *
  * @param uids 用户id列表

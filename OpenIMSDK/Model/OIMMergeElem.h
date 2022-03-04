@@ -12,9 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMMergeElem : NSObject
 
-@property(nonatomic, nullable, copy) NSString *title;
-@property(nonatomic, nullable, copy) NSArray<NSString *> *abstractList;
-@property(nonatomic, nullable, copy) NSArray<OIMMessageInfo *> *multiMessage;
+@property (nonatomic, nullable, copy) NSString *title;
+@property (nonatomic, nullable, copy) NSArray<NSString *> *abstractList;
+@property (nonatomic, nullable, copy) NSArray<OIMMessageInfo *> *multiMessage;
 
 @end
 

@@ -60,11 +60,11 @@
     Open_im_sdkAddBlack(callback, [self operationId], uid);
 }
 
-- (void)getBlackListWithOnSuccess:(OIMFullUsersInfoCallback)onSuccess
+- (void)getBlackListWithOnSuccess:(OIMBlacksInfoCallback)onSuccess
                         onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMFullUserInfo mj_objectArrayWithKeyValuesArray:data]);
+            onSuccess([OIMBlackInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     

@@ -11,11 +11,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMCustomElem : NSObject
 
-@property(nonatomic, nullable, copy) NSString *data;
+@property (nonatomic, nullable, copy) NSString *data;
 
-@property(nonatomic, nullable, copy) NSString *extension;
+@property (nonatomic, nullable, copy) NSString *extension;
 
-@property(nonatomic, nullable, copy) NSString *description;
+@property (nonatomic, nullable, copy) NSString *description;
 
 @end
 

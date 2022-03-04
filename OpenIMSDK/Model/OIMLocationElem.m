@@ -9,4 +9,8 @@
 
 @implementation OIMLocationElem
 @synthesize description;
+
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"desc" : @"desciption"};
+}
 @end
