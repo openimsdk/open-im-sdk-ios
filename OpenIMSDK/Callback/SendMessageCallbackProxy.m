@@ -23,7 +23,7 @@
                         onFailure:(OIMFailureCallback)onFailure {
     if (self = [super init]) {
         _onSuccess = [onSuccess copy];
-        _onFailure = [_onFailure copy];
+        _onFailure = [onFailure copy];
         _onProgress = [onProgress copy];
     }
     return self;
