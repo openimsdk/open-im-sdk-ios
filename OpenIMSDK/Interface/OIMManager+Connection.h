@@ -2,14 +2,14 @@
 //  OIMManager+Connection.h
 //  OpenIMSDK
 //
-//  Created by x on 2022/2/15.
+//  Created by x on 2021/2/15.
 //
 
 #import "OIMManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OIMManager (Connection) <Open_im_sdk_callbackOnConnListener>
+@interface OIMManager (Connection)
 
 /* 初始化
  * @param platform 平台
@@ -25,11 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
         dataDir:(NSString *)dataDir
        logLevel:(NSInteger)logLevel
   objectStorage:(NSString * _Nullable)os
-   onConnecting:(OIMVoidCallback)onConnecting
-onConnectFailure:(OIMFailureCallback)onConnectFailure
-onConnectSuccess:(OIMVoidCallback)onConnectSuccess
-onKickedOffline:(OIMVoidCallback)onKickedOffline
-onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired;
+   onConnecting:(nullable OIMVoidCallback)onConnecting
+onConnectFailure:(nullable OIMFailureCallback)onConnectFailure
+onConnectSuccess:(nullable OIMVoidCallback)onConnectSuccess
+onKickedOffline:(nullable OIMVoidCallback)onKickedOffline
+onUserTokenExpired:(nullable OIMVoidCallback)onUserTokenExpired;
 
 @end
 

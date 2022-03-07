@@ -2,14 +2,14 @@
 //  OIMCallbacker.m
 //  OpenIMSDK
 //
-//  Created by x on 2022/2/11.
+//  Created by x on 2021/2/11.
 //
 
 #import "OIMCallbacker.h"
 
 @interface OIMCallbacker ()
-
-@property (nonatomic, strong) NSMutableArray <id<OIMFriendshipListener>> *friendshipListener;
+@property (nonatomic, strong) NSMutableArray <id<OIMSDKListener>> *sdkListeners;
+@property (nonatomic, strong) NSMutableArray <id<OIMFriendshipListener>> *friendshipListeners;
 @property (nonatomic, strong) NSMutableArray <id<OIMGroupListener>> *groupListeners;
 @property (nonatomic, strong) NSMutableArray <id<OIMConversationListener>> *conversationListeners;
 @property (nonatomic, strong) NSMutableArray <id<OIMAdvancedMsgListener>> *advancedMsgListeners;
@@ -42,12 +42,20 @@
 #pragma mark -
 #pragma mark - Listeners getter
 
-- (NSMutableArray<id<OIMFriendshipListener>> *)friendshipListener {
-    if (_friendshipListener == nil) {
-        _friendshipListener = [NSMutableArray new];
+- (NSMutableArray<id<OIMSDKListener>> *)sdkListeners {
+    if (_sdkListeners == nil) {
+        _sdkListeners = [NSMutableArray new];
     }
     
-    return _friendshipListener;
+    return _sdkListeners;
+}
+
+- (NSMutableArray<id<OIMFriendshipListener>> *)friendshipListeners {
+    if (_friendshipListeners == nil) {
+        _friendshipListeners = [NSMutableArray new];
+    }
+    
+    return _friendshipListeners;
 }
 
 - (NSMutableArray<id<OIMGroupListener>> *)groupListeners {
@@ -77,15 +85,27 @@
 #pragma mark -
 #pragma mark - Add/Remove listener
 
+- (void)addIMSDKListener:(id<OIMSDKListener>)listener {
+    if (listener != nil && ![self.sdkListeners containsObject:listener]) {
+        [self.sdkListeners addObject:listener];
+    }
+}
+
+- (void)removeIMSDKListener:(id<OIMSDKListener>)listener {
+    if (listener != nil && self.sdkListeners.count > 0) {
+        [self.sdkListeners removeObject:listener];
+    }
+}
+
 - (void)addFriendListener:(id<OIMFriendshipListener>)listener {
-    if (listener != nil && ![self.friendshipListener containsObject:listener]) {
-        [self.friendshipListener addObject:listener];
+    if (listener != nil && ![self.friendshipListeners containsObject:listener]) {
+        [self.friendshipListeners addObject:listener];
     }
 }
 
 - (void)removeFriendListener:(id<OIMFriendshipListener>)listener {
-    if (listener != nil && self.friendshipListener.count > 0) {
-        [self.friendshipListener removeObject:listener];
+    if (listener != nil && self.friendshipListeners.count > 0) {
+        [self.friendshipListeners removeObject:listener];
     }
 }
 
@@ -126,6 +146,80 @@
 }
 
 #pragma mark -
+#pragma mark - Connection
+
+- (void)onConnectFailed:(int32_t)errCode errMsg:(NSString * _Nullable)errMsg {
+    
+    [self dispatchMainThread:^{
+        if (self.connectFailure) {
+            self.connectFailure(errCode, errMsg);
+        }
+        
+        [self.sdkListeners enumerateObjectsUsingBlock:^(id<OIMSDKListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onConnectFailed:err:)]) {
+                [obj onConnectFailed:errCode err:errMsg];
+            }
+        }];
+    }];
+}
+
+- (void)onConnectSuccess {
+    [self dispatchMainThread:^{
+        if (self.connectSuccess) {
+            self.connectSuccess();
+        }
+        
+        [self.sdkListeners enumerateObjectsUsingBlock:^(id<OIMSDKListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onConnectSuccess)]) {
+                [obj onConnectSuccess];
+            }
+        }];
+    }];
+}
+
+- (void)onConnecting {
+    [self dispatchMainThread:^{
+        if (self.connecting) {
+            self.connecting();
+        }
+        
+        [self.sdkListeners enumerateObjectsUsingBlock:^(id<OIMSDKListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onConnecting)]) {
+                [obj onConnecting];
+            }
+        }];
+    }];
+}
+
+- (void)onKickedOffline {
+    [self dispatchMainThread:^{
+        if (self.kickedOffline) {
+            self.kickedOffline();
+        }
+        
+        [self.sdkListeners enumerateObjectsUsingBlock:^(id<OIMSDKListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onKickedOffline)]) {
+                [obj onKickedOffline];
+            }
+        }];
+    }];
+}
+
+- (void)onUserTokenExpired {
+    [self dispatchMainThread:^{
+        if (self.userTokenExpired) {
+            self.userTokenExpired();
+        }
+        
+        [self.sdkListeners enumerateObjectsUsingBlock:^(id<OIMSDKListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onUserTokenExpired)]) {
+                [obj onUserTokenExpired];
+            }
+        }];
+    }];
+}
+
+#pragma mark -
 #pragma mark - User
 
 - (void)onSelfInfoUpdated:(NSString * _Nullable)userInfo {
@@ -148,7 +242,7 @@
             self.onFriendApplicationAdded(info);
         }
         
-        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj respondsToSelector:@selector(onFriendApplicationAdded:)]) {
                 [obj onFriendApplicationAdded:info];
             }
@@ -164,7 +258,7 @@
             self.onFriendApplicationRejected(info);
         }
         
-        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj respondsToSelector:@selector(onFriendApplicationRejected:)]) {
                 [obj onFriendApplicationRejected:info];
             }
@@ -180,7 +274,7 @@
             self.onFriendApplicationDeleted(info);
         }
         
-        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj respondsToSelector:@selector(onFriendApplicationAccepted:)]) {
                 [obj onFriendApplicationAccepted:info];
             }
@@ -197,7 +291,7 @@
             self.onFriendApplicationDeleted(info);
         }
         
-        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj respondsToSelector:@selector(onFriendApplicationDeleted:)]) {
                 [obj onFriendApplicationDeleted:info];
             }
@@ -213,7 +307,7 @@
             self.onFriendAdded(info);
         }
         
-        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj respondsToSelector:@selector(onFriendAdded:)]) {
                 [obj onFriendAdded:info];
             }
@@ -229,7 +323,7 @@
             self.onFriendAdded(info);
         }
         
-        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj respondsToSelector:@selector(onFriendDeleted:)]) {
                 [obj onFriendDeleted:info];
             }
@@ -245,7 +339,7 @@
             self.onFriendAdded(info);
         }
         
-        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj respondsToSelector:@selector(onFriendInfoChanged:)]) {
                 [obj onFriendInfoChanged:info];
             }
@@ -261,7 +355,7 @@
             self.onBlackAdded(info);
         }
         
-        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj respondsToSelector:@selector(onBlackAdded:)]) {
                 [obj onBlackAdded:info];
             }
@@ -277,7 +371,7 @@
             self.onBlackAdded(info);
         }
         
-        [self.friendshipListener enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj respondsToSelector:@selector(onBlackDeleted:)]) {
                 [obj onBlackDeleted:info];
             }

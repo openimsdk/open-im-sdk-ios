@@ -2,7 +2,7 @@
 //  OIMCallbacker.h
 //  OpenIMSDK
 //
-//  Created by x on 2022/2/11.
+//  Created by x on 2021/2/11.
 //
 
 #import <Foundation/Foundation.h>
@@ -59,6 +59,36 @@ typedef void (^OIMMessagesInfoCallback)(NSArray <OIMMessageInfo *> * _Nullable m
 typedef void (^OIMMessageSearchCallback)(OIMSearchResultInfo * _Nullable result);
 
 typedef void (^OIMReceiptCallback)(NSArray <OIMReceiptInfo *> * _Nullable msgReceiptList);
+
+/// IMSDK 主核心回调
+@protocol OIMSDKListener <NSObject>
+@optional
+/*
+ *  SDK 正在连接到服务器
+ */
+- (void)onConnecting;
+
+/*
+ * SDK 已经成功连接到服务器
+ */
+- (void)onConnectSuccess;
+
+/*
+ * SDK 连接服务器失败
+ */
+- (void)onConnectFailed:(NSInteger)code err:(NSString*)err;
+
+/*
+ * 当前用户被踢下线，此时可以 UI 提示用户
+ */
+- (void)onKickedOffline;
+
+/*
+ * 在线时票据过期：此时您需要生成新的 UserToken 并再次重新登录。
+ */
+- (void)onUserTokenExpired;
+
+@end
 
 /// 资料关系链回调
 @protocol OIMFriendshipListener <NSObject>
@@ -225,6 +255,7 @@ typedef void (^OIMReceiptCallback)(NSArray <OIMReceiptInfo *> * _Nullable msgRec
 
 @interface OIMCallbacker : NSObject
 <
+Open_im_sdk_callbackOnConnListener,
 Open_im_sdk_callbackOnAdvancedMsgListener,
 Open_im_sdk_callbackOnConversationListener,
 Open_im_sdk_callbackOnFriendshipListener,
@@ -238,11 +269,21 @@ Open_im_sdk_callbackOnUserListener
 
 /// 链接监听
 /// 在InitSDK时设置，在IM连接状态有变化时回调
-@property (nonatomic, nullable, copy) OIMVoidCallback onConnecting;
-@property (nonatomic, nullable, copy) OIMFailureCallback onConnectFailure;
-@property (nonatomic, nullable, copy) OIMVoidCallback onConnectSuccess;
-@property (nonatomic, nullable, copy) OIMVoidCallback onKickedOffline;
-@property (nonatomic, nullable, copy) OIMVoidCallback onUserTokenExpired;
+@property (nonatomic, nullable, copy) OIMVoidCallback connecting;
+@property (nonatomic, nullable, copy) OIMFailureCallback connectFailure;
+@property (nonatomic, nullable, copy) OIMVoidCallback connectSuccess;
+@property (nonatomic, nullable, copy) OIMVoidCallback kickedOffline;
+@property (nonatomic, nullable, copy) OIMVoidCallback userTokenExpired;
+
+/**
+ *  添加 IM 监听
+ */
+- (void)addIMSDKListener:(id<OIMSDKListener>)listener;
+
+/**
+ *  移除 IM 监听
+ */
+- (void)removeIMSDKListener:(id<OIMSDKListener>)listener;
 
 /// 用户监听
 /// 在InitSDK成功后，Login之前设置，本登录用户个人资料有变化时回调
