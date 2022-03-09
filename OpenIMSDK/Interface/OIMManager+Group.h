@@ -137,6 +137,13 @@ NS_ASSUME_NONNULL_BEGIN
                                    onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
+ * 发出的入群申请
+ *
+ */
+- (void)getSendGroupApplicationListWithOnSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
+                                       onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
  * 管理员或者群主同意某人进入某群
  *
  * @param groupId   群ID

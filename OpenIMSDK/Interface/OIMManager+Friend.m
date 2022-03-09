@@ -32,6 +32,17 @@
     Open_im_sdkGetRecvFriendApplicationList(callback, [self operationId]);
 }
 
+- (void)getSendFriendApplicationListWithOnSuccess:(OIMFriendApplicationsCallback)onSuccess
+                                        onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMFriendApplication mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetSendFriendApplicationList(callback, [self operationId]);
+}
+
 - (void)acceptFriendApplication:(NSString *)uid
                       handleMsg:(NSString *)msg
                       onSuccess:(OIMSuccessCallback)onSuccess
