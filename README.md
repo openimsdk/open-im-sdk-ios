@@ -7,6 +7,8 @@
 [![License](https://img.shields.io/cocoapods/l/OpenIMSDKiOS.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDKiOS)
 [![Platform](https://img.shields.io/cocoapods/p/OpenIMSDKiOS.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDKiOS)
 
+#### [中文文档](https://github.com/OpenIMSDK/OpenIM-Docs/blob/main/docs/client_doc/ios.md)
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
