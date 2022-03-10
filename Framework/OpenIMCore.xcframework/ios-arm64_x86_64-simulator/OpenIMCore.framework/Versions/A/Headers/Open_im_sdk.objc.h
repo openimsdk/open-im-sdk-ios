@@ -42,6 +42,8 @@ FOUNDATION_EXPORT NSString* _Nonnull Open_im_sdkCreateCardMessage(NSString* _Nul
 
 FOUNDATION_EXPORT NSString* _Nonnull Open_im_sdkCreateCustomMessage(NSString* _Nullable operationID, NSString* _Nullable data, NSString* _Nullable extension, NSString* _Nullable description);
 
+FOUNDATION_EXPORT NSString* _Nonnull Open_im_sdkCreateFaceMessage(NSString* _Nullable operationID, long index, NSString* _Nullable data);
+
 FOUNDATION_EXPORT NSString* _Nonnull Open_im_sdkCreateFileMessage(NSString* _Nullable operationID, NSString* _Nullable filePath, NSString* _Nullable fileName);
 
 FOUNDATION_EXPORT NSString* _Nonnull Open_im_sdkCreateFileMessageByURL(NSString* _Nullable operationID, NSString* _Nullable fileBaseInfo);

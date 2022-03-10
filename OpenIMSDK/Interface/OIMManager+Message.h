@@ -171,6 +171,12 @@ NS_ASSUME_NONNULL_BEGIN
                               extension:(NSString * _Nullable)extension
                             description:(NSString * _Nullable)description;
 
+/*
+ * 创建动图消息
+ *
+ */
++ (OIMMessageInfo *)createFaceMessageWithIndex:(NSInteger)index
+                                          data:(NSString *)dataStr;
 @end
 
 @interface OIMManager (Message)

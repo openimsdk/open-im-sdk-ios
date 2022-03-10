@@ -17,7 +17,7 @@
 #import "OIMCustomElem.h"
 #import "OIMQuoteElem.h"
 #import "OIMNotificationElem.h"
-
+#import "OIMFaceElem.h"
 #import "OIMModelDefine.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -90,6 +90,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, strong) OIMCustomElem *customElem;
 
 @property (nonatomic, nullable, strong) OIMNotificationElem *notificationElem;
+
+@property (nonatomic, nullable, strong) OIMFaceElem *faceElem;
 
 @end
 
