@@ -151,6 +151,17 @@
     Open_im_sdkGetRecvGroupApplicationList(callback, [self operationId]);
 }
 
+- (void)getSendGroupApplicationListWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
+                                       onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMGroupApplicationInfo mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetSendGroupApplicationList(callback, [self operationId]);
+}
+
 - (void)acceptGroupApplication:(NSString *)groupId
                     fromUserId:(NSString *)fromUserID
                      handleMsg:(NSString *)handleMsg

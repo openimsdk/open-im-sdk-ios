@@ -29,6 +29,12 @@ NS_ASSUME_NONNULL_BEGIN
                                     onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
+ * 发出的好友申请
+ */
+- (void)getSendFriendApplicationListWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
+                                        onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
  * 同意某人的好友申请
  * @param uid 用户id
  */

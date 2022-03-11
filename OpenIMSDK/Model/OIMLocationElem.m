@@ -8,7 +8,6 @@
 #import "OIMLocationElem.h"
 
 @implementation OIMLocationElem
-@synthesize description;
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
     return @{@"desc" : @"description"};

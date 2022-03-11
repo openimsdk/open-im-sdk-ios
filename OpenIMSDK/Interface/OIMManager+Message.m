@@ -97,7 +97,7 @@
                             summaryList:(NSArray<NSString *> *)summarys {
     NSArray *msgs = [OIMMessageInfo mj_keyValuesArrayWithObjectArray:messages];
     NSString *json = Open_im_sdkCreateMergerMessage([OIMManager.manager operationId], [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:msgs options:0 error:nil] encoding:NSUTF8StringEncoding], title, summarys.mj_JSONString);
-    
+
     return [self convertToMessageInfo:json];
 }
 
@@ -132,6 +132,13 @@
                               extension:(NSString *)extension
                             description:(NSString *)description {
     NSString *json = Open_im_sdkCreateCustomMessage([OIMManager.manager operationId], data, extension, description);
+    
+    return [self convertToMessageInfo:json];
+}
+
++ (OIMMessageInfo *)createFaceMessageWithIndex:(NSInteger)index
+                                          data:(NSString *)dataStr {
+    NSString *json = Open_im_sdkCreateFaceMessage([OIMManager.manager operationId], index, dataStr);
     
     return [self convertToMessageInfo:json];
 }

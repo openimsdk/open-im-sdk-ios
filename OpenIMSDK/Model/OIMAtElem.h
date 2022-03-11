@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * at 消息内容
  */
-
 @property (nonatomic, nullable, copy) NSString *text;
 
 /*
