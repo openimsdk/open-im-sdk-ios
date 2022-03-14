@@ -825,6 +825,12 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
        
         self.testMessage = [OIMMessageInfo createTextMessage:[@"测试消息" stringByAppendingFormat:@"%d", arc4random() % 1000]];
         
+        self.testMessage = [OIMMessageInfo createTextAtMessage:@"" atUidList:@[]];
+        self.testMessage = [OIMMessageInfo createMergeMessage:@[] title:@"" summaryList:@[]];
+        self.testMessage = [OIMMessageInfo createForwardMessage:self.testMessage];
+        self.testMessage = [OIMMessageInfo createLocationMessage:@"" latitude:0 longitude:0];
+        self.testMessage = [OIMMessageInfo createCustomMessage:@"" extension:@"" description:@""];
+        self.testMessage = [OIMMessageInfo createQuoteMessage:@"" message:self.testMessage];
 //        NSString *path1 = [[NSBundle mainBundle]pathForResource:@"photo_test" ofType:@"jpeg"];
 //        self.testMessage = [OIMMessageInfo createImageMessageFromFullPath:path1];
 //
