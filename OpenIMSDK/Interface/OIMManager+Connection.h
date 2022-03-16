@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)initSDK:(OIMPlatform)platform
         apiAdrr:(NSString *)apiAddr
          wsAddr:(NSString *)wsAddr
-        dataDir:(NSString *)dataDir
+        dataDir:(NSString * _Nullable)dataDir
        logLevel:(NSInteger)logLevel
   objectStorage:(NSString * _Nullable)os
    onConnecting:(nullable OIMVoidCallback)onConnecting
