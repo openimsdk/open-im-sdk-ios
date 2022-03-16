@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, strong, readonly) OIMGroupMemberInfo *entrantUser;
 /// 群改变新群主的信息
-@property (nonatomic, nullable, strong, readonly) OIMGroupMemberInfo *groupChangeOwner;
+@property (nonatomic, nullable, strong, readonly) OIMGroupMemberInfo *groupNewOwner;
 
 @property (nonatomic, nullable, strong, readonly) OIMGroupInfo *group;
 
