@@ -29,11 +29,17 @@ onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired {
     
     NSMutableDictionary *param = [NSMutableDictionary new];
     
-    param[@"platform"] = @(platform);
+    NSString *path = dataDir;
     
-    param[@"api_addr"] = apiAddr ?: @"";
-    param[@"ws_addr"]  = wsAddr ?: @"";
-    param[@"data_dir"] = dataDir ?: @"";
+    if (!dataDir) {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        path = [paths.firstObject stringByAppendingString:@"/"];
+    }
+    
+    param[@"platform"] = @(platform);
+    param[@"api_addr"] = apiAddr;
+    param[@"ws_addr"]  = wsAddr;
+    param[@"data_dir"] = path;
     param[@"log_level"] = logLevel == 0 ? @6 : @(logLevel);
     param[@"object_storage"] = os.length == 0 ? @"cos" : os;
     
