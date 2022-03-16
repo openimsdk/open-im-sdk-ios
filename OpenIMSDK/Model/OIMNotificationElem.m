@@ -10,6 +10,10 @@
 
 @implementation OIMNotificationElem
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"groupChangeOwner" : @"newGroupOwner"};
+}
+
 + (NSDictionary *)mj_objectClassInArray {
     return @{@"kickedUserList" : [OIMGroupMemberInfo class],
              @"invitedUserList": [OIMGroupMemberInfo class]
@@ -28,6 +32,7 @@
         _entrantUser = elem.entrantUser;
         _kickedUserList = elem.kickedUserList;
         _invitedUserList = elem.invitedUserList;
+        _groupChangeOwner = elem.groupChangeOwner;
     }
 }
 
