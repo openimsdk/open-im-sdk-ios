@@ -3,9 +3,9 @@
 
 # OpenIMSDK
 
-[![Version](https://img.shields.io/cocoapods/v/OpenIMSDKiOS.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDKiOS)
-[![License](https://img.shields.io/cocoapods/l/OpenIMSDKiOS.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDKiOS)
-[![Platform](https://img.shields.io/cocoapods/p/OpenIMSDKiOS.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDKiOS)
+[![Version](https://img.shields.io/cocoapods/v/OpenIMSDK.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDK)
+[![License](https://img.shields.io/cocoapods/l/OpenIMSDK.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDK)
+[![Platform](https://img.shields.io/cocoapods/p/OpenIMSDK.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDK)
 
 #### [中文文档](https://github.com/OpenIMSDK/OpenIM-Docs/blob/main/docs/client_doc/ios.md)
 
