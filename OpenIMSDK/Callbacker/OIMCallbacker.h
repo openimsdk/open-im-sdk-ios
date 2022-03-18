@@ -22,6 +22,7 @@
 #import "OIMSearchResultInfo.h"
 #import "OIMSimpleResultInfo.h"
 #import "OIMSimpleRequstInfo.h"
+#import "OIMSignalingInfo.h"
 
 @import OpenIMCore;
 
@@ -60,6 +61,8 @@ typedef void (^OIMMessageSearchCallback)(OIMSearchResultInfo * _Nullable result)
 
 typedef void (^OIMReceiptCallback)(NSArray <OIMReceiptInfo *> * _Nullable msgReceiptList);
 
+typedef void (^OIMSignalingInvitationCallback)(OIMInvitationInfo * _Nullable result);
+typedef void (^OIMSignalingResultCallback)(OIMInvitationResultInfo * _Nullable result);
 /// IMSDK 主核心回调
 @protocol OIMSDKListener <NSObject>
 @optional
@@ -242,15 +245,60 @@ typedef void (^OIMReceiptCallback)(NSArray <OIMReceiptInfo *> * _Nullable msgRec
 - (void)onRecvNewMessage:(OIMMessageInfo *)msg;
 
 /*
- *  收到消息已读回执（仅单聊有效）
+ *  单聊消息已读回执
  */
 - (void)onRecvC2CReadReceipt:(NSArray<OIMReceiptInfo *> *)receiptList;
+
+/*
+ *  群聊消息已读回执
+ */
+- (void)onRecvGroupReadReceipt:(NSArray<OIMReceiptInfo *> *)groupMsgReceiptList;
 
 /*
  *  收到消息撤回
  */
 - (void)onRecvMessageRevoked:(NSString *)msgID;
 
+@end
+
+/// 音视频监听器
+@protocol OIMSignalingListener <NSObject>
+@optional
+
+/*
+ *  被邀请者收到：音视频通话邀请
+ */
+- (void)onReceiveNewInvitation:(OIMSignalingInfo *)invitaion;
+
+/*
+ *  邀请者收到：被邀请者同意音视频通话
+ */
+- (void)onInviteeAccepted:(OIMSignalingInfo *)invitaion;
+
+/*
+ *  邀请者收到：被邀请者拒绝音视频通话
+ */
+- (void)onInviteeRejected:(OIMSignalingInfo *)invitaion;
+
+/*
+ *  被邀请者收到：邀请者取消音视频通话
+ */
+- (void)onInvitationCancelled:(OIMSignalingInfo *)invitaion;
+
+/*
+ *  邀请者收到：被邀请者超时未接通
+ */
+- (void)onInvitationTimeout:(OIMSignalingInfo *)invitaion;
+
+/*
+ *  被邀请者（其他端）收到：比如被邀请者在手机拒接，在pc上会收到此回调
+ */
+- (void)onInviteeRejectedByOtherDevice:(OIMSignalingInfo *)invitaion;
+
+/*
+ *  被邀请者（其他端）收到：比如被邀请者在手机拒接，在pc上会收到此回调
+ */
+- (void)onInviteeAcceptedByOtherDevice:(OIMSignalingInfo *)invitaion;
 @end
 
 @interface OIMCallbacker : NSObject
@@ -260,7 +308,8 @@ Open_im_sdk_callbackOnAdvancedMsgListener,
 Open_im_sdk_callbackOnConversationListener,
 Open_im_sdk_callbackOnFriendshipListener,
 Open_im_sdk_callbackOnGroupListener,
-Open_im_sdk_callbackOnUserListener
+Open_im_sdk_callbackOnUserListener,
+Open_im_sdk_callbackOnSignalingListener
 >
 
 + (instancetype)callbacker;
@@ -287,12 +336,10 @@ Open_im_sdk_callbackOnUserListener
 
 /// 用户监听
 /// 在InitSDK成功后，Login之前设置，本登录用户个人资料有变化时回调
-/// 可调用OIMCallbacker+User相关函数设置所有监
 @property (nonatomic, nullable, copy) OIMUserInfoCallback onSelfInfoUpdated;
 
 /// 好友监听
 /// 在InitSDK成功后，Login之前设置，好友相关信息有变化时回调
-/// 可调用OIMCallbacker+Friend相关函数设置所有监听
 @property (nonatomic, nullable, copy) OIMFriendApplicationCallback onFriendApplicationAdded;
 @property (nonatomic, nullable, copy) OIMFriendApplicationCallback onFriendApplicationDeleted;
 @property (nonatomic, nullable, copy) OIMFriendApplicationCallback onFriendApplicationAccepted;
@@ -315,7 +362,6 @@ Open_im_sdk_callbackOnUserListener
 
 /// 群组监听
 /// 在InitSDK成功后，Login之前设置，群组相关信息有变化时回调
-/// 可调用OIMCallbacker+Group相关函数设置所有监听
 @property (nonatomic, nullable, copy) OIMGroupInfoCallback onGroupInfoChanged;
 @property (nonatomic, nullable, copy) OIMGroupInfoCallback onJoinedGroupAdded;
 @property (nonatomic, nullable, copy) OIMGroupInfoCallback onJoinedGroupDeleted;
@@ -338,8 +384,7 @@ Open_im_sdk_callbackOnUserListener
 - (void)removeGroupListener:(id<OIMGroupListener>)listener NS_SWIFT_NAME(removeGroupListener(listener:));
 
 /// 会话监听
-/// 在InitSDK成功后，Login之前设置，群组相关信息有变化时回调
-/// 可调用OIMCallbacker+Conversation相关函数设置所有监听
+/// 在InitSDK成功后，Login之前设置，会话相关信息有变化时回调
 @property (nonatomic, nullable, copy) OIMVoidCallback syncServerStart;
 @property (nonatomic, nullable, copy) OIMVoidCallback syncServerFinish;
 @property (nonatomic, nullable, copy) OIMVoidCallback syncServerFailed;
@@ -358,10 +403,10 @@ Open_im_sdk_callbackOnUserListener
 - (void)removeConversationListener:(id<OIMConversationListener>)listener NS_SWIFT_NAME(removeConversationListener(listener:));
 
 /// 消息监听
-/// 在InitSDK成功后，Login之前设置，群组相关信息有变化时回调
-/// 可调用OIMCallbacker+Message相关函数设置所有监听
+/// 在InitSDK成功后，Login之前设置，消息相关信息有变化时回调
 @property (nonatomic, nullable, copy) OIMMessageInfoCallback onRecvNewMessage;
 @property (nonatomic, nullable, copy) OIMReceiptCallback onRecvC2CReadReceipt;
+@property (nonatomic, nullable, copy) OIMReceiptCallback onRecvGroupReadReceipt;
 @property (nonatomic, nullable, copy) OIMStringCallback onRecvMessageRevoked;
 
 /*
@@ -373,6 +418,21 @@ Open_im_sdk_callbackOnUserListener
  *  移除高级消息的事件监听器
  */
 - (void)removeAdvancedMsgListener:(id<OIMAdvancedMsgListener>)listener NS_SWIFT_NAME(removeAdvancedMsgListener(listener:));
+
+
+/// 音视频监听
+/// 在InitSDK成功后，Login之前设置
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onReceiveNewInvitation;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInviteeAccepted;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInviteeRejected;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInvitationCancelled;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInvitationTimeout;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInviteeRejectedByOtherDevice;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInviteeAcceptedByOtherDevice;
+
+- (void)addSignalingListener:(id<OIMSignalingListener>)listener NS_SWIFT_NAME(addSignalingListener(listener:));
+
+- (void)removeSignalingListener:(id<OIMSignalingListener>)listener NS_SWIFT_NAME(removeSignalingListener(listener:));
 @end
 
 NS_ASSUME_NONNULL_END

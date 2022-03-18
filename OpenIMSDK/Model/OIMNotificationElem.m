@@ -32,7 +32,7 @@
         _entrantUser = elem.entrantUser;
         _kickedUserList = elem.kickedUserList;
         _invitedUserList = elem.invitedUserList;
-        _groupChangeOwner = elem.groupNewOwner;
+        _groupNewOwner = elem.groupNewOwner;
     }
 }
 

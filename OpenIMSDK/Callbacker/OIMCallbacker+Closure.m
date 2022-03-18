@@ -65,15 +65,34 @@
 }
 
 - (void)setAdvancedMsgListenerWithOnRecvMessageRevoked:(OIMStringCallback)onRecvMessageRevoked
-                                  onRecvC2CReadReceipt:(OIMReceiptCallback)onRecvC2CReadReceipt onRecvNewMessage:(OIMMessageInfoCallback)onRecvNewMessage {
+                                  onRecvC2CReadReceipt:(OIMReceiptCallback)onRecvC2CReadReceipt
+                                onRecvGroupReadReceipt:(OIMReceiptCallback)onRecvGroupReadReceipt
+                                      onRecvNewMessage:(OIMMessageInfoCallback)onRecvNewMessage {
     
     self.onRecvMessageRevoked = onRecvMessageRevoked;
     self.onRecvC2CReadReceipt = onRecvC2CReadReceipt;
+    self.onRecvGroupReadReceipt = onRecvGroupReadReceipt;
     self.onRecvNewMessage = onRecvNewMessage;
 }
 
 - (void)setSelfUserInfoUpdateListener:(OIMUserInfoCallback)onUserInfoUpdate {
     self.onSelfInfoUpdated = onUserInfoUpdate;
+}
+
+- (void)setSignalingListenerWithOnReceiveNewInvitation:(OIMSignalingInvitationCallback)onReceiveNewInvitation
+                                     onInviteeAccepted:(OIMSignalingInvitationCallback)onInviteeAccepted
+                                     onInviteeRejected:(OIMSignalingInvitationCallback)onInviteeRejected
+                                 onInvitationCancelled:(OIMSignalingInvitationCallback)onInvitationCancelled
+                                   onInvitationTimeout:(OIMSignalingInvitationCallback)onInvitationTimeout
+                        onInviteeRejectedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeRejectedByOtherDevice
+                        onInviteeAcceptedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeAcceptedByOtherDevice {
+    self.onReceiveNewInvitation = onReceiveNewInvitation;
+    self.onInviteeAccepted = onInviteeAccepted;
+    self.onInviteeRejected = onInviteeRejected;
+    self.onInvitationCancelled = onInvitationCancelled;
+    self.onInvitationTimeout = onInvitationTimeout;
+    self.onInviteeRejectedByOtherDevice = onInviteeRejectedByOtherDevice;
+    self.onInviteeAcceptedByOtherDevice = onInviteeAcceptedByOtherDevice;
 }
 
 @end

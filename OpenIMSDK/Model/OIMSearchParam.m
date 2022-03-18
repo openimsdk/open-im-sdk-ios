@@ -9,4 +9,15 @@
 
 @implementation OIMSearchParam
 
+- (instancetype)init {
+    self = [super init];
+    
+    if (self) {
+        _senderUserIDList = @[];
+        _messageTypeList = @[];
+    }
+    
+    return self;
+}
+
 @end

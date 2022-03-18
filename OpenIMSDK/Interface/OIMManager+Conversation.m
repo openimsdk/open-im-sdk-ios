@@ -101,14 +101,6 @@
     Open_im_sdkGetTotalUnreadMsgCount(callback, [self operationId]);
 }
 
-- (void)markGroupMessageHasRead:(NSString *)groupID
-                      onSuccess:(OIMSuccessCallback)onSuccess
-                      onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-    
-    Open_im_sdkMarkGroupMessageHasRead(callback, [self operationId], groupID);
-}
-
 - (void)getConversationRecvMessageOpt:(NSArray<NSString *> *)conversationIDs
                             onSuccess:(OIMConversationNotDisturbInfoCallback)onSuccess
                             onFailure:(OIMFailureCallback)onFailure {

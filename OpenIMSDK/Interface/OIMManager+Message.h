@@ -261,6 +261,26 @@ NS_ASSUME_NONNULL_BEGIN
                    onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
+ * 标记群聊已读
+ *
+ * @param groupID   群ID
+ * @param msgIDList 消息ID的列表 ["er4er","3er4"]，传[]则标记所有
+ */
+- (void)markGroupMessageAsRead:(NSString *)groupID
+                     msgIDList:(NSArray <NSString *> *)msgIDList
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 删除一条消息
+ *
+ * @param message   为OIMMessageInfo
+ */
+- (void)deleteMessage:(OIMMessageInfo *)message
+            onSuccess:(nullable OIMSuccessCallback)onSuccess
+            onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
  * 本地删除一条消息，卸载APP后会重新获取到
  *
  * @param message   为OIMMessageInfo

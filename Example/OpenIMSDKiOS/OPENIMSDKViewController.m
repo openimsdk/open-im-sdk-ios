@@ -276,8 +276,11 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [OIMManager.callbacker setAdvancedMsgListenerWithOnRecvMessageRevoked:^(NSString * _Nullable item) {
         
     } onRecvC2CReadReceipt:^(NSArray<OIMReceiptInfo *> * _Nullable msgReceiptList) {
-        
+        NSLog(@"onRecvC2CReadReceipt:%@", msgReceiptList);
+    } onRecvGroupReadReceipt:^(NSArray<OIMReceiptInfo *> * _Nullable msgReceiptList) {
+        NSLog(@"onRecvGroupReadReceipt:%@", msgReceiptList);
     } onRecvNewMessage:^(OIMMessageInfo * _Nullable message) {
+        
     }];
 }
 
@@ -1124,8 +1127,9 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
-        [OIMManager.manager markGroupMessageHasRead:CONVERSASTION_ID
-                                          onSuccess:^(NSString * _Nullable data) {
+        [OIMManager.manager markGroupMessageAsRead:GROUP_ID
+                                         msgIDList:@[]
+                                         onSuccess:^(NSString * _Nullable data) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {

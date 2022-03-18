@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSMutableArray <id<OIMGroupListener>> *groupListeners;
 @property (nonatomic, strong) NSMutableArray <id<OIMConversationListener>> *conversationListeners;
 @property (nonatomic, strong) NSMutableArray <id<OIMAdvancedMsgListener>> *advancedMsgListeners;
+@property (nonatomic, strong) NSMutableArray <id<OIMSignalingListener>> *signalingListeners;
 @end
 
 @implementation OIMCallbacker
@@ -27,6 +28,7 @@
     Open_im_sdkSetGroupListener(self);
     Open_im_sdkSetConversationListener(self);
     Open_im_sdkSetAdvancedMsgListener(self);
+    Open_im_sdkSetSignalingListener(self);
 }
 
 - (void)dispatchMainThread:(void (NS_NOESCAPE ^)(void))todo {
@@ -80,6 +82,14 @@
     }
     
     return _advancedMsgListeners;
+}
+
+- (NSMutableArray<id<OIMSignalingListener>> *)signalingListeners {
+    if (_signalingListeners == nil) {
+        _signalingListeners = [NSMutableArray new];
+    }
+    
+    return _signalingListeners;
 }
 
 #pragma mark -
@@ -142,6 +152,18 @@
 - (void)removeAdvancedMsgListener:(id<OIMAdvancedMsgListener>)listener {
     if (listener != nil && self.advancedMsgListeners.count > 0) {
         [self.advancedMsgListeners removeObject:listener];
+    }
+}
+
+- (void)addSignalingListener:(id<OIMSignalingListener>)listener {
+    if (listener != nil && ![self.signalingListeners containsObject:listener]) {
+        [self.signalingListeners addObject:listener];
+    }
+}
+
+- (void)removeSignalingListener:(id<OIMSignalingListener>)listener {
+    if (listener != nil && self.advancedMsgListeners.count > 0) {
+        [self.signalingListeners removeObject:listener];
     }
 }
 
@@ -561,6 +583,22 @@
     }];
 }
 
+- (void)onRecvGroupReadReceipt:(NSString* _Nullable)groupMsgReceiptList {
+    NSArray *receipts = [OIMReceiptInfo mj_objectArrayWithKeyValuesArray:groupMsgReceiptList];
+    
+    [self dispatchMainThread:^{
+        if (self.onRecvGroupReadReceipt) {
+            self.onRecvGroupReadReceipt(receipts);
+        }
+        
+        [self.advancedMsgListeners enumerateObjectsUsingBlock:^(id<OIMAdvancedMsgListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onRecvGroupReadReceipt:)]) {
+                [obj onRecvGroupReadReceipt:receipts];
+            }
+        }];
+    }];
+}
+
 - (void)onRecvMessageRevoked:(NSString * _Nullable)msgId {
     
     [self dispatchMainThread:^{
@@ -680,6 +718,121 @@
         [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj respondsToSelector:@selector(onTotalUnreadMessageCountChanged:)]) {
                 [obj onTotalUnreadMessageCountChanged:totalUnreadCount];
+            }
+        }];
+    }];
+}
+
+#pragma mark -
+#pragma mark - Signaling
+
+- (void)onInvitationCancelled:(NSString * _Nullable)invitationCancelledCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:invitationCancelledCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onInvitationCancelled) {
+            self.onInvitationCancelled(info);
+        }
+        
+        [self.signalingListeners enumerateObjectsUsingBlock:^(id<OIMSignalingListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onInvitationCancelled:)]) {
+                [obj onInvitationCancelled:info];
+            }
+        }];
+    }];
+}
+
+- (void)onInvitationTimeout:(NSString * _Nullable)invitationTimeoutCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:invitationTimeoutCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onInvitationTimeout) {
+            self.onInvitationTimeout(info);
+        }
+        
+        [self.signalingListeners enumerateObjectsUsingBlock:^(id<OIMSignalingListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onInvitationTimeout:)]) {
+                [obj onInvitationTimeout:info];
+            }
+        }];
+    }];
+}
+
+- (void)onInviteeAccepted:(NSString * _Nullable)inviteeAcceptedCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:inviteeAcceptedCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onInviteeAccepted) {
+            self.onInviteeAccepted(info);
+        }
+        
+        [self.signalingListeners enumerateObjectsUsingBlock:^(id<OIMSignalingListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onInviteeAccepted:)]) {
+                [obj onInviteeAccepted:info];
+            }
+        }];
+    }];
+}
+
+- (void)onInviteeAcceptedByOtherDevice:(NSString * _Nullable)inviteeAcceptedCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:inviteeAcceptedCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onInviteeAcceptedByOtherDevice) {
+            self.onInviteeAcceptedByOtherDevice(info);
+        }
+        
+        [self.signalingListeners enumerateObjectsUsingBlock:^(id<OIMSignalingListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onInviteeAcceptedByOtherDevice:)]) {
+                [obj onInviteeAcceptedByOtherDevice:info];
+            }
+        }];
+    }];
+}
+
+- (void)onInviteeRejected:(NSString * _Nullable)inviteeRejectedCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:inviteeRejectedCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onInviteeRejected) {
+            self.onInviteeRejected(info);
+        }
+        
+        [self.signalingListeners enumerateObjectsUsingBlock:^(id<OIMSignalingListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onInviteeRejected:)]) {
+                [obj onInviteeRejected:info];
+            }
+        }];
+    }];
+}
+
+- (void)onInviteeRejectedByOtherDevice:(NSString * _Nullable)inviteeRejectedCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:inviteeRejectedCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onInviteeRejectedByOtherDevice) {
+            self.onInviteeRejectedByOtherDevice(info);
+        }
+        
+        [self.signalingListeners enumerateObjectsUsingBlock:^(id<OIMSignalingListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onInviteeRejectedByOtherDevice:)]) {
+                [obj onInviteeRejectedByOtherDevice:info];
+            }
+        }];
+    }];
+}
+
+- (void)onReceiveNewInvitation:(NSString * _Nullable)receiveNewInvitationCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:receiveNewInvitationCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onReceiveNewInvitation) {
+            self.onReceiveNewInvitation(info);
+        }
+        
+        [self.signalingListeners enumerateObjectsUsingBlock:^(id<OIMSignalingListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onReceiveNewInvitation:)]) {
+                [obj onReceiveNewInvitation:info];
             }
         }];
     }];
