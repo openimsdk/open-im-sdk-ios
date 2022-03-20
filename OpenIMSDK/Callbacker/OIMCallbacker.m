@@ -204,9 +204,7 @@
         if (self.onFriendApplicationAdded) {
             self.onFriendApplicationAdded(info);
         }
-        if ([self.friendshipListeners respondsToSelector:@selector(onFriendApplicationAdded:)]) {
-            [self.friendshipListeners onFriendApplicationAdded:info];
-        }
+        [self.friendshipListeners onFriendApplicationAdded:info];
     }];
 }
 
@@ -217,9 +215,7 @@
         if (self.onFriendApplicationRejected) {
             self.onFriendApplicationRejected(info);
         }
-        if ([self.friendshipListeners respondsToSelector:@selector(onFriendApplicationRejected:)]) {
-            [self.friendshipListeners onFriendApplicationRejected:info];
-        }
+        [self.friendshipListeners onFriendApplicationRejected:info];
     }];
 }
 
@@ -230,9 +226,7 @@
         if (self.onFriendApplicationDeleted) {
             self.onFriendApplicationDeleted(info);
         }
-        if ([self.friendshipListeners respondsToSelector:@selector(onFriendApplicationAccepted:)]) {
-            [self.friendshipListeners onFriendApplicationAccepted:info];
-        }
+        [self.friendshipListeners onFriendApplicationAccepted:info];
     }];
 }
 
@@ -243,9 +237,7 @@
         if (self.onFriendApplicationDeleted) {
             self.onFriendApplicationDeleted(info);
         }
-        if ([self.friendshipListeners respondsToSelector:@selector(onFriendApplicationDeleted:)]) {
-            [self.friendshipListeners onFriendApplicationDeleted:info];
-        }
+        [self.friendshipListeners onFriendApplicationDeleted:info];
     }];
 }
 
@@ -256,9 +248,7 @@
         if (self.onFriendAdded) {
             self.onFriendAdded(info);
         }
-        if ([self.friendshipListeners respondsToSelector:@selector(onFriendAdded:)]) {
-            [self.friendshipListeners onFriendAdded:info];
-        }
+        [self.friendshipListeners onFriendAdded:info];
     }];
 }
 
@@ -269,9 +259,7 @@
         if (self.onFriendAdded) {
             self.onFriendAdded(info);
         }
-        if ([self.friendshipListeners respondsToSelector:@selector(onFriendDeleted:)]) {
-            [self.friendshipListeners onFriendDeleted:info];
-        }
+        [self.friendshipListeners onFriendDeleted:info];
     }];
 }
 
@@ -282,9 +270,7 @@
         if (self.onFriendAdded) {
             self.onFriendAdded(info);
         }
-        if ([self.friendshipListeners respondsToSelector:@selector(onFriendInfoChanged:)]) {
-            [self.friendshipListeners onFriendInfoChanged:info];
-        }
+        [self.friendshipListeners onFriendInfoChanged:info];
     }];
 }
 
@@ -295,9 +281,7 @@
         if (self.onBlackAdded) {
             self.onBlackAdded(info);
         }
-        if ([self.friendshipListeners respondsToSelector:@selector(onBlackAdded:)]) {
-            [self.friendshipListeners onBlackAdded:info];
-        }
+        [self.friendshipListeners onBlackAdded:info];
     }];
 }
 
@@ -308,9 +292,7 @@
         if (self.onBlackAdded) {
             self.onBlackAdded(info);
         }
-        if ([self.friendshipListeners respondsToSelector:@selector(onBlackDeleted:)]) {
-            [self.friendshipListeners onBlackDeleted:info];
-        }
+        [self.friendshipListeners onBlackDeleted:info];
     }];
 }
 
@@ -324,9 +306,7 @@
         if (self.onGroupMemberAdded) {
             self.onGroupMemberAdded(info);
         }
-        if ([self.groupListeners respondsToSelector:@selector(onGroupMemberAdded:)]) {
-            [self.groupListeners onGroupMemberAdded:info];
-        }
+        [self.groupListeners onGroupMemberAdded:info];
     }];
 }
 
@@ -338,9 +318,7 @@
             self.onGroupMemberDeleted(info);
         }
         
-        if ([self.groupListeners respondsToSelector:@selector(onGroupMemberDeleted:)]) {
-            [self.groupListeners onGroupMemberDeleted:info];
-        }
+        [self.groupListeners onGroupMemberDeleted:info];
     }];
 }
 
@@ -352,9 +330,7 @@
             self.onGroupMemberInfoChanged(info);
         }
         
-        if ([self.groupListeners respondsToSelector:@selector(onGroupMemberInfoChanged:)]) {
-            [self.groupListeners onGroupMemberInfoChanged:info];
-        }
+        [self.groupListeners onGroupMemberInfoChanged:info];
     }];
 }
 
@@ -366,9 +342,7 @@
             self.onGroupInfoChanged(info);
         }
 
-        if ([self.groupListeners respondsToSelector:@selector(onGroupInfoChanged:)]) {
-            [self.groupListeners onGroupInfoChanged:info];
-        }
+        [self.groupListeners onGroupInfoChanged:info];
     }];
 }
 
@@ -380,9 +354,7 @@
             self.onJoinedGroupAdded(info);
         }
         
-        if ([self.groupListeners respondsToSelector:@selector(onJoinedGroupAdded:)]) {
-            [self.groupListeners onJoinedGroupAdded:info];
-        }
+        [self.groupListeners onJoinedGroupAdded:info];
     }];
 }
 
@@ -394,9 +366,7 @@
             self.onJoinedGroupDeleted(info);
         }
 
-        if ([self.groupListeners respondsToSelector:@selector(onJoinedGroupDeleted:)]) {
-            [self.groupListeners onJoinedGroupDeleted:info];
-        }
+        [self.groupListeners onJoinedGroupDeleted:info];
     }];
 }
 
@@ -408,9 +378,7 @@
             self.onGroupApplicationAccepted(info);
         }
         
-        if ([self.groupListeners respondsToSelector:@selector(onGroupApplicationAccepted:)]) {
-            [self.groupListeners onGroupApplicationAccepted:info];
-        }
+        [self.groupListeners onGroupApplicationAccepted:info];
     }];
 }
 
@@ -422,9 +390,7 @@
             self.onGroupApplicationAdded(info);
         }
 
-        if ([self.groupListeners respondsToSelector:@selector(onGroupApplicationAdded:)]) {
-            [self.groupListeners onGroupApplicationAdded:info];
-        }
+        [self.groupListeners onGroupApplicationAdded:info];
     }];
 }
 
@@ -436,9 +402,7 @@
             self.onGroupApplicationDeleted(info);
         }
 
-        if ([self.groupListeners respondsToSelector:@selector(onGroupApplicationDeleted:)]) {
-            [self.groupListeners onGroupApplicationDeleted:info];
-        }
+        [self.groupListeners onGroupApplicationDeleted:info];
     }];
 }
 
@@ -450,9 +414,7 @@
             self.onGroupApplicationRejected(info);
         }
         
-        if ([self.groupListeners respondsToSelector:@selector(onGroupApplicationRejected:)]) {
-            [self.groupListeners onGroupApplicationRejected:info];
-        }
+        [self.groupListeners onGroupApplicationRejected:info];
     }];
 }
 
@@ -467,9 +429,7 @@
             self.onRecvC2CReadReceipt(receipts);
         }
 
-        if ([self.advancedMsgListeners respondsToSelector:@selector(onRecvC2CReadReceipt:)]) {
-            [self.advancedMsgListeners onRecvC2CReadReceipt:receipts];
-        }
+        [self.advancedMsgListeners onRecvC2CReadReceipt:receipts];
     }];
 }
 
@@ -480,9 +440,7 @@
             self.onRecvMessageRevoked(msgId);
         }
         
-        if ([self.advancedMsgListeners respondsToSelector:@selector(onRecvMessageRevoked:)]) {
-            [self.advancedMsgListeners onRecvMessageRevoked:msgId];
-        }
+        [self.advancedMsgListeners onRecvMessageRevoked:msgId];
     }];
 }
 
@@ -494,9 +452,7 @@
             self.onRecvNewMessage(msg);
         }
         
-        if ([self.advancedMsgListeners respondsToSelector:@selector(onRecvNewMessage:)]) {
-            [self.advancedMsgListeners onRecvNewMessage:msg];
-        }
+        [self.advancedMsgListeners onRecvNewMessage:msg];
     }];
 }
 
@@ -512,9 +468,7 @@
             self.onConversationChanged(tConversations);
         }
 
-        if ([self.conversationListeners respondsToSelector:@selector(onConversationChanged:)]) {
-            [self.conversationListeners onConversationChanged:tConversations];
-        }
+        [self.conversationListeners onConversationChanged:tConversations];
     }];
 }
 
@@ -527,9 +481,7 @@
             self.onNewConversation(tConversations);
         }
         
-        if ([self.conversationListeners respondsToSelector:@selector(onNewConversation:)]) {
-            [self.conversationListeners onNewConversation:tConversations];
-        }
+        [self.conversationListeners onNewConversation:tConversations];
     }];
 }
 
@@ -539,9 +491,7 @@
             self.syncServerFailed();
         }
         
-        if ([self.conversationListeners respondsToSelector:@selector(onSyncServerFailed)]) {
-            [self.conversationListeners onSyncServerFailed];
-        }
+        [self.conversationListeners onSyncServerFailed];
     }];
 }
 
@@ -551,9 +501,7 @@
             self.syncServerFinish();
         }
 
-        if ([self.conversationListeners respondsToSelector:@selector(onSyncServerFinish)]) {
-            [self.conversationListeners onSyncServerFinish];
-        }
+        [self.conversationListeners onSyncServerFinish];
     }];
 }
 
@@ -563,9 +511,7 @@
             self.syncServerStart();
         }
         
-        if ([self.conversationListeners respondsToSelector:@selector(onSyncServerStart)]) {
-            [self.conversationListeners onSyncServerStart];
-        }
+        [self.conversationListeners onSyncServerStart];
     }];
 }
 
@@ -575,9 +521,7 @@
             self.onTotalUnreadMessageCountChanged(totalUnreadCount);
         }
         
-        if ([self.conversationListeners respondsToSelector:@selector(onTotalUnreadMessageCountChanged:)]) {
-            [self.conversationListeners onTotalUnreadMessageCountChanged:totalUnreadCount];
-        }
+        [self.conversationListeners onTotalUnreadMessageCountChanged:totalUnreadCount];
     }];
 }
 
