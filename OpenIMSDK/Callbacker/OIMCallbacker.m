@@ -6,13 +6,15 @@
 //
 
 #import "OIMCallbacker.h"
+#import "OIMGCDMulticastDelegate.h"
 
 @interface OIMCallbacker ()
-@property (nonatomic, strong) NSMutableArray <id<OIMSDKListener>> *sdkListeners;
-@property (nonatomic, strong) NSMutableArray <id<OIMFriendshipListener>> *friendshipListeners;
-@property (nonatomic, strong) NSMutableArray <id<OIMGroupListener>> *groupListeners;
-@property (nonatomic, strong) NSMutableArray <id<OIMConversationListener>> *conversationListeners;
-@property (nonatomic, strong) NSMutableArray <id<OIMAdvancedMsgListener>> *advancedMsgListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate<OIMSDKListener> *sdkListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate<OIMFriendshipListener> *friendshipListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate<OIMGroupListener> *groupListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate<OIMConversationListener> *conversationListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate<OIMAdvancedMsgListener> *advancedMsgListeners;
+
 @end
 
 @implementation OIMCallbacker
@@ -42,43 +44,38 @@
 #pragma mark -
 #pragma mark - Listeners getter
 
-- (NSMutableArray<id<OIMSDKListener>> *)sdkListeners {
-    if (_sdkListeners == nil) {
-        _sdkListeners = [NSMutableArray new];
+- (OIMGCDMulticastDelegate<OIMSDKListener> *)sdkListeners {
+    if (!_sdkListeners) {
+        _sdkListeners = (OIMGCDMulticastDelegate <OIMSDKListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
-    
     return _sdkListeners;
 }
 
-- (NSMutableArray<id<OIMFriendshipListener>> *)friendshipListeners {
-    if (_friendshipListeners == nil) {
-        _friendshipListeners = [NSMutableArray new];
+- (OIMGCDMulticastDelegate<OIMFriendshipListener> *)friendshipListeners {
+    if (!_friendshipListeners) {
+        _friendshipListeners = (OIMGCDMulticastDelegate <OIMFriendshipListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
-    
     return _friendshipListeners;
 }
 
-- (NSMutableArray<id<OIMGroupListener>> *)groupListeners {
-    if (_groupListeners == nil) {
-        _groupListeners = [NSMutableArray new];
+- (OIMGCDMulticastDelegate<OIMGroupListener> *)groupListeners {
+    if (!_groupListeners) {
+        _groupListeners = (OIMGCDMulticastDelegate <OIMGroupListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
-    
     return _groupListeners;
 }
 
-- (NSArray<id<OIMConversationListener>> *)conversationListeners {
-    if (_conversationListeners == nil) {
-        _conversationListeners = [NSMutableArray new];
+- (OIMGCDMulticastDelegate<OIMConversationListener> *)conversationListeners {
+    if (!_conversationListeners) {
+        _conversationListeners = (OIMGCDMulticastDelegate <OIMConversationListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
-    
     return _conversationListeners;
 }
 
-- (NSMutableArray<id<OIMAdvancedMsgListener>> *)advancedMsgListeners {
-    if (_advancedMsgListeners == nil) {
-        _advancedMsgListeners = [NSMutableArray new];
+- (OIMGCDMulticastDelegate<OIMAdvancedMsgListener> *)advancedMsgListeners {
+    if (!_advancedMsgListeners) {
+        _advancedMsgListeners = (OIMGCDMulticastDelegate <OIMAdvancedMsgListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
-    
     return _advancedMsgListeners;
 }
 
@@ -86,63 +83,43 @@
 #pragma mark - Add/Remove listener
 
 - (void)addIMSDKListener:(id<OIMSDKListener>)listener {
-    if (listener != nil && ![self.sdkListeners containsObject:listener]) {
-        [self.sdkListeners addObject:listener];
-    }
+    [self.sdkListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
 }
 
 - (void)removeIMSDKListener:(id<OIMSDKListener>)listener {
-    if (listener != nil && self.sdkListeners.count > 0) {
-        [self.sdkListeners removeObject:listener];
-    }
+    [self.sdkListeners removeDelegate:listener];
 }
 
 - (void)addFriendListener:(id<OIMFriendshipListener>)listener {
-    if (listener != nil && ![self.friendshipListeners containsObject:listener]) {
-        [self.friendshipListeners addObject:listener];
-    }
+    [self.friendshipListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
 }
 
 - (void)removeFriendListener:(id<OIMFriendshipListener>)listener {
-    if (listener != nil && self.friendshipListeners.count > 0) {
-        [self.friendshipListeners removeObject:listener];
-    }
+    [self.friendshipListeners removeDelegate:listener];
 }
 
 - (void)addGroupListener:(id<OIMGroupListener>)listener {
-    if (listener != nil && ![self.groupListeners containsObject:listener]) {
-        [self.groupListeners addObject:listener];
-    }
+    [self.groupListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
 }
 
 - (void)removeGroupListener:(id<OIMGroupListener>)listener {
-    if (listener != nil && self.groupListeners.count > 0) {
-        [self.groupListeners removeObject:listener];
-    }
+    [self.groupListeners removeDelegate:listener];
 }
 
 - (void)addConversationListener:(id<OIMConversationListener>)listener {
-    if (listener != nil && ![self.conversationListeners containsObject:listener]) {
-        [self.conversationListeners addObject:listener];
-    }
+    [self.conversationListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
 }
 
 - (void)removeConversationListener:(id<OIMConversationListener>)listener {
-    if (listener != nil && self.conversationListeners.count > 0) {
-        [self.conversationListeners removeObject:listener];
-    }
+    [self.conversationListeners removeDelegate:listener];
 }
 
 - (void)addAdvancedMsgListener:(id<OIMAdvancedMsgListener>)listener {
-    if (listener != nil && ![self.advancedMsgListeners containsObject:listener]) {
-        [self.advancedMsgListeners addObject:listener];
-    }
+    [self.advancedMsgListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
 }
 
 - (void)removeAdvancedMsgListener:(id<OIMAdvancedMsgListener>)listener {
-    if (listener != nil && self.advancedMsgListeners.count > 0) {
-        [self.advancedMsgListeners removeObject:listener];
-    }
+    [self.advancedMsgListeners removeDelegate:listener];
 }
 
 #pragma mark -
@@ -155,11 +132,9 @@
             self.connectFailure(errCode, errMsg);
         }
         
-        [self.sdkListeners enumerateObjectsUsingBlock:^(id<OIMSDKListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onConnectFailed:err:)]) {
-                [obj onConnectFailed:errCode err:errMsg];
-            }
-        }];
+        if ([self.sdkListeners respondsToSelector:@selector(onConnectFailed:err:)]) {
+            [self.sdkListeners onConnectFailed:errCode err:errMsg];
+        }
     }];
 }
 
@@ -168,12 +143,9 @@
         if (self.connectSuccess) {
             self.connectSuccess();
         }
-        
-        [self.sdkListeners enumerateObjectsUsingBlock:^(id<OIMSDKListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onConnectSuccess)]) {
-                [obj onConnectSuccess];
-            }
-        }];
+        if ([self.sdkListeners respondsToSelector:@selector(onConnectSuccess)]) {
+            [self.sdkListeners onConnectSuccess];
+        }
     }];
 }
 
@@ -182,12 +154,9 @@
         if (self.connecting) {
             self.connecting();
         }
-        
-        [self.sdkListeners enumerateObjectsUsingBlock:^(id<OIMSDKListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onConnecting)]) {
-                [obj onConnecting];
-            }
-        }];
+        if ([self.sdkListeners respondsToSelector:@selector(onConnecting)]) {
+            [self.sdkListeners onConnecting];
+        }
     }];
 }
 
@@ -196,12 +165,9 @@
         if (self.kickedOffline) {
             self.kickedOffline();
         }
-        
-        [self.sdkListeners enumerateObjectsUsingBlock:^(id<OIMSDKListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onKickedOffline)]) {
-                [obj onKickedOffline];
-            }
-        }];
+        if ([self.sdkListeners respondsToSelector:@selector(onKickedOffline)]) {
+            [self.sdkListeners onKickedOffline];
+        }
     }];
 }
 
@@ -210,12 +176,9 @@
         if (self.userTokenExpired) {
             self.userTokenExpired();
         }
-        
-        [self.sdkListeners enumerateObjectsUsingBlock:^(id<OIMSDKListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onUserTokenExpired)]) {
-                [obj onUserTokenExpired];
-            }
-        }];
+        if ([self.sdkListeners respondsToSelector:@selector(onUserTokenExpired)]) {
+            [self.sdkListeners onUserTokenExpired];
+        }
     }];
 }
 
@@ -241,12 +204,9 @@
         if (self.onFriendApplicationAdded) {
             self.onFriendApplicationAdded(info);
         }
-        
-        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onFriendApplicationAdded:)]) {
-                [obj onFriendApplicationAdded:info];
-            }
-        }];
+        if ([self.friendshipListeners respondsToSelector:@selector(onFriendApplicationAdded:)]) {
+            [self.friendshipListeners onFriendApplicationAdded:info];
+        }
     }];
 }
 
@@ -257,12 +217,9 @@
         if (self.onFriendApplicationRejected) {
             self.onFriendApplicationRejected(info);
         }
-        
-        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onFriendApplicationRejected:)]) {
-                [obj onFriendApplicationRejected:info];
-            }
-        }];
+        if ([self.friendshipListeners respondsToSelector:@selector(onFriendApplicationRejected:)]) {
+            [self.friendshipListeners onFriendApplicationRejected:info];
+        }
     }];
 }
 
@@ -273,13 +230,9 @@
         if (self.onFriendApplicationDeleted) {
             self.onFriendApplicationDeleted(info);
         }
-        
-        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onFriendApplicationAccepted:)]) {
-                [obj onFriendApplicationAccepted:info];
-            }
-        }];
-        
+        if ([self.friendshipListeners respondsToSelector:@selector(onFriendApplicationAccepted:)]) {
+            [self.friendshipListeners onFriendApplicationAccepted:info];
+        }
     }];
 }
 
@@ -290,12 +243,9 @@
         if (self.onFriendApplicationDeleted) {
             self.onFriendApplicationDeleted(info);
         }
-        
-        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onFriendApplicationDeleted:)]) {
-                [obj onFriendApplicationDeleted:info];
-            }
-        }];
+        if ([self.friendshipListeners respondsToSelector:@selector(onFriendApplicationDeleted:)]) {
+            [self.friendshipListeners onFriendApplicationDeleted:info];
+        }
     }];
 }
 
@@ -306,12 +256,9 @@
         if (self.onFriendAdded) {
             self.onFriendAdded(info);
         }
-        
-        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onFriendAdded:)]) {
-                [obj onFriendAdded:info];
-            }
-        }];
+        if ([self.friendshipListeners respondsToSelector:@selector(onFriendAdded:)]) {
+            [self.friendshipListeners onFriendAdded:info];
+        }
     }];
 }
 
@@ -322,12 +269,9 @@
         if (self.onFriendAdded) {
             self.onFriendAdded(info);
         }
-        
-        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onFriendDeleted:)]) {
-                [obj onFriendDeleted:info];
-            }
-        }];
+        if ([self.friendshipListeners respondsToSelector:@selector(onFriendDeleted:)]) {
+            [self.friendshipListeners onFriendDeleted:info];
+        }
     }];
 }
 
@@ -338,12 +282,9 @@
         if (self.onFriendAdded) {
             self.onFriendAdded(info);
         }
-        
-        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onFriendInfoChanged:)]) {
-                [obj onFriendInfoChanged:info];
-            }
-        }];
+        if ([self.friendshipListeners respondsToSelector:@selector(onFriendInfoChanged:)]) {
+            [self.friendshipListeners onFriendInfoChanged:info];
+        }
     }];
 }
 
@@ -354,12 +295,9 @@
         if (self.onBlackAdded) {
             self.onBlackAdded(info);
         }
-        
-        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onBlackAdded:)]) {
-                [obj onBlackAdded:info];
-            }
-        }];
+        if ([self.friendshipListeners respondsToSelector:@selector(onBlackAdded:)]) {
+            [self.friendshipListeners onBlackAdded:info];
+        }
     }];
 }
 
@@ -370,12 +308,9 @@
         if (self.onBlackAdded) {
             self.onBlackAdded(info);
         }
-        
-        [self.friendshipListeners enumerateObjectsUsingBlock:^(id<OIMFriendshipListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onBlackDeleted:)]) {
-                [obj onBlackDeleted:info];
-            }
-        }];
+        if ([self.friendshipListeners respondsToSelector:@selector(onBlackDeleted:)]) {
+            [self.friendshipListeners onBlackDeleted:info];
+        }
     }];
 }
 
@@ -389,12 +324,9 @@
         if (self.onGroupMemberAdded) {
             self.onGroupMemberAdded(info);
         }
-        
-        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onGroupMemberAdded:)]) {
-                [obj onGroupMemberAdded:info];
-            }
-        }];
+        if ([self.groupListeners respondsToSelector:@selector(onGroupMemberAdded:)]) {
+            [self.groupListeners onGroupMemberAdded:info];
+        }
     }];
 }
 
@@ -406,11 +338,9 @@
             self.onGroupMemberDeleted(info);
         }
         
-        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onGroupMemberDeleted:)]) {
-                [obj onGroupMemberDeleted:info];
-            }
-        }];
+        if ([self.groupListeners respondsToSelector:@selector(onGroupMemberDeleted:)]) {
+            [self.groupListeners onGroupMemberDeleted:info];
+        }
     }];
 }
 
@@ -422,11 +352,9 @@
             self.onGroupMemberInfoChanged(info);
         }
         
-        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onGroupMemberInfoChanged:)]) {
-                [obj onGroupMemberInfoChanged:info];
-            }
-        }];
+        if ([self.groupListeners respondsToSelector:@selector(onGroupMemberInfoChanged:)]) {
+            [self.groupListeners onGroupMemberInfoChanged:info];
+        }
     }];
 }
 
@@ -437,12 +365,10 @@
         if (self.onGroupInfoChanged) {
             self.onGroupInfoChanged(info);
         }
-        
-        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onGroupInfoChanged:)]) {
-                [obj onGroupInfoChanged:info];
-            }
-        }];
+
+        if ([self.groupListeners respondsToSelector:@selector(onGroupInfoChanged:)]) {
+            [self.groupListeners onGroupInfoChanged:info];
+        }
     }];
 }
 
@@ -454,11 +380,9 @@
             self.onJoinedGroupAdded(info);
         }
         
-        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onJoinedGroupAdded:)]) {
-                [obj onJoinedGroupAdded:info];
-            }
-        }];
+        if ([self.groupListeners respondsToSelector:@selector(onJoinedGroupAdded:)]) {
+            [self.groupListeners onJoinedGroupAdded:info];
+        }
     }];
 }
 
@@ -469,12 +393,10 @@
         if (self.onJoinedGroupDeleted) {
             self.onJoinedGroupDeleted(info);
         }
-        
-        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onJoinedGroupDeleted:)]) {
-                [obj onJoinedGroupDeleted:info];
-            }
-        }];
+
+        if ([self.groupListeners respondsToSelector:@selector(onJoinedGroupDeleted:)]) {
+            [self.groupListeners onJoinedGroupDeleted:info];
+        }
     }];
 }
 
@@ -486,11 +408,9 @@
             self.onGroupApplicationAccepted(info);
         }
         
-        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onGroupApplicationAccepted:)]) {
-                [obj onGroupApplicationAccepted:info];
-            }
-        }];
+        if ([self.groupListeners respondsToSelector:@selector(onGroupApplicationAccepted:)]) {
+            [self.groupListeners onGroupApplicationAccepted:info];
+        }
     }];
 }
 
@@ -501,12 +421,10 @@
         if (self.onGroupApplicationAdded) {
             self.onGroupApplicationAdded(info);
         }
-        
-        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onGroupApplicationAdded:)]) {
-                [obj onGroupApplicationAdded:info];
-            }
-        }];
+
+        if ([self.groupListeners respondsToSelector:@selector(onGroupApplicationAdded:)]) {
+            [self.groupListeners onGroupApplicationAdded:info];
+        }
     }];
 }
 
@@ -517,12 +435,10 @@
         if (self.onGroupApplicationDeleted) {
             self.onGroupApplicationDeleted(info);
         }
-        
-        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onGroupApplicationDeleted:)]) {
-                [obj onGroupApplicationDeleted:info];
-            }
-        }];
+
+        if ([self.groupListeners respondsToSelector:@selector(onGroupApplicationDeleted:)]) {
+            [self.groupListeners onGroupApplicationDeleted:info];
+        }
     }];
 }
 
@@ -534,11 +450,9 @@
             self.onGroupApplicationRejected(info);
         }
         
-        [self.groupListeners enumerateObjectsUsingBlock:^(id<OIMGroupListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onGroupApplicationRejected:)]) {
-                [obj onGroupApplicationRejected:info];
-            }
-        }];
+        if ([self.groupListeners respondsToSelector:@selector(onGroupApplicationRejected:)]) {
+            [self.groupListeners onGroupApplicationRejected:info];
+        }
     }];
 }
 
@@ -552,12 +466,10 @@
         if (self.onRecvC2CReadReceipt) {
             self.onRecvC2CReadReceipt(receipts);
         }
-        
-        [self.advancedMsgListeners enumerateObjectsUsingBlock:^(id<OIMAdvancedMsgListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onRecvC2CReadReceipt:)]) {
-                [obj onRecvC2CReadReceipt:receipts];
-            }
-        }];
+
+        if ([self.advancedMsgListeners respondsToSelector:@selector(onRecvC2CReadReceipt:)]) {
+            [self.advancedMsgListeners onRecvC2CReadReceipt:receipts];
+        }
     }];
 }
 
@@ -568,11 +480,9 @@
             self.onRecvMessageRevoked(msgId);
         }
         
-        [self.advancedMsgListeners enumerateObjectsUsingBlock:^(id<OIMAdvancedMsgListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onRecvMessageRevoked:)]) {
-                [obj onRecvMessageRevoked:msgId];
-            }
-        }];
+        if ([self.advancedMsgListeners respondsToSelector:@selector(onRecvMessageRevoked:)]) {
+            [self.advancedMsgListeners onRecvMessageRevoked:msgId];
+        }
     }];
 }
 
@@ -584,11 +494,9 @@
             self.onRecvNewMessage(msg);
         }
         
-        [self.advancedMsgListeners enumerateObjectsUsingBlock:^(id<OIMAdvancedMsgListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onRecvNewMessage:)]) {
-                [obj onRecvNewMessage:msg];
-            }
-        }];
+        if ([self.advancedMsgListeners respondsToSelector:@selector(onRecvNewMessage:)]) {
+            [self.advancedMsgListeners onRecvNewMessage:msg];
+        }
     }];
 }
 
@@ -603,12 +511,10 @@
         if (self.onConversationChanged) {
             self.onConversationChanged(tConversations);
         }
-        
-        [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onConversationChanged:)]) {
-                [obj onConversationChanged:tConversations];
-            }
-        }];
+
+        if ([self.conversationListeners respondsToSelector:@selector(onConversationChanged:)]) {
+            [self.conversationListeners onConversationChanged:tConversations];
+        }
     }];
 }
 
@@ -621,11 +527,9 @@
             self.onNewConversation(tConversations);
         }
         
-        [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onNewConversation:)]) {
-                [obj onNewConversation:tConversations];
-            }
-        }];
+        if ([self.conversationListeners respondsToSelector:@selector(onNewConversation:)]) {
+            [self.conversationListeners onNewConversation:tConversations];
+        }
     }];
 }
 
@@ -635,11 +539,9 @@
             self.syncServerFailed();
         }
         
-        [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onSyncServerFailed)]) {
-                [obj onSyncServerFailed];
-            }
-        }];
+        if ([self.conversationListeners respondsToSelector:@selector(onSyncServerFailed)]) {
+            [self.conversationListeners onSyncServerFailed];
+        }
     }];
 }
 
@@ -648,12 +550,10 @@
         if (self.syncServerFinish) {
             self.syncServerFinish();
         }
-        
-        [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onSyncServerFinish)]) {
-                [obj onSyncServerFinish];
-            }
-        }];
+
+        if ([self.conversationListeners respondsToSelector:@selector(onSyncServerFinish)]) {
+            [self.conversationListeners onSyncServerFinish];
+        }
     }];
 }
 
@@ -663,11 +563,9 @@
             self.syncServerStart();
         }
         
-        [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onSyncServerStart)]) {
-                [obj onSyncServerStart];
-            }
-        }];
+        if ([self.conversationListeners respondsToSelector:@selector(onSyncServerStart)]) {
+            [self.conversationListeners onSyncServerStart];
+        }
     }];
 }
 
@@ -677,11 +575,9 @@
             self.onTotalUnreadMessageCountChanged(totalUnreadCount);
         }
         
-        [self.conversationListeners enumerateObjectsUsingBlock:^(id<OIMConversationListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onTotalUnreadMessageCountChanged:)]) {
-                [obj onTotalUnreadMessageCountChanged:totalUnreadCount];
-            }
-        }];
+        if ([self.conversationListeners respondsToSelector:@selector(onTotalUnreadMessageCountChanged:)]) {
+            [self.conversationListeners onTotalUnreadMessageCountChanged:totalUnreadCount];
+        }
     }];
 }
 
