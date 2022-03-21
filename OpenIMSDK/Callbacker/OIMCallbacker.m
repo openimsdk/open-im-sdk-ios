@@ -83,7 +83,7 @@
 
 - (NSMutableArray<id<OIMSignalingListener>> *)signalingListeners {
     if (_signalingListeners == nil) {
-        _signalingListeners = (OIMGCDMulticastDelegate <OIMAdvancedMsgListener> *)[[OIMGCDMulticastDelegate alloc] init];
+        _signalingListeners = (OIMGCDMulticastDelegate <OIMSignalingListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
     
     return _signalingListeners;
@@ -459,11 +459,7 @@
             self.onRecvGroupReadReceipt(receipts);
         }
         
-        [self.advancedMsgListeners enumerateObjectsUsingBlock:^(id<OIMAdvancedMsgListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj respondsToSelector:@selector(onRecvGroupReadReceipt:)]) {
-                [obj onRecvGroupReadReceipt:receipts];
-            }
-        }];
+        [self.advancedMsgListeners onRecvGroupReadReceipt:receipts];
     }];
 }
 
