@@ -45,35 +45,35 @@
 #pragma mark - Listeners getter
 
 - (OIMGCDMulticastDelegate<OIMSDKListener> *)sdkListeners {
-    if (!_sdkListeners) {
+    if (_sdkListeners == nil) {
         _sdkListeners = (OIMGCDMulticastDelegate <OIMSDKListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
     return _sdkListeners;
 }
 
 - (OIMGCDMulticastDelegate<OIMFriendshipListener> *)friendshipListeners {
-    if (!_friendshipListeners) {
+    if (_friendshipListeners == nil) {
         _friendshipListeners = (OIMGCDMulticastDelegate <OIMFriendshipListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
     return _friendshipListeners;
 }
 
 - (OIMGCDMulticastDelegate<OIMGroupListener> *)groupListeners {
-    if (!_groupListeners) {
+    if (_groupListeners == nil) {
         _groupListeners = (OIMGCDMulticastDelegate <OIMGroupListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
     return _groupListeners;
 }
 
 - (OIMGCDMulticastDelegate<OIMConversationListener> *)conversationListeners {
-    if (!_conversationListeners) {
+    if (_conversationListeners == nil) {
         _conversationListeners = (OIMGCDMulticastDelegate <OIMConversationListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
     return _conversationListeners;
 }
 
 - (OIMGCDMulticastDelegate<OIMAdvancedMsgListener> *)advancedMsgListeners {
-    if (!_advancedMsgListeners) {
+    if (_advancedMsgListeners == nil) {
         _advancedMsgListeners = (OIMGCDMulticastDelegate <OIMAdvancedMsgListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
     return _advancedMsgListeners;
