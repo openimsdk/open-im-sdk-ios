@@ -11,12 +11,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
 @interface OIMReceiptInfo : NSObject
 
 /*
- * 用户id
+ * 用户id - 单聊有效
  */
-@property (nonatomic, nullable, copy) NSString *uid;
+@property (nonatomic, nullable, copy) NSString *userID;
+
+/*
+ * group id - 群聊有效
+ */
+@property (nonatomic, nullable, copy) NSString *groupID;
 
 /*
  * 已读消息id

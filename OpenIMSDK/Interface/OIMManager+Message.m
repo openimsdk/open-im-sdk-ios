@@ -217,6 +217,23 @@
     Open_im_sdkMarkC2CMessageAsRead(callback, [self operationId], userID, msgIDList.mj_JSONString);
 }
 
+- (void)markGroupMessageAsRead:(NSString *)groupID
+                     msgIDList:(NSArray <NSString *> *)msgIDList
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkMarkGroupMessageAsRead(callback, [self operationId], groupID, msgIDList.mj_JSONString);
+}
+
+- (void)deleteMessage:(OIMMessageInfo *)message
+            onSuccess:(nullable OIMSuccessCallback)onSuccess
+            onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkDeleteMessage(callback, [self operationId], message.mj_JSONString);
+}
+
 - (void)deleteMessageFromLocalStorage:(OIMMessageInfo *)message
                             onSuccess:(OIMSuccessCallback)onSuccess
                             onFailure:(OIMFailureCallback)onFailure {

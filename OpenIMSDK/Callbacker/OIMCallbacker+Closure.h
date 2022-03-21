@@ -72,6 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setAdvancedMsgListenerWithOnRecvMessageRevoked:(OIMStringCallback)onRecvMessageRevoked
                                   onRecvC2CReadReceipt:(OIMReceiptCallback)onRecvC2CReadReceipt
+                                onRecvGroupReadReceipt:(OIMReceiptCallback)onRecvGroupReadReceipt
                                       onRecvNewMessage:(OIMMessageInfoCallback)onRecvNewMessage;
 
 /*
@@ -79,6 +80,27 @@ NS_ASSUME_NONNULL_BEGIN
  *
  */
 - (void)setSelfUserInfoUpdateListener:(OIMUserInfoCallback)onUserInfoUpdate;
+
+
+/*
+ * 设置音视频监听
+ *
+ * 被邀请者收到：音视频通话邀请   onReceiveNewInvitation
+ * 邀请者收到：被邀请者同意音视频通话   onInviteeAccepted
+ * 邀请者收到：被邀请者拒绝音视频通话    onInviteeRejected
+ * 被邀请者收到：邀请者取消音视频通话 onInvitationCancelled
+ * 邀请者收到：被邀请者超时未接通   onInvitationTimeout
+ * 被邀请者（其他端）收到：比如被邀请者在手机拒接，在pc上会收到此回调  onInviteeRejectedByOtherDevice
+ * 被邀请者（其他端）收到：比如被邀请者在手机拒接，在pc上会收到此回调  onInviteeAcceptedByOtherDevice
+ *
+ */
+- (void)setSignalingListenerWithOnReceiveNewInvitation:(OIMSignalingInvitationCallback)onReceiveNewInvitation
+                                     onInviteeAccepted:(OIMSignalingInvitationCallback)onInviteeAccepted
+                                     onInviteeRejected:(OIMSignalingInvitationCallback)onInviteeRejected
+                                 onInvitationCancelled:(OIMSignalingInvitationCallback)onInvitationCancelled
+                                   onInvitationTimeout:(OIMSignalingInvitationCallback)onInvitationTimeout
+                        onInviteeRejectedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeRejectedByOtherDevice
+                        onInviteeAcceptedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeAcceptedByOtherDevice;
 @end
 
 NS_ASSUME_NONNULL_END

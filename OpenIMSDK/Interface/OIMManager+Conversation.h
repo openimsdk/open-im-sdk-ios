@@ -91,15 +91,6 @@ NS_ASSUME_NONNULL_BEGIN
                                   onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
- * 标记群组会话已读
- *
- * @param groupID 群组ID
- */
-- (void)markGroupMessageHasRead:(NSString *)groupID
-                      onSuccess:(nullable OIMSuccessCallback)onSuccess
-                      onFailure:(nullable OIMFailureCallback)onFailure;
-
-/*
  * 获取会话免打扰状态
  *
  */

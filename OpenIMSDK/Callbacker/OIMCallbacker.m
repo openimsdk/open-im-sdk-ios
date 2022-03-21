@@ -9,11 +9,12 @@
 #import "OIMGCDMulticastDelegate.h"
 
 @interface OIMCallbacker ()
-@property (nonatomic, strong) OIMGCDMulticastDelegate<OIMSDKListener> *sdkListeners;
-@property (nonatomic, strong) OIMGCDMulticastDelegate<OIMFriendshipListener> *friendshipListeners;
-@property (nonatomic, strong) OIMGCDMulticastDelegate<OIMGroupListener> *groupListeners;
-@property (nonatomic, strong) OIMGCDMulticastDelegate<OIMConversationListener> *conversationListeners;
-@property (nonatomic, strong) OIMGCDMulticastDelegate<OIMAdvancedMsgListener> *advancedMsgListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMSDKListener> *sdkListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMFriendshipListener> *friendshipListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMGroupListener> *groupListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMConversationListener> *conversationListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMAdvancedMsgListener> *advancedMsgListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMSignalingListener> *signalingListeners;
 
 @end
 
@@ -29,6 +30,7 @@
     Open_im_sdkSetGroupListener(self);
     Open_im_sdkSetConversationListener(self);
     Open_im_sdkSetAdvancedMsgListener(self);
+    Open_im_sdkSetSignalingListener(self);
 }
 
 - (void)dispatchMainThread:(void (NS_NOESCAPE ^)(void))todo {
@@ -79,6 +81,14 @@
     return _advancedMsgListeners;
 }
 
+- (NSMutableArray<id<OIMSignalingListener>> *)signalingListeners {
+    if (_signalingListeners == nil) {
+        _signalingListeners = (OIMGCDMulticastDelegate <OIMAdvancedMsgListener> *)[[OIMGCDMulticastDelegate alloc] init];
+    }
+    
+    return _signalingListeners;
+}
+
 #pragma mark -
 #pragma mark - Add/Remove listener
 
@@ -120,6 +130,14 @@
 
 - (void)removeAdvancedMsgListener:(id<OIMAdvancedMsgListener>)listener {
     [self.advancedMsgListeners removeDelegate:listener];
+}
+
+- (void)addSignalingListener:(id<OIMSignalingListener>)listener {
+    [self.signalingListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
+}
+
+- (void)removeSignalingListener:(id<OIMSignalingListener>)listener {
+    [self.signalingListeners removeDelegate:listener];
 }
 
 #pragma mark -
@@ -433,6 +451,22 @@
     }];
 }
 
+- (void)onRecvGroupReadReceipt:(NSString* _Nullable)groupMsgReceiptList {
+    NSArray *receipts = [OIMReceiptInfo mj_objectArrayWithKeyValuesArray:groupMsgReceiptList];
+    
+    [self dispatchMainThread:^{
+        if (self.onRecvGroupReadReceipt) {
+            self.onRecvGroupReadReceipt(receipts);
+        }
+        
+        [self.advancedMsgListeners enumerateObjectsUsingBlock:^(id<OIMAdvancedMsgListener>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj respondsToSelector:@selector(onRecvGroupReadReceipt:)]) {
+                [obj onRecvGroupReadReceipt:receipts];
+            }
+        }];
+    }];
+}
+
 - (void)onRecvMessageRevoked:(NSString * _Nullable)msgId {
     
     [self dispatchMainThread:^{
@@ -522,6 +556,93 @@
         }
         
         [self.conversationListeners onTotalUnreadMessageCountChanged:totalUnreadCount];
+    }];
+}
+
+#pragma mark -
+#pragma mark - Signaling
+
+- (void)onInvitationCancelled:(NSString * _Nullable)invitationCancelledCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:invitationCancelledCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onInvitationCancelled) {
+            self.onInvitationCancelled(info);
+        }
+      
+        [self.signalingListeners onInvitationCancelled:info];
+    }];
+}
+
+- (void)onInvitationTimeout:(NSString * _Nullable)invitationTimeoutCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:invitationTimeoutCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onInvitationTimeout) {
+            self.onInvitationTimeout(info);
+        }
+        
+        [self.signalingListeners onInvitationTimeout:info];
+    }];
+}
+
+- (void)onInviteeAccepted:(NSString * _Nullable)inviteeAcceptedCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:inviteeAcceptedCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onInviteeAccepted) {
+            self.onInviteeAccepted(info);
+        }
+        
+        [self.signalingListeners onInviteeAccepted:info];
+    }];
+}
+
+- (void)onInviteeAcceptedByOtherDevice:(NSString * _Nullable)inviteeAcceptedCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:inviteeAcceptedCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onInviteeAcceptedByOtherDevice) {
+            self.onInviteeAcceptedByOtherDevice(info);
+        }
+        
+        [self.signalingListeners onInviteeAcceptedByOtherDevice:info];
+    }];
+}
+
+- (void)onInviteeRejected:(NSString * _Nullable)inviteeRejectedCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:inviteeRejectedCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onInviteeRejected) {
+            self.onInviteeRejected(info);
+        }
+        
+        [self.signalingListeners onInviteeRejected:info];
+    }];
+}
+
+- (void)onInviteeRejectedByOtherDevice:(NSString * _Nullable)inviteeRejectedCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:inviteeRejectedCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onInviteeRejectedByOtherDevice) {
+            self.onInviteeRejectedByOtherDevice(info);
+        }
+        
+        [self.signalingListeners onInviteeRejectedByOtherDevice:info];
+    }];
+}
+
+- (void)onReceiveNewInvitation:(NSString * _Nullable)receiveNewInvitationCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:receiveNewInvitationCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onReceiveNewInvitation) {
+            self.onReceiveNewInvitation(info);
+        }
+        
+        [self.signalingListeners onReceiveNewInvitation:info];
     }];
 }
 
