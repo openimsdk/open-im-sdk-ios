@@ -32,9 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, copy) NSString *serverMsgID;
 
-@property (nonatomic, assign) NSInteger createTime;
+@property (nonatomic, assign) NSTimeInterval createTime;
 
-@property (nonatomic, assign) NSInteger sendTime;
+@property (nonatomic, assign) NSTimeInterval sendTime;
 
 @property (nonatomic, assign) OIMConversationType sessionType;
 
