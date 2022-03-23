@@ -231,7 +231,7 @@
             onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkDeleteMessage(callback, [self operationId], message.mj_JSONString);
+    Open_im_sdkDeleteMessageFromLocalAndSvr(callback, [self operationId], message.mj_JSONString);
 }
 
 - (void)deleteMessageFromLocalStorage:(OIMMessageInfo *)message

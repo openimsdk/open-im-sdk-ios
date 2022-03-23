@@ -64,12 +64,21 @@
     Open_im_sdkGetMultipleConversation(callback, [self operationId], ids.mj_JSONString);
 }
 
+- (void)deleteConversationFromLocalStorage:(NSString *)conversationID
+                                 onSuccess:(nullable OIMSuccessCallback)onSuccess
+                                 onFailure:(nullable OIMFailureCallback)onFailure {
+    
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkDeleteConversation(callback, [self operationId], conversationID);
+}
+
 - (void)deleteConversation:(NSString *)conversationID
                  onSuccess:(OIMSuccessCallback)onSuccess
                  onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkDeleteConversation(callback, [self operationId], conversationID);
+    Open_im_sdkDeleteConversationMsgFromLocalAndSvr(callback, [self operationId], conversationID);
 }
 
 - (void)setConversationDraft:(NSString *)conversationID
