@@ -100,7 +100,8 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"获取发出的进群申请列表", OIM_LIST_CELL_FUNC: @"getSendGroupApplicationList"},
           @{OIM_LIST_CELL_TITLE: @"同意某人进群", OIM_LIST_CELL_FUNC: @"acceptGroupApplication"},
           @{OIM_LIST_CELL_TITLE: @"拒绝某人进群", OIM_LIST_CELL_FUNC: @"refuseGroupApplication"},
-          @{OIM_LIST_CELL_TITLE: @"清空群聊天记录", OIM_LIST_CELL_FUNC: @"clearGroupHistoryMessage"},],
+          @{OIM_LIST_CELL_TITLE: @"清空群聊天记录", OIM_LIST_CELL_FUNC: @"clearGroupHistoryMessage"},
+          @{OIM_LIST_CELL_TITLE: @"解散群", OIM_LIST_CELL_FUNC: @"clearGroupHistoryMessage"},],
         
         @[@{OIM_LIST_CELL_TITLE: @"发送消息", OIM_LIST_CELL_FUNC: @"sendMessage"},
           @{OIM_LIST_CELL_TITLE: @"获取聊天历史", OIM_LIST_CELL_FUNC: @"getHistoryMessageList"},
@@ -811,6 +812,20 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
        
         [OIMManager.manager clearGroupHistoryMessage:GROUP_ID
                                            onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)dismissGroup {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager dismissGroup:GROUP_ID
+                               onSuccess:^(NSString * _Nullable data) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {

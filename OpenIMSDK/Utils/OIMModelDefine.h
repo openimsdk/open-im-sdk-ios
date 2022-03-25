@@ -69,8 +69,9 @@ typedef NS_ENUM(NSInteger, OIMMessageStatus) {
  *  会话类型
  */
 typedef NS_ENUM(NSInteger, OIMConversationType) {
-    OIMConversationTypeC2C = 1, /// 单聊
-    OIMConversationTypeGroup    /// 群聊
+    OIMConversationTypeUndefine = 0,
+    OIMConversationTypeC2C,             /// 单聊
+    OIMConversationTypeGroup            /// 群聊
 };
 
 /*

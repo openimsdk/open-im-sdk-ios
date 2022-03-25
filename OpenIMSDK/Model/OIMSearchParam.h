@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, strong) NSArray *senderUserIDList;
 
 /*
- * 消息类型列表，暂时未用
+ * 消息类型列表
  */
 @property (nonatomic, nullable, strong) NSArray *messageTypeList;
 
@@ -54,12 +54,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger searchTimePeriod;
 
 /*
- * 分页使用的偏移，暂时未用
+ * 当前页数
  */
 @property (nonatomic, assign) NSInteger pageIndex;
 
 /*
- * 每页数量，暂时未用
+ * 每页数量
  */
 @property (nonatomic, assign) NSInteger count;
 

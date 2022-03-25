@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OpenIMSDK'
-  s.version          = '2.0.4'
+  s.version          = '2.0.5'
   s.summary          = 'Open-IM-SDK'
 
 # This description is used to generate tags and improve search results.

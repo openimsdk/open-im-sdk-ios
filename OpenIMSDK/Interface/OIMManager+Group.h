@@ -169,6 +169,14 @@ NS_ASSUME_NONNULL_BEGIN
                      onSuccess:(nullable OIMSuccessCallback)onSuccess
                      onFailure:(nullable OIMFailureCallback)onFailure;
 
+/*
+ * 解散群
+ *
+ * @param groupId   群ID
+ */
+- (void)dismissGroup:(NSString *)groupID
+           onSuccess:(nullable OIMSuccessCallback)onSuccess
+           onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END
