@@ -31,6 +31,27 @@ onConnectSuccess:(nullable OIMVoidCallback)onConnectSuccess
 onKickedOffline:(nullable OIMVoidCallback)onKickedOffline
 onUserTokenExpired:(nullable OIMVoidCallback)onUserTokenExpired;
 
+- (BOOL)initSDKWithApiAdrr:(NSString *)apiAddr
+                    wsAddr:(NSString *)wsAddr
+                   dataDir:(NSString * _Nullable)dataDir
+                  logLevel:(NSInteger)logLevel
+             objectStorage:(NSString * _Nullable)os
+              onConnecting:(nullable OIMVoidCallback)onConnecting
+          onConnectFailure:(nullable OIMFailureCallback)onConnectFailure
+          onConnectSuccess:(nullable OIMVoidCallback)onConnectSuccess
+           onKickedOffline:(nullable OIMVoidCallback)onKickedOffline
+        onUserTokenExpired:(nullable OIMVoidCallback)onUserTokenExpired;
+
+/*
+ * 设置心跳间隔
+ */
+- (void)setHeartbeatInterval:(NSInteger)heartbeatInterval;
+
+/*
+ * 进入前台
+ */
+- (void)wakeUpWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
+                  onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

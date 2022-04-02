@@ -177,6 +177,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)dismissGroup:(NSString *)groupID
            onSuccess:(nullable OIMSuccessCallback)onSuccess
            onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ *  静音或取消禁言某群成员 mutedSeconds为0时取消禁言
+ */
+- (void)changeGroupMemberMute:(NSString *)groupID
+                       userID:(NSString *)userID
+                 mutedSeconds:(NSInteger)mutedSeconds
+           onSuccess:(nullable OIMSuccessCallback)onSuccess
+           onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ *  静音或取消禁言某群
+ */
+- (void)changeGroupMute:(NSString *)groupID
+                 isMute:(BOOL)isMute
+              onSuccess:(nullable OIMSuccessCallback)onSuccess
+              onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

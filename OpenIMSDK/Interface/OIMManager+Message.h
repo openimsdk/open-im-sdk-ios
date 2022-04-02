@@ -272,6 +272,15 @@ NS_ASSUME_NONNULL_BEGIN
                      onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
+ * 标记会话已读
+ *
+ */
+- (void)markMessageAsReadByConID:(NSString *)conversationID
+                       msgIDList:(NSArray <NSString *> *)msgIDList
+                       onSuccess:(nullable OIMSuccessCallback)onSuccess
+                       onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
  * 删除一条消息
  *
  * @param message   为OIMMessageInfo
@@ -306,6 +315,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)clearGroupHistoryMessage:(NSString *)groupID
                        onSuccess:(nullable OIMSuccessCallback)onSuccess
                        onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 本地删除消息
+ *
+ */
+- (void)deleteAllMsgFromLocalWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
+                                 onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 本地/远端删除消息
+ *
+ */
+- (void)deleteAllMsgFromLocalAndSvrWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
+                                       onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 插入一条单聊消息到本地

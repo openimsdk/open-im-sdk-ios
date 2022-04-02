@@ -226,6 +226,15 @@
     Open_im_sdkMarkGroupMessageAsRead(callback, [self operationId], groupID, msgIDList.mj_JSONString);
 }
 
+- (void)markMessageAsReadByConID:(NSString *)conversationID
+                       msgIDList:(NSArray<NSString *> *)msgIDList
+                       onSuccess:(OIMSuccessCallback)onSuccess
+                       onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+
+    Open_im_sdkMarkMessageAsReadByConID(callback, [self operationId], conversationID, msgIDList.mj_JSONString);
+}
+
 - (void)deleteMessage:(OIMMessageInfo *)message
             onSuccess:(nullable OIMSuccessCallback)onSuccess
             onFailure:(nullable OIMFailureCallback)onFailure {
@@ -256,6 +265,20 @@
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
     Open_im_sdkClearGroupHistoryMessage(callback, [self operationId], groupID);
+}
+
+- (void)deleteAllMsgFromLocalWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
+                                 onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkDeleteAllMsgFromLocal(callback, [self operationId]);
+}
+
+- (void)deleteAllMsgFromLocalAndSvrWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
+                                       onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkDeleteAllMsgFromLocalAndSvr(callback, [self operationId]);
 }
 
 - (void)insertSingleMessageToLocalStorage:(OIMMessageInfo *)message

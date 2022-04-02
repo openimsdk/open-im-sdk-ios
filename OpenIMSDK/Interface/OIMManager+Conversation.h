@@ -114,8 +114,6 @@ NS_ASSUME_NONNULL_BEGIN
                                status:(OIMReceiveMessageOpt)status
                             onSuccess:(nullable OIMSuccessCallback)onSuccess
                             onFailure:(nullable OIMFailureCallback)onFailure;
-
-
 @end
 
 NS_ASSUME_NONNULL_END

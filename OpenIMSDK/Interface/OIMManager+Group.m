@@ -190,4 +190,23 @@
     Open_im_sdkDismissGroup(callback, [self operationId], groupID);
 }
 
+- (void)changeGroupMemberMute:(NSString *)groupID
+                       userID:(NSString *)userID
+                 mutedSeconds:(NSInteger)mutedSeconds
+                    onSuccess:(OIMSuccessCallback)onSuccess
+                    onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkChangeGroupMemberMute(callback, [self operationId], groupID, userID, mutedSeconds);
+}
+
+- (void)changeGroupMute:(NSString *)groupID
+                 isMute:(BOOL)isMute
+              onSuccess:(nullable OIMSuccessCallback)onSuccess
+              onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkChangeGroupMute(callback, [self operationId], groupID, isMute);
+}
+
 @end

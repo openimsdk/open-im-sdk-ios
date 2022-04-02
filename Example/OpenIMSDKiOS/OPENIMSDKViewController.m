@@ -65,7 +65,9 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     self.funcs = @[
         @[@{OIM_LIST_CELL_TITLE: @"登陆", OIM_LIST_CELL_FUNC: @"login"},
           @{OIM_LIST_CELL_TITLE: @"登陆状态", OIM_LIST_CELL_FUNC: @"loginStatus"},
-          @{OIM_LIST_CELL_TITLE: @"登出", OIM_LIST_CELL_FUNC: @"logout"}],
+          @{OIM_LIST_CELL_TITLE: @"登出", OIM_LIST_CELL_FUNC: @"logout"},
+          @{OIM_LIST_CELL_TITLE: @"设置心跳", OIM_LIST_CELL_FUNC: @"setHeartbeatInterval"},
+        ],
         
         @[@{OIM_LIST_CELL_TITLE: @"登录用户信息", OIM_LIST_CELL_FUNC: @"getSelfInfo"},
           @{OIM_LIST_CELL_TITLE: @"修改登录用户信息", OIM_LIST_CELL_FUNC: @"setSelfInfo"},
@@ -101,7 +103,10 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"同意某人进群", OIM_LIST_CELL_FUNC: @"acceptGroupApplication"},
           @{OIM_LIST_CELL_TITLE: @"拒绝某人进群", OIM_LIST_CELL_FUNC: @"refuseGroupApplication"},
           @{OIM_LIST_CELL_TITLE: @"清空群聊天记录", OIM_LIST_CELL_FUNC: @"clearGroupHistoryMessage"},
-          @{OIM_LIST_CELL_TITLE: @"解散群", OIM_LIST_CELL_FUNC: @"clearGroupHistoryMessage"},],
+          @{OIM_LIST_CELL_TITLE: @"解散群", OIM_LIST_CELL_FUNC: @"clearGroupHistoryMessage"},
+          @{OIM_LIST_CELL_TITLE: @"更改群成员禁言状态", OIM_LIST_CELL_FUNC: @"changeGroupMemberMute"},
+          @{OIM_LIST_CELL_TITLE: @"更改群禁言状态", OIM_LIST_CELL_FUNC: @"ChangeGroupMute"},
+        ],
         
         @[@{OIM_LIST_CELL_TITLE: @"发送消息", OIM_LIST_CELL_FUNC: @"sendMessage"},
           @{OIM_LIST_CELL_TITLE: @"获取聊天历史", OIM_LIST_CELL_FUNC: @"getHistoryMessageList"},
@@ -109,7 +114,10 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"输入状态", OIM_LIST_CELL_FUNC: @"typingStatusUpdate"},
           @{OIM_LIST_CELL_TITLE: @"单聊已读", OIM_LIST_CELL_FUNC: @"markC2CMessageAsRead"},
           @{OIM_LIST_CELL_TITLE: @"清空历史消息", OIM_LIST_CELL_FUNC: @"clearC2CHistoryMessage"},
-          @{OIM_LIST_CELL_TITLE: @"本地插入消息", OIM_LIST_CELL_FUNC: @"insertSingleMessageToLocalStorage"}],
+          @{OIM_LIST_CELL_TITLE: @"本地插入消息", OIM_LIST_CELL_FUNC: @"insertSingleMessageToLocalStorage",},
+          @{OIM_LIST_CELL_TITLE: @"删除本地所有消息", OIM_LIST_CELL_FUNC: @"deleteAllMsgFromLocal",},
+          @{OIM_LIST_CELL_TITLE: @"删除本地和远端所有消息", OIM_LIST_CELL_FUNC: @"deleteAllMsgFromLocalAndSvr",}
+        ],
         
         @[@{OIM_LIST_CELL_TITLE: @"会话列表", OIM_LIST_CELL_FUNC: @"getAllConversationList"},
           @{OIM_LIST_CELL_TITLE: @"分页获取会话", OIM_LIST_CELL_FUNC: @"getConversationListSplit"},
@@ -384,6 +392,14 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
             callback(@(code), msg);
         }];
+    }];
+}
+
+- (void)setHeartbeatInterval {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        
+        [OIMManager.manager setHeartbeatInterval:30];
     }];
 }
 
@@ -834,6 +850,37 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     }];
 }
 
+- (void)changeGroupMemberMute {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager changeGroupMemberMute:GROUP_ID
+                                           userID:OTHER_USER_ID
+                                     mutedSeconds:1
+                                        onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)ChangeGroupMute {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager changeGroupMute:GROUP_ID
+                                     isMute:YES
+                                  onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Message
 
@@ -1012,6 +1059,42 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         
         [OIMManager.manager searchLocalMessages:t
                                       onSuccess:^(OIMSearchResultInfo * _Nullable result) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)deleteAllMsgFromLocal {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        OIMSearchParam *t = [OIMSearchParam new];
+        t.sourceID = OTHER_USER_ID;
+        t.sessionType = 1;
+        t.keywordList = @[@"x"];
+        
+        [OIMManager.manager deleteAllMsgFromLocalWithOnSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)deleteAllMsgFromLocalAndSvr {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        OIMSearchParam *t = [OIMSearchParam new];
+        t.sourceID = OTHER_USER_ID;
+        t.sessionType = 1;
+        t.keywordList = @[@"x"];
+        
+        [OIMManager.manager deleteAllMsgFromLocalAndSvrWithOnSuccess:^(NSString * _Nullable data) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
