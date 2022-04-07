@@ -130,4 +130,13 @@
     
     Open_im_sdkSetConversationRecvMessageOpt(callback, [self operationId], conversationIDs.mj_JSONString, status);
 }
+
+- (void)setOneConversationPrivateChat:(NSString *)conversationID
+                            isPrivate:(BOOL)isPrivate
+                            onSuccess:(OIMSuccessCallback)onSuccess
+                            onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSetOneConversationPrivateChat(callback, [self operationId], conversationID, isPrivate);
+}
 @end

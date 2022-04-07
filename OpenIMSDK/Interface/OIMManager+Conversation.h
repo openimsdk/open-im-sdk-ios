@@ -114,6 +114,15 @@ NS_ASSUME_NONNULL_BEGIN
                                status:(OIMReceiveMessageOpt)status
                             onSuccess:(nullable OIMSuccessCallback)onSuccess
                             onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 设置私聊, 可做“阅后即焚”功能
+ *
+ */
+- (void)setOneConversationPrivateChat:(NSString *)conversationID
+                            isPrivate:(BOOL)isPrivate
+                            onSuccess:(nullable OIMSuccessCallback)onSuccess
+                            onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END
