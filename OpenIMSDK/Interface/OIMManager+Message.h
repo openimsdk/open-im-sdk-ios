@@ -308,6 +308,15 @@ NS_ASSUME_NONNULL_BEGIN
                      onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
+ * 清空单聊的本地/远端历史记录
+ *
+ * @param userID   用户的ID
+ */
+- (void)clearC2CHistoryMessageFromLocalAndSvr:(NSString *)userID
+                                    onSuccess:(nullable OIMSuccessCallback)onSuccess
+                                    onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
  * 清空群聊的历史记录
  *
  * @param groupID   群ID
@@ -315,6 +324,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)clearGroupHistoryMessage:(NSString *)groupID
                        onSuccess:(nullable OIMSuccessCallback)onSuccess
                        onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 清空群聊的本地/远端历史记录
+ *
+ * @param groupID   群ID
+ */
+- (void)clearGroupHistoryMessageFromLocalAndSvr:(NSString *)groupID
+                                      onSuccess:(nullable OIMSuccessCallback)onSuccess
+                                      onFailure:(nullable OIMFailureCallback)onFailure;
+
 
 /*
  * 本地删除消息

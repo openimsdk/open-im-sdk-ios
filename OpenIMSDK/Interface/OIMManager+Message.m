@@ -104,7 +104,7 @@
 + (OIMMessageInfo *)createForwardMessage:(OIMMessageInfo *)message {
     NSString *json = Open_im_sdkCreateForwardMessage([OIMManager.manager operationId], message.mj_JSONString);
     
-    return [self convertToMessageInfo:json];
+    return [OIMMessageInfo mj_objectWithKeyValues:json];
 }
 
 + (OIMMessageInfo *)createLocationMessage:(NSString *)description
@@ -259,12 +259,28 @@
     Open_im_sdkClearC2CHistoryMessage(callback, [self operationId], userID);
 }
 
+- (void)clearC2CHistoryMessageFromLocalAndSvr:(NSString *)userID
+                                    onSuccess:(OIMSuccessCallback)onSuccess
+                                    onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkClearC2CHistoryMessageFromLocalAndSvr(callback, [self operationId], userID);
+}
+
 - (void)clearGroupHistoryMessage:(NSString *)groupID
                        onSuccess:(OIMSuccessCallback)onSuccess
                        onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
     Open_im_sdkClearGroupHistoryMessage(callback, [self operationId], groupID);
+}
+
+- (void)clearGroupHistoryMessageFromLocalAndSvr:(NSString *)groupID
+                                      onSuccess:(OIMSuccessCallback)onSuccess
+                                      onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkClearGroupHistoryMessageFromLocalAndSvr(callback, [self operationId], groupID);
 }
 
 - (void)deleteAllMsgFromLocalWithOnSuccess:(nullable OIMSuccessCallback)onSuccess

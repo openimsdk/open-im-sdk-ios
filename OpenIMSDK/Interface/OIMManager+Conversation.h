@@ -72,6 +72,13 @@ NS_ASSUME_NONNULL_BEGIN
                  onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
+ * 删除所有会话
+ *
+ */
+- (void)deleteAllConversationFromLocalWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
+                                          onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
  * 设置会话的草稿
  * @param conversationID    会话ID
  * @param draftText 草稿文本，如果为""则为删除草稿

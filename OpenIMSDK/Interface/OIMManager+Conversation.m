@@ -78,7 +78,14 @@
                  onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkDeleteConversationMsgFromLocalAndSvr(callback, [self operationId], conversationID);
+    Open_im_sdkDeleteConversationFromLocalAndSvr(callback, [self operationId], conversationID);
+}
+
+- (void)deleteAllConversationFromLocalWithOnSuccess:(OIMSuccessCallback)onSuccess
+                                          onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkDeleteAllConversationFromLocal(callback, [self operationId]);
 }
 
 - (void)setConversationDraft:(NSString *)conversationID
