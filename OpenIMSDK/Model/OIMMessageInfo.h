@@ -97,6 +97,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, strong) OIMAttachedInfoElem *attachedInfoElem;
 
+@property (nonatomic, assign) NSTimeInterval hasReadTime;
+
 @end
 
 

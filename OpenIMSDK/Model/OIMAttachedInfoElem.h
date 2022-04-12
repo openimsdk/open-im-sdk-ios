@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, strong) OIMGroupHasReadInfo *groupHasReadInfo;
 
+@property (nonatomic, assign) BOOL isPrivateChat;
+
+@property (nonatomic, assign) NSTimeInterval hasReadTime;
 @end
 
 NS_ASSUME_NONNULL_END

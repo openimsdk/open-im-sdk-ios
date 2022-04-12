@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger joinSource;
 @property (nonatomic, nullable, copy) NSString *operatorUserID;
 @property (nonatomic, nullable, copy) NSString *ex;
+@property (nonatomic, assign) NSTimeInterval muteEndTime;
 
 @end
 

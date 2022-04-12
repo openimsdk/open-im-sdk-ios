@@ -20,4 +20,12 @@
     return self;
 }
 
+- (NSTimeInterval)hasReadTime {
+    if (_hasReadTime == 0) {
+        _hasReadTime = _attachedInfoElem.hasReadTime;
+    }
+    
+    return _hasReadTime;
+}
+
 @end

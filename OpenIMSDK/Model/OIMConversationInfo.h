@@ -50,6 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) BOOL isPinned;
 
+@property (nonatomic, assign) BOOL isPrivateChat;
+
 @property (nonatomic, nullable, copy) NSString *attachedInfo;
 
 @property (nonatomic, nullable, strong) OIMMessageInfo *latestMsg;
