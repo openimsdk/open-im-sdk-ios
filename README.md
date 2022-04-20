@@ -24,6 +24,22 @@ it, simply add the following line to your Podfile:
 pod 'OpenIMSDK'
 ```
 
+## 已知的几个问题
+```ruby
+问题1: The 'Pods-xxx' target has transitive dependencies that include statically linked binaries: (xxx/Pods/OpenIMSDKCore/Framework/OpenIMCore.xcframework)
+
+处理Podfile内容:
+  a. 删除
+      use_frameworks!
+  b. 增加 
+      pre_install do |installer|
+        Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+      end
+```
+
+```ruby
+问题2: SDK 不支持amrv7架构，注意Xcode的设置。
+```
 ## License
 
 OpenIMSDK is available under the MIT license. See the LICENSE file for more info.
