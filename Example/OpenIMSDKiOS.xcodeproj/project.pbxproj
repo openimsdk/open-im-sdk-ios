@@ -25,10 +25,10 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
+		62800C76AD94EBFFCFB0AB4D /* Pods_OpenIMSDKiOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B8F45C95B59558A4314653 /* Pods_OpenIMSDKiOS_Example.framework */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
-		94CA26AB5AFF9E41BEB22612 /* Pods_OpenIMSDKiOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE514ADDF9BBEB5BEB909A8B /* Pods_OpenIMSDKiOS_Tests.framework */; };
-		B6FC0F0ECCAF85DC8906C102 /* Pods_OpenIMSDKiOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F1A9931AFDF91761161E1D6 /* Pods_OpenIMSDKiOS_Example.framework */; };
+		D65231F9939DD688C709B8BE /* Pods_OpenIMSDKiOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB4A30FC3E55737EB0FBA0B /* Pods_OpenIMSDKiOS_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,13 +42,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07B8F45C95B59558A4314653 /* Pods_OpenIMSDKiOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenIMSDKiOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		17918D0527BC8F380040C924 /* OPENIMSDKTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPENIMSDKTableViewCell.h; sourceTree = "<group>"; };
 		17918D0627BC8F380040C924 /* OPENIMSDKTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPENIMSDKTableViewCell.m; sourceTree = "<group>"; };
 		17CADD2527C7227F0069C80E /* photo_test.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo_test.jpeg; sourceTree = "<group>"; };
 		17CADD2627C7227F0069C80E /* voice_test.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = voice_test.m4a; sourceTree = "<group>"; };
 		17CADD2927C738630069C80E /* video_test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video_test.mp4; sourceTree = "<group>"; };
 		17CADD2B27C7781C0069C80E /* file_test.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = file_test.zip; sourceTree = "<group>"; };
-		2F1A9931AFDF91761161E1D6 /* Pods_OpenIMSDKiOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenIMSDKiOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EF995546887F96AC6C32E5F /* Pods-OpenIMSDKiOS_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenIMSDKiOS_Example.debug.xcconfig"; path = "Target Support Files/Pods-OpenIMSDKiOS_Example/Pods-OpenIMSDKiOS_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* OpenIMSDKiOS_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenIMSDKiOS_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -74,7 +74,7 @@
 		B6AC3F85F72574407C2BA6CB /* Pods-OpenIMSDKiOS_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenIMSDKiOS_Example.release.xcconfig"; path = "Target Support Files/Pods-OpenIMSDKiOS_Example/Pods-OpenIMSDKiOS_Example.release.xcconfig"; sourceTree = "<group>"; };
 		BEFA913FDF1A7FB751CB50D8 /* Pods-OpenIMSDKiOS_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenIMSDKiOS_Tests.release.xcconfig"; path = "Target Support Files/Pods-OpenIMSDKiOS_Tests/Pods-OpenIMSDKiOS_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		C927ACC53F8B5F1B7B2BC3F7 /* Pods-OpenIMSDKiOS_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenIMSDKiOS_Tests.debug.xcconfig"; path = "Target Support Files/Pods-OpenIMSDKiOS_Tests/Pods-OpenIMSDKiOS_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		DE514ADDF9BBEB5BEB909A8B /* Pods_OpenIMSDKiOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenIMSDKiOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEB4A30FC3E55737EB0FBA0B /* Pods_OpenIMSDKiOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenIMSDKiOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +85,7 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				B6FC0F0ECCAF85DC8906C102 /* Pods_OpenIMSDKiOS_Example.framework in Frameworks */,
+				62800C76AD94EBFFCFB0AB4D /* Pods_OpenIMSDKiOS_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,7 +96,7 @@
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				94CA26AB5AFF9E41BEB22612 /* Pods_OpenIMSDKiOS_Tests.framework in Frameworks */,
+				D65231F9939DD688C709B8BE /* Pods_OpenIMSDKiOS_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,8 +141,8 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				2F1A9931AFDF91761161E1D6 /* Pods_OpenIMSDKiOS_Example.framework */,
-				DE514ADDF9BBEB5BEB909A8B /* Pods_OpenIMSDKiOS_Tests.framework */,
+				07B8F45C95B59558A4314653 /* Pods_OpenIMSDKiOS_Example.framework */,
+				CEB4A30FC3E55737EB0FBA0B /* Pods_OpenIMSDKiOS_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -210,7 +210,7 @@
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
-				CC1C36DB4BD41A2F072FA617 /* [CP] Embed Pods Frameworks */,
+				1682226354A6398DFE3D216B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -306,6 +306,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1682226354A6398DFE3D216B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OpenIMSDKiOS_Example/Pods-OpenIMSDKiOS_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenIMSDK/OpenIMSDK.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenIMSDK.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OpenIMSDKiOS_Example/Pods-OpenIMSDKiOS_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5DA17352055A256D11C230C9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -348,26 +368,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CC1C36DB4BD41A2F072FA617 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-OpenIMSDKiOS_Example/Pods-OpenIMSDKiOS_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
-				"${BUILT_PRODUCTS_DIR}/OpenIMSDK/OpenIMSDK.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenIMSDK.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OpenIMSDKiOS_Example/Pods-OpenIMSDKiOS_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

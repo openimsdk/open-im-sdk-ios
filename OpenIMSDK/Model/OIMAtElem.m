@@ -7,6 +7,11 @@
 
 #import "OIMAtElem.h"
 
+
+@implementation OIMAtInfo
+
+@end
+
 @implementation OIMAtElem
 
 @end

@@ -28,9 +28,15 @@
 }
 
 + (OIMMessageInfo *)createTextAtMessage:(NSString *)text
-                              atUidList:(NSArray<NSString *> *)atUidList {
-    NSString *json = Open_im_sdkCreateTextAtMessage([OIMManager.manager operationId], text, atUidList.mj_JSONString);
+                              atUidList:(NSArray<NSString *> *)atUidList
+                            atUsersInfo:(NSArray<OIMAtInfo *> *)atUsersInfo
+                                message:(OIMMessageInfo *)message {
     
+    NSArray *atUsers = [OIMAtInfo mj_keyValuesArrayWithObjectArray:atUsersInfo];
+    NSString *atUsersJson = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:atUsers options:0 error:nil] encoding:NSUTF8StringEncoding];
+    
+    NSString *json = Open_im_sdkCreateTextAtMessage([OIMManager.manager operationId], text, atUidList.mj_JSONString, atUsersJson, message ? message.mj_JSONString : @"");
+
     return [self convertToMessageInfo:json];
 }
 

@@ -23,6 +23,8 @@
 @class Open_im_sdk_callbackOnFriendshipListener;
 @protocol Open_im_sdk_callbackOnGroupListener;
 @class Open_im_sdk_callbackOnGroupListener;
+@protocol Open_im_sdk_callbackOnOrganizationListener;
+@class Open_im_sdk_callbackOnOrganizationListener;
 @protocol Open_im_sdk_callbackOnSignalingListener;
 @class Open_im_sdk_callbackOnSignalingListener;
 @protocol Open_im_sdk_callbackOnUserListener;
@@ -38,7 +40,7 @@
 @protocol Open_im_sdk_callbackOnAdvancedMsgListener <NSObject>
 - (void)onRecvC2CReadReceipt:(NSString* _Nullable)msgReceiptList;
 - (void)onRecvGroupReadReceipt:(NSString* _Nullable)groupMsgReceiptList;
-- (void)onRecvMessageRevoked:(NSString* _Nullable)msgId;
+- (void)onRecvMessageRevoked:(NSString* _Nullable)msgID;
 - (void)onRecvNewMessage:(NSString* _Nullable)message;
 @end
 
@@ -84,6 +86,10 @@
 - (void)onJoinedGroupDeleted:(NSString* _Nullable)groupInfo;
 @end
 
+@protocol Open_im_sdk_callbackOnOrganizationListener <NSObject>
+- (void)onOrganizationUpdated;
+@end
+
 @protocol Open_im_sdk_callbackOnSignalingListener <NSObject>
 - (void)onInvitationCancelled:(NSString* _Nullable)invitationCancelledCallback;
 - (void)onInvitationTimeout:(NSString* _Nullable)invitationTimeoutCallback;
@@ -116,6 +122,8 @@
 
 @class Open_im_sdk_callbackOnGroupListener;
 
+@class Open_im_sdk_callbackOnOrganizationListener;
+
 @class Open_im_sdk_callbackOnSignalingListener;
 
 @class Open_im_sdk_callbackOnUserListener;
@@ -138,7 +146,7 @@
 - (nonnull instancetype)initWithRef:(_Nonnull id)ref;
 - (void)onRecvC2CReadReceipt:(NSString* _Nullable)msgReceiptList;
 - (void)onRecvGroupReadReceipt:(NSString* _Nullable)groupMsgReceiptList;
-- (void)onRecvMessageRevoked:(NSString* _Nullable)msgId;
+- (void)onRecvMessageRevoked:(NSString* _Nullable)msgID;
 - (void)onRecvNewMessage:(NSString* _Nullable)message;
 @end
 
@@ -198,6 +206,14 @@
 - (void)onGroupMemberInfoChanged:(NSString* _Nullable)groupMemberInfo;
 - (void)onJoinedGroupAdded:(NSString* _Nullable)groupInfo;
 - (void)onJoinedGroupDeleted:(NSString* _Nullable)groupInfo;
+@end
+
+@interface Open_im_sdk_callbackOnOrganizationListener : NSObject <goSeqRefInterface, Open_im_sdk_callbackOnOrganizationListener> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (void)onOrganizationUpdated;
 @end
 
 @interface Open_im_sdk_callbackOnSignalingListener : NSObject <goSeqRefInterface, Open_im_sdk_callbackOnSignalingListener> {

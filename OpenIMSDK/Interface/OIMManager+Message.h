@@ -28,9 +28,13 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param text      内容
  * @param atUidList 用户id列表
+ * @param atUsersInfo 用户在群内的信息
+ * @param message 引用消息的时候使用
  */
 + (OIMMessageInfo *)createTextAtMessage:(NSString *)text
-                              atUidList:(NSArray <NSString *> *)atUidList;
+                              atUidList:(NSArray<NSString *> *)atUidList
+                            atUsersInfo:(NSArray<OIMAtInfo *> *)atUsersInfo
+                                message:(OIMMessageInfo * _Nullable)message;
 
 /*
  * 创建图片消息（
