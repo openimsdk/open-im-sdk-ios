@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, OIMMessageContentType) {
     OIMMessageContentTypeMemberInvited = 1509,                  /// 邀请群成员通知
     OIMMessageContentTypeMemberEnter = 1510,                    /// 群成员进群通知
     OIMMessageContentTypeDismissGroup = 1511,                   /// 解散群通知
-    OIMMessageContentTypeDismissGroup = 1701,                   /// 阅后即焚通知
+    OIMMessageContentTypeIsPrivateMessage = 1701,               /// 阅后即焚通知
 };
 
 /*
