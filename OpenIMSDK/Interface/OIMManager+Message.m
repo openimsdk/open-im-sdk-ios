@@ -40,6 +40,14 @@
     return [self convertToMessageInfo:json];
 }
 
++ (OIMMessageInfo *)createTextAtAllMessage:(NSString *)text
+                               displayText:(NSString *)displayText
+                                   message:(OIMMessageInfo * _Nullable)message {
+    NSString *json = Open_im_sdkCreateTextAtMessage([OIMManager.manager operationId], text, @[Open_im_sdkGetAtAllTag()].mj_JSONString, @[@{Open_im_sdkGetAtAllTag(): displayText ?: @"@全体成员"}].mj_JSONString, message ? message.mj_JSONString : @"");
+
+    return [self convertToMessageInfo:json];
+}
+
 + (OIMMessageInfo *)createImageMessage:(NSString *)imagePath {
     NSString *json = Open_im_sdkCreateImageMessage([OIMManager.manager operationId], imagePath);
     

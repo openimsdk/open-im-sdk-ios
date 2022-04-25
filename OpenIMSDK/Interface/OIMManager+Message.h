@@ -37,6 +37,17 @@ NS_ASSUME_NONNULL_BEGIN
                                 message:(OIMMessageInfo * _Nullable)message;
 
 /*
+ * 创建@全体成员文本消息
+ *
+ * @param text      内容
+ * @param displayText 展示的内容, 例如“@全体成员“
+ * @param message 引用消息的时候使用
+ */
++ (OIMMessageInfo *)createTextAtAllMessage:(NSString *)text
+                               displayText:(NSString * _Nullable)displayText
+                                   message:(OIMMessageInfo * _Nullable)message;
+
+/*
  * 创建图片消息（
  * initSDK时传入了数据缓存路径，如路径：A，这时需要你将图片复制到A路径下后，如 A/pic/a.png路径，imagePath的值：“/pic/.png”
  *
