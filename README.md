@@ -28,7 +28,7 @@ pod 'OpenIMSDK'
 ```ruby
 问题1: The 'Pods-xxx' target has transitive dependencies that include statically linked binaries: (xxx/Pods/OpenIMSDKCore/Framework/OpenIMCore.xcframework)
 
-处理Podfile内容:
+处理Podfile内容（a、b选择其一）:
   a. 删除
       use_frameworks!
   b. 增加 
