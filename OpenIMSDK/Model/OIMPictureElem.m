@@ -7,6 +7,10 @@
 
 #import "OIMPictureElem.h"
 
+@implementation OIMPictureInfo
+
+@end
+
 @implementation OIMPictureElem
 
 @end

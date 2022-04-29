@@ -6,6 +6,8 @@
 //
 
 #import "OIMSearchParam.h"
+#import <MJExtension/MJExtension.h>
+#import "OIMMessageInfo.h"
 
 @implementation OIMSearchParam
 
@@ -21,3 +23,15 @@
 }
 
 @end
+
+
+@implementation OIMSearchGroupParam
+
+
+@end
+
+@implementation OIMGetMessageOptions
+
+
+@end
+

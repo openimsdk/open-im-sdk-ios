@@ -7,6 +7,24 @@
 
 #import "OIMMessageInfo.h"
 
+@implementation OIMOfflinePushInfo
+
+- (instancetype)init {
+    self = [super init];
+    
+    if (self) {
+        self.title = @"";
+        self.desc = @"";
+        self.ex = @"";
+        self.iOSPushSound = @"";
+        self.iOSBadgeCount = YES;
+    }
+    
+    return self;
+}
+
+@end
+
 @implementation OIMMessageInfo
 
 - (instancetype)init {
@@ -29,3 +47,8 @@
 }
 
 @end
+
+@implementation OIMReceiptInfo
+
+@end
+

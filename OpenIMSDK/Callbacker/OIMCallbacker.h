@@ -17,7 +17,6 @@
 #import "OIMGroupMemberInfo.h"
 #import "OIMConversationInfo.h"
 #import "OIMMessageInfo.h"
-#import "OIMReceiptInfo.h"
 #import "OIMSearchParam.h"
 #import "OIMSearchResultInfo.h"
 #import "OIMSimpleResultInfo.h"

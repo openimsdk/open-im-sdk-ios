@@ -27,12 +27,12 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
  *  CONVERSASTION_ID 有会话以后生成
  *  注意：部分API只能设置other_user_id 或者 group_id 其中之一，例如发送消息
  */
-#define API_ADDRESS         @"http://121.37.25.71:10000"
-#define WS_ADDRESS          @"ws://121.37.25.71:17778"
+#define API_ADDRESS         @"http://121.37.25.71:10002"
+#define WS_ADDRESS          @"ws://121.37.25.71:10001"
 
-#define LOGIN_USER_ID       @"x2"
-#define LOGIN_USER_TOKEN    @"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVSUQiOiJ4MiIsIlBsYXRmb3JtIjoiSU9TIiwiZXhwIjoxNjQ2MTA0MDYyLCJuYmYiOjE2NDU0OTkyNjIsImlhdCI6MTY0NTQ5OTI2Mn0.XYGVdQPJTQ2U2fEQTpCYb5CWK4FcSknyJ-gcVgT0QwA"
-#define OTHER_USER_ID       @"x1"
+#define LOGIN_USER_ID       @""
+#define LOGIN_USER_TOKEN    @""
+#define OTHER_USER_ID       @""
 
 #define GROUP_ID            @""
 #define CONVERSASTION_ID    @""
@@ -106,10 +106,12 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"解散群", OIM_LIST_CELL_FUNC: @"clearGroupHistoryMessage"},
           @{OIM_LIST_CELL_TITLE: @"更改群成员禁言状态", OIM_LIST_CELL_FUNC: @"changeGroupMemberMute"},
           @{OIM_LIST_CELL_TITLE: @"更改群禁言状态", OIM_LIST_CELL_FUNC: @"changeGroupMute"},
+          @{OIM_LIST_CELL_TITLE: @"搜索群", OIM_LIST_CELL_FUNC: @"searchGroups"},
         ],
         
         @[@{OIM_LIST_CELL_TITLE: @"发送消息", OIM_LIST_CELL_FUNC: @"sendMessage"},
           @{OIM_LIST_CELL_TITLE: @"获取聊天历史", OIM_LIST_CELL_FUNC: @"getHistoryMessageList"},
+          @{OIM_LIST_CELL_TITLE: @"获取反向聊天历史", OIM_LIST_CELL_FUNC: @"getHistoryMessageListReverse"},
           @{OIM_LIST_CELL_TITLE: @"撤销消息", OIM_LIST_CELL_FUNC: @"revokeMessage"},
           @{OIM_LIST_CELL_TITLE: @"输入状态", OIM_LIST_CELL_FUNC: @"typingStatusUpdate"},
           @{OIM_LIST_CELL_TITLE: @"单聊已读", OIM_LIST_CELL_FUNC: @"markC2CMessageAsRead"},
@@ -894,6 +896,24 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     }];
 }
 
+- (void)searchGroups {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        OIMSearchGroupParam *param = [OIMSearchGroupParam new];
+        param.isSearchGroupName = YES;
+        param.keywordList = @[@"test"];
+        
+        [OIMManager.manager searchGroups:param
+                               onSuccess:^(NSArray<OIMGroupInfo *> * _Nullable groupsInfo) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Message
 
@@ -947,6 +967,25 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
                                            startClientMsgID:nil
                                                       count:20
                                                   onSuccess:^(NSArray<OIMMessageInfo *> * _Nullable messages) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getHistoryMessageListReverse {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        OIMGetMessageOptions *options = [OIMGetMessageOptions new];
+        options.userID = OTHER_USER_ID;
+        options.groupID = GROUP_ID;
+        options.conversationID = CONVERSASTION_ID;
+        
+        [OIMManager.manager getHistoryMessageListReverse:options
+                                               onSuccess:^(NSArray<OIMMessageInfo *> * _Nullable messages) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
@@ -1066,8 +1105,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
         OIMSearchParam *t = [OIMSearchParam new];
-        t.sourceID = OTHER_USER_ID;
-        t.sessionType = 1;
+        t.conversationID = CONVERSASTION_ID;
         t.keywordList = @[@"x"];
         
         [OIMManager.manager searchLocalMessages:t

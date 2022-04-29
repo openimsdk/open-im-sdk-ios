@@ -6,22 +6,18 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "OIMModelDefine.h"
+
+@class OIMMessageInfo;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMSearchParam : NSObject
 
 /*
- * 源ID,单聊为用户ID，群聊为群ID
+ * 会话ID，如果为空，则为全局搜素
  */
-@property (nonatomic, copy) NSString *sourceID;
-
-/*
- * 会话类型，单聊为1，群聊为2，如果为0，则代表搜索全部
- */
-@property (nonatomic, assign) OIMConversationType sessionType;
+@property (nonatomic, copy) NSString *conversationID;
 
 /*
  * 搜索关键词列表，目前仅支持一个关键词搜索
@@ -54,13 +50,41 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger searchTimePeriod;
 
 /*
- * 当前页数
+ * 当前页数，起始第一页为 1,conversationID为空时候，即全局搜素情況下，无效
  */
 @property (nonatomic, assign) NSInteger pageIndex;
 
 /*
- * 每页数量
+ * 每页数量，conversationID为空时候，即全局搜素情况下，无效
  */
+@property (nonatomic, assign) NSInteger count;
+
+@end
+
+
+
+// 查询聊天记录使用
+@interface OIMSearchGroupParam : NSObject
+
+// 搜索关键词，目前仅支持一个关键词搜索，不能为空
+@property (nonatomic, copy) NSArray *keywordList;
+
+// 是否以关键词搜索群ID(注：两个不可以同时为false)，默认false
+@property (nonatomic, assign) BOOL isSearchGroupID;
+
+// 是否以关键词搜索群名字，默认false
+@property (nonatomic, assign) BOOL isSearchGroupName;
+
+@end
+
+
+// 查询聊天记录使用
+@interface OIMGetMessageOptions : NSObject
+
+@property (nonatomic, copy, nullable) NSString *userID;
+@property (nonatomic, copy, nullable) NSString *groupID;
+@property (nonatomic, copy, nullable) NSString *conversationID; //会话ID，如果不为空则以会话ID获取，否则通过userID和groupID获取
+@property (nonatomic, copy, nullable) NSString *startClientMsgID; // 起始的消息clientMsgID
 @property (nonatomic, assign) NSInteger count;
 
 @end

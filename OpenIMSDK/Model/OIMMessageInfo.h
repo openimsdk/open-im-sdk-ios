@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OIMOfflinePushInfo.h"
 #import "OIMPictureElem.h"
 #import "OIMSoundElem.h"
 #import "OIMVideoElem.h"
@@ -23,6 +22,17 @@
 
 
 NS_ASSUME_NONNULL_BEGIN
+
+@interface OIMOfflinePushInfo : NSObject
+
+@property (nonatomic, nullable, copy) NSString *title;
+@property (nonatomic, nullable, copy) NSString *desc;
+@property (nonatomic, nullable, copy) NSString *iOSPushSound;
+@property (nonatomic, assign) BOOL iOSBadgeCount;
+@property (nonatomic, nullable, copy) NSString *operatorUserID;
+@property (nonatomic, nullable, copy) NSString *ex;
+
+@end
 
 /// 消息模型
 ///
@@ -98,6 +108,36 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, strong) OIMAttachedInfoElem *attachedInfoElem;
 
 @property (nonatomic, assign) NSTimeInterval hasReadTime;
+
+@end
+
+@interface OIMReceiptInfo : NSObject
+
+/*
+ * 用户id - 单聊有效
+ */
+@property (nonatomic, nullable, copy) NSString *userID;
+
+/*
+ * group id - 群聊有效
+ */
+@property (nonatomic, nullable, copy) NSString *groupID;
+
+/*
+ * 已读消息id
+ */
+@property (nonatomic, nullable, copy) NSArray<NSString *> *msgIDList;
+
+/*
+ * 阅读时间
+ */
+@property (nonatomic, assign) NSInteger readTime;
+
+@property (nonatomic, assign) OIMMessageLevel msgFrom;
+
+@property (nonatomic, assign) OIMMessageContentType contentType;
+
+@property (nonatomic, assign) OIMConversationType sessionType;
 
 @end
 
