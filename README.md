@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/cocoapods/l/OpenIMSDK.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDK)
 [![Platform](https://img.shields.io/cocoapods/p/OpenIMSDK.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDK)
 
-#### [中文文档](https://github.com/OpenIMSDK/OpenIM-Docs/blob/main/docs/client_doc/ios.md)
+#### [中文文档](https://doc.rentsoft.cn/#/integrate/ios/integrate_import_ios)
 
 ## Example
 
