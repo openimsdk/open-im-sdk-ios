@@ -202,7 +202,23 @@
                             @"groupID": groupID ?: @"",
                             @"startClientMsgID": startClientMsgID ?: @"",
                             @"count": @(count)};
+    
     Open_im_sdkGetHistoryMessageList(callback, [self operationId], param.mj_JSONString);
+}
+
+- (void)getHistoryMessageListReverse:(OIMGetMessageOptions *)options
+                           onSuccess:(nullable OIMMessagesInfoCallback)onSuccess
+                           onFailure:(nullable OIMFailureCallback)onFailure {
+    
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMMessageInfo mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    NSString *t = options.mj_JSONString;
+    
+    Open_im_sdkGetHistoryMessageListReverse(callback, [self operationId], options.mj_JSONString);
 }
 
 - (void)revokeMessage:(OIMMessageInfo *)message

@@ -194,6 +194,14 @@ NS_ASSUME_NONNULL_BEGIN
                  isMute:(BOOL)isMute
               onSuccess:(nullable OIMSuccessCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
+
+
+/*
+ *  搜索群，通过群名称或者群ID
+ */
+- (void)searchGroups:(OIMSearchGroupParam *)searchParam
+              onSuccess:(nullable OIMGroupsInfoCallback)onSuccess
+              onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

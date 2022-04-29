@@ -209,4 +209,17 @@
     Open_im_sdkChangeGroupMute(callback, [self operationId], groupID, isMute);
 }
 
+- (void)searchGroups:(OIMSearchGroupParam *)searchParam
+           onSuccess:(OIMGroupsInfoCallback)onSuccess
+           onFailure:(OIMFailureCallback)onFailure {
+    
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMGroupInfo mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkSearchGroups(callback, [self operationId], searchParam.mj_JSONString);
+}
+
 @end

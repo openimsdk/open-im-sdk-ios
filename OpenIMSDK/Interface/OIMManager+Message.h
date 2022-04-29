@@ -244,6 +244,14 @@ NS_ASSUME_NONNULL_BEGIN
                               onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
+ * 反序获取历史记录 - 拉取的聊天记录为发送时间大于startClientMsgID发送时间的升序列表
+ *
+ */
+- (void)getHistoryMessageListReverse:(OIMGetMessageOptions *)options
+                           onSuccess:(nullable OIMMessagesInfoCallback)onSuccess
+                           onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
  * 撤回一条消息
  *
  * @param message   为OIMMessageInfo

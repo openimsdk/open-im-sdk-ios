@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
                        onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
- * 删除一个会话
+ * 本地删除一个会话
  * @param conversationID    会话ID
  */
 - (void)deleteConversationFromLocalStorage:(NSString *)conversationID
