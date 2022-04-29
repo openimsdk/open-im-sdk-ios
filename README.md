@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/cocoapods/l/OpenIMSDK.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDK)
 [![Platform](https://img.shields.io/cocoapods/p/OpenIMSDK.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDK)
 
-#### [中文文档](https://github.com/OpenIMSDK/OpenIM-Docs/blob/main/docs/client_doc/ios.md)
+#### [中文文档](https://doc.rentsoft.cn/#/integrate/ios/integrate_import_ios)
 
 ## Example
 
@@ -28,7 +28,7 @@ pod 'OpenIMSDK'
 ```ruby
 问题1: The 'Pods-xxx' target has transitive dependencies that include statically linked binaries: (xxx/Pods/OpenIMSDKCore/Framework/OpenIMCore.xcframework)
 
-处理Podfile内容:
+处理Podfile内容（a、b选择其一）:
   a. 删除
       use_frameworks!
   b. 增加 
