@@ -28,7 +28,7 @@ pod 'OpenIMSDK'
 ```ruby
 问题1: The 'Pods-xxx' target has transitive dependencies that include statically linked binaries: (xxx/Pods/OpenIMSDKCore/Framework/OpenIMCore.xcframework)
 
-处理Podfile内容（a、b选择其一）:
+处理Podfile内容（a、b选择其一， 升级2.0.7.4不需要处理）:
   a. 删除
       use_frameworks!
   b. 增加 
@@ -39,6 +39,10 @@ pod 'OpenIMSDK'
 
 ```ruby
 问题2: SDK 不支持amrv7架构，注意Xcode的设置。
+```
+
+```ruby
+问题3: 升级2.0.7.4后恢复问题1的原有内容。
 ```
 ## License
 
