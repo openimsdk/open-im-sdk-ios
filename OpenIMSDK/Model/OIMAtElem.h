@@ -52,6 +52,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isAtSelf;
 
 
+/*
+ * 是否@全体成员
+ */
+@property (nonatomic, assign) BOOL isAtAll;
 
 @end
 

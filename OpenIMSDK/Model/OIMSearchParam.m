@@ -27,11 +27,13 @@
 
 @implementation OIMSearchGroupParam
 
-
 @end
 
 @implementation OIMGetMessageOptions
 
+@end
+
+@implementation OIMSearchUserParam
 
 @end
 

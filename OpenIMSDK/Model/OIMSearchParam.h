@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-// 查询聊天记录使用
+// 查询群使用
 @interface OIMSearchGroupParam : NSObject
 
 // 搜索关键词，目前仅支持一个关键词搜索，不能为空
@@ -75,6 +75,22 @@ NS_ASSUME_NONNULL_BEGIN
 // 是否以关键词搜索群名字，默认false
 @property (nonatomic, assign) BOOL isSearchGroupName;
 
+@end
+
+// 查询好友使用
+@interface OIMSearchUserParam : NSObject
+
+// 搜索关键词，目前仅支持一个关键词搜索，不能为空
+@property (nonatomic, copy) NSArray *keywordList;
+
+// 是否以关键词搜索UserID
+@property (nonatomic, assign) BOOL isSearchUserID;
+
+// 是否以关键词搜索昵称，默认false
+@property (nonatomic, assign) BOOL isSearchNickname;
+
+// 是否以关键词搜索备注，默认false
+@property (nonatomic, assign) BOOL isSearchRemark;
 @end
 
 

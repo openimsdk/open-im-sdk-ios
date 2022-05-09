@@ -122,6 +122,12 @@ NS_ASSUME_NONNULL_BEGIN
            onSuccess:(nullable OIMSuccessCallback)onSuccess
            onFailure:(nullable OIMFailureCallback)onFailure;
 
+/*
+ *  搜索用户,可能是非好友
+ */
+- (void)searchUsers:(OIMSearchUserParam *)searchParam
+          onSuccess:(nullable OIMSearchUsersInfoCallback)onSuccess
+          onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END
