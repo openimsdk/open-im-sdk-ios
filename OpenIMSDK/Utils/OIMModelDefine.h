@@ -116,4 +116,9 @@ typedef NS_ENUM(NSInteger, OIMApplicationStatus) {
     OIMApplicationStatusAccept = 1,     /// 已同意
 };
 
+typedef NS_ENUM(NSInteger, OIMRelationship) {
+    OIMRelationshipBlack  = 0,
+    OIMRelationshipFriend = 1
+};
+
 #endif /* OIMModelDefine_h */

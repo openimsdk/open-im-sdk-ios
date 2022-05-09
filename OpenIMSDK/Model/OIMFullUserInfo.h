@@ -65,6 +65,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface OIMSearchUserInfo : OIMFriendInfo
+
+@property (nonatomic, assign) OIMRelationship relationship;
+
+@end
+
 /*
  整合了PublicUserInfo， FriendInfo和BlackInfo
  getuserinfo时，

@@ -85,7 +85,8 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"获取好友列表", OIM_LIST_CELL_FUNC: @"getFriendList"},
           @{OIM_LIST_CELL_TITLE: @"验证是否好友关系", OIM_LIST_CELL_FUNC: @"checkFriend"},
           @{OIM_LIST_CELL_TITLE: @"设置好友备注", OIM_LIST_CELL_FUNC: @"setFriendRemark"},
-          @{OIM_LIST_CELL_TITLE: @"删除好友", OIM_LIST_CELL_FUNC: @"deleteFriend"}],
+          @{OIM_LIST_CELL_TITLE: @"删除好友", OIM_LIST_CELL_FUNC: @"deleteFriend"},
+          @{OIM_LIST_CELL_TITLE: @"本地查询用户", OIM_LIST_CELL_FUNC: @"searchUsers"}],
         
         @[@{OIM_LIST_CELL_TITLE: @"创建群聊", OIM_LIST_CELL_FUNC: @"createGroup"},
           @{OIM_LIST_CELL_TITLE: @"加入群聊", OIM_LIST_CELL_FUNC: @"joinGroup"},
@@ -302,16 +303,13 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     
     NSLog(@"\n\n-----初始化------");
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *path = [paths.firstObject stringByAppendingString:@"/"];
-    
-    BOOL initSuccess = [OIMManager.manager initSDK:iOS
-                                           apiAdrr:API_ADDRESS
-                                            wsAddr:WS_ADDRESS
-                                           dataDir:path
-                                          logLevel:6
-                                     objectStorage:nil
-                                      onConnecting:^{
+    BOOL initSuccess = [OIMManager.manager initSDKWithApiAdrr:API_ADDRESS
+                                                       wsAddr:WS_ADDRESS
+                                                      dataDir:nil
+                                                     logLevel:6
+                                                objectStorage:nil
+                                                 onConnecting:^{
+        
         NSLog(@"\nconnecting");
     } onConnectFailure:^(NSInteger code, NSString * _Nullable msg) {
         NSLog(@"\n connect failure");
@@ -324,9 +322,6 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     }];
     
     NSLog(@"初始化成功与否：%d", initSuccess);
-    
-
-    
 }
 
 - (void)login {
@@ -593,6 +588,27 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         [OIMManager.manager deleteFriend:OTHER_USER_ID
                                   onSuccess:^(NSString * _Nullable data) {
             
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+
+- (void)searchUsers {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        OIMSearchUserParam *t = [OIMSearchUserParam new];
+        t.keywordList = @[@"x2"];
+        t.isSearchRemark = YES;
+        t.isSearchUserID = YES;
+        
+        [OIMManager.manager searchUsers:t
+                              onSuccess:^(NSArray<OIMSearchUserInfo *> * _Nullable usersInfo) {
+            
+        
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
             callback(@(code), msg);
@@ -940,6 +956,10 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
 //
 //        NSString *path4 = [[NSBundle mainBundle]pathForResource:@"file_test" ofType:@"zip"];
 //        self.testMessage = [OIMMessageInfo createFileMessageFromFullPath:path4 fileName:@"file_test"];
+//        OIMAtInfo *t = [OIMAtInfo new];
+//        t.atUserID = OTHER_USER_ID;
+//        t.groupNickname = @"x2";
+//        self.testMessage = [OIMMessageInfo createTextAtMessage:@"一条消息" atUidList:@[] atUsersInfo:@[t] message:nil];
         
         [OIMManager.manager sendMessage:self.testMessage
                                  recvID:OTHER_USER_ID

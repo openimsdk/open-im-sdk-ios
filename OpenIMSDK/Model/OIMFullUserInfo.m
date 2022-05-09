@@ -19,6 +19,10 @@
 
 @end
 
+@implementation OIMSearchUserInfo
+
+@end
+
 @implementation OIMFullUserInfo
 
 - (NSString *)userID {

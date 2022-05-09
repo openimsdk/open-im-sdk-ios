@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OpenIMSDK'
-  s.version          = '2.0.7.4'
+  s.version          = '2.0.8'
   s.summary          = 'Open-IM-SDK'
 
 # This description is used to generate tags and improve search results.
@@ -70,9 +70,9 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = {
       'ARCHS[sdk=iphonesimulator*]' => '$(ARCHS_STANDARD_64_BIT)', 'DEFINES_MODULE' => 'YES'
   }
-  
-  s.dependency 'OpenIMSDKCore', '2.0.7.1'
-  s.static_framework = true
 
+
+  s.static_framework = true
+  s.dependency 'OpenIMSDKCore', '2.0.8'
   s.dependency 'MJExtension'
 end
