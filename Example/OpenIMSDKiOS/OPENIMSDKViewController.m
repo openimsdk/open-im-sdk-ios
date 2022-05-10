@@ -965,13 +965,12 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
                                  recvID:OTHER_USER_ID
                                 groupID:GROUP_ID
                         offlinePushInfo:nil
-                              onSuccess:^(NSString * _Nullable data) {
-            // 这里特别注意下，返回的这个message 需要替换创建的消息体。
-            OIMMessageInfo *newMsg = [OIMMessageInfo mj_objectWithKeyValues:data];
-            self.testMessage = newMsg;
+                              onSuccess:^(OIMMessageInfo * _Nullable message) {
+            // 这里特别注意下，返回的这个message 需要替换数据源。
+            self.testMessage = message;
             callback(nil, nil);
         } onProgress:^(NSInteger number) {
-            NSLog(@"progress:%d", number);
+            NSLog(@"progress:%zd", number);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
             callback(@(code), msg);
         }];

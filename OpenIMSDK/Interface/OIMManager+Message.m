@@ -165,10 +165,14 @@
              recvID:(NSString *)recvID
             groupID:(NSString *)groupID
     offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
-          onSuccess:(OIMSuccessCallback)onSuccess
+          onSuccess:(OIMMessageInfoCallback)onSuccess
          onProgress:(OIMNumberCallback)onProgress
           onFailure:(OIMFailureCallback)onFailure {
-    SendMessageCallbackProxy *callback = [[SendMessageCallbackProxy alloc]initWithOnSuccess:onSuccess onProgress:onProgress onFailure:onFailure];
+    SendMessageCallbackProxy *callback = [[SendMessageCallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMMessageInfo mj_objectWithKeyValues:data]);
+        }
+    } onProgress:onProgress onFailure:onFailure];
     
     Open_im_sdkSendMessage(callback, [self operationId], message.mj_JSONString, recvID ?: @"", groupID ?: @"", offlinePushInfo ? offlinePushInfo.mj_JSONString : @"{}");
 }
@@ -177,10 +181,14 @@
                    recvID:(NSString *)recvID
                   groupID:(NSString *)groupID
           offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
-                onSuccess:(OIMSuccessCallback)onSuccess
+                onSuccess:(OIMMessageInfoCallback)onSuccess
                onProgress:(OIMNumberCallback)onProgress
                 onFailure:(OIMFailureCallback)onFailure {
-    SendMessageCallbackProxy *callback = [[SendMessageCallbackProxy alloc]initWithOnSuccess:onSuccess onProgress:onProgress onFailure:onFailure];
+    SendMessageCallbackProxy *callback = [[SendMessageCallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMMessageInfo mj_objectWithKeyValues:data]);
+        }
+    } onProgress:onProgress onFailure:onFailure];
     
     Open_im_sdkSendMessageNotOss(callback, [self operationId], message.mj_JSONString, recvID, groupID, offlinePushInfo.mj_JSONString);
 }
@@ -215,8 +223,6 @@
             onSuccess([OIMMessageInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
-    
-    NSString *t = options.mj_JSONString;
     
     Open_im_sdkGetHistoryMessageListReverse(callback, [self operationId], options.mj_JSONString);
 }

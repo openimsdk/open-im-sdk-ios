@@ -208,7 +208,7 @@ NS_ASSUME_NONNULL_BEGIN
              recvID:(NSString * _Nullable)recvID
             groupID:(NSString * _Nullable)groupID
     offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
-          onSuccess:(nullable OIMSuccessCallback)onSuccess
+          onSuccess:(nullable OIMMessageInfoCallback)onSuccess
          onProgress:(nullable OIMNumberCallback)onProgress
           onFailure:(nullable OIMFailureCallback)onFailure;
 
@@ -224,7 +224,7 @@ NS_ASSUME_NONNULL_BEGIN
                    recvID:(NSString * _Nullable)recvID
                   groupID:(NSString * _Nullable)groupID
           offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
-                onSuccess:(nullable OIMSuccessCallback)onSuccess
+                onSuccess:(nullable OIMMessageInfoCallback)onSuccess
                onProgress:(nullable OIMNumberCallback)onProgress
                 onFailure:(nullable OIMFailureCallback)onFailure;
 
