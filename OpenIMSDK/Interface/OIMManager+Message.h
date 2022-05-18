@@ -405,6 +405,22 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)searchLocalMessages:(OIMSearchParam *)param
                   onSuccess:(nullable OIMMessageSearchCallback)onSuccess
                   onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 独立上传图片到初始化sdk的objectStorage（发送图片消息不使用此函数，其在sdk内部自动上传）
+ *
+ */
+- (void)uploadImageWithFullPath:(NSString *)path
+                     onProgress:(nullable OIMNumberCallback)onProgress
+                      onSuccess:(nullable OIMSuccessCallback)onSuccess
+                      onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)uploadImageWithFullPath:(NSString *)path
+                          token:(NSString *)token
+                  objectStorage:(NSString *)objectStorage
+                     onProgress:(OIMNumberCallback)onProgress
+                      onSuccess:(OIMSuccessCallback)onSuccess
+                      onFailure:(OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

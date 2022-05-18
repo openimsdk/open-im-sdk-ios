@@ -61,7 +61,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.titles = @[@"登陆", @"用户信息", @"好友", @"群", @"消息", @"会话"];
+    self.titles = @[@"登陆", @"用户信息", @"好友", @"群", @"消息", @"会话", @"组织架构"];
     self.funcs = @[
         @[@{OIM_LIST_CELL_TITLE: @"登陆", OIM_LIST_CELL_FUNC: @"login"},
           @{OIM_LIST_CELL_TITLE: @"登陆状态", OIM_LIST_CELL_FUNC: @"loginStatus"},
@@ -121,7 +121,8 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"清空群聊本地/远端消息", OIM_LIST_CELL_FUNC: @"clearGroupHistoryMessageFromLocalAndSvr"},
           @{OIM_LIST_CELL_TITLE: @"本地插入消息", OIM_LIST_CELL_FUNC: @"insertSingleMessageToLocalStorage",},
           @{OIM_LIST_CELL_TITLE: @"删除本地所有消息", OIM_LIST_CELL_FUNC: @"deleteAllMsgFromLocal",},
-          @{OIM_LIST_CELL_TITLE: @"删除本地和远端所有消息", OIM_LIST_CELL_FUNC: @"deleteAllMsgFromLocalAndSvr",}
+          @{OIM_LIST_CELL_TITLE: @"删除本地和远端所有消息", OIM_LIST_CELL_FUNC: @"deleteAllMsgFromLocalAndSvr",},
+          @{OIM_LIST_CELL_TITLE: @"独立上传图片", OIM_LIST_CELL_FUNC: @"uploadImage",}
         ],
         
         @[@{OIM_LIST_CELL_TITLE: @"会话列表", OIM_LIST_CELL_FUNC: @"getAllConversationList"},
@@ -138,6 +139,11 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"本地插入群消息", OIM_LIST_CELL_FUNC: @"insertGroupMessageToLocalStorage"},
           @{OIM_LIST_CELL_TITLE: @"查找本地消息", OIM_LIST_CELL_FUNC: @"searchLocalMessages"},
           @{OIM_LIST_CELL_TITLE: @"删除本地所有会话", OIM_LIST_CELL_FUNC: @"deleteAllConversationFromLocal"},],
+        
+        @[@{OIM_LIST_CELL_TITLE: @"获取子部门列表", OIM_LIST_CELL_FUNC: @"getSubDepartment"},
+          @{OIM_LIST_CELL_TITLE: @"获取部门成员信息", OIM_LIST_CELL_FUNC: @"getDepartmentMember"},
+          @{OIM_LIST_CELL_TITLE: @"获取用户在所有部门信息", OIM_LIST_CELL_FUNC: @"getUserInDepartment"},
+          @{OIM_LIST_CELL_TITLE: @"获取子部门信息和部门成员信息", OIM_LIST_CELL_FUNC: @"getDepartmentMemberAndSubDepartment"},],
     ];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hiddenErrorView)];
@@ -307,7 +313,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
                                                        wsAddr:WS_ADDRESS
                                                       dataDir:nil
                                                      logLevel:6
-                                                objectStorage:nil
+                                                objectStorage:@"minio"
                                                  onConnecting:^{
         
         NSLog(@"\nconnecting");
@@ -1191,6 +1197,22 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     }];
 }
 
+- (void)uploadImage {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        
+        [OIMManager.manager uploadImageWithFullPath:[[NSBundle mainBundle]pathForResource:@"photo_test.jpeg" ofType:nil]
+                                         onProgress:^(NSInteger number) {
+            NSLog(@"progress:%zd", number);
+        } onSuccess:^(NSString * _Nullable data) {
+            NSLog(@"upload success:%@", data);
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
 #pragma mark -
 #pragma mark - conversation
 
@@ -1358,6 +1380,77 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
         [OIMManager.manager deleteAllConversationFromLocalWithOnSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+#pragma mark -
+#pragma mark - Organization
+
+- (void)getSubDepartment {
+    
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getSubDepartment:@""
+                                      offset:0
+                                       count:100
+                                   onSuccess:^(NSArray<OIMDepartmentInfo *> * _Nullable departmentList) {
+    
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getDepartmentMember {
+    
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getDepartmentMember:@""
+                                         offset:0
+                                          count:100
+                                      onSuccess:^(NSArray<OIMDepartmentMemberInfo *> * _Nullable members) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getUserInDepartment {
+    
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getUserInDepartment:@""
+                                      onSuccess:^(NSArray<OIMUserInDepartmentInfo *> * _Nullable members) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getDepartmentMemberAndSubDepartment {
+    
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getDepartmentMemberAndSubDepartment:@""
+                                               departmentOffset:0
+                                                departmentCount:100
+                                                   memberOffset:0
+                                                    memberCount:100
+                                                      onSuccess:^(OIMDepartmentMemberAndSubInfo * _Nullable items) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {

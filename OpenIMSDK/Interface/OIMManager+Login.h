@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param uid   用户ID
  *              uid来自于自身业务服务器
  * @param token 用户token
- *              token需要业务服务器根据secret向OpenIM服务端交换获取。
+ *              token需要业务服务器向OpenIM服务端交换获取。
  */
 - (void)login:(NSString *)uid
         token:(NSString *)token

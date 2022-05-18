@@ -73,6 +73,6 @@ Pod::Spec.new do |s|
 
 
   s.static_framework = true
-  s.dependency 'OpenIMSDKCore', '2.0.8'
+  s.dependency 'OpenIMSDKCore', '2.0.9'
   s.dependency 'MJExtension'
 end

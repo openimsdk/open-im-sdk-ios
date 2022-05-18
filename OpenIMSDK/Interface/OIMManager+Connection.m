@@ -67,6 +67,8 @@ onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired {
     param[@"log_level"] = logLevel == 0 ? @6 : @(logLevel);
     param[@"object_storage"] = os.length == 0 ? @"cos" : os;
     
+    self.objectStorage = os.length == 0 ? @"cos" : os;
+    
     return Open_im_sdkInitSDK([self class].callbacker, [self operationId], param.mj_JSONString);
 }
 

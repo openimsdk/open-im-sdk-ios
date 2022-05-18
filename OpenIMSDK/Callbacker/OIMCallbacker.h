@@ -22,6 +22,7 @@
 #import "OIMSimpleResultInfo.h"
 #import "OIMSimpleRequstInfo.h"
 #import "OIMSignalingInfo.h"
+#import "OIMDepartmentInfo.h"
 
 @import OpenIMCore;
 
@@ -61,8 +62,13 @@ typedef void (^OIMMessageSearchCallback)(OIMSearchResultInfo * _Nullable result)
 
 typedef void (^OIMReceiptCallback)(NSArray <OIMReceiptInfo *> * _Nullable msgReceiptList);
 
-typedef void (^OIMSignalingInvitationCallback)(OIMInvitationInfo * _Nullable result);
+typedef void (^OIMSignalingInvitationCallback)(OIMSignalingInfo * _Nullable result);
 typedef void (^OIMSignalingResultCallback)(OIMInvitationResultInfo * _Nullable result);
+
+typedef void (^OIMDepartmentInfoCallback)(NSArray <OIMDepartmentInfo *> * _Nullable departmentList);
+typedef void (^OIMDepartmentMembersInfoCallback)(NSArray <OIMDepartmentMemberInfo *> * _Nullable members);
+typedef void (^OIMUserInDepartmentInfoCallback)(NSArray <OIMUserInDepartmentInfo *> * _Nullable members);
+typedef void (^OIMDepartmentMemberAndSubInfoCallback)(OIMDepartmentMemberAndSubInfo * _Nullable items);
 /// IMSDK 主核心回调
 @protocol OIMSDKListener <NSObject>
 @optional
@@ -301,6 +307,16 @@ typedef void (^OIMSignalingResultCallback)(OIMInvitationResultInfo * _Nullable r
 - (void)onInviteeAcceptedByOtherDevice:(OIMSignalingInfo *)invitaion;
 @end
 
+/// 组织架构
+@protocol OIMOrganizationListener <NSObject>
+@optional
+
+/*
+ *  组织架构更新
+ */
+- (void)onOrganizationUpdated;
+@end
+
 @interface OIMCallbacker : NSObject
 <
 Open_im_sdk_callbackOnConnListener,
@@ -309,7 +325,8 @@ Open_im_sdk_callbackOnConversationListener,
 Open_im_sdk_callbackOnFriendshipListener,
 Open_im_sdk_callbackOnGroupListener,
 Open_im_sdk_callbackOnUserListener,
-Open_im_sdk_callbackOnSignalingListener
+Open_im_sdk_callbackOnSignalingListener,
+Open_im_sdk_callbackOnOrganizationListener
 >
 
 + (instancetype)callbacker;
@@ -433,6 +450,16 @@ Open_im_sdk_callbackOnSignalingListener
 - (void)addSignalingListener:(id<OIMSignalingListener>)listener NS_SWIFT_NAME(addSignalingListener(listener:));
 
 - (void)removeSignalingListener:(id<OIMSignalingListener>)listener NS_SWIFT_NAME(removeSignalingListener(listener:));
+
+
+/// 组织架构监听
+/// 在InitSDK成功后，Login之前设置
+@property (nonatomic, nullable, copy) OIMVoidCallback organizationUpdated;
+
+
+- (void)addOrganizationListener:(id<OIMOrganizationListener>)listener NS_SWIFT_NAME(addOrganizationListener(listener:));
+
+- (void)removeOrganizationListener:(id<OIMOrganizationListener>)listener NS_SWIFT_NAME(removeOrganizationListener(listener:));
 @end
 
 NS_ASSUME_NONNULL_END

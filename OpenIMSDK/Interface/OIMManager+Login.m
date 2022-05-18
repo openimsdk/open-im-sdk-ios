@@ -14,7 +14,14 @@
         token:(NSString *)token
     onSuccess:(OIMSuccessCallback)onSuccess
     onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+     
+        self.token = token;
+        
+        if (onSuccess) {
+            onSuccess(data);
+        }
+    } onFailure:onFailure];
     
     [[self class].callbacker setListener];
     

@@ -364,4 +364,25 @@
     
     Open_im_sdkSearchLocalMessages(callback, [self operationId], param.mj_JSONString);
 }
+
+- (void)uploadImageWithFullPath:(NSString *)path
+                     onProgress:(OIMNumberCallback)onProgress
+                      onSuccess:(OIMSuccessCallback)onSuccess
+                      onFailure:(OIMFailureCallback)onFailure {
+    
+    return [self uploadImageWithFullPath:path token:self.token objectStorage:self.objectStorage onProgress:onProgress onSuccess:onSuccess onFailure:onFailure];
+}
+
+- (void)uploadImageWithFullPath:(NSString *)path
+                          token:(NSString *)token
+                  objectStorage:(NSString *)objectStorage
+                     onProgress:(OIMNumberCallback)onProgress
+                      onSuccess:(OIMSuccessCallback)onSuccess
+                      onFailure:(OIMFailureCallback)onFailure {
+    
+    SendMessageCallbackProxy *callback = [[SendMessageCallbackProxy alloc]initWithOnSuccess:onSuccess onProgress:onProgress onFailure:onFailure];
+    
+    NSString *t =  Open_im_sdkUploadImage(callback, [self operationId], path, self.token, self.objectStorage);
+    NSLog(@"=====t:%@", t);
+}
 @end
