@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, OIMMessageStatus) {
     OIMMessageStatusSendSuccess,    /// 发送成功
     OIMMessageStatusSendFailure,    /// 发送失败
     OIMMessageStatusDeleted,        /// 已删除
-    OIMMessageStatusRevoke          /// 已撤回
+    OIMMessageStatusRevoke          /// 已撤回，客户端不用关心
 };
 
 /*

@@ -15,6 +15,7 @@
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMConversationListener> *conversationListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMAdvancedMsgListener> *advancedMsgListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMSignalingListener> *signalingListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMOrganizationListener> *organizationListeners;
 
 @end
 
@@ -31,6 +32,7 @@
     Open_im_sdkSetConversationListener(self);
     Open_im_sdkSetAdvancedMsgListener(self);
     Open_im_sdkSetSignalingListener(self);
+    Open_im_sdkSetOrganizationListener(self);
 }
 
 - (void)dispatchMainThread:(void (NS_NOESCAPE ^)(void))todo {
@@ -81,12 +83,20 @@
     return _advancedMsgListeners;
 }
 
-- (NSMutableArray<id<OIMSignalingListener>> *)signalingListeners {
+- (OIMGCDMulticastDelegate<OIMSignalingListener> *)signalingListeners {
     if (_signalingListeners == nil) {
         _signalingListeners = (OIMGCDMulticastDelegate <OIMSignalingListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
     
     return _signalingListeners;
+}
+
+- (OIMGCDMulticastDelegate<OIMOrganizationListener> *)organizationListeners {
+    if (_organizationListeners == nil) {
+        _organizationListeners = (OIMGCDMulticastDelegate <OIMOrganizationListener> *)[[OIMGCDMulticastDelegate alloc] init];
+    }
+    
+    return _organizationListeners;
 }
 
 #pragma mark -
@@ -639,6 +649,19 @@
         }
         
         [self.signalingListeners onReceiveNewInvitation:info];
+    }];
+}
+
+#pragma mark -
+#pragma mark - Organization
+
+- (void)onOrganizationUpdated {
+    [self dispatchMainThread:^{
+        if (self.organizationUpdated) {
+            self.organizationUpdated();
+        }
+        
+        [self.organizationListeners onOrganizationUpdated];
     }];
 }
 

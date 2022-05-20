@@ -208,7 +208,7 @@ NS_ASSUME_NONNULL_BEGIN
              recvID:(NSString * _Nullable)recvID
             groupID:(NSString * _Nullable)groupID
     offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
-          onSuccess:(nullable OIMSuccessCallback)onSuccess
+          onSuccess:(nullable OIMMessageInfoCallback)onSuccess
          onProgress:(nullable OIMNumberCallback)onProgress
           onFailure:(nullable OIMFailureCallback)onFailure;
 
@@ -224,7 +224,7 @@ NS_ASSUME_NONNULL_BEGIN
                    recvID:(NSString * _Nullable)recvID
                   groupID:(NSString * _Nullable)groupID
           offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
-                onSuccess:(nullable OIMSuccessCallback)onSuccess
+                onSuccess:(nullable OIMMessageInfoCallback)onSuccess
                onProgress:(nullable OIMNumberCallback)onProgress
                 onFailure:(nullable OIMFailureCallback)onFailure;
 
@@ -405,6 +405,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)searchLocalMessages:(OIMSearchParam *)param
                   onSuccess:(nullable OIMMessageSearchCallback)onSuccess
                   onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 独立上传文件到初始化sdk的objectStorage（发送多媒体消息不需调用此函数，其在sdk内部自动上传）
+ *
+ */
+- (void)uploadFileWithFullPath:(NSString *)path
+                    onProgress:(nullable OIMNumberCallback)onProgress
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure;
+
 @end
 
 NS_ASSUME_NONNULL_END
