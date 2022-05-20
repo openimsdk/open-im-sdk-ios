@@ -122,7 +122,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"本地插入消息", OIM_LIST_CELL_FUNC: @"insertSingleMessageToLocalStorage",},
           @{OIM_LIST_CELL_TITLE: @"删除本地所有消息", OIM_LIST_CELL_FUNC: @"deleteAllMsgFromLocal",},
           @{OIM_LIST_CELL_TITLE: @"删除本地和远端所有消息", OIM_LIST_CELL_FUNC: @"deleteAllMsgFromLocalAndSvr",},
-          @{OIM_LIST_CELL_TITLE: @"独立上传图片", OIM_LIST_CELL_FUNC: @"uploadImage",}
+          @{OIM_LIST_CELL_TITLE: @"上传多媒体文件", OIM_LIST_CELL_FUNC: @"uploadFile",}
         ],
         
         @[@{OIM_LIST_CELL_TITLE: @"会话列表", OIM_LIST_CELL_FUNC: @"getAllConversationList"},
@@ -1197,11 +1197,11 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     }];
 }
 
-- (void)uploadImage {
+- (void)uploadFile {
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
         
-        [OIMManager.manager uploadImageWithFullPath:[[NSBundle mainBundle]pathForResource:@"photo_test.jpeg" ofType:nil]
+        [OIMManager.manager uploadFileWithFullPath:[[NSBundle mainBundle]pathForResource:@"file_test.zip" ofType:nil]
                                          onProgress:^(NSInteger number) {
             NSLog(@"progress:%zd", number);
         } onSuccess:^(NSString * _Nullable data) {
