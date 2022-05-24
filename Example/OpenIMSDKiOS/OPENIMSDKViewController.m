@@ -107,7 +107,8 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"解散群", OIM_LIST_CELL_FUNC: @"clearGroupHistoryMessage"},
           @{OIM_LIST_CELL_TITLE: @"更改群成员禁言状态", OIM_LIST_CELL_FUNC: @"changeGroupMemberMute"},
           @{OIM_LIST_CELL_TITLE: @"更改群禁言状态", OIM_LIST_CELL_FUNC: @"changeGroupMute"},
-          @{OIM_LIST_CELL_TITLE: @"搜索群", OIM_LIST_CELL_FUNC: @"searchGroups"},
+          @{OIM_LIST_CELL_TITLE: @"搜索群", OIM_LIST_CELL_FUNC: @"searchGroups",},
+          @{OIM_LIST_CELL_TITLE: @"设置群昵称", OIM_LIST_CELL_FUNC: @"setGroupMemberNickname",}
         ],
         
         @[@{OIM_LIST_CELL_TITLE: @"发送消息", OIM_LIST_CELL_FUNC: @"sendMessage"},
@@ -929,6 +930,25 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         [OIMManager.manager searchGroups:param
                                onSuccess:^(NSArray<OIMGroupInfo *> * _Nullable groupsInfo) {
             
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)setGroupMemberNickname {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        OIMSearchGroupParam *param = [OIMSearchGroupParam new];
+        param.isSearchGroupName = YES;
+        param.keywordList = @[@"test"];
+        
+        [OIMManager.manager setGroupMemberNickname:GROUP_ID
+                                            userID:OTHER_USER_ID
+                                     groupNickname:@"群昵称"
+                                         onSuccess:^(NSString * _Nullable data) {
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
             callback(@(code), msg);

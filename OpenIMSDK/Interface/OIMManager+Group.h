@@ -200,8 +200,17 @@ NS_ASSUME_NONNULL_BEGIN
  *  搜索群，通过群名称或者群ID
  */
 - (void)searchGroups:(OIMSearchGroupParam *)searchParam
-              onSuccess:(nullable OIMGroupsInfoCallback)onSuccess
-              onFailure:(nullable OIMFailureCallback)onFailure;
+           onSuccess:(nullable OIMGroupsInfoCallback)onSuccess
+           onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ *  设置群成员昵称
+ */
+- (void)setGroupMemberNickname:(NSString *)groupID
+                        userID:(NSString *)userID
+                 groupNickname:(NSString * _Nullable)groupNickname
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END
