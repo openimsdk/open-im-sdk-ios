@@ -222,4 +222,14 @@
     Open_im_sdkSearchGroups(callback, [self operationId], searchParam.mj_JSONString);
 }
 
+- (void)setGroupMemberNickname:(NSString *)groupID
+                        userID:(NSString *)userID
+                 groupNickname:(NSString *)groupNickname
+                     onSuccess:(OIMSuccessCallback)onSuccess
+                     onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSetGroupMemberNickname(callback, [self operationId], groupID, userID, groupNickname ?: @"");
+}
+
 @end
