@@ -34,10 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 获取子部门信息和部门成员信息
 - (void)getDepartmentMemberAndSubDepartment:(NSString *)departmentID
-                           departmentOffset:(NSInteger)departmentOffset
-                            departmentCount:(NSInteger)departmentCount
-                               memberOffset:(NSInteger)memberOffset
-                                memberCount:(NSInteger)memberCount
                                   onSuccess:(nullable OIMDepartmentMemberAndSubInfoCallback)onSuccess
                                   onFailure:(nullable OIMFailureCallback)onFailure;
 
