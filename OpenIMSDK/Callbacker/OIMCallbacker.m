@@ -150,6 +150,14 @@
     [self.signalingListeners removeDelegate:listener];
 }
 
+- (void)addOrganizationListener:(id<OIMOrganizationListener>)listener NS_SWIFT_NAME(addOrganizationListener(listener:)) {
+    [self.organizationListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
+}
+
+- (void)removeOrganizationListener:(id<OIMOrganizationListener>)listener NS_SWIFT_NAME(removeOrganizationListener(listener:)) {
+    [self.organizationListeners removeDelegate:listener];
+}
+
 #pragma mark -
 #pragma mark - Connection
 
@@ -160,9 +168,7 @@
             self.connectFailure(errCode, errMsg);
         }
         
-        if ([self.sdkListeners respondsToSelector:@selector(onConnectFailed:err:)]) {
-            [self.sdkListeners onConnectFailed:errCode err:errMsg];
-        }
+        [self.sdkListeners onConnectFailed:errCode err:errMsg];
     }];
 }
 
@@ -171,9 +177,8 @@
         if (self.connectSuccess) {
             self.connectSuccess();
         }
-        if ([self.sdkListeners respondsToSelector:@selector(onConnectSuccess)]) {
-            [self.sdkListeners onConnectSuccess];
-        }
+        
+        [self.sdkListeners onConnectSuccess];
     }];
 }
 
@@ -182,9 +187,8 @@
         if (self.connecting) {
             self.connecting();
         }
-        if ([self.sdkListeners respondsToSelector:@selector(onConnecting)]) {
-            [self.sdkListeners onConnecting];
-        }
+
+        [self.sdkListeners onConnecting];
     }];
 }
 
@@ -193,9 +197,8 @@
         if (self.kickedOffline) {
             self.kickedOffline();
         }
-        if ([self.sdkListeners respondsToSelector:@selector(onKickedOffline)]) {
-            [self.sdkListeners onKickedOffline];
-        }
+        
+        [self.sdkListeners onKickedOffline];
     }];
 }
 
@@ -204,9 +207,8 @@
         if (self.userTokenExpired) {
             self.userTokenExpired();
         }
-        if ([self.sdkListeners respondsToSelector:@selector(onUserTokenExpired)]) {
-            [self.sdkListeners onUserTokenExpired];
-        }
+
+        [self.sdkListeners onUserTokenExpired];
     }];
 }
 
