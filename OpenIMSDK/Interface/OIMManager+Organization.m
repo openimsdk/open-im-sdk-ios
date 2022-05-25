@@ -56,10 +56,6 @@
 
 // 获取子部门信息和部门成员信息
 - (void)getDepartmentMemberAndSubDepartment:(NSString *)departmentID
-                           departmentOffset:(NSInteger)departmentOffset
-                            departmentCount:(NSInteger)departmentCount
-                               memberOffset:(NSInteger)memberOffset
-                                memberCount:(NSInteger)memberCount
                                   onSuccess:(nullable OIMDepartmentMemberAndSubInfoCallback)onSuccess
                                   onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
@@ -68,7 +64,7 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetDepartmentMemberAndSubDepartment(callback, [self operationId], departmentID, departmentOffset, departmentCount, memberOffset, memberCount);
+    Open_im_sdkGetDepartmentMemberAndSubDepartment(callback, [self operationId], departmentID);
 }
 
 @end

@@ -1466,10 +1466,6 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
         [OIMManager.manager getDepartmentMemberAndSubDepartment:@""
-                                               departmentOffset:0
-                                                departmentCount:100
-                                                   memberOffset:0
-                                                    memberCount:100
                                                       onSuccess:^(OIMDepartmentMemberAndSubInfo * _Nullable items) {
             
             callback(nil, nil);
