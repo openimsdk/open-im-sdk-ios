@@ -44,6 +44,11 @@ pod 'OpenIMSDK'
 ```ruby
 问题3: 升级2.0.7.4后恢复问题1的原有内容。
 ```
+
+```ruby
+问题4: 有开发者发现使用swift实现sdk的代理API未传递到业务层，需要使用@objc符号修饰。
+例如： @objc public func onFriendApplicationAdded:
+```
 ## License
 
 OpenIMSDK is available under the MIT license. See the LICENSE file for more info.
