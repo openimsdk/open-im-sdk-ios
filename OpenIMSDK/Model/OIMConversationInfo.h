@@ -37,10 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSInteger unreadCount;
 
-/*
- *  at信息持久展示，暂未使用
- */
-@property (nonatomic, assign) NSInteger groupAtType;
+@property (nonatomic, assign) OIMGroupAtType groupAtType;
 
 @property (nonatomic, assign) NSInteger latestMsgSendTime;
 

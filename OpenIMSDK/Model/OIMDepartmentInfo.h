@@ -56,8 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMDepartmentMemberAndSubInfo : NSObject
 
-@property (nonatomic, strong) NSArray<OIMDepartmentInfo*> *departmentList;
-@property (nonatomic, strong) NSArray<OIMDepartmentMemberInfo*> *departmentMemberList;
+@property (nonatomic, copy) NSArray<OIMDepartmentInfo*> *departmentList;
+@property (nonatomic, copy) NSArray<OIMDepartmentMemberInfo*> *departmentMemberList;
 
 @end
 

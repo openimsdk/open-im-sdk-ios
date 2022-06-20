@@ -108,7 +108,8 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"更改群成员禁言状态", OIM_LIST_CELL_FUNC: @"changeGroupMemberMute"},
           @{OIM_LIST_CELL_TITLE: @"更改群禁言状态", OIM_LIST_CELL_FUNC: @"changeGroupMute"},
           @{OIM_LIST_CELL_TITLE: @"搜索群", OIM_LIST_CELL_FUNC: @"searchGroups",},
-          @{OIM_LIST_CELL_TITLE: @"设置群昵称", OIM_LIST_CELL_FUNC: @"setGroupMemberNickname",}
+          @{OIM_LIST_CELL_TITLE: @"设置群昵称", OIM_LIST_CELL_FUNC: @"setGroupMemberNickname",},
+          @{OIM_LIST_CELL_TITLE: @"设置群成员级别", OIM_LIST_CELL_FUNC: @"setGroupMemberRoleLevel",}
         ],
         
         @[@{OIM_LIST_CELL_TITLE: @"发送消息", OIM_LIST_CELL_FUNC: @"sendMessage"},
@@ -123,7 +124,8 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"本地插入消息", OIM_LIST_CELL_FUNC: @"insertSingleMessageToLocalStorage",},
           @{OIM_LIST_CELL_TITLE: @"删除本地所有消息", OIM_LIST_CELL_FUNC: @"deleteAllMsgFromLocal",},
           @{OIM_LIST_CELL_TITLE: @"删除本地和远端所有消息", OIM_LIST_CELL_FUNC: @"deleteAllMsgFromLocalAndSvr",},
-          @{OIM_LIST_CELL_TITLE: @"上传多媒体文件", OIM_LIST_CELL_FUNC: @"uploadFile",}
+          @{OIM_LIST_CELL_TITLE: @"上传多媒体文件", OIM_LIST_CELL_FUNC: @"uploadFile",},
+          @{OIM_LIST_CELL_TITLE: @"设置全局消息接收情况", OIM_LIST_CELL_FUNC: @"setGlobalRecvMessageOpt",},
         ],
         
         @[@{OIM_LIST_CELL_TITLE: @"会话列表", OIM_LIST_CELL_FUNC: @"getAllConversationList"},
@@ -139,12 +141,16 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"设置免打扰", OIM_LIST_CELL_FUNC: @"setConversationRecvMessageOpt"},
           @{OIM_LIST_CELL_TITLE: @"本地插入群消息", OIM_LIST_CELL_FUNC: @"insertGroupMessageToLocalStorage"},
           @{OIM_LIST_CELL_TITLE: @"查找本地消息", OIM_LIST_CELL_FUNC: @"searchLocalMessages"},
-          @{OIM_LIST_CELL_TITLE: @"删除本地所有会话", OIM_LIST_CELL_FUNC: @"deleteAllConversationFromLocal"},],
+          @{OIM_LIST_CELL_TITLE: @"删除本地所有会话", OIM_LIST_CELL_FUNC: @"deleteAllConversationFromLocal"},
+          @{OIM_LIST_CELL_TITLE: @"重置会话at标准位", OIM_LIST_CELL_FUNC: @"resetConversationGroupAtType"},],
         
         @[@{OIM_LIST_CELL_TITLE: @"获取子部门列表", OIM_LIST_CELL_FUNC: @"getSubDepartment"},
+          @{OIM_LIST_CELL_TITLE: @"获取父部门列表", OIM_LIST_CELL_FUNC: @"getParentDepartment"},
           @{OIM_LIST_CELL_TITLE: @"获取部门成员信息", OIM_LIST_CELL_FUNC: @"getDepartmentMember"},
           @{OIM_LIST_CELL_TITLE: @"获取用户在所有部门信息", OIM_LIST_CELL_FUNC: @"getUserInDepartment"},
-          @{OIM_LIST_CELL_TITLE: @"获取子部门信息和部门成员信息", OIM_LIST_CELL_FUNC: @"getDepartmentMemberAndSubDepartment"},],
+          @{OIM_LIST_CELL_TITLE: @"获取子部门信息和部门成员信息", OIM_LIST_CELL_FUNC: @"getDepartmentMemberAndSubDepartment"},
+          @{OIM_LIST_CELL_TITLE: @"获取部门信息", OIM_LIST_CELL_FUNC: @"getDepartmentInfo"},
+          @{OIM_LIST_CELL_TITLE: @"搜索组织架构", OIM_LIST_CELL_FUNC: @"searchOrganization"},],
     ];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hiddenErrorView)];
@@ -956,6 +962,21 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     }];
 }
 
+- (void)setGroupMemberRoleLevel {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        
+        [OIMManager.manager setGroupMemberRoleLevel:GROUP_ID
+                                             userID:OTHER_USER_ID
+                                          roleLevel:OIMGroupMemberRoleAdmin
+                                          onSuccess:^(NSString * _Nullable data) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Message
 
@@ -1233,6 +1254,19 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     }];
 }
 
+- (void)setGlobalRecvMessageOpt {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        
+        [OIMManager.manager setGlobalRecvMessageOpt:OIMReceiveMessageOptNotReceive
+                                          onSuccess:^(NSString * _Nullable data) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
 #pragma mark -
 #pragma mark - conversation
 
@@ -1408,6 +1442,20 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     }];
 }
 
+- (void)resetConversationGroupAtType {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager resetConversationGroupAtType:CONVERSASTION_ID
+                                               onSuccess:^(NSString * _Nullable data) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Organization
 
@@ -1417,6 +1465,23 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
         [OIMManager.manager getSubDepartment:@""
+                                      offset:0
+                                       count:100
+                                   onSuccess:^(NSArray<OIMDepartmentInfo *> * _Nullable departmentList) {
+    
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getParentDepartment {
+    
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getParentDepartment:@""
                                       offset:0
                                        count:100
                                    onSuccess:^(NSArray<OIMDepartmentInfo *> * _Nullable departmentList) {
@@ -1468,6 +1533,39 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         [OIMManager.manager getDepartmentMemberAndSubDepartment:@""
                                                       onSuccess:^(OIMDepartmentMemberAndSubInfo * _Nullable items) {
             
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)getDepartmentInfo {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        [OIMManager.manager getDepartmentInfo:@""
+                                    onSuccess:^(NSArray<OIMDepartmentInfo *> * _Nullable departmentList) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)searchOrganization {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+       
+        OIMSearchOrganizationParam *param = [OIMSearchOrganizationParam new];
+        param.keyword = @"";
+        param.isSearchUserName = YES;
+        
+        [OIMManager.manager searchOrganization:param
+                                        offset:0
+                                         count:100
+                                     onSuccess:^(OIMDepartmentMemberAndSubInfo * _Nullable items) {
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
             callback(@(code), msg);

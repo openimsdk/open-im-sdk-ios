@@ -130,6 +130,14 @@ NS_ASSUME_NONNULL_BEGIN
                             isPrivate:(BOOL)isPrivate
                             onSuccess:(nullable OIMSuccessCallback)onSuccess
                             onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 重置at标准位
+ *
+ */
+- (void)resetConversationGroupAtType:(NSString *)conversationID
+                           onSuccess:(nullable OIMSuccessCallback)onSuccess
+                           onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

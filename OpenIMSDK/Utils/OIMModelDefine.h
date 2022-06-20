@@ -70,8 +70,10 @@ typedef NS_ENUM(NSInteger, OIMMessageStatus) {
  */
 typedef NS_ENUM(NSInteger, OIMConversationType) {
     OIMConversationTypeUndefine = 0,
-    OIMConversationTypeC2C,             /// 单聊
-    OIMConversationTypeGroup            /// 群聊
+    OIMConversationTypeC2C,                 /// 单聊
+    OIMConversationTypeGroup,               /// 群聊
+    OIMConversationTypeSuperGroup,          /// 超级大群
+    OIMConversationTypeNotification         /// 通知
 };
 
 /*
@@ -91,9 +93,7 @@ typedef NS_ENUM(NSInteger, OIMReceiveMessageOpt) {
     OIMReceiveMessageOptNotNotify = 2,  /// 在线正常接收消息，离线不会有推送通知
 };
 
-/*
- *  群成员级别
- */
+
 typedef NS_ENUM(NSInteger, OIMGroupMemberRole) {
     OIMGroupMemberRoleUndefine       = 0,    /// 未定义
     OIMGroupMemberRoleMember         = 1,    /// 群成员
@@ -119,6 +119,14 @@ typedef NS_ENUM(NSInteger, OIMApplicationStatus) {
 typedef NS_ENUM(NSInteger, OIMRelationship) {
     OIMRelationshipBlack  = 0,
     OIMRelationshipFriend = 1
+};
+
+typedef NS_ENUM(NSInteger, OIMGroupAtType) {
+    OIMGroupAtTypeAtNormal = 0,
+    OIMGroupAtTypeAtMe = 1,
+    OIMGroupAtTypeAtAll = 2,
+    OIMGroupAtTypeAtAllAtMe = 3,
+    OIMGroupAtTypeGroupNotification = 4
 };
 
 #endif /* OIMModelDefine_h */

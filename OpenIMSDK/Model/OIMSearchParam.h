@@ -105,4 +105,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+// 查询组织架构使用
+@interface OIMSearchOrganizationParam : NSObject
+
+// 搜索关键词，目前仅支持一个关键词搜索，不能为空
+@property (nonatomic, copy) NSString *keyword;
+
+// 是否以关键词搜索UserID
+@property (nonatomic, assign) BOOL isSearchUserID;
+
+// 是否以关键词搜索昵称，默认false
+@property (nonatomic, assign) BOOL isSearchUserName;
+
+// 是否以英文搜索备注，默认false
+@property (nonatomic, assign) BOOL isSearchEnglishName;
+
+// 是否以职位搜索备注，默认false
+@property (nonatomic, assign) BOOL isSearchPosition;
+
+// 是否以移动号码搜索备注，默认false
+@property (nonatomic, assign) BOOL isSearchMobile;
+
+// 是否以邮箱搜索备注，默认false
+@property (nonatomic, assign) BOOL isSearchEmail;
+
+// 是否以电话号码搜索备注，默认false
+@property (nonatomic, assign) BOOL isSearchTelephone;
+@end
+
 NS_ASSUME_NONNULL_END

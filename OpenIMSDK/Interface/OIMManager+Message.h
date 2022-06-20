@@ -415,6 +415,13 @@ NS_ASSUME_NONNULL_BEGIN
                      onSuccess:(nullable OIMSuccessCallback)onSuccess
                      onFailure:(nullable OIMFailureCallback)onFailure;
 
+/*
+ * 全局设置消息提示
+ *
+ */
+- (void)setGlobalRecvMessageOpt:(OIMReceiveMessageOpt)opt
+                      onSuccess:(nullable OIMSuccessCallback)onSuccess
+                      onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

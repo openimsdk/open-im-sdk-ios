@@ -25,6 +25,20 @@
     Open_im_sdkGetSubDepartment(callback, [self operationId], departmentID, offset, count);
 }
 
+- (void)getParentDepartment:(NSString *)departmentID
+                     offset:(NSInteger)offset
+                      count:(NSInteger)count
+                  onSuccess:(OIMDepartmentInfoCallback)onSuccess
+                  onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMDepartmentInfo mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetParentDepartmentList(callback, [self operationId], departmentID);
+}
+
 // 获取部门成员信息
 - (void)getDepartmentMember:(NSString *)departmentID
                      offset:(NSInteger)offset
@@ -67,4 +81,29 @@
     Open_im_sdkGetDepartmentMemberAndSubDepartment(callback, [self operationId], departmentID);
 }
 
+- (void)getDepartmentInfo:(NSString *)departmentID
+                onSuccess:(OIMDepartmentInfoCallback)onSuccess
+                onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess(@[[OIMDepartmentInfo mj_objectWithKeyValues:data]]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetDepartmentInfo(callback, [self operationId], departmentID);
+}
+
+- (void)searchOrganization:(OIMSearchOrganizationParam *)param
+                    offset:(NSInteger)offset
+                     count:(NSInteger)count
+                 onSuccess:(OIMDepartmentMemberAndSubInfoCallback)onSuccess
+                 onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMDepartmentMemberAndSubInfo mj_objectWithKeyValues:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkSearchOrganization(callback, [self operationId], param.mj_JSONString, offset, count);
+}
 @end

@@ -13,8 +13,9 @@
     self = [super init];
     
     if (self) {
-        _timeout = 1000;
+        _timeout = 30;
         _platformID = iOS;
+        _groupID = @"";
     }
     
     return self;

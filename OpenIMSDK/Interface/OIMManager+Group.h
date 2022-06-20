@@ -211,6 +211,15 @@ NS_ASSUME_NONNULL_BEGIN
                  groupNickname:(NSString * _Nullable)groupNickname
                      onSuccess:(nullable OIMSuccessCallback)onSuccess
                      onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ *  设置群成员级别
+ */
+- (void)setGroupMemberRoleLevel:(NSString *)groupID
+                         userID:(NSString *)userID
+                      roleLevel:(OIMGroupMemberRole)roleLevel
+                      onSuccess:(nullable OIMSuccessCallback)onSuccess
+                      onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END
