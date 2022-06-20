@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OIMMessageInfo.h"
 #import "OIMDefine.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -15,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  *  被邀请者UserID列表，如果是单聊只有一个元素
  */
-@property (nonatomic, copy) NSArray *inviteeUserIDList;
+@property (nonatomic, copy) NSArray <NSString *> *inviteeUserIDList;
 
 /*
  *  房间ID，必须唯一
@@ -49,6 +50,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  如果是单聊，为""
  */
 @property (nonatomic, copy) NSString *groupID;
+
+/*
+ *  发起时间
+ */
+@property (nonatomic, assign) NSTimeInterval initiateTime;
 
 
 - (BOOL)isVideo;
@@ -85,6 +91,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *opUserID;
 
 @property (nonatomic, strong) OIMInvitationInfo *invitation;
+
+@property (nonatomic, strong) OIMOfflinePushInfo *offlinePushInfo;
 
 @end
 

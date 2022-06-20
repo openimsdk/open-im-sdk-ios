@@ -375,4 +375,12 @@
     Open_im_sdkUploadFile(callback, [self operationId], path);
 }
 
+- (void)setGlobalRecvMessageOpt:(OIMReceiveMessageOpt)opt
+                      onSuccess:(OIMSuccessCallback)onSuccess
+                      onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+
+    Open_im_sdkSetGlobalRecvMessageOpt(callback, [self operationId], opt);
+}
+
 @end

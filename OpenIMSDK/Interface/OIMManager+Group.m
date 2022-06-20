@@ -232,4 +232,14 @@
     Open_im_sdkSetGroupMemberNickname(callback, [self operationId], groupID, userID, groupNickname ?: @"");
 }
 
+- (void)setGroupMemberRoleLevel:(NSString *)groupID
+                         userID:(NSString *)userID
+                      roleLevel:(OIMGroupMemberRole)roleLevel
+                      onSuccess:(OIMSuccessCallback)onSuccess
+                      onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSetGroupMemberRoleLevel(callback, [self operationId], groupID, userID, roleLevel);
+}
+
 @end

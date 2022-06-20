@@ -18,19 +18,17 @@ NS_ASSUME_NONNULL_BEGIN
  * 邀请个人加入：
     {
         "inviteeUserIDList": ["userID"],  //只有一个元素
-        "roomID": "roomID",
-        "timeout": 1000,
-        "mediaType": "video",
-        "sessionType": x,
+        "roomID": "", // 选填
+        "timeout": 30,// 默认30s
+        "mediaType": "video", / "audio"
     }
  * 邀请群里某些人加入音视频
     {
         "inviteeUserIDList": ["useID1", "userID2"],
         "groupID": "groupID",
-        "roomID": "roomID",
-        "timeout": 1000,
-        "mediaType": "video",
-        "sessionType": x
+        "roomID": "", // 选填
+        "timeout": 30,// 默认30s
+        "mediaType": "video", / "audio"
     }
  * @param offlinePushInfo 离线push消息
  */
@@ -39,10 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
               onSuccess:(nullable OIMSignalingResultCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
-
-- (void)signalingInviteInGroup:(OIMInvitationInfo *)invitation
-                     onSuccess:(nullable OIMSignalingResultCallback)onSuccess
-                     onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  *  同意某人音视频邀请

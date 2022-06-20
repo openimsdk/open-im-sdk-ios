@@ -654,6 +654,18 @@
     }];
 }
 
+- (void)onHangUp:(NSString *)hangUpCallback {
+    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:hangUpCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onHunguUp) {
+            self.onHunguUp(info);
+        }
+        
+        [self.signalingListeners onHunguUp:info];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Organization
 

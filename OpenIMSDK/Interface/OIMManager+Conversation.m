@@ -146,4 +146,12 @@
     
     Open_im_sdkSetOneConversationPrivateChat(callback, [self operationId], conversationID, isPrivate);
 }
+
+- (void)resetConversationGroupAtType:(NSString *)conversationID
+                           onSuccess:(OIMSuccessCallback)onSuccess
+                           onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkResetConversationGroupAtType(callback, [self operationId], conversationID);
+}
 @end

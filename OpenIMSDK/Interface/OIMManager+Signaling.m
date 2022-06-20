@@ -20,29 +20,27 @@
         }
     } onFailure:onFailure];
     
-    invitation.sessionType = OIMConversationTypeC2C;
+    invitation.sessionType = invitation.groupID.length == 0 ? OIMConversationTypeC2C : OIMConversationTypeGroup;
+    invitation.inviterUserID = invitation.inviterUserID ?: self.getLoginUid;
+    invitation.mediaType = invitation.mediaType.length == 0 ? @"video" : invitation.mediaType;
+    invitation.roomID = invitation.roomID.length == 0 ? [[NSUUID UUID]UUIDString].lowercaseString : invitation.roomID;
     
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    param[@"invitation"] = invitation.mj_JSONObject;
-    param[@"offlinePushInfo"] = offlinePushInfo.mj_JSONObject;
+    OIMSignalingInfo *info = [OIMSignalingInfo new];
+    info.invitation = invitation;
+    info.opUserID = [self getLoginUid];
     
-    Open_im_sdkSignalingInvite(callback, [self operationId], param.mj_JSONString);
-}
-
-- (void)signalingInviteInGroup:(OIMInvitationInfo *)invitation
-                     onSuccess:(nullable OIMSignalingResultCallback)onSuccess
-                     onFailure:(nullable OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            onSuccess([OIMInvitationResultInfo mj_objectWithKeyValues:data]);
+    if (invitation.groupID.length > 0) {
+        if (!offlinePushInfo) {
+            offlinePushInfo = [OIMOfflinePushInfo new];
         }
-    } onFailure:onFailure];
+        offlinePushInfo.title = @"有群邀请你加入音视频";
+    }
     
-    invitation.sessionType = OIMConversationTypeGroup;
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    param[@"invitation"] = invitation.mj_JSONObject;
+    info.offlinePushInfo = offlinePushInfo;
     
-    Open_im_sdkSignalingInvite(callback, [self operationId], param.mj_JSONString);
+    NSLog(@"====invite json:%@", info.mj_JSONString);
+    
+    Open_im_sdkSignalingInvite(callback, [self operationId], info.mj_JSONString);
 }
 
 - (void)signalingAccept:(OIMSignalingInfo *)invitation

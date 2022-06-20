@@ -274,37 +274,42 @@ typedef void (^OIMDepartmentMemberAndSubInfoCallback)(OIMDepartmentMemberAndSubI
 /*
  *  被邀请者收到：音视频通话邀请
  */
-- (void)onReceiveNewInvitation:(OIMSignalingInfo *)invitaion;
+- (void)onReceiveNewInvitation:(OIMSignalingInfo *)signalingInfo;
 
 /*
  *  邀请者收到：被邀请者同意音视频通话
  */
-- (void)onInviteeAccepted:(OIMSignalingInfo *)invitaion;
+- (void)onInviteeAccepted:(OIMSignalingInfo *)signalingInfo;
 
 /*
  *  邀请者收到：被邀请者拒绝音视频通话
  */
-- (void)onInviteeRejected:(OIMSignalingInfo *)invitaion;
+- (void)onInviteeRejected:(OIMSignalingInfo *)signalingInfo;
 
 /*
  *  被邀请者收到：邀请者取消音视频通话
  */
-- (void)onInvitationCancelled:(OIMSignalingInfo *)invitaion;
+- (void)onInvitationCancelled:(OIMSignalingInfo *)signalingInfo;
 
 /*
  *  邀请者收到：被邀请者超时未接通
  */
-- (void)onInvitationTimeout:(OIMSignalingInfo *)invitaion;
+- (void)onInvitationTimeout:(OIMSignalingInfo *)signalingInfo;
 
 /*
  *  被邀请者（其他端）收到：比如被邀请者在手机拒接，在pc上会收到此回调
  */
-- (void)onInviteeRejectedByOtherDevice:(OIMSignalingInfo *)invitaion;
+- (void)onInviteeRejectedByOtherDevice:(OIMSignalingInfo *)signalingInfo;
 
 /*
  *  被邀请者（其他端）收到：比如被邀请者在手机拒接，在pc上会收到此回调
  */
-- (void)onInviteeAcceptedByOtherDevice:(OIMSignalingInfo *)invitaion;
+- (void)onInviteeAcceptedByOtherDevice:(OIMSignalingInfo *)signalingInfo;
+
+/*
+ *  被挂断
+ */
+- (void)onHunguUp:(OIMSignalingInfo *)signalingInfo;
 @end
 
 /// 组织架构
@@ -446,6 +451,7 @@ Open_im_sdk_callbackOnOrganizationListener
 @property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInvitationTimeout;
 @property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInviteeRejectedByOtherDevice;
 @property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInviteeAcceptedByOtherDevice;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onHunguUp;
 
 - (void)addSignalingListener:(id<OIMSignalingListener>)listener NS_SWIFT_NAME(addSignalingListener(listener:));
 
