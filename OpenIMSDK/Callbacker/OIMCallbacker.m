@@ -16,6 +16,7 @@
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMAdvancedMsgListener> *advancedMsgListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMSignalingListener> *signalingListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMOrganizationListener> *organizationListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMWorkMomentsListener> *workMomentsListeners;
 
 @end
 
@@ -33,6 +34,7 @@
     Open_im_sdkSetAdvancedMsgListener(self);
     Open_im_sdkSetSignalingListener(self);
     Open_im_sdkSetOrganizationListener(self);
+    Open_im_sdkSetWorkMomentsListener(self);
 }
 
 - (void)dispatchMainThread:(void (NS_NOESCAPE ^)(void))todo {
@@ -99,6 +101,14 @@
     return _organizationListeners;
 }
 
+- (OIMGCDMulticastDelegate<OIMWorkMomentsListener> *)workMomentsListeners {
+    if (_workMomentsListeners == nil) {
+        _workMomentsListeners = (OIMGCDMulticastDelegate <OIMWorkMomentsListener> *)[[OIMGCDMulticastDelegate alloc] init];
+    }
+    
+    return _workMomentsListeners;
+}
+
 #pragma mark -
 #pragma mark - Add/Remove listener
 
@@ -150,12 +160,20 @@
     [self.signalingListeners removeDelegate:listener];
 }
 
-- (void)addOrganizationListener:(id<OIMOrganizationListener>)listener NS_SWIFT_NAME(addOrganizationListener(listener:)) {
+- (void)addOrganizationListener:(id<OIMOrganizationListener>)listener{
     [self.organizationListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
 }
 
-- (void)removeOrganizationListener:(id<OIMOrganizationListener>)listener NS_SWIFT_NAME(removeOrganizationListener(listener:)) {
+- (void)removeOrganizationListener:(id<OIMOrganizationListener>)listener {
     [self.organizationListeners removeDelegate:listener];
+}
+
+- (void)addWorkMomentsListener:(id<OIMWorkMomentsListener>)listener {
+    [self.workMomentsListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
+}
+
+- (void)removeWorkMomentsListener:(id<OIMWorkMomentsListener>)listener {
+    [self.workMomentsListeners removeDelegate:listener];
 }
 
 #pragma mark -
@@ -676,6 +694,19 @@
         }
         
         [self.organizationListeners onOrganizationUpdated];
+    }];
+}
+
+#pragma mark -
+#pragma mark - Organization
+
+- (void)onRecvNewNotification {
+    [self dispatchMainThread:^{
+        if (self.recvNewNotification) {
+            self.recvNewNotification();
+        }
+        
+        [self.workMomentsListeners onRecvNewNotification];
     }];
 }
 

@@ -129,4 +129,13 @@ typedef NS_ENUM(NSInteger, OIMGroupAtType) {
     OIMGroupAtTypeGroupNotification = 4
 };
 
+/*
+ *  进群验证设置选项
+ */
+typedef NS_ENUM(NSInteger,  OIMGroupVerificationType) {
+    OIMGroupVerificationTypeApplyNeedVerificationInviteDirectly = 0,    /// 申请需要同意 邀请直接进
+    OIMGroupVerificationTypeAllNeedVerification = 1,                    /// 所有人进群需要验证，除了群主管理员邀
+    OIMGroupVerificationTypeDirectly = 2,                               /// 直接进群
+};
+
 #endif /* OIMModelDefine_h */

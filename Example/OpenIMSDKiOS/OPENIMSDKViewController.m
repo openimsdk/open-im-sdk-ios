@@ -109,7 +109,9 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"更改群禁言状态", OIM_LIST_CELL_FUNC: @"changeGroupMute"},
           @{OIM_LIST_CELL_TITLE: @"搜索群", OIM_LIST_CELL_FUNC: @"searchGroups",},
           @{OIM_LIST_CELL_TITLE: @"设置群昵称", OIM_LIST_CELL_FUNC: @"setGroupMemberNickname",},
-          @{OIM_LIST_CELL_TITLE: @"设置群成员级别", OIM_LIST_CELL_FUNC: @"setGroupMemberRoleLevel",}
+          @{OIM_LIST_CELL_TITLE: @"设置群成员级别", OIM_LIST_CELL_FUNC: @"setGroupMemberRoleLevel",},
+          @{OIM_LIST_CELL_TITLE: @"根据加入时间分页获取组成员列表", OIM_LIST_CELL_FUNC: @"getGroupMemberListByJoinTimeFilter",},
+          @{OIM_LIST_CELL_TITLE: @"设置进群方式", OIM_LIST_CELL_FUNC: @"setGroupVerification",}
         ],
         
         @[@{OIM_LIST_CELL_TITLE: @"发送消息", OIM_LIST_CELL_FUNC: @"sendMessage"},
@@ -946,10 +948,6 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
 - (void)setGroupMemberNickname {
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
-       
-        OIMSearchGroupParam *param = [OIMSearchGroupParam new];
-        param.isSearchGroupName = YES;
-        param.keywordList = @[@"test"];
         
         [OIMManager.manager setGroupMemberNickname:GROUP_ID
                                             userID:OTHER_USER_ID
@@ -977,6 +975,39 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     }];
 }
 
+- (void)getGroupMemberListByJoinTimeFilter {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        
+        [OIMManager.manager getGroupMemberListByJoinTimeFilter:GROUP_ID
+                                                        offset:0
+                                                         count:100
+                                                 joinTimeBegin:[NSDate new].timeIntervalSince1970
+                                                   joinTimeEnd:[NSDate new].timeIntervalSince1970
+                                              filterUserIDList:@[]
+                                                     onSuccess:^(NSArray<OIMGroupMemberInfo *> * _Nullable groupMembersInfo) {
+            
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)setGroupVerification {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        
+        [OIMManager.manager setGroupVerification:GROUP_ID
+                                needVerification:OIMGroupVerificationTypeDirectly
+                                       onSuccess:^(NSString * _Nullable data) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Message
 
@@ -986,7 +1017,6 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
        
         self.testMessage = [OIMMessageInfo createTextMessage:[@"测试消息" stringByAppendingFormat:@"%d", arc4random() % 1000]];
         
-//        self.testMessage = [OIMMessageInfo createTextAtMessage:@"" atUidList:@[]];
 //        self.testMessage = [OIMMessageInfo createMergeMessage:@[] title:@"" summaryList:@[]];
 //        self.testMessage = [OIMMessageInfo createForwardMessage:self.testMessage];
 //        self.testMessage = [OIMMessageInfo createLocationMessage:@"" latitude:0 longitude:0];

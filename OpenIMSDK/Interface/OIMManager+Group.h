@@ -220,6 +220,33 @@ NS_ASSUME_NONNULL_BEGIN
                       roleLevel:(OIMGroupMemberRole)roleLevel
                       onSuccess:(nullable OIMSuccessCallback)onSuccess
                       onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 根据加入时间分页获取组成员列表
+ @param groupID 群ID
+ @param joinTimeBegin 加入开始时间
+ @param joinTimeEnd 加入结束时间
+ @param offset 开始下标
+ @param count 总数
+ */
+- (void)getGroupMemberListByJoinTimeFilter:(NSString *)groupID
+                                    offset:(NSInteger)offset
+                                     count:(NSInteger)count
+                             joinTimeBegin:(NSInteger)joinTimeBegin
+                               joinTimeEnd:(NSInteger)joinTimeEnd
+                          filterUserIDList:(NSArray <NSString *> *)filterUserIDList
+                                 onSuccess:(nullable OIMGroupMembersInfoCallback)onSuccess
+                                 onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 设置群成员权限
+ @param groupID 群ID
+ @param needVerification 进群设置
+ */
+- (void)setGroupVerification:(NSString *)groupID
+            needVerification:(OIMGroupVerificationType)needVerification
+                   onSuccess:(nullable OIMSuccessCallback)onSuccess
+                   onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

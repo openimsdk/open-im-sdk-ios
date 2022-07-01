@@ -10,6 +10,11 @@
 
 @implementation OIMDepartmentMemberInfo
 
++ (NSDictionary *)mj_objectClassInArray {
+    
+    return @{@"parentDepartmentList" : [OIMDepartmentInfo class]};
+};
+
 @end
 
 
@@ -30,7 +35,6 @@
     return @{@"departmentList" : [OIMDepartmentInfo class],
              @"departmentMemberList": [OIMDepartmentMemberInfo class]
     };
-
 }
 
 @end

@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSInteger hasReadCount;
 
+@property (nonatomic, assign) NSInteger groupMemberCount;
+
 @end
 
 @interface OIMAttachedInfoElem : NSObject

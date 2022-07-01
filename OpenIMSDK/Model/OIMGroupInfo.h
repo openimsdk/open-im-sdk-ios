@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) NSString *ownerUserID;
 @property (nonatomic, assign) NSInteger createTime;
 @property (nonatomic, assign) NSInteger memberCount;
-/// ok = 0 blocked = 1 Dismissed = 2 Muted  = 3
+/// 群状态：0正常，1被封，2解散，3禁言
 @property (nonatomic, assign) NSInteger status;
 @property (nonatomic, nullable, copy) NSString *creatorUserID;
 
