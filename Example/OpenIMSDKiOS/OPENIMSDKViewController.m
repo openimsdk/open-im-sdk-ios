@@ -1057,6 +1057,17 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
 - (void)getHistoryMessageList {
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        
+        [OIMManager.manager getHistoryMessageList:CONVERSASTION_ID
+                                           userId:OTHER_USER_ID
+                                          groupID:GROUP_ID
+                                 startClientMsgID:nil
+                                            count:20
+                                        onSuccess:^(NSArray<OIMMessageInfo *> * _Nullable messages) {
+            
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            
+        }];
        
         [OIMManager.manager getHistoryMessageListWithUserId:OTHER_USER_ID
                                                     groupID:nil
@@ -1069,6 +1080,8 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
             callback(@(code), msg);
         }];
     }];
+    
+    
 }
 
 - (void)getHistoryMessageListReverse {

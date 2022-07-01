@@ -245,7 +245,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 获取历史记录
  * conversationID、userID、groupID选择其一
- * @param conversationID   会话ID
+ * @param conversationID   会话ID, 大群必须使用
  * @param userID       拉取单个用户之间的聊天消息
  * @param groupID      拉取群的聊天消息
  * @param startClientMsgID      起始的消息clientMsgID，第一次拉取为""
