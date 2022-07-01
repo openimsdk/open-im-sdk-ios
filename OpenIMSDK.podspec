@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/OpenIMSDK/Open-IM-SDK-iOS'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'OpenIM' => 'https://github.com/OpenIMSDK/Open-IM-SDK-iOS' }
-  s.source           = { :git => 'https://github.com/OpenIMSDK/Open-IM-SDK-iOS', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/OpenIMSDK/Open-IM-SDK-iOS.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '11.0'    
   
