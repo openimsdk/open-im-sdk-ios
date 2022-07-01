@@ -95,4 +95,14 @@
     self.onInviteeAcceptedByOtherDevice = onInviteeAcceptedByOtherDevice;
 }
 
+- (void)setOrganizationListenerWithOrganizationUpdated:(OIMVoidCallback)onOrganizationUpdated {
+    
+    self.organizationUpdated = onOrganizationUpdated;
+}
+
+- (void)setWorkMomentsListenerWithOrganizationUpdated:(OIMVoidCallback)onRecvNewNotification {
+    
+    self.recvNewNotification = onRecvNewNotification;
+}
+
 @end

@@ -23,6 +23,7 @@
 #import "OIMSimpleRequstInfo.h"
 #import "OIMSignalingInfo.h"
 #import "OIMDepartmentInfo.h"
+#import "OIMMomentsInfo.h"
 
 @import OpenIMCore;
 
@@ -69,6 +70,9 @@ typedef void (^OIMDepartmentInfoCallback)(NSArray <OIMDepartmentInfo *> * _Nulla
 typedef void (^OIMDepartmentMembersInfoCallback)(NSArray <OIMDepartmentMemberInfo *> * _Nullable members);
 typedef void (^OIMUserInDepartmentInfoCallback)(NSArray <OIMUserInDepartmentInfo *> * _Nullable members);
 typedef void (^OIMDepartmentMemberAndSubInfoCallback)(OIMDepartmentMemberAndSubInfo * _Nullable items);
+
+typedef void (^OIMMomentsInfoCallback)(NSArray <OIMMomentsInfo *> * _Nullable items);
+
 /// IMSDK 主核心回调
 @protocol OIMSDKListener <NSObject>
 @optional
@@ -322,6 +326,16 @@ typedef void (^OIMDepartmentMemberAndSubInfoCallback)(OIMDepartmentMemberAndSubI
 - (void)onOrganizationUpdated;
 @end
 
+/// 工作圈
+@protocol OIMWorkMomentsListener <NSObject>
+@optional
+
+/*
+ *  工作圈收到新通知
+ */
+- (void)onRecvNewNotification;
+@end
+
 @interface OIMCallbacker : NSObject
 <
 Open_im_sdk_callbackOnConnListener,
@@ -331,7 +345,8 @@ Open_im_sdk_callbackOnFriendshipListener,
 Open_im_sdk_callbackOnGroupListener,
 Open_im_sdk_callbackOnUserListener,
 Open_im_sdk_callbackOnSignalingListener,
-Open_im_sdk_callbackOnOrganizationListener
+Open_im_sdk_callbackOnOrganizationListener,
+Open_im_sdk_callbackOnWorkMomentsListener
 >
 
 + (instancetype)callbacker;
@@ -466,6 +481,16 @@ Open_im_sdk_callbackOnOrganizationListener
 - (void)addOrganizationListener:(id<OIMOrganizationListener>)listener NS_SWIFT_NAME(addOrganizationListener(listener:));
 
 - (void)removeOrganizationListener:(id<OIMOrganizationListener>)listener NS_SWIFT_NAME(removeOrganizationListener(listener:));
+
+
+/// 工作圈监听
+/// 在InitSDK成功后，Login之前设置
+@property (nonatomic, nullable, copy) OIMVoidCallback recvNewNotification;
+
+
+- (void)addWorkMomentsListener:(id<OIMWorkMomentsListener>)listener NS_SWIFT_NAME(addWorkMomentsListener(listener:));
+
+- (void)removeWorkMomentsListener:(id<OIMWorkMomentsListener>)listener NS_SWIFT_NAME(removeWorkMomentsListener(listener:));
 @end
 
 NS_ASSUME_NONNULL_END

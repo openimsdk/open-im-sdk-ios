@@ -101,6 +101,17 @@ NS_ASSUME_NONNULL_BEGIN
                                    onInvitationTimeout:(OIMSignalingInvitationCallback)onInvitationTimeout
                         onInviteeRejectedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeRejectedByOtherDevice
                         onInviteeAcceptedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeAcceptedByOtherDevice;
+
+/*
+ * 设置组织架构监听
+ */
+- (void)setOrganizationListenerWithOrganizationUpdated:(OIMVoidCallback)onOrganizationUpdated;
+ 
+
+/*
+ * 设置工作圈监听
+ */
+- (void)setWorkMomentsListenerWithOrganizationUpdated:(OIMVoidCallback)onRecvNewNotification;
 @end
 
 NS_ASSUME_NONNULL_END

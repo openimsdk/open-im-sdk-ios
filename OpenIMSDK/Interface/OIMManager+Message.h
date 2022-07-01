@@ -242,6 +242,22 @@ NS_ASSUME_NONNULL_BEGIN
                                   count:(NSInteger)count
                               onSuccess:(nullable OIMMessagesInfoCallback)onSuccess
                               onFailure:(nullable OIMFailureCallback)onFailure;
+/*
+ * 获取历史记录
+ * conversationID、userID、groupID选择其一
+ * @param conversationID   会话ID, 大群必须使用
+ * @param userID       拉取单个用户之间的聊天消息
+ * @param groupID      拉取群的聊天消息
+ * @param startClientMsgID      起始的消息clientMsgID，第一次拉取为""
+ * @param count        拉取消息的数量
+ */
+- (void)getHistoryMessageList:(NSString * _Nullable)conversationID
+                       userId:(NSString * _Nullable)userID
+                      groupID:(NSString * _Nullable)groupID
+             startClientMsgID:(NSString * _Nullable)startClientMsgID
+                        count:(NSInteger)count
+                    onSuccess:(nullable OIMMessagesInfoCallback)onSuccess
+                    onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 反序获取历史记录 - 拉取的聊天记录为发送时间大于startClientMsgID发送时间的升序列表

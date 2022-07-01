@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* 初始化
  * @param platform 平台
- * @param apiAddr    SDK的api地。如http:xxx:10000
- * @param wsAddr     SDK的web socket地址。如： ws:xxx:17778
+ * @param apiAddr    SDK的api地。如http://xxx:10002
+ * @param wsAddr     SDK的web socket地址。如： ws://xxx:10001
  * @param dataDir    数据存储路径，默认documents下
  * @param logLevel   默认6
  * @param oss        默认cos, minio 填'minio‘

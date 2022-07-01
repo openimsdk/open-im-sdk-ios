@@ -200,6 +200,23 @@
                               onSuccess:(OIMMessagesInfoCallback)onSuccess
                               onFailure:(OIMFailureCallback)onFailure {
     
+    [self getHistoryMessageList:nil
+                         userId:userID
+                        groupID:groupID
+               startClientMsgID:startClientMsgID
+                          count:count
+                      onSuccess:onSuccess
+                      onFailure:onFailure];
+}
+
+- (void)getHistoryMessageList:(NSString * _Nullable)conversationID
+                       userId:(NSString * _Nullable)userID
+                      groupID:(NSString * _Nullable)groupID
+             startClientMsgID:(NSString * _Nullable)startClientMsgID
+                        count:(NSInteger)count
+                    onSuccess:(nullable OIMMessagesInfoCallback)onSuccess
+                    onFailure:(nullable OIMFailureCallback)onFailure {
+    
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
             onSuccess([OIMMessageInfo mj_objectArrayWithKeyValuesArray:data]);
@@ -208,6 +225,7 @@
     
     NSDictionary *param = @{@"userID": userID ?: @"",
                             @"groupID": groupID ?: @"",
+                            @"conversationID": conversationID ?: @"",
                             @"startClientMsgID": startClientMsgID ?: @"",
                             @"count": @(count)};
     

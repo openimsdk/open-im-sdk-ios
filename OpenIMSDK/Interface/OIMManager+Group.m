@@ -242,4 +242,30 @@
     Open_im_sdkSetGroupMemberRoleLevel(callback, [self operationId], groupID, userID, roleLevel);
 }
 
+- (void)getGroupMemberListByJoinTimeFilter:(NSString *)groupID
+                                    offset:(NSInteger)offset
+                                     count:(NSInteger)count
+                             joinTimeBegin:(NSInteger)joinTimeBegin
+                               joinTimeEnd:(NSInteger)joinTimeEnd
+                          filterUserIDList:(NSArray <NSString *> *)filterUserIDList
+                                 onSuccess:(OIMGroupMembersInfoCallback)onSuccess
+                                 onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMGroupMemberInfo mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetGroupMemberListByJoinTimeFilter(callback, [self operationId], groupID, (int32_t)offset, (int32_t)count, joinTimeBegin, joinTimeEnd, filterUserIDList.mj_JSONString);
+}
+
+- (void)setGroupVerification:(NSString *)groupID
+            needVerification:(OIMGroupVerificationType)needVerification
+                   onSuccess:(OIMSuccessCallback)onSuccess
+                   onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSetGroupVerification(callback, [self operationId], groupID, (int32_t)needVerification);
+}
+
 @end

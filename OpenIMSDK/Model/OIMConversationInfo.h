@@ -47,7 +47,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) BOOL isPinned;
 
+/// 是否开启了私聊（阅后即焚）
 @property (nonatomic, assign) BOOL isPrivateChat;
+
+/// 是否还在组内，如果退群返回true
+@property (nonatomic, assign) BOOL isNotInGroup;
 
 @property (nonatomic, nullable, copy) NSString *attachedInfo;
 
