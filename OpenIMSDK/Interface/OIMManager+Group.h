@@ -239,7 +239,7 @@ NS_ASSUME_NONNULL_BEGIN
                                  onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 设置群成员权限
+ 进群验证设置选项
  @param groupID 群ID
  @param needVerification 进群设置
  */
