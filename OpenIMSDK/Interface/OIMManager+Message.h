@@ -17,11 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isSelf;
 
 /*
- *  是否是发@全体的消息
- */
-- (BOOL)isAtAll;
-
-/*
  * 创建文本消息
  *
  * @param text 内容
