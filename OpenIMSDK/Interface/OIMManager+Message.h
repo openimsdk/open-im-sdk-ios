@@ -297,7 +297,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 标记已读
  *
  * @param userID    用户ID
- * @param msgIDList 消息ID的列表 ["er4er","3er4"]，传[]则标记所有
+ * @param msgIDList 消息ID的列表 ["er4er","3er4"]，传[]则标记所有, clientMsgID
  */
 - (void)markC2CMessageAsRead:(NSString *)userID
                    msgIDList:(NSArray <NSString *> *)msgIDList
@@ -308,7 +308,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 标记群聊已读
  *
  * @param groupID   群ID
- * @param msgIDList 消息ID的列表 ["er4er","3er4"]，传[]则标记所有
+ * @param msgIDList 消息ID的列表 ["er4er","3er4"]，传[]则标记所有, clientMsgID
  */
 - (void)markGroupMessageAsRead:(NSString *)groupID
                      msgIDList:(NSArray <NSString *> *)msgIDList
