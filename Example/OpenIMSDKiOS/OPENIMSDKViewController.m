@@ -1070,7 +1070,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         }];
        
         [OIMManager.manager getHistoryMessageListWithUserId:OTHER_USER_ID
-                                                    groupID:nil
+                                                    groupID:GROUP_ID
                                            startClientMsgID:nil
                                                       count:20
                                                   onSuccess:^(NSArray<OIMMessageInfo *> * _Nullable messages) {

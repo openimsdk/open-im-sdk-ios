@@ -14,6 +14,13 @@
     return [self.sendID isEqualToString:[OIMManager.manager getLoginUid]];
 }
 
+- (BOOL)isAtAll {
+    // "atElem":{"text":" @AtAllTag ","atUserList":["AtAllTag"],"atUsersInfo":[{"atUserID":"AtAllTag","groupNickname":"所有人"}],"isAtSelf":false}
+    return self.atElem &&
+    self.atElem.atUserList.count > 0 &&
+    [self.atElem.atUserList.firstObject isEqualToString:Open_im_sdkGetAtAllTag()];
+}
+
 + (OIMMessageInfo *)convertToMessageInfo:(NSString *)json {
     OIMMessageInfo *msg = [OIMMessageInfo mj_objectWithKeyValues:json];
     msg.status = OIMMessageStatusUndefine;
