@@ -86,7 +86,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"验证是否好友关系", OIM_LIST_CELL_FUNC: @"checkFriend"},
           @{OIM_LIST_CELL_TITLE: @"设置好友备注", OIM_LIST_CELL_FUNC: @"setFriendRemark"},
           @{OIM_LIST_CELL_TITLE: @"删除好友", OIM_LIST_CELL_FUNC: @"deleteFriend"},
-          @{OIM_LIST_CELL_TITLE: @"本地查询用户", OIM_LIST_CELL_FUNC: @"searchUsers"}],
+          @{OIM_LIST_CELL_TITLE: @"本地查询好友", OIM_LIST_CELL_FUNC: @"searchFriends"}],
         
         @[@{OIM_LIST_CELL_TITLE: @"创建群聊", OIM_LIST_CELL_FUNC: @"createGroup"},
           @{OIM_LIST_CELL_TITLE: @"加入群聊", OIM_LIST_CELL_FUNC: @"joinGroup"},
@@ -611,7 +611,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
 }
 
 
-- (void)searchUsers {
+- (void)searchFriends {
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
@@ -620,7 +620,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         t.isSearchRemark = YES;
         t.isSearchUserID = YES;
         
-        [OIMManager.manager searchUsers:t
+        [OIMManager.manager searchFriends:t
                               onSuccess:^(NSArray<OIMSearchUserInfo *> * _Nullable usersInfo) {
             
         

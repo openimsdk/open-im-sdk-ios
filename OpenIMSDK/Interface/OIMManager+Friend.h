@@ -123,11 +123,18 @@ NS_ASSUME_NONNULL_BEGIN
            onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
- *  搜索用户,可能是非好友
+ *  搜索好友
  */
 - (void)searchUsers:(OIMSearchUserParam *)searchParam
           onSuccess:(nullable OIMSearchUsersInfoCallback)onSuccess
-          onFailure:(nullable OIMFailureCallback)onFailure;
+          onFailure:(nullable OIMFailureCallback)onFailure DEPRECATED_MSG_ATTRIBUTE("Use [searchFriends:onSuccess:onFailure]");
+
+/*
+ *  本地搜索好友
+ */
+- (void)searchFriends:(OIMSearchUserParam *)searchParam
+            onSuccess:(nullable OIMSearchUsersInfoCallback)onSuccess
+            onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END
