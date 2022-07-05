@@ -138,4 +138,11 @@ typedef NS_ENUM(NSInteger,  OIMGroupVerificationType) {
     OIMGroupVerificationTypeDirectly = 2,                               /// 直接进群
 };
 
+/**
+ 群类型
+ */
+typedef NS_ENUM(NSInteger, OIMGroupType) {
+    OIMGroupTypeNormal,     /// 普通群
+    OIMGroupTypeWorking,    /// 工作群
+};
 #endif /* OIMModelDefine_h */
