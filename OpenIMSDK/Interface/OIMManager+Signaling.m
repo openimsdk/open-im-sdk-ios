@@ -37,10 +37,19 @@
     }
     
     info.offlinePushInfo = offlinePushInfo;
-    
-    NSLog(@"====invite json:%@", info.mj_JSONString);
-    
-    Open_im_sdkSignalingInvite(callback, [self operationId], info.mj_JSONString);
+        
+    if (invitation.sessionType == OIMConversationTypeGroup) {
+        Open_im_sdkSignalingInviteInGroup(callback, [self operationId], info.mj_JSONString);
+    } else {
+        Open_im_sdkSignalingInvite(callback, [self operationId], info.mj_JSONString);
+    }
+}
+
+- (void)signalingInviteInGroup:(OIMInvitationInfo *)invitation
+               offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
+                     onSuccess:(OIMSignalingResultCallback)onSuccess
+                     onFailure:(OIMFailureCallback)onFailure {
+    [self signalingInvite:invitation offlinePushInfo:offlinePushInfo onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)signalingAccept:(OIMSignalingInfo *)invitation
