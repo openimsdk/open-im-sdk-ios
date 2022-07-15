@@ -145,4 +145,13 @@ typedef NS_ENUM(NSInteger, OIMGroupType) {
     OIMGroupTypeNormal,     /// 普通群
     OIMGroupTypeWorking,    /// 工作群
 };
+
+/**
+ 入群方式
+ */
+typedef NS_ENUM(int32_t, OIMJoinType) {
+    OIMJoinTypeInvited = 2, /// 通过邀请
+    OIMJoinTypeSearch = 3,  /// 通过搜索
+    OIMJoinTypeQRCode = 4   /// 通过二维码
+};
 #endif /* OIMModelDefine_h */

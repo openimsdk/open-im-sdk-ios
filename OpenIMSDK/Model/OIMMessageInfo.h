@@ -19,7 +19,7 @@
 #import "OIMFaceElem.h"
 #import "OIMAttachedInfoElem.h"
 #import "OIMModelDefine.h"
-
+#import "OIMMessageElem.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -107,6 +107,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, strong) OIMAttachedInfoElem *attachedInfoElem;
 
+@property (nonatomic, nullable, strong) OIMMessageElem *messageEntityElem;
+
 @property (nonatomic, assign) NSTimeInterval hasReadTime;
 
 @end
@@ -141,6 +143,33 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface OIMMessageRevoked : NSObject
+
+/*
+ * 撤回者的id
+ */
+@property (nonatomic, copy) NSString *revokerID;
+
+@property (nonatomic, copy) NSString *revokerNickname;
+
+/*
+ * 撤回者的身份：例如：群主，群管理员
+ */
+@property (nonatomic, assign) OIMGroupMemberRole revokerRole;
+
+@property (nonatomic, copy) NSString *clientMsgID;
+
+@property (nonatomic, assign) NSTimeInterval revokeTime;
+
+@property (nonatomic, assign) NSTimeInterval sourceMessageSendTime;
+
+@property (nonatomic, copy) NSString *sourceMessageSendID;
+
+@property (nonatomic, copy) NSString *sourceMessageSenderNickname;
+
+@property (nonatomic, assign) OIMConversationType sessionType;
+
+@end
 
 
 NS_ASSUME_NONNULL_END

@@ -62,6 +62,7 @@ typedef void (^OIMMessagesInfoCallback)(NSArray <OIMMessageInfo *> * _Nullable m
 typedef void (^OIMMessageSearchCallback)(OIMSearchResultInfo * _Nullable result);
 
 typedef void (^OIMReceiptCallback)(NSArray <OIMReceiptInfo *> * _Nullable msgReceiptList);
+typedef void (^OIMRevokedCallback)(NSArray <OIMMessageRevoked *> * _Nullable msgRovoked);
 
 typedef void (^OIMSignalingInvitationCallback)(OIMSignalingInfo * _Nullable result);
 typedef void (^OIMSignalingResultCallback)(OIMInvitationResultInfo * _Nullable result);
@@ -269,6 +270,8 @@ typedef void (^OIMMomentsInfoCallback)(NSArray <OIMMomentsInfo *> * _Nullable it
  */
 - (void)onRecvMessageRevoked:(NSString *)msgID;
 
+- (void)onNewRecvMessageRevoked:(NSString *)messageRevoked;
+
 @end
 
 /// 音视频监听器
@@ -445,6 +448,7 @@ Open_im_sdk_callbackOnWorkMomentsListener
 @property (nonatomic, nullable, copy) OIMReceiptCallback onRecvC2CReadReceipt;
 @property (nonatomic, nullable, copy) OIMReceiptCallback onRecvGroupReadReceipt;
 @property (nonatomic, nullable, copy) OIMStringCallback onRecvMessageRevoked;
+@property (nonatomic, nullable, copy) OIMRevokedCallback onNewRecvMessageRevoked;
 
 /*
  *  添加高级消息的事件监听器

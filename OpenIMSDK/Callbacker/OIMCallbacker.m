@@ -504,6 +504,19 @@
     }];
 }
 
+- (void)onNewRecvMessageRevoked:(NSString *)messageRevoked {
+    
+    OIMMessageRevoked *revoked = [OIMMessageRevoked mj_objectWithKeyValues:messageRevoked];
+    
+    [self dispatchMainThread:^{
+        if (self.onNewRecvMessageRevoked) {
+            self.onNewRecvMessageRevoked(revoked);
+        }
+        
+        [self.advancedMsgListeners onNewRecvMessageRevoked:revoked];
+    }];
+}
+
 - (void)onRecvNewMessage:(NSString * _Nullable)message {
     OIMMessageInfo *msg = [OIMMessageInfo mj_objectWithKeyValues:message];
     

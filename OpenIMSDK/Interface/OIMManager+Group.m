@@ -29,7 +29,17 @@
         onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkJoinGroup(callback, [self operationId], gid, reqMsg ?: @"");
+    Open_im_sdkJoinGroup(callback, [self operationId], gid, reqMsg ?: @"", OIMJoinTypeSearch);
+}
+
+- (void)joinGroup:(NSString *)gid
+           reqMsg:(NSString *)reqMsg
+       joinSource:(OIMJoinType)joinSource
+        onSuccess:(OIMSuccessCallback)onSuccess
+        onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkJoinGroup(callback, [self operationId], gid, reqMsg ?: @"", joinSource);
 }
 
 - (void)quitGroup:(NSString *)gid
@@ -69,7 +79,7 @@
            onSuccess:(OIMSuccessCallback)onSuccess
            onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-
+    
     Open_im_sdkSetGroupInfo(callback, [self operationId], gid, info.mj_JSONString);
 }
 
@@ -141,7 +151,7 @@
 }
 
 - (void)getGroupApplicationListWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
-                                    onFailure:(OIMFailureCallback)onFailure {
+                                   onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
             onSuccess([OIMGroupApplicationInfo mj_objectArrayWithKeyValuesArray:data]);
@@ -268,4 +278,35 @@
     Open_im_sdkSetGroupVerification(callback, [self operationId], groupID, (int32_t)needVerification);
 }
 
+- (void)getGroupMemberOwnerAndAdmin:(NSString *)groupID
+                          onSuccess:(OIMGroupMembersInfoCallback)onSuccess
+                          onFailure:(OIMFailureCallback)onFailure {
+    
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMGroupMemberInfo mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetGroupMemberOwnerAndAdmin(callback, [self operationId], groupID);
+}
+
+- (void)setGroupApplyMemberFriend:(NSString *)groupID
+                             rule:(int32_t)rule
+                        onSuccess:(nullable OIMSuccessCallback)onSuccess
+                        onFailure:(nullable OIMFailureCallback)onFailure {
+    
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSetGroupApplyMemberFriend(callback, [self operationId], groupID, rule);
+}
+
+- (void)setGroupLookMemberInfo:(NSString *)groupID
+                          rule:(int32_t)rule
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSetGroupLookMemberInfo(callback, [self operationId], groupID, rule);
+}
 @end

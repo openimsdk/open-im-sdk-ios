@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OIMMessageElem.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,6 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isPrivateChat;
 
 @property (nonatomic, assign) NSTimeInterval hasReadTime;
+
+@property (nonatomic, assign) BOOL notSenderNotificationPush;
+
+@property (nonatomic, strong) NSArray <OIMMessageEntity *> *messageEntityList;
 @end
 
 NS_ASSUME_NONNULL_END

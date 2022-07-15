@@ -72,7 +72,19 @@
     self.onRecvMessageRevoked = onRecvMessageRevoked;
     self.onRecvC2CReadReceipt = onRecvC2CReadReceipt;
     self.onRecvGroupReadReceipt = onRecvGroupReadReceipt;
-    self.onRecvNewMessage = onRecvNewMessage;
+}
+
+- (void)setAdvancedMsgListenerWithOnRecvMessageRevoked:(OIMStringCallback)onRecvMessageRevoked
+                                  onRecvC2CReadReceipt:(OIMReceiptCallback)onRecvC2CReadReceipt
+                                onRecvGroupReadReceipt:(OIMReceiptCallback)onRecvGroupReadReceipt
+                                      onRecvNewMessage:(OIMMessageInfoCallback)onRecvNewMessage
+                               onNewRecvMessageRevoked:(OIMRevokedCallback)onNewRecvMessageRevoked {
+    
+    self.onRecvMessageRevoked = onRecvMessageRevoked;
+    self.onRecvC2CReadReceipt = onRecvC2CReadReceipt;
+    self.onRecvGroupReadReceipt = onRecvGroupReadReceipt;
+    self.onNewRecvMessageRevoked = onNewRecvMessageRevoked;
+    
 }
 
 - (void)setSelfUserInfoUpdateListener:(OIMUserInfoCallback)onUserInfoUpdate {

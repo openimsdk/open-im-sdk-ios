@@ -63,6 +63,16 @@ NS_ASSUME_NONNULL_BEGIN
 + (OIMMessageInfo *)createImageMessageFromFullPath:(NSString *)imagePath;
 
 /*
+ * 创建音频消息
+ * 例如：自行上传的文件，然后使用返回的url发送消息
+ *
+ */
++ (OIMMessageInfo *)createImageMessageByURL:(OIMPictureInfo *)source
+                                 bigPicture:(OIMPictureInfo *)big
+                            snapshotPicture:(OIMPictureInfo *)snapshot;
+                                   
+
+/*
  * 创建声音消息
  * initSDK时传入了数据缓存路径，如路径：A，这时需要你将声音文件复制到A路径下后，如 A/voice/a.m4c路径，soundPath的值：“/voice/.m4c”
  *
@@ -80,6 +90,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (OIMMessageInfo *)createSoundMessageFromFullPath:(NSString *)soundPath
                                           duration:(NSInteger)duration;
+
+/*
+ * 创建音频消息
+ * 例如：自行上传的文件，然后使用返回的url发送消息
+ *
+ */
++ (OIMMessageInfo *)createSoundMessageByURL:(NSString *)fileURL
+                                   duration:(NSInteger)duration
+                                       size:(NSInteger)size;
 
 /*
  * 创建视频消息
@@ -110,6 +129,18 @@ NS_ASSUME_NONNULL_BEGIN
                                       snapshotPath:(NSString *)snapshotPath;
 
 /*
+ * 创建视频频消息
+ * 例如：自行上传的文件，然后使用返回的url发送消息
+ *
+ */
++ (OIMMessageInfo *)createVideoMessageByURL:(NSString *)fileURL
+                                  videoType:(NSString * _Nullable)videoType
+                                   duration:(NSInteger)duration
+                                      size:(NSInteger)size
+                                   snapshot:(NSString * _Nullable)snapshotURL
+;
+
+/*
  * 创建文件消息
  * initSDK时传入了数据缓存路径，如路径：A，这时需要你将声音文件复制到A路径下后，如 A/file/a.txt路径，soundPath的值：“/file/.txt”
  *
@@ -129,6 +160,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (OIMMessageInfo *)createFileMessageFromFullPath:(NSString *)filePath
                                          fileName:(NSString *)fileName;
+
+/*
+ * 创建文件消息
+ * 例如：自行上传的文件，然后使用返回的url发送消息
+ *
+ */
++ (OIMMessageInfo *)createFileMessageByURL:(NSString *)fileURL
+                                  fileName:(NSString * _Nullable)fileName
+                                      size:(NSInteger)size;
 
 /*
  * 创建合并消息
@@ -192,6 +232,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (OIMMessageInfo *)createFaceMessageWithIndex:(NSInteger)index
                                           data:(NSString *)dataStr;
+
+
+/*
+ * 创建动图消息
+ *
+ */
++ (OIMMessageInfo *)createAdvancedTextMessage:(NSString *)text
+                            messageEntityList:(NSArray <OIMMessageEntity *> *)messageEntityList;
 @end
 
 @interface OIMManager (Message)
@@ -223,7 +271,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)sendMessageNotOss:(OIMMessageInfo *)message
                    recvID:(NSString * _Nullable)recvID
                   groupID:(NSString * _Nullable)groupID
-          offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
+          offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
                 onSuccess:(nullable OIMMessageInfoCallback)onSuccess
                onProgress:(nullable OIMNumberCallback)onProgress
                 onFailure:(nullable OIMFailureCallback)onFailure;
@@ -275,7 +323,17 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)revokeMessage:(OIMMessageInfo *)message
             onSuccess:(nullable OIMSuccessCallback)onSuccess
-            onFailure:(nullable OIMFailureCallback)onFailure;
+            onFailure:(nullable OIMFailureCallback)onFailure DEPRECATED_MSG_ATTRIBUTE("Use [newRevokeMessage:onSuccess:onFailure]");
+
+/*
+ * 撤回一条消息 - 支持管理员撤回消息；支持撤回tips显示在原来的位置
+ *
+ * @param message   为OIMMessageInfo
+ *
+ */
+- (void)newRevokeMessage:(OIMMessageInfo *)message
+               onSuccess:(nullable OIMSuccessCallback)onSuccess
+               onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 单聊正在输入消息

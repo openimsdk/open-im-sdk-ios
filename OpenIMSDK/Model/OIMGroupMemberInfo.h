@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 // 加入时间
 @property (nonatomic, assign) NSInteger joinTime;
 // 入群方式
-@property (nonatomic, assign) NSInteger joinSource;
+@property (nonatomic, assign) OIMJoinType joinSource;
 // 操作者id
 @property (nonatomic, nullable, copy) NSString *operatorUserID;
 // 禁言时间s

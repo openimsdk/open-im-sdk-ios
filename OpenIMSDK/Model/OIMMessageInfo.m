@@ -52,3 +52,7 @@
 
 @end
 
+@implementation OIMMessageRevoked
+
+@end
+

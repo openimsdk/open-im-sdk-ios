@@ -39,10 +39,10 @@
     }
     return _callbacker;
 }
-                  
+
 + (NSString *)sdkSdkVersion
 {
-  return Open_im_sdkSdkVersion();
+    return Open_im_sdkSdkVersion();
 }
 
 - (NSString *)getLoginUid {
@@ -54,7 +54,9 @@
 }
 
 - (NSString *)operationId {
-    return [[NSUUID UUID]UUIDString];
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval time = [date timeIntervalSince1970] * 1000;
+    return [NSString stringWithFormat:@"%ld", (NSInteger)time];
 }
 
 @end
