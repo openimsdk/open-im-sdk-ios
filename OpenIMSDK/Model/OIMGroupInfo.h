@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OIMModelDefine.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMGroupCreateInfo : OIMGroupBaseInfo
 
-@property (nonatomic, assign) NSInteger groupType;
+@property (nonatomic, assign) OIMGroupType groupType;
 
 @end
 

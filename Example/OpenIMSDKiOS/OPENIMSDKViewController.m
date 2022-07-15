@@ -86,7 +86,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"验证是否好友关系", OIM_LIST_CELL_FUNC: @"checkFriend"},
           @{OIM_LIST_CELL_TITLE: @"设置好友备注", OIM_LIST_CELL_FUNC: @"setFriendRemark"},
           @{OIM_LIST_CELL_TITLE: @"删除好友", OIM_LIST_CELL_FUNC: @"deleteFriend"},
-          @{OIM_LIST_CELL_TITLE: @"本地查询用户", OIM_LIST_CELL_FUNC: @"searchUsers"}],
+          @{OIM_LIST_CELL_TITLE: @"本地查询好友", OIM_LIST_CELL_FUNC: @"searchFriends"}],
         
         @[@{OIM_LIST_CELL_TITLE: @"创建群聊", OIM_LIST_CELL_FUNC: @"createGroup"},
           @{OIM_LIST_CELL_TITLE: @"加入群聊", OIM_LIST_CELL_FUNC: @"joinGroup"},
@@ -111,7 +111,10 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
           @{OIM_LIST_CELL_TITLE: @"设置群昵称", OIM_LIST_CELL_FUNC: @"setGroupMemberNickname",},
           @{OIM_LIST_CELL_TITLE: @"设置群成员级别", OIM_LIST_CELL_FUNC: @"setGroupMemberRoleLevel",},
           @{OIM_LIST_CELL_TITLE: @"根据加入时间分页获取组成员列表", OIM_LIST_CELL_FUNC: @"getGroupMemberListByJoinTimeFilter",},
-          @{OIM_LIST_CELL_TITLE: @"设置进群方式", OIM_LIST_CELL_FUNC: @"setGroupVerification",}
+          @{OIM_LIST_CELL_TITLE: @"设置进群方式", OIM_LIST_CELL_FUNC: @"setGroupVerification",},
+          @{OIM_LIST_CELL_TITLE: @"获取群主和管理员", OIM_LIST_CELL_FUNC: @"getGroupMemberOwnerAndAdmin",},
+          @{OIM_LIST_CELL_TITLE: @"群成员间是否可加好友", OIM_LIST_CELL_FUNC: @"setGroupApplyMemberFriend",},
+          @{OIM_LIST_CELL_TITLE: @"群成员间是否可查看信息", OIM_LIST_CELL_FUNC: @"setGroupLookMemberInfo",},
         ],
         
         @[@{OIM_LIST_CELL_TITLE: @"发送消息", OIM_LIST_CELL_FUNC: @"sendMessage"},
@@ -310,6 +313,8 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     } onRecvGroupReadReceipt:^(NSArray<OIMReceiptInfo *> * _Nullable msgReceiptList) {
         NSLog(@"onRecvGroupReadReceipt:%@", msgReceiptList);
     } onRecvNewMessage:^(OIMMessageInfo * _Nullable message) {
+        
+    } onNewRecvMessageRevoked:^(NSArray<OIMMessageRevoked *> * _Nullable msgRovoked) {
         
     }];
 }
@@ -611,7 +616,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
 }
 
 
-- (void)searchUsers {
+- (void)searchFriends {
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
@@ -620,7 +625,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         t.isSearchRemark = YES;
         t.isSearchUserID = YES;
         
-        [OIMManager.manager searchUsers:t
+        [OIMManager.manager searchFriends:t
                               onSuccess:^(NSArray<OIMSearchUserInfo *> * _Nullable usersInfo) {
             
         
@@ -1008,6 +1013,47 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     }];
 }
 
+- (void)getGroupMemberOwnerAndAdmin {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        
+        [OIMManager.manager getGroupMemberOwnerAndAdmin:GROUP_ID
+                                              onSuccess:^(NSArray<OIMGroupMemberInfo *> * _Nullable groupMembersInfo) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)setGroupApplyMemberFriend {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        
+        [OIMManager.manager setGroupApplyMemberFriend:GROUP_ID
+                                                 rule:0
+                                            onSuccess:^(NSString * _Nullable data) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
+- (void)setGroupLookMemberInfo {
+    [self operate:_cmd
+             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
+        
+        [OIMManager.manager setGroupLookMemberInfo:GROUP_ID
+                                              rule:0
+                                         onSuccess:^(NSString * _Nullable data) {
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Message
 
@@ -1051,6 +1097,33 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
             callback(@(code), msg);
         }];
+        
+        /* 不使用sdk的文件上传
+        OIMPictureInfo *pic = [OIMPictureInfo new];
+        pic.url = @"xxx";
+        
+        self.testMessage = [OIMMessageInfo createImageMessageByURL:pic bigPicture:pic snapshotPicture:pic];
+        self.testMessage = [OIMMessageInfo createSoundMessageByURL:@"xxx"
+                                                          duration:10
+                                                              size:100];
+        self.testMessage = [OIMMessageInfo createVideoMessageByURL:@"xxx"
+                                                         videoType:@"mp4"
+                                                          duration:10
+                                                              size:100
+                                                          snapshot:@"https://c-ssl.duitang.com/uploads/item/202105/29/20210529001057_aSeLB.jpeg"];
+        [OIMManager.manager sendMessageNotOss:self.testMessage
+                                       recvID:OTHER_USER_ID
+                                      groupID:GROUP_ID
+                              offlinePushInfo:nil
+                                    onSuccess:^(OIMMessageInfo * _Nullable message) {
+            self.testMessage = message;
+                        callback(nil, nil);
+        } onProgress:^(NSInteger number) {
+            
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+         */
     }];
 }
 
@@ -1070,7 +1143,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         }];
        
         [OIMManager.manager getHistoryMessageListWithUserId:OTHER_USER_ID
-                                                    groupID:nil
+                                                    groupID:GROUP_ID
                                            startClientMsgID:nil
                                                       count:20
                                                   onSuccess:^(NSArray<OIMMessageInfo *> * _Nullable messages) {
@@ -1110,6 +1183,13 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         [OIMManager.manager revokeMessage:self.testMessage
                                 onSuccess:^(NSString * _Nullable data) {
             
+            callback(nil, nil);
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            callback(@(code), msg);
+        }];
+        
+        [OIMManager.manager newRevokeMessage:self.testMessage
+                                   onSuccess:^(NSString * _Nullable data) {
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
             callback(@(code), msg);

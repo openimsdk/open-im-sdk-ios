@@ -30,7 +30,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)joinGroup:(NSString *)gid
            reqMsg:(NSString * _Nullable)reqMsg
         onSuccess:(nullable OIMSuccessCallback)onSuccess
-        onFailure:(nullable OIMFailureCallback)onFailure;
+        onFailure:(nullable OIMFailureCallback)onFailure DEPRECATED_MSG_ATTRIBUTE("Use [joinGroup:reqMsg:joinSource]");
+
+/*
+ * 申请加入群组
+ *
+ * @param gid    群组ID
+ * @param reqMsg 进群申请消息
+ * @param joinSource 进群方式
+ */
+- (void)joinGroup:(NSString *)gid
+           reqMsg:(NSString *)reqMsg
+       joinSource:(OIMJoinType)joinSource
+        onSuccess:(OIMSuccessCallback)onSuccess
+        onFailure:(OIMFailureCallback)onFailure;
 
 /*
  * 退群
@@ -247,6 +260,34 @@ NS_ASSUME_NONNULL_BEGIN
             needVerification:(OIMGroupVerificationType)needVerification
                    onSuccess:(nullable OIMSuccessCallback)onSuccess
                    onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 获取管理者和拥有者
+ @param groupID 群ID
+ */
+- (void)getGroupMemberOwnerAndAdmin:(NSString *)groupID
+                          onSuccess:(nullable OIMGroupMembersInfoCallback)onSuccess
+                          onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 群成员之间是否可添加好友
+ @param groupID 群ID
+ @param rule 0: 默认可行 1: 不可行
+ */
+- (void)setGroupApplyMemberFriend:(NSString *)groupID
+                             rule:(int32_t)rule
+                          onSuccess:(nullable OIMSuccessCallback)onSuccess
+                          onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 查看群成员信息
+ @param groupID 群ID
+ @param rule 0: 默认可行 1: 不可行
+ */
+- (void)setGroupLookMemberInfo:(NSString *)groupID
+                          rule:(int32_t)rule
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

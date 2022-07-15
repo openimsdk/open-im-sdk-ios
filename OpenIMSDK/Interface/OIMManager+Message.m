@@ -36,7 +36,7 @@
     NSString *atUsersJson = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:atUsers options:0 error:nil] encoding:NSUTF8StringEncoding];
     
     NSString *json = Open_im_sdkCreateTextAtMessage([OIMManager.manager operationId], text, atUidList.mj_JSONString, atUsersJson, message ? message.mj_JSONString : @"");
-
+    
     return [self convertToMessageInfo:json];
 }
 
@@ -44,7 +44,7 @@
                                displayText:(NSString *)displayText
                                    message:(OIMMessageInfo * _Nullable)message {
     NSString *json = Open_im_sdkCreateTextAtMessage([OIMManager.manager operationId], text, @[Open_im_sdkGetAtAllTag()].mj_JSONString, @[@{Open_im_sdkGetAtAllTag(): displayText ?: @"@全体成员"}].mj_JSONString, message ? message.mj_JSONString : @"");
-
+    
     return [self convertToMessageInfo:json];
 }
 
@@ -60,6 +60,15 @@
     return [self convertToMessageInfo:json];
 }
 
++ (OIMMessageInfo *)createImageMessageByURL:(OIMPictureInfo *)source
+                                 bigPicture:(OIMPictureInfo *)big
+                            snapshotPicture:(OIMPictureInfo *)snapshot {
+    
+    NSString *json = Open_im_sdkCreateImageMessageByURL([OIMManager.manager operationId], source.mj_JSONString, big.mj_JSONString, snapshot.mj_JSONString);
+    
+    return [self convertToMessageInfo:json];
+}
+
 + (OIMMessageInfo *)createSoundMessage:(NSString *)soundPath
                               duration:(NSInteger)duration {
     NSString *json = Open_im_sdkCreateSoundMessage([OIMManager.manager operationId], soundPath, duration);
@@ -70,6 +79,19 @@
 + (OIMMessageInfo *)createSoundMessageFromFullPath:(NSString *)soundPath
                                           duration:(NSInteger)duration {
     NSString *json = Open_im_sdkCreateSoundMessageFromFullPath([OIMManager.manager operationId], soundPath, duration);
+    
+    return [self convertToMessageInfo:json];
+}
+
++ (OIMMessageInfo *)createSoundMessageByURL:(NSString *)fileURL
+                                   duration:(NSInteger)duration
+                                       size:(NSInteger)size {
+    OIMSoundElem *elem = [OIMSoundElem new];
+    elem.sourceUrl = fileURL;
+    elem.duration = duration;
+    elem.dataSize = size;
+    
+    NSString *json = Open_im_sdkCreateSoundMessageByURL([OIMManager.manager operationId], elem.mj_JSONString);
     
     return [self convertToMessageInfo:json];
 }
@@ -92,6 +114,23 @@
     return [self convertToMessageInfo:json];
 }
 
++ (OIMMessageInfo *)createVideoMessageByURL:(NSString *)fileURL
+                                  videoType:(NSString *)videoType
+                                   duration:(NSInteger)duration
+                                       size:(NSInteger)size
+                                   snapshot:(NSString *)snapshotURL {
+    OIMVideoElem *elem = [OIMVideoElem new];
+    elem.videoUrl = fileURL;
+    elem.videoType = videoType;
+    elem.duration = duration;
+    elem.videoSize = size;
+    elem.snapshotUrl = snapshotURL;
+    
+    NSString *json = Open_im_sdkCreateVideoMessageByURL([OIMManager.manager operationId], elem.mj_JSONString);
+    
+    return [self convertToMessageInfo:json];
+}
+
 + (OIMMessageInfo *)createFileMessage:(NSString *)filePath
                              fileName:(NSString *)fileName {
     NSString *json = Open_im_sdkCreateFileMessage([OIMManager.manager operationId], filePath, fileName);
@@ -106,12 +145,25 @@
     return [self convertToMessageInfo:json];
 }
 
++ (OIMMessageInfo *)createFileMessageByURL:(NSString *)fileURL
+                                  fileName:(NSString *)fileName
+                                      size:(NSInteger)size {
+    OIMFileElem *elem = [OIMFileElem new];
+    elem.sourceUrl = fileURL;
+    elem.fileName = fileName ?: fileURL.lastPathComponent;
+    elem.fileSize = size;
+    
+    NSString *json = Open_im_sdkCreateFileMessageByURL([OIMManager.manager operationId], elem.mj_JSONString);
+    
+    return [self convertToMessageInfo:json];
+}
+
 + (OIMMessageInfo *)createMergeMessage:(NSArray<OIMMessageInfo *> *)messages
-                                  title:(NSString *)title
-                            summaryList:(NSArray<NSString *> *)summarys {
+                                 title:(NSString *)title
+                           summaryList:(NSArray<NSString *> *)summarys {
     NSArray *msgs = [OIMMessageInfo mj_keyValuesArrayWithObjectArray:messages];
     NSString *json = Open_im_sdkCreateMergerMessage([OIMManager.manager operationId], [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:msgs options:0 error:nil] encoding:NSUTF8StringEncoding], title, summarys.mj_JSONString);
-
+    
     return [self convertToMessageInfo:json];
 }
 
@@ -157,6 +209,13 @@
     return [self convertToMessageInfo:json];
 }
 
++ (OIMMessageInfo *)createAdvancedTextMessage:(NSString *)text
+                            messageEntityList:(NSArray<OIMMessageEntity *> *)messageEntityList {
+    NSString *json = Open_im_sdkCreateAdvancedTextMessage([OIMManager.manager operationId], text, messageEntityList.mj_JSONString);
+    
+    return [self convertToMessageInfo:json];
+}
+
 @end
 
 @implementation OIMManager (Message)
@@ -168,6 +227,9 @@
           onSuccess:(OIMMessageInfoCallback)onSuccess
          onProgress:(OIMNumberCallback)onProgress
           onFailure:(OIMFailureCallback)onFailure {
+    
+    assert(recvID.length != 0 || groupID.length != 0);
+    
     SendMessageCallbackProxy *callback = [[SendMessageCallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
             onSuccess([OIMMessageInfo mj_objectWithKeyValues:data]);
@@ -184,6 +246,9 @@
                 onSuccess:(OIMMessageInfoCallback)onSuccess
                onProgress:(OIMNumberCallback)onProgress
                 onFailure:(OIMFailureCallback)onFailure {
+    
+    assert(recvID.length != 0 || groupID.length != 0);
+    
     SendMessageCallbackProxy *callback = [[SendMessageCallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
             onSuccess([OIMMessageInfo mj_objectWithKeyValues:data]);
@@ -253,6 +318,14 @@
     Open_im_sdkRevokeMessage(callback, [self operationId], message.mj_JSONString);
 }
 
+- (void)newRevokeMessage:(OIMMessageInfo *)message
+               onSuccess:(OIMSuccessCallback)onSuccess
+               onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkNewRevokeMessage(callback, [self operationId], message.mj_JSONString);
+}
+
 - (void)typingStatusUpdate:(NSString *)recvID
                     msgTip:(NSString *)msgTip
                  onSuccess:(OIMSuccessCallback)onSuccess
@@ -285,7 +358,7 @@
                        onSuccess:(OIMSuccessCallback)onSuccess
                        onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-
+    
     Open_im_sdkMarkMessageAsReadByConID(callback, [self operationId], conversationID, msgIDList.mj_JSONString);
 }
 
@@ -384,9 +457,9 @@
 }
 
 - (void)uploadFileWithFullPath:(NSString *)path
-                     onProgress:(OIMNumberCallback)onProgress
-                      onSuccess:(OIMSuccessCallback)onSuccess
-                      onFailure:(OIMFailureCallback)onFailure {
+                    onProgress:(OIMNumberCallback)onProgress
+                     onSuccess:(OIMSuccessCallback)onSuccess
+                     onFailure:(OIMFailureCallback)onFailure {
     
     SendMessageCallbackProxy *callback = [[SendMessageCallbackProxy alloc]initWithOnSuccess:onSuccess onProgress:onProgress onFailure:onFailure];
     
@@ -397,7 +470,7 @@
                       onSuccess:(OIMSuccessCallback)onSuccess
                       onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-
+    
     Open_im_sdkSetGlobalRecvMessageOpt(callback, [self operationId], opt);
 }
 

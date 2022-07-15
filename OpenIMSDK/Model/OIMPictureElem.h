@@ -12,12 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface OIMPictureInfo : NSObject
 
 /*
- * 唯一ID
+ * 唯一ID，可不设置
  */
 @property (nonatomic, nullable, copy) NSString *uuID;
 
 /*
- * 图片类型
+ * 图片类型, 可不设置
  */
 @property (nonatomic, nullable, copy) NSString *type;
 
@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 图片oss地址
  */
-@property (nonatomic, nullable, copy) NSString *url;
+@property (nonatomic, copy) NSString *url;
 
 @end
 

@@ -22,7 +22,7 @@
 }
 
 - (BOOL)isAtAll {
-    return self.atUserList.firstObject != nil &&
+    return self.atUserList.count > 0 &&
     [self.atUserList.firstObject isKindOfClass:[NSString class]] &&
     [self.atUserList.firstObject isEqualToString:Open_im_sdkGetAtAllTag()];
 }

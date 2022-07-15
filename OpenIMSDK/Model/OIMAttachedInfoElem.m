@@ -6,11 +6,17 @@
 //
 
 #import "OIMAttachedInfoElem.h"
+#import <MJExtension/MJExtension.h>
 
 @implementation OIMGroupHasReadInfo
 
 @end
 
 @implementation OIMAttachedInfoElem
+
++ (NSDictionary *)mj_objectClassInArray
+{
+    return @{@"messageEntityList" : [OIMMessageEntity class]};
+}
 
 @end

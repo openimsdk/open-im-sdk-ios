@@ -75,6 +75,12 @@ NS_ASSUME_NONNULL_BEGIN
                                 onRecvGroupReadReceipt:(OIMReceiptCallback)onRecvGroupReadReceipt
                                       onRecvNewMessage:(OIMMessageInfoCallback)onRecvNewMessage;
 
+- (void)setAdvancedMsgListenerWithOnRecvMessageRevoked:(nullable OIMStringCallback)onRecvMessageRevoked
+                                  onRecvC2CReadReceipt:(OIMReceiptCallback)onRecvC2CReadReceipt
+                                onRecvGroupReadReceipt:(OIMReceiptCallback)onRecvGroupReadReceipt
+                                      onRecvNewMessage:(OIMMessageInfoCallback)onRecvNewMessage
+                               onNewRecvMessageRevoked:(OIMRevokedCallback)onNewRecvMessageRevoked;
+
 /*
  * 用户信息监听
  *

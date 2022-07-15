@@ -158,5 +158,18 @@
     Open_im_sdkSearchFriends(callback, [self operationId], searchParam.mj_JSONString);
 }
 
-
+- (void)searchFriends:(OIMSearchUserParam *)searchParam
+            onSuccess:(nullable OIMSearchUsersInfoCallback)onSuccess
+            onFailure:(nullable OIMFailureCallback)onFailure {
+    
+    assert(searchParam.isSearchRemark || searchParam.isSearchNickname || searchParam.isSearchUserID);
+    
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMSearchUserInfo mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkSearchFriends(callback, [self operationId], searchParam.mj_JSONString);
+}
 @end
