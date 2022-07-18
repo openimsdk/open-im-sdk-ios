@@ -37,6 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
 // 禁言时间s
 @property (nonatomic, assign) NSTimeInterval muteEndTime;
 
+@property (nonatomic, copy) NSString *inviterUserID;
+
 @property (nonatomic, nullable, copy) NSString *ex;
 
 @end

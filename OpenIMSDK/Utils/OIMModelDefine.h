@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, OIMMessageContentType) {
     OIMMessageContentTypeTyping = 113,          /// 正在输入状态
     OIMMessageContentTypeQuote = 114,           /// 引用消息
     OIMMessageContentTypeFace = 115,            /// 动图消息
+    OIMMessageContentTypeAdvancedRevoke = 118,  /// 撤回消息类型-新
     /// 以下皆是通知消息枚举
     OIMMessageContentTypeFriendAppApproved = 1201,              /// 同意加好友申请通知
     OIMMessageContentTypeFriendAppRejected = 1202,              /// 拒绝加好友申请通知

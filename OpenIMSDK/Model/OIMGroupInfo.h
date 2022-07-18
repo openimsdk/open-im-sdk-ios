@@ -36,7 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger memberCount;
 /// 群状态：0正常，1被封，2解散，3禁言
 @property (nonatomic, assign) NSInteger status;
-@property (nonatomic, nullable, copy) NSString *creatorUserID;
+@property (nonatomic, copy) NSString *creatorUserID;
+@property (nonatomic, assign) NSInteger needVerification;
+@property (nonatomic, assign) NSInteger lookMemberInfo;
+@property (nonatomic, assign) NSInteger applyMemberFriend;
+@property (nonatomic, assign) NSInteger notificationUpdateTime;
+@property (nonatomic, copy) NSString *notificationUserID;
 
 @end
 
