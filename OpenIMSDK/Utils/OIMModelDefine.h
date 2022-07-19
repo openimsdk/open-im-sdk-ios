@@ -13,22 +13,24 @@
  *  消息类型
  */
 typedef NS_ENUM(NSInteger, OIMMessageContentType) {
-    OIMMessageContentTypeText = 101,            /// 文本消息
-    OIMMessageContentTypeImage = 102,           /// 图片消息
-    OIMMessageContentTypeAudio = 103,           /// 语音消息
-    OIMMessageContentTypeVideo = 104,           /// 视频消息
-    OIMMessageContentTypeFile = 105,            /// 文件消息
-    OIMMessageContentTypeAt = 106,              /// @消息
-    OIMMessageContentTypeMerge = 107,           /// 合并消息
-    OIMMessageContentTypeCard = 108,            /// 名片消息
-    OIMMessageContentTypeLocation = 109,        /// 位置消息
-    OIMMessageContentTypeCustom = 110,          /// 自定义消息
-    OIMMessageContentTypeRevokeReciept = 111,   /// 撤回消息回执
-    OIMMessageContentTypeC2CReciept = 112,      /// C2C已读回执
-    OIMMessageContentTypeTyping = 113,          /// 正在输入状态
-    OIMMessageContentTypeQuote = 114,           /// 引用消息
-    OIMMessageContentTypeFace = 115,            /// 动图消息
-    OIMMessageContentTypeAdvancedRevoke = 118,  /// 撤回消息类型-新
+    OIMMessageContentTypeText = 101,                /// 文本消息
+    OIMMessageContentTypeImage = 102,               /// 图片消息
+    OIMMessageContentTypeAudio = 103,               /// 语音消息
+    OIMMessageContentTypeVideo = 104,               /// 视频消息
+    OIMMessageContentTypeFile = 105,                /// 文件消息
+    OIMMessageContentTypeAt = 106,                  /// @消息
+    OIMMessageContentTypeMerge = 107,               /// 合并消息
+    OIMMessageContentTypeCard = 108,                /// 名片消息
+    OIMMessageContentTypeLocation = 109,            /// 位置消息
+    OIMMessageContentTypeCustom = 110,              /// 自定义消息
+    OIMMessageContentTypeRevokeReciept = 111,       /// 撤回消息回执
+    OIMMessageContentTypeC2CReciept = 112,          /// C2C已读回执
+    OIMMessageContentTypeTyping = 113,              /// 正在输入状态
+    OIMMessageContentTypeQuote = 114,               /// 引用消息
+    OIMMessageContentTypeFace = 115,                /// 动图消息
+    OIMMessageContentTypeGroupHasReadReceipt = 116, /// 群聊已读回执
+    OIMMessageContentTypeAdvancedText = 117,        /// Advanced消息
+    OIMMessageContentTypeAdvancedRevoke = 118,      /// 撤回消息类型-新
     /// 以下皆是通知消息枚举
     OIMMessageContentTypeFriendAppApproved = 1201,              /// 同意加好友申请通知
     OIMMessageContentTypeFriendAppRejected = 1202,              /// 拒绝加好友申请通知
@@ -51,6 +53,16 @@ typedef NS_ENUM(NSInteger, OIMMessageContentType) {
     OIMMessageContentTypeMemberInvited = 1509,                  /// 邀请群成员通知
     OIMMessageContentTypeMemberEnter = 1510,                    /// 群成员进群通知
     OIMMessageContentTypeDismissGroup = 1511,                   /// 解散群通知
+    OIMMessageContentTypeGroupMemberMutedNotification = 1512,
+    OIMMessageContentTypeGroupMemberCancelMutedNotification = 1513,
+    OIMMessageContentTypeGroupMutedNotification = 1514,
+    OIMMessageContentTypeGroupCancelMutedNotification = 1515,
+    OIMMessageContentTypeGroupMemberInfoSetNotification = 1516,
+    OIMMessageContentTypeGroupMemberSetToAdminNotification = 1517,
+    OIMMessageContentTypeGroupMemberSetToOrdinaryUserNotification = 1518,
+    OIMMessageContentTypeSuperGroupUpdateNotification = 1651,
+    OIMMessageContentTypeConversationPrivateChatNotification = 1701,
+    OIMMessageContentTypeOrganizationChangedNotification = 1801,
     OIMMessageContentTypeIsPrivateMessage = 1701,               /// 阅后即焚通知
 };
 
@@ -146,6 +158,16 @@ typedef NS_ENUM(NSInteger, OIMGroupType) {
     OIMGroupTypeNormal = 0,     /// 普通群
     OIMGroupTypeSuper = 1,      /// 超级群
     OIMGroupTypeWorking = 2,    /// 工作群
+};
+
+/**
+ 群状态
+ */
+typedef NS_ENUM(NSInteger, OIMGroupStatus) {
+    OIMGroupStatusOk = 0,       /// 正常
+    OIMGroupStatusBanChat = 1,  /// 被封
+    OIMGroupStatusDismissed = 2,/// 解散
+    OIMGroupStatusMuted = 3,    /// 禁言
 };
 
 /**
