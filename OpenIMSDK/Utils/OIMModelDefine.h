@@ -143,8 +143,9 @@ typedef NS_ENUM(NSInteger,  OIMGroupVerificationType) {
  群类型
  */
 typedef NS_ENUM(NSInteger, OIMGroupType) {
-    OIMGroupTypeNormal,     /// 普通群
-    OIMGroupTypeWorking,    /// 工作群
+    OIMGroupTypeNormal = 0,     /// 普通群
+    OIMGroupTypeSuper = 1,      /// 超级群
+    OIMGroupTypeWorking = 2,    /// 工作群
 };
 
 /**
