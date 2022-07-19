@@ -192,7 +192,7 @@ NS_ASSUME_NONNULL_BEGIN
            onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
- *  静音或取消禁言某群成员 mutedSeconds为0时取消禁言
+ *  禁言或取消禁言某群成员 mutedSeconds为0时取消禁言
  */
 - (void)changeGroupMemberMute:(NSString *)groupID
                        userID:(NSString *)userID
@@ -201,7 +201,7 @@ NS_ASSUME_NONNULL_BEGIN
            onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
- *  静音或取消禁言某群
+ *  禁言或取消禁言某群
  */
 - (void)changeGroupMute:(NSString *)groupID
                  isMute:(BOOL)isMute
