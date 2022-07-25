@@ -33,6 +33,10 @@
 
 @end
 
+@implementation OIMGetAdvancedHistoryMessageListParam
+
+@end
+
 @implementation OIMSearchUserParam
 
 @end

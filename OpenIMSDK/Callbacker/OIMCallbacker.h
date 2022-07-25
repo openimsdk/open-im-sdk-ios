@@ -74,6 +74,8 @@ typedef void (^OIMDepartmentMemberAndSubInfoCallback)(OIMDepartmentMemberAndSubI
 
 typedef void (^OIMMomentsInfoCallback)(NSArray <OIMMomentsInfo *> * _Nullable items);
 
+typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMessageListInfo * _Nullable result);
+
 /// IMSDK 主核心回调
 @protocol OIMSDKListener <NSObject>
 @optional

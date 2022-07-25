@@ -26,3 +26,7 @@
 }
 
 @end
+
+@implementation OIMGetAdvancedHistoryMessageListInfo
+
+@end

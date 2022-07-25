@@ -40,10 +40,22 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 搜索结果
  */
-@property (nonatomic, strong) NSArray <OIMSearchResultItemInfo *> *searchResultItems;
+@property (nonatomic, copy) NSArray <OIMSearchResultItemInfo *> *searchResultItems;
 
 @end
 
+@interface OIMGetAdvancedHistoryMessageListInfo : NSObject
 
+@property (nonatomic, assign) BOOL isEnd;
+
+@property (nonatomic, assign) NSInteger lastMinSeq;
+
+@property (nonatomic, assign) NSInteger errCode;
+
+@property (nonatomic, copy) NSString *errMsg;
+
+@property (nonatomic, copy) NSArray <OIMMessageInfo *> *messageList;
+
+@end
 
 NS_ASSUME_NONNULL_END

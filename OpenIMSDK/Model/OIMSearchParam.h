@@ -105,6 +105,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface OIMGetAdvancedHistoryMessageListParam : OIMGetMessageOptions
+
+@property (nonatomic, assign) NSInteger lastMinSeq;
+
+@end
+
 // 查询组织架构使用
 @interface OIMSearchOrganizationParam : NSObject
 

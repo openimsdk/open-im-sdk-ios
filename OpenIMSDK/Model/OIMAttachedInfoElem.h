@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSInteger hasReadCount;
 
+// 发送此条消息时的群人数
 @property (nonatomic, assign) NSInteger groupMemberCount;
 
 @end
