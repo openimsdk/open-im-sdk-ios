@@ -496,6 +496,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setGlobalRecvMessageOpt:(OIMReceiveMessageOpt)opt
                       onSuccess:(nullable OIMSuccessCallback)onSuccess
                       onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+* Advanced Message 系列使用
+ @param opts lastMinSeq  是上一次拉取回调给的值，上下文，第二次拉取需要回传
+ */
+- (void)getAdvancedHistoryMessageList:(OIMGetAdvancedHistoryMessageListParam *)opts
+                            onSuccess:(nullable OIMGetAdvancedHistoryMessageListCallback)onSuccess
+                            onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

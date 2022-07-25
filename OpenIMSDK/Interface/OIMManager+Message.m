@@ -474,4 +474,16 @@
     Open_im_sdkSetGlobalRecvMessageOpt(callback, [self operationId], opt);
 }
 
+- (void)getAdvancedHistoryMessageList:(OIMGetAdvancedHistoryMessageListParam *)opts
+                            onSuccess:(OIMGetAdvancedHistoryMessageListCallback)onSuccess
+                            onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMGetAdvancedHistoryMessageListInfo mj_objectWithKeyValues:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetAdvancedHistoryMessageList(callback, [self operationId], opts.mj_JSONString);
+}
+
 @end

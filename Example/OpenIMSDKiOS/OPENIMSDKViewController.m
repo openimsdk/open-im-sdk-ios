@@ -314,7 +314,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         NSLog(@"onRecvGroupReadReceipt:%@", msgReceiptList);
     } onRecvNewMessage:^(OIMMessageInfo * _Nullable message) {
         
-    } onNewRecvMessageRevoked:^(NSArray<OIMMessageRevoked *> * _Nullable msgRovoked) {
+    } onNewRecvMessageRevoked:^(OIMMessageRevoked * _Nullable msgRovoked) {
         
     }];
 }

@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger createTime;
 @property (nonatomic, assign) NSInteger memberCount;
 /// 群状态：0正常，1被封，2解散，3禁言
-@property (nonatomic, assign) NSInteger status;
+@property (nonatomic, assign) OIMGroupStatus status;
 @property (nonatomic, copy) NSString *creatorUserID;
 @property (nonatomic, assign) NSInteger needVerification;
 @property (nonatomic, assign) NSInteger lookMemberInfo;

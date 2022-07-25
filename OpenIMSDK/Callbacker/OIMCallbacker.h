@@ -62,7 +62,7 @@ typedef void (^OIMMessagesInfoCallback)(NSArray <OIMMessageInfo *> * _Nullable m
 typedef void (^OIMMessageSearchCallback)(OIMSearchResultInfo * _Nullable result);
 
 typedef void (^OIMReceiptCallback)(NSArray <OIMReceiptInfo *> * _Nullable msgReceiptList);
-typedef void (^OIMRevokedCallback)(NSArray <OIMMessageRevoked *> * _Nullable msgRovoked);
+typedef void (^OIMRevokedCallback)(OIMMessageRevoked * _Nullable msgRovoked);
 
 typedef void (^OIMSignalingInvitationCallback)(OIMSignalingInfo * _Nullable result);
 typedef void (^OIMSignalingResultCallback)(OIMInvitationResultInfo * _Nullable result);
@@ -73,6 +73,8 @@ typedef void (^OIMUserInDepartmentInfoCallback)(NSArray <OIMUserInDepartmentInfo
 typedef void (^OIMDepartmentMemberAndSubInfoCallback)(OIMDepartmentMemberAndSubInfo * _Nullable items);
 
 typedef void (^OIMMomentsInfoCallback)(NSArray <OIMMomentsInfo *> * _Nullable items);
+
+typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMessageListInfo * _Nullable result);
 
 /// IMSDK 主核心回调
 @protocol OIMSDKListener <NSObject>
@@ -270,7 +272,7 @@ typedef void (^OIMMomentsInfoCallback)(NSArray <OIMMomentsInfo *> * _Nullable it
  */
 - (void)onRecvMessageRevoked:(NSString *)msgID;
 
-- (void)onNewRecvMessageRevoked:(NSString *)messageRevoked;
+- (void)onNewRecvMessageRevoked:(OIMMessageRevoked *)messageRevoked;
 
 @end
 

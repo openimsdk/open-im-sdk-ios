@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) OIMJoinType joinSource;
 // 操作者id
 @property (nonatomic, nullable, copy) NSString *operatorUserID;
-// 禁言时间s
+// 被禁言结束时间戳s
 @property (nonatomic, assign) NSTimeInterval muteEndTime;
 
 @property (nonatomic, copy) NSString *inviterUserID;
