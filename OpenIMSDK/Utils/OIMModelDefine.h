@@ -31,6 +31,8 @@ typedef NS_ENUM(NSInteger, OIMMessageContentType) {
     OIMMessageContentTypeGroupHasReadReceipt = 116, /// 群聊已读回执
     OIMMessageContentTypeAdvancedText = 117,        /// Advanced消息
     OIMMessageContentTypeAdvancedRevoke = 118,      /// 撤回消息类型-新
+    OIMMessageContentTypeCustomMsgNotTriggerConversation = 119,      /// 后端API会用到
+    OIMMessageContentTypeCustomMsgOnlineOnly = 120,      /// 后端API会用到
     /// 以下皆是通知消息枚举
     OIMMessageContentTypeFriendAppApproved = 1201,              /// 同意加好友申请通知
     OIMMessageContentTypeFriendAppRejected = 1202,              /// 拒绝加好友申请通知

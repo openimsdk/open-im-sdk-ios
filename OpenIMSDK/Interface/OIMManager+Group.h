@@ -288,6 +288,13 @@ NS_ASSUME_NONNULL_BEGIN
                           rule:(int32_t)rule
                      onSuccess:(nullable OIMSuccessCallback)onSuccess
                      onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 搜索群成员
+ */
+- (void)searchGroupMembers:(OIMSearchGroupMembersParam *)searchParam
+                 onSuccess:(nullable OIMGroupMembersInfoCallback)onSuccess
+                 onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface OIMMessageEntityElem : NSObject
 
 @property (nonatomic, copy) NSString *text;
-@property (nonatomic, strong) NSArray <OIMMessageEntity *> *messageEntityList;
+@property (nonatomic, copy) NSArray <OIMMessageEntity *> *messageEntityList;
 
 @end
 

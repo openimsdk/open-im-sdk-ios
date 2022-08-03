@@ -22,11 +22,18 @@
 
 + (NSDictionary *)mj_objectClassInArray
 {
-    return @{@"searchResultItems" : [OIMSearchResultItemInfo class]};
+    return @{@"searchResultItems" : [OIMSearchResultItemInfo class],
+             @"findResultItems" : [OIMSearchResultItemInfo class]
+    };
 }
 
 @end
 
 @implementation OIMGetAdvancedHistoryMessageListInfo
+
++ (NSDictionary *)mj_objectClassInArray
+{
+    return @{@"messageList" : [OIMMessageInfo class]};
+}
 
 @end

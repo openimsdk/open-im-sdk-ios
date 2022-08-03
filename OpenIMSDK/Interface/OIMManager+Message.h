@@ -235,11 +235,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /*
- * 创建动图消息
+ * 创建高级消息
  *
  */
 + (OIMMessageInfo *)createAdvancedTextMessage:(NSString *)text
                             messageEntityList:(NSArray <OIMMessageEntity *> *)messageEntityList;
+
+/*
+ * 创建高级引用消息
+ *
+ */
++ (OIMMessageInfo *)createAdvancedQuoteMessage:(NSString *)text
+                                       message:(OIMMessageInfo *)message
+                             messageEntityList:(NSArray <OIMMessageEntity *> *)messageEntityList;
+
 @end
 
 @interface OIMManager (Message)
@@ -504,6 +513,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getAdvancedHistoryMessageList:(OIMGetAdvancedHistoryMessageListParam *)opts
                             onSuccess:(nullable OIMGetAdvancedHistoryMessageListCallback)onSuccess
                             onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 查找消息列表
+ */
+- (void)findMessageList:(OIMFindMessageListParam *)param
+              onSuccess:(nullable OIMMessageSearchCallback)onSuccess
+              onFailure:(nullable OIMFailureCallback)onFailure;
+
 @end
 
 NS_ASSUME_NONNULL_END

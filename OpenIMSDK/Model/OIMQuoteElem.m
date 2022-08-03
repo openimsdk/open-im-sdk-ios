@@ -9,4 +9,9 @@
 
 @implementation OIMQuoteElem
 
++ (NSDictionary *)mj_objectClassInArray
+{
+    return @{@"messageEntityList" : [OIMMessageEntity class]};
+}
+
 @end

@@ -13,7 +13,8 @@
 
 + (NSDictionary *)mj_objectClassInArray
 {
-    return @{@"multiMessage" : [OIMMessageInfo class]};
+    return @{@"multiMessage" : [OIMMessageInfo class],
+             @"messageEntityList" : [OIMMessageEntity class]};
 }
 
 @end
