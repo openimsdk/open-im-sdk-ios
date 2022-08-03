@@ -41,6 +41,14 @@
 
 @end
 
+@implementation OIMFindMessageListParam
+
+@end
+
+@implementation OIMSearchGroupMembersParam
+
+@end
+
 @implementation OIMSearchOrganizationParam
 
 @end

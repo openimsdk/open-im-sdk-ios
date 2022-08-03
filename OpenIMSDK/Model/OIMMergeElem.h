@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OIMMessageElem.h"
 @class OIMMessageInfo;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -15,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) NSString *title;
 @property (nonatomic, nullable, copy) NSArray<NSString *> *abstractList;
 @property (nonatomic, nullable, copy) NSArray<OIMMessageInfo *> *multiMessage;
+@property (nonatomic, nullable, copy) NSArray<OIMMessageEntity *> *messageEntityList;
 
 @end
 

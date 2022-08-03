@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) BOOL notSenderNotificationPush;
 
-@property (nonatomic, strong) NSArray <OIMMessageEntity *> *messageEntityList;
+@property (nonatomic, copy) NSArray <OIMMessageEntity *> *messageEntityList;
 @end
 
 NS_ASSUME_NONNULL_END

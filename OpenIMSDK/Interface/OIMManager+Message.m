@@ -216,6 +216,15 @@
     return [self convertToMessageInfo:json];
 }
 
++ (OIMMessageInfo *)createAdvancedQuoteMessage:(NSString *)text
+                                       message:(OIMMessageInfo *)message
+                             messageEntityList:(NSArray<OIMMessageEntity *> *)messageEntityList {
+    NSArray *msgs = [OIMMessageEntity mj_keyValuesArrayWithObjectArray:messageEntityList];
+    NSString *json = Open_im_sdkCreateAdvancedQuoteMessage([OIMManager.manager operationId], text, message.mj_JSONString, [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:msgs options:0 error:nil] encoding:NSUTF8StringEncoding]);
+    
+    return [self convertToMessageInfo:json];
+}
+
 @end
 
 @implementation OIMManager (Message)
@@ -484,6 +493,18 @@
     } onFailure:onFailure];
     
     Open_im_sdkGetAdvancedHistoryMessageList(callback, [self operationId], opts.mj_JSONString);
+}
+
+- (void)findMessageList:(OIMFindMessageListParam *)param
+              onSuccess:(OIMMessageSearchCallback)onSuccess
+              onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMSearchResultInfo mj_objectWithKeyValues:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkFindMessageList(callback, [self operationId], param.mj_JSONString);
 }
 
 @end

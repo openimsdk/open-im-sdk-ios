@@ -111,6 +111,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+
+@interface OIMFindMessageListParam : NSObject
+
+@property (nonatomic, copy) NSString *conversationID;
+
+@property (nonatomic, copy) NSArray <NSString *> *clientMsgIDList;
+
+@end
+
 // 查询组织架构使用
 @interface OIMSearchOrganizationParam : NSObject
 
@@ -137,6 +146,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 是否以电话号码搜索备注，默认false
 @property (nonatomic, assign) BOOL isSearchTelephone;
+@end
+
+// 查询群成员使用
+@interface OIMSearchGroupMembersParam : NSObject
+
+@property (nonatomic, copy) NSString *groupID;
+
+@property (nonatomic, copy) NSArray *keywordList;
+
+// 是否以关键词搜索UserID
+@property (nonatomic, assign) BOOL isSearchUserID;
+
+// 是否以关键词搜索昵称，默认false
+@property (nonatomic, assign) BOOL isSearchMemberNickname;
+
+@property (nonatomic, assign) NSInteger offset;
+
+@property (nonatomic, assign) NSInteger count;
 @end
 
 NS_ASSUME_NONNULL_END

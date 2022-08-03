@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OIMModelDefine.h"
 
 @class OIMMessageInfo;
 
@@ -22,6 +23,12 @@ NS_ASSUME_NONNULL_BEGIN
  * 这个会话下的消息数量
  */
 @property (nonatomic, assign) NSInteger messageCount;
+
+@property (nonatomic, assign) OIMConversationType conversationType;
+
+@property (nonatomic, copy) NSString *showName;
+
+@property (nonatomic, copy) NSString *faceURL;
 
 /*
  * OIMMessageInfo的列表
@@ -41,6 +48,9 @@ NS_ASSUME_NONNULL_BEGIN
  * 搜索结果
  */
 @property (nonatomic, copy) NSArray <OIMSearchResultItemInfo *> *searchResultItems;
+
+// 仅适用于findMessageList函数的回调结果
+@property (nonatomic, copy) NSArray <OIMSearchResultItemInfo *> *findResultItems;
 
 @end
 

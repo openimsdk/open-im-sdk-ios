@@ -309,4 +309,16 @@
     
     Open_im_sdkSetGroupLookMemberInfo(callback, [self operationId], groupID, rule);
 }
+
+- (void)searchGroupMembers:(OIMSearchParam *)searchParam
+                 onSuccess:(OIMGroupMembersInfoCallback)onSuccess
+                 onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMGroupMemberInfo mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkSearchGroupMembers(callback, [self operationId], searchParam.mj_JSONString);
+}
 @end
