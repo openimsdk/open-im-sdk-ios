@@ -1084,6 +1084,11 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
 //        t.groupNickname = @"x2";
 //        self.testMessage = [OIMMessageInfo createTextAtMessage:@"一条消息" atUidList:@[] atUsersInfo:@[t] message:nil];
         
+//        OIMMessageEntity *e1 = [OIMMessageEntity new];
+//        OIMMessageEntity *e2 = [OIMMessageEntity new];
+//        
+//        self.testMessage = [OIMMessageInfo createAdvancedTextMessage:@"text" messageEntityList:@[e1, e2]];
+        
         [OIMManager.manager sendMessage:self.testMessage
                                  recvID:OTHER_USER_ID
                                 groupID:GROUP_ID

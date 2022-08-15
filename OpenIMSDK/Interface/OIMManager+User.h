@@ -35,6 +35,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getSelfInfoWithOnSuccess:(nullable OIMUserInfoCallback)onSuccess
                        onFailure:(nullable OIMFailureCallback)onFailure;
 
+/**
+ *   更新FMC token
+ */
+- (void)updateFcmToken:(NSString *)fmcToken
+             onSuccess:(nullable OIMSuccessCallback)onSuccess
+             onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

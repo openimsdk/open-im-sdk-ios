@@ -211,7 +211,8 @@
 
 + (OIMMessageInfo *)createAdvancedTextMessage:(NSString *)text
                             messageEntityList:(NSArray<OIMMessageEntity *> *)messageEntityList {
-    NSString *json = Open_im_sdkCreateAdvancedTextMessage([OIMManager.manager operationId], text, messageEntityList.mj_JSONString);
+    NSArray *msgs = [OIMMessageEntity mj_keyValuesArrayWithObjectArray:messageEntityList];
+    NSString *json = Open_im_sdkCreateAdvancedTextMessage([OIMManager.manager operationId], text, [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:msgs options:0 error:nil] encoding:NSUTF8StringEncoding]);
     
     return [self convertToMessageInfo:json];
 }
