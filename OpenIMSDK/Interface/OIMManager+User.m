@@ -41,4 +41,11 @@
     Open_im_sdkGetSelfUserInfo(callback, [self operationId]);
 }
 
+- (void)updateFcmToken:(NSString *)fmcToken
+             onSuccess:(OIMSuccessCallback)onSuccess
+             onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+        
+    Open_im_sdkUpdateFcmToken(callback, fmcToken, [self operationId]);
+}
 @end
