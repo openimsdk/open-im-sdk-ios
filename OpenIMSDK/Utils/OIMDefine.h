@@ -11,12 +11,15 @@
 #import "OIMModelDefine.h"
 
 typedef NS_ENUM(NSInteger, OIMPlatform) {
-    iOS = 1,    /// iOS
+    iPhone = 1, /// iPhone
     android,    /// Android
     windows,    /// Windows
     xOS,        /// Mac
     web,        /// Web
-    miniWeb     /// miniWeb
+    miniWeb,    /// miniWeb
+    linux,      /// Linux
+    aPad,       /// Android Pad
+    iPad,       /// iPad
 };
 
 typedef void (^OIMVoidCallback)(void);

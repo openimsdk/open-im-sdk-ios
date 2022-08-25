@@ -21,7 +21,8 @@
            onKickedOffline:(OIMVoidCallback)onKickedOffline
         onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired {
     
-    return [self initSDK:iOS apiAdrr:apiAddr
+    return [self initSDK: [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad ? iPad : iPhone
+                 apiAdrr:apiAddr
                   wsAddr:wsAddr
                  dataDir:dataDir
                 logLevel:logLevel
