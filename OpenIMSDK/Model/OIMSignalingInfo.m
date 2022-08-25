@@ -14,7 +14,7 @@
     
     if (self) {
         _timeout = 30;
-        _platformID = iOS;
+        _platformID = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad ? iPad : iPhone;
         _groupID = @"";
     }
     
