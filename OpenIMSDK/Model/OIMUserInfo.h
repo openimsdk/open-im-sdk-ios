@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OIMModelDefine.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) NSString *email;
 @property (nonatomic, assign) NSInteger createTime;
 @property (nonatomic, nullable, copy) NSString *ex;
+@property (nonatomic, assign) OIMReceiveMessageOpt globalRecvMsgOpt;
 @end
 
 NS_ASSUME_NONNULL_END

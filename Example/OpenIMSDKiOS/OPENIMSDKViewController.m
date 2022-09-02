@@ -1267,7 +1267,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         [OIMManager.manager insertSingleMessageToLocalStorage:self.testMessage
                                                        recvID:OTHER_USER_ID
                                                        sendID:LOGIN_USER_ID
-                                                    onSuccess:^(NSString * _Nullable data) {
+                                                    onSuccess:^(OIMMessageInfo * _Nullable message) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
@@ -1285,7 +1285,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         [OIMManager.manager insertGroupMessageToLocalStorage:t
                                                      groupID:GROUP_ID
                                                       sendID:LOGIN_USER_ID
-                                                   onSuccess:^(NSString * _Nullable data) {
+                                                   onSuccess:^(OIMMessageInfo * _Nullable message) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {

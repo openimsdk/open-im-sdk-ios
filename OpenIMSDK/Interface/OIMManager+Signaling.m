@@ -10,7 +10,7 @@
 
 @implementation OIMManager (Signaling)
 
-- (void)signalingInvite:(OIMInvitationInfo *)invitation
+- (OIMSignalingInfo *)signalingInvite:(OIMInvitationInfo *)invitation
         offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
               onSuccess:(OIMSignalingResultCallback)onSuccess
               onFailure:(OIMFailureCallback)onFailure {
@@ -43,13 +43,15 @@
     } else {
         Open_im_sdkSignalingInvite(callback, [self operationId], info.mj_JSONString);
     }
+    
+    return info;
 }
 
-- (void)signalingInviteInGroup:(OIMInvitationInfo *)invitation
+- (OIMSignalingInfo *)signalingInviteInGroup:(OIMInvitationInfo *)invitation
                offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
                      onSuccess:(OIMSignalingResultCallback)onSuccess
                      onFailure:(OIMFailureCallback)onFailure {
-    [self signalingInvite:invitation offlinePushInfo:offlinePushInfo onSuccess:onSuccess onFailure:onFailure];
+    return [self signalingInvite:invitation offlinePushInfo:offlinePushInfo onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)signalingAccept:(OIMSignalingInfo *)invitation
