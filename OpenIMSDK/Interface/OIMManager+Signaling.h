@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
  * @param offlinePushInfo 离线push消息
  */
-- (void)signalingInvite:(OIMInvitationInfo *)invitation
+- (OIMSignalingInfo *)signalingInvite:(OIMInvitationInfo *)invitation
         offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
               onSuccess:(nullable OIMSignalingResultCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  *  邀请群里某些人加入音视频 - 只在于参数的设置
  */
-- (void)signalingInviteInGroup:(OIMInvitationInfo *)invitation
+- (OIMSignalingInfo *)signalingInviteInGroup:(OIMInvitationInfo *)invitation
                offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
                      onSuccess:(nullable OIMSignalingResultCallback)onSuccess
                      onFailure:(nullable OIMFailureCallback)onFailure;

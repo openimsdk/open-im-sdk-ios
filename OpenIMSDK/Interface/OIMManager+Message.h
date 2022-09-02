@@ -464,7 +464,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)insertSingleMessageToLocalStorage:(OIMMessageInfo *)message
                                    recvID:(NSString *)recvID
                                    sendID:(NSString *)sendID
-                                onSuccess:(nullable OIMSuccessCallback)onSuccess
+                                onSuccess:(nullable OIMMessageInfoCallback)onSuccess
                                 onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
@@ -476,7 +476,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)insertGroupMessageToLocalStorage:(OIMMessageInfo *)message
                                  groupID:(NSString * _Nullable)groupID
                                   sendID:(NSString * _Nullable)sendID
-                               onSuccess:(nullable OIMSuccessCallback)onSuccess
+                               onSuccess:(nullable OIMMessageInfoCallback)onSuccess
                                onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
@@ -521,6 +521,12 @@ NS_ASSUME_NONNULL_BEGIN
               onSuccess:(nullable OIMMessageSearchCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
+/**
+ 设置角标使用，告知服务器 客户端现有的数量
+ */
+- (void)setAppBadge:(NSInteger)count
+          onSuccess:(nullable OIMSuccessCallback)onSuccess
+          onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

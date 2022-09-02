@@ -437,9 +437,13 @@
 - (void)insertSingleMessageToLocalStorage:(OIMMessageInfo *)message
                                    recvID:(NSString *)recvID
                                    sendID:(NSString *)sendID
-                                onSuccess:(OIMSuccessCallback)onSuccess
+                                onSuccess:(OIMMessageInfoCallback)onSuccess
                                 onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMMessageInfo mj_objectWithKeyValues:data]);
+        }
+    } onFailure:onFailure];
     
     Open_im_sdkInsertSingleMessageToLocalStorage(callback, [self operationId], message.mj_JSONString, recvID, sendID);
 }
@@ -447,9 +451,13 @@
 - (void)insertGroupMessageToLocalStorage:(OIMMessageInfo *)message
                                  groupID:(NSString *)groupID
                                   sendID:(NSString *)sendID
-                               onSuccess:(OIMSuccessCallback)onSuccess
+                               onSuccess:(OIMMessageInfoCallback)onSuccess
                                onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMMessageInfo mj_objectWithKeyValues:data]);
+        }
+    } onFailure:onFailure];
     
     Open_im_sdkInsertGroupMessageToLocalStorage(callback, [self operationId], message.mj_JSONString, groupID, sendID);
 }
@@ -506,6 +514,14 @@
     } onFailure:onFailure];
     
     Open_im_sdkFindMessageList(callback, [self operationId], param.mj_JSONString);
+}
+
+- (void)setAppBadge:(NSInteger)count
+          onSuccess:(OIMSuccessCallback)onSuccess
+          onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+        
+    Open_im_sdkSetAppBadge(callback, count, [self operationId]);
 }
 
 @end
