@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, OIMMessageContentType) {
     OIMMessageContentTypeBlackDeleted = 1208,                   /// 移除黑名单通知
     OIMMessageContentTypeConversationOptChange = 1300,          /// 会话免打扰设置通知
     OIMMessageContentTypeUserInfoUpdated = 1303,                /// 个人信息变更通知
+    OIMMessageContentTypeOANotification = 1400,                 /// oa 通知
     OIMMessageContentTypeGroupCreated = 1501,                   /// 群创建通知
     OIMMessageContentTypeGroupInfoSet = 1502,                   /// 更新群信息通知
     OIMMessageContentTypeJoinGroupApplication = 1503,           /// 申请加群通知
