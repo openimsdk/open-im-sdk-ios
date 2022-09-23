@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, copy) NSString *ex;
 
-@property (nonatomic, strong) OIMOfflinePushInfo *offlinePushInfo;
+@property (nonatomic, strong) OIMOfflinePushInfo *offlinePush;
 
 @property (nonatomic, nullable, strong) OIMPictureElem *pictureElem;
 

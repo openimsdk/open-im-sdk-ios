@@ -31,7 +31,7 @@
     self = [super init];
     
     if (self) {
-        self.offlinePushInfo = [OIMOfflinePushInfo new];
+        self.offlinePush = [OIMOfflinePushInfo new];
         self.status = OIMMessageStatusUndefine;
     }
     
