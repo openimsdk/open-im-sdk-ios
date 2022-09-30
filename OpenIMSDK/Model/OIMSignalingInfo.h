@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OIMMessageInfo.h"
+#import "OIMFullUserInfo.h"
 #import "OIMDefine.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -62,10 +63,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-
-
-
-
 @interface OIMInvitationResultInfo : NSObject
 
 /*
@@ -96,5 +93,36 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+
+/// 参与者信息
+@interface OIMParticipantMetaData : NSObject
+
+@property (nonatomic, strong) OIMGroupInfo *groupInfo;
+
+@property (nonatomic, strong) OIMGroupMemberInfo *groupMemberInfo;
+
+@property (nonatomic, strong) OIMPublicUserInfo *publicUserInfo;
+
+@property (nonatomic, strong) OIMPublicUserInfo *userInfo;
+@end
+
+@interface OIMParticipantConnectedInfo : NSObject
+
+@property (nonatomic, copy) NSString *groupID;
+
+@property (nonatomic, strong) OIMInvitationInfo *invitation;
+
+@property (nonatomic, copy) NSArray<OIMParticipantMetaData *> *metaData;
+
+// --- 查询房间 ---
+@property (nonatomic, copy) NSArray<OIMParticipantMetaData *> *participant;
+
+@property (nonatomic, copy) NSString *token;
+
+@property (nonatomic, copy) NSString *roomID;
+
+@property (nonatomic, copy) NSString *liveURL;
+
+@end
 
 NS_ASSUME_NONNULL_END

@@ -98,6 +98,26 @@
                                    onInvitationTimeout:(OIMSignalingInvitationCallback)onInvitationTimeout
                         onInviteeRejectedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeRejectedByOtherDevice
                         onInviteeAcceptedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeAcceptedByOtherDevice {
+    [self setSignalingListenerWithOnReceiveNewInvitation:onReceiveNewInvitation
+                                       onInviteeAccepted:onInviteeAccepted
+                                       onInviteeRejected:onReceiveNewInvitation
+                                   onInvitationCancelled:onInvitationCancelled
+                                     onInvitationTimeout:onInvitationTimeout
+                          onInviteeRejectedByOtherDevice:onInviteeRejectedByOtherDevice
+                          onInviteeAcceptedByOtherDevice:onInviteeAcceptedByOtherDevice
+                              onRoomParticipantConnected:nil
+                           onRoomParticipantDisconnected:nil];
+}
+
+- (void)setSignalingListenerWithOnReceiveNewInvitation:(OIMSignalingInvitationCallback)onReceiveNewInvitation
+                                     onInviteeAccepted:(OIMSignalingInvitationCallback)onInviteeAccepted
+                                     onInviteeRejected:(OIMSignalingInvitationCallback)onInviteeRejected
+                                 onInvitationCancelled:(OIMSignalingInvitationCallback)onInvitationCancelled
+                                   onInvitationTimeout:(OIMSignalingInvitationCallback)onInvitationTimeout
+                        onInviteeRejectedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeRejectedByOtherDevice
+                        onInviteeAcceptedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeAcceptedByOtherDevice
+                            onRoomParticipantConnected:(OIMSignalingParticipantChangeCallback)onRoomParticipantConnected
+                         onRoomParticipantDisconnected:(OIMSignalingParticipantChangeCallback)onRoomParticipantDisconnected {
     self.onReceiveNewInvitation = onReceiveNewInvitation;
     self.onInviteeAccepted = onInviteeAccepted;
     self.onInviteeRejected = onInviteeRejected;
@@ -105,6 +125,8 @@
     self.onInvitationTimeout = onInvitationTimeout;
     self.onInviteeRejectedByOtherDevice = onInviteeRejectedByOtherDevice;
     self.onInviteeAcceptedByOtherDevice = onInviteeAcceptedByOtherDevice;
+    self.onRoomParticipantConnected = onRoomParticipantConnected;
+    self.onRoomParticipantDisconnected = onRoomParticipantDisconnected;
 }
 
 - (void)setOrganizationListenerWithOrganizationUpdated:(OIMVoidCallback)onOrganizationUpdated {

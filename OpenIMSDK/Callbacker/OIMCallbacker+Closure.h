@@ -98,7 +98,8 @@ NS_ASSUME_NONNULL_BEGIN
  * 邀请者收到：被邀请者超时未接通   onInvitationTimeout
  * 被邀请者（其他端）收到：比如被邀请者在手机拒接，在pc上会收到此回调  onInviteeRejectedByOtherDevice
  * 被邀请者（其他端）收到：比如被邀请者在手机拒接，在pc上会收到此回调  onInviteeAcceptedByOtherDevice
- *
+ * 房间信息 onRoomParticipantConnected
+ * 成员断开 onRoomParticipantDisconnected
  */
 - (void)setSignalingListenerWithOnReceiveNewInvitation:(OIMSignalingInvitationCallback)onReceiveNewInvitation
                                      onInviteeAccepted:(OIMSignalingInvitationCallback)onInviteeAccepted
@@ -108,6 +109,15 @@ NS_ASSUME_NONNULL_BEGIN
                         onInviteeRejectedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeRejectedByOtherDevice
                         onInviteeAcceptedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeAcceptedByOtherDevice;
 
+- (void)setSignalingListenerWithOnReceiveNewInvitation:(OIMSignalingInvitationCallback)onReceiveNewInvitation
+                                     onInviteeAccepted:(OIMSignalingInvitationCallback)onInviteeAccepted
+                                     onInviteeRejected:(OIMSignalingInvitationCallback)onInviteeRejected
+                                 onInvitationCancelled:(OIMSignalingInvitationCallback)onInvitationCancelled
+                                   onInvitationTimeout:(OIMSignalingInvitationCallback)onInvitationTimeout
+                        onInviteeRejectedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeRejectedByOtherDevice
+                        onInviteeAcceptedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeAcceptedByOtherDevice
+                            onRoomParticipantConnected:(nullable OIMSignalingParticipantChangeCallback)onRoomParticipantConnected
+                         onRoomParticipantDisconnected:(nullable OIMSignalingParticipantChangeCallback)onRoomParticipantDisconnected;
 /*
  * 设置组织架构监听
  */
