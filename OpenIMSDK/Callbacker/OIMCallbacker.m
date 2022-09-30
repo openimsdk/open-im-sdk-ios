@@ -697,6 +697,30 @@
     }];
 }
 
+- (void)onRoomParticipantConnected:(NSString *)onRoomParticipantConnectedCallback {
+    OIMParticipantConnectedInfo *info = [OIMParticipantConnectedInfo mj_objectWithKeyValues:onRoomParticipantConnectedCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onRoomParticipantConnected) {
+            self.onRoomParticipantConnected(info);
+        }
+        
+        [self.signalingListeners onRoomParticipantConnected:info];
+    }];
+}
+
+- (void)onRoomParticipantDisconnected:(NSString *)onRoomParticipantDisconnectedCallback {
+    OIMParticipantConnectedInfo *info = [OIMParticipantConnectedInfo mj_objectWithKeyValues:onRoomParticipantDisconnectedCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onRoomParticipantDisconnected) {
+            self.onRoomParticipantDisconnected(info);
+        }
+        
+        [self.signalingListeners onRoomParticipantDisconnected:info];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Organization
 

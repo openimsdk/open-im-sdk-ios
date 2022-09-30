@@ -84,7 +84,7 @@
 }
 
 - (void)getGroupMemberList:(NSString *)groupId
-                    filter:(NSInteger)filter
+                    filter:(OIMGroupMemberRole)filter
                     offset:(NSInteger)offset
                      count:(NSInteger)count
                  onSuccess:(OIMGroupMembersInfoCallback)onSuccess

@@ -33,3 +33,11 @@
 @implementation OIMSignalingInfo
 
 @end
+
+@implementation OIMParticipantMetaData
+
+@end
+
+@implementation OIMParticipantConnectedInfo
+
+@end

@@ -91,4 +91,16 @@
     Open_im_sdkSignalingHungUp(callback, [self operationId], invitation.mj_JSONString);
 }
 
+- (void)signalingGetRoomByGroupID:(NSString *)groupID
+                        onSuccess:(OIMSignalingParticipantChangeCallback)onSuccess
+                        onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMParticipantConnectedInfo mj_objectWithKeyValues:data]);
+        }
+    } onFailure:onFailure];
+        
+    Open_im_sdkSignalingGetRoomByGroupID(callback, [self operationId], groupID);
+}
+
 @end

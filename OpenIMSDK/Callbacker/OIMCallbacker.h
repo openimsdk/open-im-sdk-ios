@@ -66,6 +66,7 @@ typedef void (^OIMRevokedCallback)(OIMMessageRevoked * _Nullable msgRovoked);
 
 typedef void (^OIMSignalingInvitationCallback)(OIMSignalingInfo * _Nullable result);
 typedef void (^OIMSignalingResultCallback)(OIMInvitationResultInfo * _Nullable result);
+typedef void (^OIMSignalingParticipantChangeCallback)(OIMParticipantConnectedInfo * _Nullable result);
 
 typedef void (^OIMDepartmentInfoCallback)(NSArray <OIMDepartmentInfo *> * _Nullable departmentList);
 typedef void (^OIMDepartmentMembersInfoCallback)(NSArray <OIMDepartmentMemberInfo *> * _Nullable members);
@@ -319,6 +320,16 @@ typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMe
  *  被挂断
  */
 - (void)onHunguUp:(OIMSignalingInfo *)signalingInfo;
+
+/*
+ *  加入房间 群用户收到：加群房间人数改变
+ */
+- (void)onRoomParticipantConnected:(OIMParticipantConnectedInfo *)connectedInfo;
+
+/*
+ * 离开房间
+ */
+- (void)onRoomParticipantDisconnected:(OIMParticipantConnectedInfo *)disconnectedInfo;
 @end
 
 /// 组织架构
@@ -473,6 +484,9 @@ Open_im_sdk_callbackOnWorkMomentsListener
 @property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInviteeRejectedByOtherDevice;
 @property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInviteeAcceptedByOtherDevice;
 @property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onHunguUp;
+@property (nonatomic, nullable, copy) OIMSignalingParticipantChangeCallback onRoomParticipantConnected;
+@property (nonatomic, nullable, copy) OIMSignalingParticipantChangeCallback onRoomParticipantDisconnected;
+
 
 - (void)addSignalingListener:(id<OIMSignalingListener>)listener NS_SWIFT_NAME(addSignalingListener(listener:));
 

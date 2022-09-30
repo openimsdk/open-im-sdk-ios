@@ -109,6 +109,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)signalingHungUp:(OIMSignalingInfo *)invitation
               onSuccess:(nullable OIMSuccessCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 根据群ID查房间信息，正在通话的群成员信息
+ */
+- (void)signalingGetRoomByGroupID:(NSString *)groupID
+                        onSuccess:(nullable OIMSignalingParticipantChangeCallback)onSuccess
+                        onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

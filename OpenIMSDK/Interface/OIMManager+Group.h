@@ -87,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param count   成员个数
  */
 - (void)getGroupMemberList:(NSString *)groupId
-                    filter:(NSInteger)filter
+                    filter:(OIMGroupMemberRole)filter
                     offset:(NSInteger)offset
                      count:(NSInteger)count
                  onSuccess:(nullable OIMGroupMembersInfoCallback)onSuccess
