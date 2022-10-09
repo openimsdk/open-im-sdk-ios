@@ -103,4 +103,16 @@
     Open_im_sdkSignalingGetRoomByGroupID(callback, [self operationId], groupID);
 }
 
+- (void)signalingGetTokenByRoomID:(NSString *)groupID
+                        onSuccess:(OIMSignalingResultCallback)onSuccess
+                        onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMInvitationResultInfo mj_objectWithKeyValues:data]);
+        }
+    } onFailure:onFailure];
+        
+    Open_im_sdkSignalingGetTokenByRoomID(callback, [self operationId], groupID);
+}
+
 @end

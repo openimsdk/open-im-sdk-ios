@@ -116,6 +116,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)signalingGetRoomByGroupID:(NSString *)groupID
                         onSuccess:(nullable OIMSignalingParticipantChangeCallback)onSuccess
                         onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 根据群ID查token
+ */
+- (void)signalingGetTokenByRoomID:(NSString *)groupID
+                        onSuccess:(nullable OIMSignalingResultCallback)onSuccess
+                        onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END
