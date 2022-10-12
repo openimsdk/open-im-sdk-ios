@@ -6,6 +6,7 @@
 //
 
 #import "OIMSignalingInfo.h"
+#import <MJExtension/MJExtension.h>
 
 @implementation OIMInvitationInfo
 
@@ -39,5 +40,13 @@
 @end
 
 @implementation OIMParticipantConnectedInfo
+
++ (NSDictionary *)mj_objectClassInArray
+{
+    return @{@"metaData" : [OIMParticipantMetaData class],
+             @"participant" : [OIMParticipantMetaData class]
+    };
+}
+
 
 @end
