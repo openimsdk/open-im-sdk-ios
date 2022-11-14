@@ -122,7 +122,7 @@ typedef NS_ENUM(NSInteger, OIMGroupMemberRole) {
  *  性别类型
  */
 typedef NS_ENUM(NSInteger, OIMGender)  {
-    OIMGenderMale,  /// 男性
+    OIMGenderMale = 1,  /// 男性
     OIMGenderFemale /// 女性
 };
 

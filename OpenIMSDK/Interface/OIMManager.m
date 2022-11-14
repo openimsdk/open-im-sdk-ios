@@ -30,51 +30,6 @@
     return instance;
 }
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        if (@available(iOS 13.0, *)) {
-            [[NSNotificationCenter defaultCenter]addObserver:self
-                                                    selector:@selector(didEnterBackground)
-                                                        name:UISceneDidEnterBackgroundNotification
-                                                      object:nil];
-            
-            [[NSNotificationCenter defaultCenter]addObserver:self
-                                                    selector:@selector(willEnterForeground)
-                                                        name:UISceneWillEnterForegroundNotification
-                                                      object:nil];
-        } else {
-            [[NSNotificationCenter defaultCenter]addObserver:self
-                                                    selector:@selector(didEnterBackground)
-                                                        name:UIApplicationDidEnterBackgroundNotification
-                                                      object:nil];
-            
-            [[NSNotificationCenter defaultCenter]addObserver:self
-                                                    selector:@selector(willEnterForeground)
-                                                        name:UIApplicationWillEnterForegroundNotification
-                                                      object:nil];
-        }
-    }
-    
-    return  self;
-}
-
-- (void)didEnterBackground {
-    __weak typeof(self) weakSelf = self;
-    _backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithName:@"com.oim.background.task" expirationHandler:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf->_backgroundTaskIdentifier != UIBackgroundTaskInvalid) {
-            
-            [[UIApplication sharedApplication] endBackgroundTask:strongSelf->_backgroundTaskIdentifier];
-            strongSelf->_backgroundTaskIdentifier = UIBackgroundTaskInvalid;
-        }
-    }];
-}
-
-- (void)willEnterForeground {
-    [[UIApplication sharedApplication] endBackgroundTask:_backgroundTaskIdentifier];
-}
-
 + (OIMCallbacker *)callbacker {
     return [OIMManager manager].callbacker;
 }
