@@ -10,6 +10,7 @@
 @interface OIMManager ()
 {
     OIMCallbacker *_callbacker;
+    UIBackgroundTaskIdentifier _backgroundTaskIdentifier;
 }
 
 @end
