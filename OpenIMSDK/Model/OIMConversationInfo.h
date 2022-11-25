@@ -49,6 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 是否开启了私聊（阅后即焚）
 @property (nonatomic, assign) BOOL isPrivateChat;
+// 私聊时长
+@property (nonatomic, assign) NSTimeInterval burnDuration;
 
 /// 是否还在组内，如果退群返回true
 @property (nonatomic, assign) BOOL isNotInGroup;
