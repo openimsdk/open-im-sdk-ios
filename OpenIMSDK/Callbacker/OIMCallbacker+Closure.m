@@ -132,6 +132,10 @@
     self.onStreamChange = onStreamChange;
 }
 
+- (void)setSignalingListenerWithOnReceiveCustomSignal:(OIMStringCallback)onReceiveCustomSignal {
+    self.onReceiveCustomSignal = onReceiveCustomSignal;
+}
+
 - (void)setOrganizationListenerWithOrganizationUpdated:(OIMVoidCallback)onOrganizationUpdated {
     
     self.organizationUpdated = onOrganizationUpdated;

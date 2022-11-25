@@ -337,6 +337,11 @@ typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMe
  * 流变化
  */
 - (void)onStreamChange:(OIMMeetingStreamEvent *)meettingInfo;
+
+/*
+ * 接收自定义信号
+ */
+- (void)onReceiveCustomSignal:(NSString *)customSignalCallback;
 @end
 
 /// 组织架构
@@ -494,6 +499,7 @@ Open_im_sdk_callbackOnWorkMomentsListener
 @property (nonatomic, nullable, copy) OIMSignalingParticipantChangeCallback onRoomParticipantConnected;
 @property (nonatomic, nullable, copy) OIMSignalingParticipantChangeCallback onRoomParticipantDisconnected;
 @property (nonatomic, nullable, copy) OIMSignalingMeetingStreamEventCallback onStreamChange;
+@property (nonatomic, nullable, copy) OIMStringCallback onReceiveCustomSignal;
 
 - (void)addSignalingListener:(id<OIMSignalingListener>)listener NS_SWIFT_NAME(addSignalingListener(listener:));
 

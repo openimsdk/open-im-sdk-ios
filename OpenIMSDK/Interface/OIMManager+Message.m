@@ -521,7 +521,7 @@
           onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
         
-    Open_im_sdkSetAppBadge(callback, count, [self operationId]);
+    Open_im_sdkSetAppBadge(callback, [self operationId], (int32_t)count);
 }
 
 @end

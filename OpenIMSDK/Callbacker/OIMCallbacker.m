@@ -733,6 +733,17 @@
     }];
 }
 
+- (void)onReceiveCustomSignal:(NSString *)customSignalCallback {
+    
+    [self dispatchMainThread:^{
+        if (self.onReceiveCustomSignal) {
+            self.onReceiveCustomSignal(customSignalCallback);
+        }
+        
+        [self.signalingListeners onReceiveCustomSignal:customSignalCallback];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Organization
 
