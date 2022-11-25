@@ -211,6 +211,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)signalingCloseRoom:(NSString *)roomID
                         onSuccess:(nullable OIMSuccessCallback)onSuccess
                         onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)signalingSendCustomSignal:(NSString *)roomID
+                       customInfo:(NSString *)customInfo
+                        onSuccess:(nullable OIMSuccessCallback)onSuccess
+                        onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

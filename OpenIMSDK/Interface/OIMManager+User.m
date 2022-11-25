@@ -46,6 +46,6 @@
              onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
         
-    Open_im_sdkUpdateFcmToken(callback, fmcToken, [self operationId]);
+    Open_im_sdkUpdateFcmToken(callback, [self operationId], fmcToken);
 }
 @end

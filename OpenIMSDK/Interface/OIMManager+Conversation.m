@@ -147,6 +147,15 @@
     Open_im_sdkSetOneConversationPrivateChat(callback, [self operationId], conversationID, isPrivate);
 }
 
+- (void)setOneConversationBurnDuratio:(NSString *)conversationID
+                         burnDuration:(NSInteger)burnDuration
+                            onSuccess:(OIMSuccessCallback)onSuccess
+                            onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSetOneConversationBurnDuration(callback, [self operationId], conversationID, (int32_t)burnDuration);
+}
+
 - (void)resetConversationGroupAtType:(NSString *)conversationID
                            onSuccess:(OIMSuccessCallback)onSuccess
                            onFailure:(OIMFailureCallback)onFailure {

@@ -119,6 +119,9 @@ NS_ASSUME_NONNULL_BEGIN
                             onRoomParticipantConnected:(nullable OIMSignalingParticipantChangeCallback)onRoomParticipantConnected
                          onRoomParticipantDisconnected:(nullable OIMSignalingParticipantChangeCallback)onRoomParticipantDisconnected
                                         onStreamChange:(nullable OIMSignalingMeetingStreamEventCallback)onStreamChange;
+
+- (void)setSignalingListenerWithOnReceiveCustomSignal:(OIMStringCallback)onReceiveCustomSignal;
+
 /*
  * 设置组织架构监听
  */

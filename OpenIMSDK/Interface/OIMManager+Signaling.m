@@ -205,4 +205,11 @@
     Open_im_sdkSignalingGetMeetings(callback, [self operationId]);
 }
 
+- (void)signalingSendCustomSignal:(NSString *)roomID
+                       customInfo:(NSString *)customInfo
+                        onSuccess:(OIMSuccessCallback)onSuccess onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSignalingSendCustomSignal(callback, [self operationId], customInfo, roomID);
+}
 @end
