@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) BOOL isPrivateChat;
 
+@property (nonatomic, assign) NSTimeInterval burnDuration;
+
 @property (nonatomic, assign) NSTimeInterval hasReadTime;
 
 @property (nonatomic, assign) BOOL notSenderNotificationPush;
