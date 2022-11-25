@@ -135,10 +135,10 @@ NS_ASSUME_NONNULL_BEGIN
  * 设置私聊, 可做“阅后即焚”时间设置功能
  *
  */
-- (void)setOneConversationBurnDuratio:(NSString *)conversationID
-                         burnDuration:(NSInteger)burnDuration
-                            onSuccess:(nullable OIMSuccessCallback)onSuccess
-                            onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)setOneConversationBurnDuration:(NSString *)conversationID
+                              duration:(NSInteger)burnDuration
+                             onSuccess:(nullable OIMSuccessCallback)onSuccess
+                             onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 重置at标准位
