@@ -106,7 +106,8 @@
                           onInviteeRejectedByOtherDevice:onInviteeRejectedByOtherDevice
                           onInviteeAcceptedByOtherDevice:onInviteeAcceptedByOtherDevice
                               onRoomParticipantConnected:nil
-                           onRoomParticipantDisconnected:nil];
+                           onRoomParticipantDisconnected:nil
+                                          onStreamChange:nil];
 }
 
 - (void)setSignalingListenerWithOnReceiveNewInvitation:(OIMSignalingInvitationCallback)onReceiveNewInvitation
@@ -117,7 +118,8 @@
                         onInviteeRejectedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeRejectedByOtherDevice
                         onInviteeAcceptedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeAcceptedByOtherDevice
                             onRoomParticipantConnected:(OIMSignalingParticipantChangeCallback)onRoomParticipantConnected
-                         onRoomParticipantDisconnected:(OIMSignalingParticipantChangeCallback)onRoomParticipantDisconnected {
+                         onRoomParticipantDisconnected:(OIMSignalingParticipantChangeCallback)onRoomParticipantDisconnected
+                                        onStreamChange:(OIMSignalingMeetingStreamEventCallback)onStreamChange {
     self.onReceiveNewInvitation = onReceiveNewInvitation;
     self.onInviteeAccepted = onInviteeAccepted;
     self.onInviteeRejected = onInviteeRejected;
@@ -127,6 +129,7 @@
     self.onInviteeAcceptedByOtherDevice = onInviteeAcceptedByOtherDevice;
     self.onRoomParticipantConnected = onRoomParticipantConnected;
     self.onRoomParticipantDisconnected = onRoomParticipantDisconnected;
+    self.onStreamChange = onStreamChange;
 }
 
 - (void)setOrganizationListenerWithOrganizationUpdated:(OIMVoidCallback)onOrganizationUpdated {

@@ -80,6 +80,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, copy) NSString *liveURL;
 
+/*
+ * 占线列表
+ */
+@property (nonatomic, copy) NSArray<NSString *>* busyLineUserIDList;
+
 @end
 
 
@@ -123,6 +128,34 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString *liveURL;
 
+@end
+
+// 会议相关
+@interface OIMMeetingInfo : NSObject
+
+@property (nonatomic, copy) NSString *meetingID;
+@property (nonatomic, copy) NSString *meetingName;
+@property (nonatomic, copy) NSString *hostUserID;
+@property (nonatomic, assign) NSTimeInterval createTime;
+@property (nonatomic, assign) NSTimeInterval startTime;
+@property (nonatomic, assign) NSTimeInterval endTime;
+@property (nonatomic, assign) BOOL participantCanEnableVideo;
+@property (nonatomic, assign) BOOL onlyHostInviteUser;
+@property (nonatomic, assign) BOOL joinDisableVideo;
+@property (nonatomic, assign) BOOL participantCanUnmuteSelf;
+@property (nonatomic, assign) BOOL isMuteAllMicrophone;
+@property (nonatomic, copy) NSArray<NSString *> *inviteeUserIDList;
+@end
+
+@interface OIMMeetingInfoList : NSObject
+@property (nonatomic, copy) NSArray<OIMMeetingInfo *> *meetingInfoList;
+@end
+
+@interface OIMMeetingStreamEvent : NSObject
+
+@property (nonatomic, copy) NSString *meetingID;
+@property (nonatomic, copy) NSString *streamType;
+@property (nonatomic, assign) BOOL mute;
 @end
 
 NS_ASSUME_NONNULL_END

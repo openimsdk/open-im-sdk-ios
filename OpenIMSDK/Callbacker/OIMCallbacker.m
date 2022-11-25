@@ -721,6 +721,18 @@
     }];
 }
 
+- (void)onStreamChange:(NSString *)OnStreamChangeCallback {
+    OIMMeetingStreamEvent *info = [OIMMeetingStreamEvent mj_objectWithKeyValues:OnStreamChangeCallback];
+    
+    [self dispatchMainThread:^{
+        if (self.onStreamChange) {
+            self.onStreamChange(info);
+        }
+        
+        [self.signalingListeners onStreamChange:info];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Organization
 
