@@ -115,4 +115,94 @@
     Open_im_sdkSignalingGetTokenByRoomID(callback, [self operationId], groupID);
 }
 
+- (void)signalingCloseRoom:(NSString *)roomID
+                 onSuccess:(OIMSuccessCallback)onSuccess
+                 onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSignalingCloseRoom(callback, [self operationId], roomID);
+}
+
+- (void)signalingCreateMeeting:(NSString *)meetingName
+             meetingHostUserID:(NSString *)meetingHostUserID
+                     startTime:(NSNumber *)startTime
+               meetingDuration:(NSNumber *)meetingDuration
+             inviteeUserIDList:(NSArray *)inviteeUserIDList
+                     onSuccess:(OIMSignalingResultCallback)onSuccess
+                     onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMInvitationResultInfo mj_objectWithKeyValues:data]);
+        }
+    } onFailure:onFailure];
+    
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    params[@"meetingName"] = meetingName;
+    
+    if (meetingHostUserID != nil) {
+        params[@"meetingHostUserID"] = meetingHostUserID;
+    }
+    
+    if (startTime != nil) {
+        params[@"startTime"] = startTime;
+    }
+    
+    if (meetingDuration != nil) {
+        params[@"meetingDuration"] = meetingDuration;
+    }
+    
+    params[@"inviteeUserIDList"] = inviteeUserIDList ?: [NSArray new];
+        
+    Open_im_sdkSignalingCreateMeeting(callback, [self operationId], params.mj_JSONString);
+}
+
+- (void)signalingCreateMeeting:(NSString *)meetingID
+                   meetingName:(nullable NSString *)meetingName
+           participantNickname:(nullable NSString *)participantNickname
+                     onSuccess:(nullable OIMSignalingResultCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMInvitationResultInfo mj_objectWithKeyValues:data]);
+        }
+    } onFailure:onFailure];
+    
+    NSMutableDictionary *params = [NSMutableDictionary new];
+    params[@"meetingID"] = meetingID;
+    
+    if (meetingName != nil) {
+        params[@"meetingName"] = meetingName;
+    }
+    
+    if (participantNickname != nil) {
+        params[@"participantNickname"] = participantNickname;
+    }
+        
+    Open_im_sdkSignalingJoinMeeting(callback, [self operationId], params.mj_JSONString);
+}
+
+- (void)signalingUpdateMeetingInfo:(NSString *)roomID
+                           setting:(NSDictionary *)params
+                         onSuccess:(OIMSuccessCallback)onSuccess
+                         onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    NSMutableDictionary *p = [NSMutableDictionary new];
+    p[@"roomID"] = roomID;
+    [p addEntriesFromDictionary:params];
+    
+    Open_im_sdkSignalingUpdateMeetingInfo(callback, [self operationId], p.mj_JSONString);
+}
+
+- (void)signalingGetMeetingsWithSuccess:(OIMSignalingMeetingsInfoCallback)onSuccess
+                              onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMMeetingInfoList mj_objectWithKeyValues:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkSignalingGetMeetings(callback, [self operationId]);
+}
+
 @end

@@ -117,7 +117,8 @@ NS_ASSUME_NONNULL_BEGIN
                         onInviteeRejectedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeRejectedByOtherDevice
                         onInviteeAcceptedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeAcceptedByOtherDevice
                             onRoomParticipantConnected:(nullable OIMSignalingParticipantChangeCallback)onRoomParticipantConnected
-                         onRoomParticipantDisconnected:(nullable OIMSignalingParticipantChangeCallback)onRoomParticipantDisconnected;
+                         onRoomParticipantDisconnected:(nullable OIMSignalingParticipantChangeCallback)onRoomParticipantDisconnected
+                                        onStreamChange:(nullable OIMSignalingMeetingStreamEventCallback)onStreamChange;
 /*
  * 设置组织架构监听
  */

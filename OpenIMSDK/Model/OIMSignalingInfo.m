@@ -47,6 +47,21 @@
              @"participant" : [OIMParticipantMetaData class]
     };
 }
+@end
 
+@implementation OIMMeetingInfo
+
+@end
+
+@implementation OIMMeetingInfoList
+
++ (NSDictionary *)mj_objectClassInArray
+{
+    return @{@"meetingInfoList" : [OIMMeetingInfo class],
+    };
+}
+@end
+
+@implementation OIMMeetingStreamEvent
 
 @end

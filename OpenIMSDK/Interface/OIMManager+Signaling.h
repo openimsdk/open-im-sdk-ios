@@ -123,6 +123,94 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)signalingGetTokenByRoomID:(NSString *)groupID
                         onSuccess:(nullable OIMSignalingResultCallback)onSuccess
                         onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 创建会议
+ @param meetingName 会议主题
+ @param meetingHostUserID 会议主持人ID
+ @param startTime 开始时间s
+ @param meetingDuration 会议时长s
+ @param inviteeUserIDList 被邀请人ID列表
+ */
+- (void)signalingCreateMeeting:(NSString *)meetingName
+             meetingHostUserID:(nullable NSString *)meetingHostUserID
+                     startTime:(nullable NSNumber *)startTime
+               meetingDuration:(nullable NSNumber *)meetingDuration
+             inviteeUserIDList:(nullable NSArray *)inviteeUserIDList
+                     onSuccess:(nullable OIMSignalingResultCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 加入会议
+ @param meetingID 会议ID
+ @param meetingName 会议主题
+ @param participantNickname 加入房间显示的名称
+ */
+- (void)signalingCreateMeeting:(NSString *)meetingID
+                   meetingName:(nullable NSString *)meetingName
+           participantNickname:(nullable NSString *)participantNickname
+                     onSuccess:(nullable OIMSignalingResultCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 会议室 管理员对指定的某一个入会人员设置禁言
+ @param roomID 会议ID
+ @param userID 目标的用户ID
+ @param streamType video/audio
+ @param mute YES：禁言
+ @param muteAll video/audio 一起设置
+ */
+- (void)signalingOperateStream:(NSString *)roomID
+                        userID:(NSString *)userID
+                    streamType:(NSString *)streamType
+                          mute:(BOOL)mute
+                       muteAll:(BOOL)muteAll
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+  会议设置
+@param roomID 会议id
+ @param params 设置相关参数，需要谁设置谁
+///  String meetingName,
+///  int startTime = 0,
+///  int endTime = 0,
+///  bool participantCanUnmuteSelf = true,
+///  bool participantCanEnableVideo = true,
+///  bool onlyHostInviteUser = true,
+///  bool onlyHostShareScreen = true,
+///  bool joinDisableMicrophone = true,
+///  bool joinDisableVideo = true,
+///  bool isMuteAllVideo = true,
+///  bool isMuteAllMicrophone = true,
+///  NSArray<String> addCanScreenUserIDList =  [],
+///  NSArray<String> reduceCanScreenUserIDList =  [],
+///  NSArray<String> addDisableMicrophoneUserIDList =  [],
+///  NSArray<String> reduceDisableMicrophoneUserIDList =  [],
+///  NSArray<String> addDisableVideoUserIDList =  [],
+///  NSArray<String> reduceDisableVideoUserIDList =  [],
+///  NSArray<String> addPinedUserIDList = [],
+///  NSArray<String> reducePinedUserIDList =  [],
+///  NSArray<String> addBeWatchedUserIDList =  [],
+///  NSArray<String> reduceBeWatchedUserIDList =  [],
+ */
+- (void)signalingUpdateMeetingInfo:(NSString *)roomID
+                           setting:(NSDictionary *)params
+                         onSuccess:(nullable OIMSuccessCallback)onSuccess
+                         onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 获取所有的未完成会议
+ */
+- (void)signalingGetMeetingsWithSuccess:(nullable OIMSignalingMeetingsInfoCallback)onSuccess
+                                onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 结束会议
+ */
+- (void)signalingCloseRoom:(NSString *)roomID
+                        onSuccess:(nullable OIMSuccessCallback)onSuccess
+                        onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END
