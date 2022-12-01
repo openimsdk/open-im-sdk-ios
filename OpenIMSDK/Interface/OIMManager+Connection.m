@@ -84,4 +84,11 @@ onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired {
     Open_im_sdkWakeUp(callback, [self operationId]);
 }
 
+- (void)setAppBackgroundStatus:(BOOL)isBackground
+                     onSuccess:(OIMSuccessCallback)onSuccess
+                     onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSetAppBackgroundStatus(callback, [self operationId], isBackground);
+}
 @end
