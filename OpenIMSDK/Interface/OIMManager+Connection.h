@@ -52,6 +52,15 @@ onUserTokenExpired:(nullable OIMVoidCallback)onUserTokenExpired;
  */
 - (void)wakeUpWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
                   onFailure:(nullable OIMFailureCallback)onFailure;
+
+
+/*
+ * 设置进入前台还是进入后台
+ */
+- (void)setAppBackgroundStatus:(BOOL)isBackground
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure;
+
 @end
 
 NS_ASSUME_NONNULL_END

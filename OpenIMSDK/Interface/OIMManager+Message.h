@@ -507,7 +507,7 @@ NS_ASSUME_NONNULL_BEGIN
                       onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
-* Advanced Message 系列使用
+ * Advanced Message 系列使用
  @param opts lastMinSeq  是上一次拉取回调给的值，上下文，第二次拉取需要回传
  */
 - (void)getAdvancedHistoryMessageList:(OIMGetAdvancedHistoryMessageListParam *)opts
@@ -527,6 +527,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setAppBadge:(NSInteger)count
           onSuccess:(nullable OIMSuccessCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)modifyGroupMessageReaction:(NSString *)groupID
+                             msgID:(NSString *)msgID
+                           counter:(NSInteger)counter
+                      reactionType:(NSInteger)reactionType
+                     operationType: (NSInteger)operationType
+                         onSuccess:(nullable OIMSuccessCallback)onSuccess
+                         onFailure:(nullable OIMFailureCallback)onFailure;
+
 @end
 
 NS_ASSUME_NONNULL_END
