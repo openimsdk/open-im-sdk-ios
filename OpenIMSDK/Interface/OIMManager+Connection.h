@@ -42,6 +42,19 @@ onUserTokenExpired:(nullable OIMVoidCallback)onUserTokenExpired;
            onKickedOffline:(nullable OIMVoidCallback)onKickedOffline
         onUserTokenExpired:(nullable OIMVoidCallback)onUserTokenExpired;
 
+- (BOOL)initSDKWithApiAdrr:(NSString *)apiAddr
+                    wsAddr:(NSString *)wsAddr
+                   dataDir:(NSString * _Nullable)dataDir
+                  logLevel:(NSInteger)logLevel
+             objectStorage:(NSString * _Nullable)os
+          enableEncryption:(BOOL)encryption
+         turnOnCompression:(BOOL)compression
+              onConnecting:(nullable OIMVoidCallback)onConnecting
+          onConnectFailure:(nullable OIMFailureCallback)onConnectFailure
+          onConnectSuccess:(nullable OIMVoidCallback)onConnectSuccess
+           onKickedOffline:(nullable OIMVoidCallback)onKickedOffline
+        onUserTokenExpired:(nullable OIMVoidCallback)onUserTokenExpired;
+
 /*
  * 设置心跳间隔
  */

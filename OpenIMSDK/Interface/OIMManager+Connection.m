@@ -21,7 +21,7 @@
            onKickedOffline:(OIMVoidCallback)onKickedOffline
         onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired {
     
-    return [self initSDK: [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad ? iPad : iPhone
+    return [self initSDK:[UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad ? iPad : iPhone
                  apiAdrr:apiAddr
                   wsAddr:wsAddr
                  dataDir:dataDir
@@ -45,6 +45,62 @@ onConnectFailure:(OIMFailureCallback)onConnectFailure
 onConnectSuccess:(OIMVoidCallback)onConnectSuccess
 onKickedOffline:(OIMVoidCallback)onKickedOffline
 onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired {
+    return [self initSDK:[UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad ? iPad : iPhone
+                 apiAdrr:apiAddr
+                  wsAddr:wsAddr
+                 dataDir:dataDir
+                logLevel:logLevel
+           objectStorage:os
+        enableEncryption:NO
+       turnOnCompression:NO
+            onConnecting:onConnecting
+        onConnectFailure:onConnectFailure
+        onConnectSuccess:onConnectSuccess
+         onKickedOffline:onKickedOffline
+      onUserTokenExpired:onUserTokenExpired];
+}
+
+- (BOOL)initSDKWithApiAdrr:(NSString *)apiAddr
+                    wsAddr:(NSString *)wsAddr
+                   dataDir:(NSString *)dataDir
+                  logLevel:(NSInteger)logLevel
+             objectStorage:(NSString *)os
+          enableEncryption:(BOOL)encryption
+         turnOnCompression:(BOOL)compression
+              onConnecting:(OIMVoidCallback)onConnecting
+          onConnectFailure:(OIMFailureCallback)onConnectFailure
+          onConnectSuccess:(OIMVoidCallback)onConnectSuccess
+           onKickedOffline:(OIMVoidCallback)onKickedOffline
+        onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired {
+    
+    return [self initSDK:[UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad ? iPad : iPhone
+                 apiAdrr:apiAddr
+                  wsAddr:wsAddr
+                 dataDir:dataDir
+                logLevel:logLevel
+           objectStorage:os
+        enableEncryption:encryption
+       turnOnCompression:compression
+            onConnecting:onConnecting
+        onConnectFailure:onConnectFailure
+        onConnectSuccess:onConnectSuccess
+         onKickedOffline:onKickedOffline
+      onUserTokenExpired:onUserTokenExpired];
+}
+
+- (BOOL)initSDK:(OIMPlatform)platform
+        apiAdrr:(NSString *)apiAddr
+                    wsAddr:(NSString *)wsAddr
+                   dataDir:(NSString *)dataDir
+                  logLevel:(NSInteger)logLevel
+             objectStorage:(NSString *)os
+          enableEncryption:(BOOL)encryption
+         turnOnCompression:(BOOL)compression
+              onConnecting:(OIMVoidCallback)onConnecting
+          onConnectFailure:(OIMFailureCallback)onConnectFailure
+          onConnectSuccess:(OIMVoidCallback)onConnectSuccess
+           onKickedOffline:(OIMVoidCallback)onKickedOffline
+        onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired {
     
     [self class].callbacker.connecting = onConnecting;
     [self class].callbacker.connectFailure = onConnectFailure;
@@ -67,6 +123,8 @@ onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired {
     param[@"data_dir"] = path;
     param[@"log_level"] = logLevel == 0 ? @6 : @(logLevel);
     param[@"object_storage"] = os.length == 0 ? @"cos" : os;
+    param[@"is_need_encryption"] = @(encryption);
+    param[@"is_compression"] = @(compression);
     
     self.objectStorage = os.length == 0 ? @"cos" : os;
     
