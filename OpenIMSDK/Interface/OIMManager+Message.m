@@ -532,8 +532,8 @@
                          onSuccess:(OIMSuccessCallback)onSuccess
                          onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-        
-    Open_im_sdkModifyGroupMessageReaction(callback, [self operationId], (int32_t)counter, (long)reactionType, (long)operationType, groupID, msgID);
+    // 稍后开放
+//    Open_im_sdkModifyGroupMessageReaction(callback, [self operationId], (int32_t)counter, (long)reactionType, (long)operationType, groupID, msgID);
 }
 
 @end
