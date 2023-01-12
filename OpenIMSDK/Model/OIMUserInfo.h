@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger createTime;
 @property (nonatomic, nullable, copy) NSString *ex;
 @property (nonatomic, assign) OIMReceiveMessageOpt globalRecvMsgOpt;
+// 1970年之前的问题
+@property (nonatomic, nullable, copy) NSString *birthTime;
 @end
 
 NS_ASSUME_NONNULL_END

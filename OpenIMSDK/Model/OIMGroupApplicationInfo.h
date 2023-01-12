@@ -6,7 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "OIMModelDefine.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -37,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) NSString *handleUserID;
 @property (nonatomic, assign) NSInteger handledTime;
 @property (nonatomic, nullable, copy) NSString *ex;
+@property (nonatomic, nullable, copy) NSString *inviterUserID;
+@property (nonatomic, assign) OIMJoinType joinSource;
 
 @end
 
