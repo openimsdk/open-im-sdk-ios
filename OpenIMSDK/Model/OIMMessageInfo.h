@@ -171,5 +171,34 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface OIMKeyValue: NSObject
+
+@property (nonatomic, copy) NSString *errMsg;
+
+@property (nonatomic, assign) NSInteger errCode;
+
+@property (nonatomic, copy) NSString *typeKey;
+
+@property (nonatomic, copy) NSString *value;
+
+@property (nonatomic, assign) NSTimeInterval latestUpdateTime;
+
+@end
+
+@interface OIMKeyValues: NSObject
+
+@property (nonatomic, copy) NSString *errMsg;
+
+@property (nonatomic, assign) NSInteger errCode;
+
+@property (nonatomic, copy) NSString *clientMsgID;
+
+@property (nonatomic, copy) NSDictionary<NSString *, OIMKeyValue *> *reactionExtensionList;
+
+@end
+
+
+
+
 
 NS_ASSUME_NONNULL_END

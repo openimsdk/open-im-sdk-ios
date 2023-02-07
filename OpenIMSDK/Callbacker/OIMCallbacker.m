@@ -529,6 +529,41 @@
     }];
 }
 
+- (void)onRecvMessageExtensionsAdded:(NSString* _Nullable)msgID reactionExtensionList:(NSString* _Nullable)reactionExtensionList {
+    NSArray *msg = [OIMKeyValue mj_objectArrayWithKeyValuesArray:reactionExtensionList];
+    
+    [self dispatchMainThread:^{
+        if (self.onRecvMessageExtensionsAdded) {
+            self.onRecvMessageExtensionsAdded(msgID, msg);
+        }
+        
+        [self.advancedMsgListeners onRecvMessageExtensionsAdded:msgID reactionExtensionList:msg];
+    }];
+}
+
+- (void)onRecvMessageExtensionsChanged:(NSString* _Nullable)msgID reactionExtensionList:(NSString* _Nullable)reactionExtensionList {
+    NSArray *msg = [OIMKeyValue mj_objectArrayWithKeyValuesArray:reactionExtensionList];
+    
+    [self dispatchMainThread:^{
+        if (self.onRecvMessageExtensionsChanged) {
+            self.onRecvMessageExtensionsChanged(msgID, msg);
+        }
+        
+        [self.advancedMsgListeners onRecvMessageExtensionsChanged:msgID reactionExtensionKeyList:msg];
+    }];
+}
+
+- (void)onRecvMessageExtensionsDeleted:(NSString* _Nullable)msgID reactionExtensionKeyList:(NSString* _Nullable)reactionExtensionKeyList {
+    
+    [self dispatchMainThread:^{
+        if (self.onRecvMessageExtensionsDeleted) {
+            self.onRecvMessageExtensionsDeleted(msgID, reactionExtensionKeyList.mj_JSONObject);
+        }
+        
+        [self.advancedMsgListeners onRecvMessageExtensionsDeleted:msgID reactionExtensionList:reactionExtensionKeyList.mj_JSONObject];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Conversation
 

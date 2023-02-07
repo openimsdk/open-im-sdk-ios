@@ -78,7 +78,8 @@ typedef void (^OIMDepartmentMemberAndSubInfoCallback)(OIMDepartmentMemberAndSubI
 typedef void (^OIMMomentsInfoCallback)(NSArray <OIMMomentsInfo *> * _Nullable items);
 
 typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMessageListInfo * _Nullable result);
-
+typedef void (^OIMKeyValueResultCallback)(NSString * _Nullable msgID, NSArray <OIMKeyValue *> * _Nullable result);
+typedef void (^OIMKeyValuesResultCallback)(NSArray <OIMKeyValues *> * _Nullable result);
 /// IMSDK 主核心回调
 @protocol OIMSDKListener <NSObject>
 @optional
@@ -277,6 +278,12 @@ typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMe
 
 - (void)onNewRecvMessageRevoked:(OIMMessageRevoked *)messageRevoked;
 
+- (void)onRecvMessageExtensionsAdded:(NSString *)msgID reactionExtensionList:(NSArray<OIMKeyValue *> *)reactionExtensionList;
+
+- (void)onRecvMessageExtensionsDeleted:(NSString *)msgID reactionExtensionList:(NSArray<NSString *> *)reactionExtensionList;
+
+- (void)onRecvMessageExtensionsChanged:(NSString *)msgID reactionExtensionKeyList:(NSArray<OIMKeyValue *> *)reactionExtensionKeyList;
+
 @end
 
 /// 音视频监听器
@@ -474,6 +481,9 @@ Open_im_sdk_callbackOnWorkMomentsListener
 @property (nonatomic, nullable, copy) OIMReceiptCallback onRecvGroupReadReceipt;
 @property (nonatomic, nullable, copy) OIMStringCallback onRecvMessageRevoked;
 @property (nonatomic, nullable, copy) OIMRevokedCallback onNewRecvMessageRevoked;
+@property (nonatomic, nullable, copy) OIMKeyValueResultCallback onRecvMessageExtensionsChanged;
+@property (nonatomic, nullable, copy) OIMStringArrayCallback onRecvMessageExtensionsDeleted;
+@property (nonatomic, nullable, copy) OIMKeyValueResultCallback onRecvMessageExtensionsAdded;
 
 /*
  *  添加高级消息的事件监听器

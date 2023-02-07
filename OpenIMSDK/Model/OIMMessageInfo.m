@@ -6,6 +6,7 @@
 //
 
 #import "OIMMessageInfo.h"
+#import <MJExtension/MJExtension.h>
 
 @implementation OIMOfflinePushInfo
 
@@ -56,3 +57,8 @@
 
 @end
 
+@implementation OIMKeyValue
+@end
+
+@implementation OIMKeyValues
+@end

@@ -528,14 +528,24 @@ NS_ASSUME_NONNULL_BEGIN
           onSuccess:(nullable OIMSuccessCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
 
-- (void)modifyGroupMessageReaction:(NSString *)groupID
-                             msgID:(NSString *)msgID
-                           counter:(NSInteger)counter
-                      reactionType:(NSInteger)reactionType
-                     operationType: (NSInteger)operationType
-                         onSuccess:(nullable OIMSuccessCallback)onSuccess
-                         onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)setMessageReactionExtensions:(OIMMessageInfo *)message
+               reactionExtensionList:(NSArray<OIMKeyValue *> *)list
+                           onSuccess:(nullable OIMKeyValueResultCallback)onSuccess
+                           onFailure:(nullable OIMFailureCallback)onFailure;
 
+- (void)deleteMessageReactionExtensions:(OIMMessageInfo *)message
+                  reactionExtensionList:(NSArray<NSString *> *)list
+                              onSuccess:(nullable OIMKeyValueResultCallback)onSuccess
+                              onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)getMessageListReactionExtensions:(NSArray<OIMMessageInfo *> *)messages
+                               onSuccess:(nullable OIMKeyValuesResultCallback)onSuccess
+                               onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)getMessageListSomeReactionExtensions:(NSArray<OIMMessageInfo *> *)messages
+                                keyValueList:(NSArray<OIMKeyValue *> *)kvList
+                                   onSuccess:(nullable OIMKeyValuesResultCallback)onSuccess
+                                   onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END
