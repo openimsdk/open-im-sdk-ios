@@ -73,7 +73,10 @@
                                     onRecvC2CReadReceipt:onRecvC2CReadReceipt
                                   onRecvGroupReadReceipt:onRecvGroupReadReceipt
                                         onRecvNewMessage:onRecvNewMessage
-                                 onNewRecvMessageRevoked:nil];
+                                 onNewRecvMessageRevoked:nil
+                          onRecvMessageExtensionsChanged:nil
+                          onRecvMessageExtensionsDeleted:nil
+                            onRecvMessageExtensionsAdded:nil];
 }
 
 - (void)setAdvancedMsgListenerWithOnRecvMessageRevoked:(OIMStringCallback)onRecvMessageRevoked
@@ -82,11 +85,32 @@
                                       onRecvNewMessage:(OIMMessageInfoCallback)onRecvNewMessage
                                onNewRecvMessageRevoked:(OIMRevokedCallback)onNewRecvMessageRevoked {
     
+    [self setAdvancedMsgListenerWithOnRecvMessageRevoked:onRecvMessageRevoked
+                                    onRecvC2CReadReceipt:onRecvC2CReadReceipt
+                                  onRecvGroupReadReceipt:onRecvGroupReadReceipt
+                                        onRecvNewMessage:onRecvNewMessage
+                                 onNewRecvMessageRevoked:onNewRecvMessageRevoked
+                          onRecvMessageExtensionsChanged:nil
+                          onRecvMessageExtensionsDeleted:nil
+                            onRecvMessageExtensionsAdded:nil];
+}
+
+- (void)setAdvancedMsgListenerWithOnRecvMessageRevoked:(OIMStringCallback)onRecvMessageRevoked
+                                  onRecvC2CReadReceipt:(OIMReceiptCallback)onRecvC2CReadReceipt
+                                onRecvGroupReadReceipt:(OIMReceiptCallback)onRecvGroupReadReceipt
+                                      onRecvNewMessage:(OIMMessageInfoCallback)onRecvNewMessage
+                               onNewRecvMessageRevoked:(OIMRevokedCallback)onNewRecvMessageRevoked
+                        onRecvMessageExtensionsChanged:(OIMKeyValueResultCallback)onRecvMessageExtensionsChanged
+                        onRecvMessageExtensionsDeleted:(OIMStringArrayCallback)onRecvMessageExtensionsDeleted
+                          onRecvMessageExtensionsAdded:(OIMKeyValueResultCallback)onRecvMessageExtensionsAdded {
     self.onRecvMessageRevoked = onRecvMessageRevoked;
     self.onRecvC2CReadReceipt = onRecvC2CReadReceipt;
     self.onRecvGroupReadReceipt = onRecvGroupReadReceipt;
-    self.onRecvNewMessage = onRecvNewMessage;
     self.onNewRecvMessageRevoked = onNewRecvMessageRevoked;
+    self.onRecvNewMessage = onRecvNewMessage;
+    self.onRecvMessageExtensionsChanged = onRecvMessageExtensionsChanged;
+    self.onRecvMessageExtensionsDeleted = onRecvMessageExtensionsDeleted;
+    self.onRecvMessageExtensionsAdded = onRecvMessageExtensionsAdded;
 }
 
 - (void)setSelfUserInfoUpdateListener:(OIMUserInfoCallback)onUserInfoUpdate {
