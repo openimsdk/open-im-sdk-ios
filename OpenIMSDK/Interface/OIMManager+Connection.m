@@ -8,7 +8,57 @@
 #import "OIMManager+Connection.h"
 #import "CallbackProxy.h"
 
+@implementation OIMInitConfig
+
+- (instancetype)init {
+    self = [super init];
+    
+    if (self) {
+        self.dataDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingString:@"/"];
+        self.logLevel = 6;
+        self.objectStorage = @"minio";
+        self.encryption = NO;
+        self.compression = NO;
+        self.isExternal = NO;
+    }
+    
+    return self;
+}
+
+@end
+
+
 @implementation OIMManager (Connection)
+
+- (BOOL)initSDKWithConfig:(OIMInitConfig *)config
+             onConnecting:(OIMVoidCallback)onConnecting
+         onConnectFailure:(OIMFailureCallback)onConnectFailure
+         onConnectSuccess:(OIMVoidCallback)onConnectSuccess
+          onKickedOffline:(OIMVoidCallback)onKickedOffline
+       onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired {
+    
+    [self class].callbacker.connecting = onConnecting;
+    [self class].callbacker.connectFailure = onConnectFailure;
+    [self class].callbacker.connectSuccess = onConnectSuccess;
+    [self class].callbacker.kickedOffline = onKickedOffline;
+    [self class].callbacker.userTokenExpired = onUserTokenExpired;
+    
+    NSMutableDictionary *param = [NSMutableDictionary new];
+    
+    param[@"platform"] = @([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad ? iPad : iPhone);
+    param[@"api_addr"] = config.apiAddr;
+    param[@"ws_addr"]  = config.wsAddr;
+    param[@"data_dir"] = config.dataDir;
+    param[@"log_level"] = @(config.logLevel);
+    param[@"object_storage"] = config.objectStorage;
+    param[@"is_need_encryption"] = @(config.encryption);
+    param[@"is_compression"] = @(config.compression);
+    param[@"is_external_extensions"] = @(config.isExternal);
+    
+    self.objectStorage = config.objectStorage;
+    
+    return Open_im_sdkInitSDK([self class].callbacker, [self operationId], param.mj_JSONString);
+}
 
 - (BOOL)initSDKWithApiAdrr:(NSString *)apiAddr
                     wsAddr:(NSString *)wsAddr

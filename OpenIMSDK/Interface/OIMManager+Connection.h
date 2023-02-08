@@ -9,7 +9,32 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface OIMInitConfig : NSObject
+
+// SDK的API地址
+@property (nonatomic, copy) NSString *apiAddr;
+// SDK的Web Socket地址
+@property (nonatomic, copy) NSString *wsAddr;
+// 默认Documents/下
+@property (nonatomic, copy, nullable) NSString *dataDir;
+// 日志等级默认6
+@property (nonatomic, assign) NSInteger logLevel;
+// 默认minio
+@property (nonatomic, copy, nullable) NSString *objectStorage;
+@property (nonatomic, assign) BOOL encryption;
+@property (nonatomic, assign) BOOL compression;
+@property (nonatomic, assign) BOOL isExternal;
+
+@end
+
 @interface OIMManager (Connection)
+
+- (BOOL)initSDKWithConfig:(OIMInitConfig *)config
+             onConnecting:(nullable OIMVoidCallback)onConnecting
+         onConnectFailure:(nullable OIMFailureCallback)onConnectFailure
+         onConnectSuccess:(nullable OIMVoidCallback)onConnectSuccess
+          onKickedOffline:(nullable OIMVoidCallback)onKickedOffline
+       onUserTokenExpired:(nullable OIMVoidCallback)onUserTokenExpired;
 
 /* 初始化
  * @param platform 平台
