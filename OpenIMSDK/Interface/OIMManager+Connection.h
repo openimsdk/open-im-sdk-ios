@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMInitConfig : NSObject
 
+// 设备类型
+@property (nonatomic, assign) NSInteger platform;
 // SDK的API地址
 @property (nonatomic, copy) NSString *apiAddr;
 // SDK的Web Socket地址

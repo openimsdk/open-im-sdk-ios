@@ -14,6 +14,7 @@
     self = [super init];
     
     if (self) {
+        self.platform = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad ? iPad : iPhone;
         self.dataDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingString:@"/"];
         self.logLevel = 6;
         self.objectStorage = @"minio";
