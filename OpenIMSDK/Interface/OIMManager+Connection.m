@@ -46,7 +46,7 @@
     
     NSMutableDictionary *param = [NSMutableDictionary new];
     
-    param[@"platform"] = @([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad ? iPad : iPhone);
+    param[@"platform"] = @(config.platform);
     param[@"api_addr"] = config.apiAddr;
     param[@"ws_addr"]  = config.wsAddr;
     param[@"data_dir"] = config.dataDir;
