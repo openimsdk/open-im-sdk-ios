@@ -528,6 +528,11 @@ NS_ASSUME_NONNULL_BEGIN
           onSuccess:(nullable OIMSuccessCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
 
+- (void)addMessageReactionExtensions:(OIMMessageInfo *)message
+               reactionExtensionList:(NSArray<OIMKeyValue *> *)list
+                           onSuccess:(OIMKeyValueResultCallback)onSuccess
+                           onFailure:(OIMFailureCallback)onFailure;
+
 - (void)setMessageReactionExtensions:(OIMMessageInfo *)message
                reactionExtensionList:(NSArray<OIMKeyValue *> *)list
                            onSuccess:(nullable OIMKeyValueResultCallback)onSuccess

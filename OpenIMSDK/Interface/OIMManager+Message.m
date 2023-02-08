@@ -524,6 +524,19 @@
     Open_im_sdkSetAppBadge(callback, [self operationId], (int32_t)count);
 }
 
+- (void)addMessageReactionExtensions:(OIMMessageInfo *)message
+               reactionExtensionList:(NSArray<OIMKeyValue *> *)list
+                           onSuccess:(OIMKeyValueResultCallback)onSuccess
+                           onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess(nil, [OIMKeyValue mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkAddMessageReactionExtensions(callback, [self operationId], message.mj_JSONString, [OIMKeyValue mj_keyValuesArrayWithObjectArray:list].mj_JSONString);
+}
+
 - (void)setMessageReactionExtensions:(OIMMessageInfo *)message
                reactionExtensionList:(NSArray<OIMKeyValue *> *)list
                            onSuccess:(OIMKeyValueResultCallback)onSuccess
