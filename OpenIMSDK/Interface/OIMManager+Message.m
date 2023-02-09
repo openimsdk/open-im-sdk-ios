@@ -520,7 +520,7 @@
           onSuccess:(OIMSuccessCallback)onSuccess
           onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-        
+    
     Open_im_sdkSetAppBadge(callback, [self operationId], (int32_t)count);
 }
 
@@ -568,7 +568,25 @@
                                onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMKeyValues mj_objectArrayWithKeyValuesArray:data]);
+            NSArray<OIMKeyValues *> *keyValues = [OIMKeyValues mj_objectArrayWithKeyValuesArray:data];
+            
+            [keyValues enumerateObjectsUsingBlock:^(OIMKeyValues * _Nonnull keyValue, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([keyValue.reactionExtensionList isKindOfClass:NSDictionary.class]) {
+                    NSMutableDictionary *extensions = keyValue.reactionExtensionList.mutableCopy;
+                    
+                    NSEnumerator *enumerator = extensions.keyEnumerator;
+                    NSString *key = @"";
+                    
+                    while (key = [enumerator nextObject]) {
+                        NSDictionary *value = extensions[key];
+                        OIMKeyValue *obj = [OIMKeyValue mj_objectWithKeyValues:value];
+                        extensions[key] = obj;
+                    }
+                    keyValue.reactionExtensionList = extensions;
+                }
+            }];
+            
+            onSuccess(keyValues);
         }
     } onFailure:onFailure];
     
@@ -581,7 +599,25 @@
                                    onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMKeyValues mj_objectArrayWithKeyValuesArray:data]);
+            NSArray<OIMKeyValues *> *keyValues = [OIMKeyValues mj_objectArrayWithKeyValuesArray:data];
+            
+            [keyValues enumerateObjectsUsingBlock:^(OIMKeyValues * _Nonnull keyValue, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([keyValue.reactionExtensionList isKindOfClass:NSDictionary.class]) {
+                    NSMutableDictionary *extensions = keyValue.reactionExtensionList.mutableCopy;
+                    
+                    NSEnumerator *enumerator = extensions.keyEnumerator;
+                    NSString *key = @"";
+                    
+                    while (key = [enumerator nextObject]) {
+                        NSDictionary *value = extensions[key];
+                        OIMKeyValue *obj = [OIMKeyValue mj_objectWithKeyValues:value];
+                        extensions[key] = obj;
+                    }
+                    keyValue.reactionExtensionList = extensions;
+                }
+            }];
+            
+            onSuccess(keyValues);
         }
     } onFailure:onFailure];
     
