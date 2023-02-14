@@ -574,7 +574,7 @@
                 if ([keyValue.reactionExtensionList isKindOfClass:NSDictionary.class]) {
                     NSMutableDictionary *extensions = keyValue.reactionExtensionList.mutableCopy;
                     
-                    NSEnumerator *enumerator = extensions.keyEnumerator;
+                    NSEnumerator *enumerator = keyValue.reactionExtensionList.keyEnumerator;
                     NSString *key = @"";
                     
                     while (key = [enumerator nextObject]) {
