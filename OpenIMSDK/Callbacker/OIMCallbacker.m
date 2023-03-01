@@ -271,8 +271,8 @@
     OIMFriendApplication *info = [OIMFriendApplication mj_objectWithKeyValues:friendApplication];
     
     [self dispatchMainThread:^{
-        if (self.onFriendApplicationDeleted) {
-            self.onFriendApplicationDeleted(info);
+        if (self.onFriendApplicationAccepted) {
+            self.onFriendApplicationAccepted(info);
         }
         [self.friendshipListeners onFriendApplicationAccepted:info];
     }];
@@ -304,8 +304,8 @@
     OIMFriendInfo *info = [OIMFriendInfo mj_objectWithKeyValues:friendInfo];
     
     [self dispatchMainThread:^{
-        if (self.onFriendAdded) {
-            self.onFriendAdded(info);
+        if (self.onFriendDeleted) {
+            self.onFriendDeleted(info);
         }
         [self.friendshipListeners onFriendDeleted:info];
     }];
@@ -315,8 +315,8 @@
     OIMFriendInfo *info = [OIMFriendInfo mj_objectWithKeyValues:friendInfo];
     
     [self dispatchMainThread:^{
-        if (self.onFriendAdded) {
-            self.onFriendAdded(info);
+        if (self.onFriendInfoChanged) {
+            self.onFriendInfoChanged(info);
         }
         [self.friendshipListeners onFriendInfoChanged:info];
     }];
@@ -337,8 +337,8 @@
     OIMBlackInfo *info = [OIMBlackInfo mj_objectWithKeyValues:blackInfo];
     
     [self dispatchMainThread:^{
-        if (self.onBlackAdded) {
-            self.onBlackAdded(info);
+        if (self.onBlackDeleted) {
+            self.onBlackDeleted(info);
         }
         [self.friendshipListeners onBlackDeleted:info];
     }];

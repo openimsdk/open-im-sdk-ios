@@ -14,7 +14,7 @@
                                      onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess(data.integerValue);
+            onSuccess([data.mj_JSONObject[@"unreadCount"]integerValue]);
         }
     } onFailure:onFailure];
     
