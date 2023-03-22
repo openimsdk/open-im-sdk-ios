@@ -163,4 +163,12 @@
     
     Open_im_sdkResetConversationGroupAtType(callback, [self operationId], conversationID);
 }
+
+- (void)hideConversation:(NSString *)conversationID
+               onSuccess:(OIMSuccessCallback)onSuccess
+               onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkHideConversation(callback, [self operationId], conversationID);
+}
 @end

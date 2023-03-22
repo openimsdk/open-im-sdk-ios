@@ -504,6 +504,18 @@
     Open_im_sdkGetAdvancedHistoryMessageList(callback, [self operationId], opts.mj_JSONString);
 }
 
+- (void)getAdvancedHistoryMessageListReverse:(OIMGetAdvancedHistoryMessageListParam *)opts
+                                   onSuccess:(nullable OIMGetAdvancedHistoryMessageListCallback)onSuccess
+                                   onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMGetAdvancedHistoryMessageListInfo mj_objectWithKeyValues:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetAdvancedHistoryMessageListReverse(callback, [self operationId], opts.mj_JSONString);
+}
+
 - (void)findMessageList:(OIMFindMessageListParam *)param
               onSuccess:(OIMMessageSearchCallback)onSuccess
               onFailure:(OIMFailureCallback)onFailure {
