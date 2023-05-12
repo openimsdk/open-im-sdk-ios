@@ -516,7 +516,7 @@
     Open_im_sdkGetAdvancedHistoryMessageListReverse(callback, [self operationId], opts.mj_JSONString);
 }
 
-- (void)findMessageList:(OIMFindMessageListParam *)param
+- (void)findMessageList:(NSArray<OIMFindMessageListParam *> *)param
               onSuccess:(OIMMessageSearchCallback)onSuccess
               onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
@@ -525,7 +525,9 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkFindMessageList(callback, [self operationId], param.mj_JSONString);
+    NSArray *params = [OIMFindMessageListParam mj_keyValuesArrayWithObjectArray:param];
+    
+    Open_im_sdkFindMessageList(callback, [self operationId], params.mj_JSONString);
 }
 
 - (void)setAppBadge:(NSInteger)count

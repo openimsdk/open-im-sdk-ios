@@ -525,7 +525,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  查找消息列表
  */
-- (void)findMessageList:(OIMFindMessageListParam *)param
+- (void)findMessageList:(NSArray<OIMFindMessageListParam *> *)param
               onSuccess:(nullable OIMMessageSearchCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
