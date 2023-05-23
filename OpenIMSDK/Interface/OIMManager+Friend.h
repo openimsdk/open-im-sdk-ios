@@ -82,9 +82,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param uids 用户id列表
  */
-- (void)getDesignatedFriendsInfo:(NSArray <NSString *> *)uids
-                       onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
-                       onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)getSpecifiedFriendsInfo:(NSArray <NSString *> *)usersID
+                      onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
+                      onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 获取所有好友的相关信息
@@ -98,7 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param uidList userID列表
 */
-- (void)checkFriend:(NSArray <NSString *> *)uids
+- (void)checkFriend:(NSArray <NSString *> *)usersID
           onSuccess:(nullable OIMSimpleResultsCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
 

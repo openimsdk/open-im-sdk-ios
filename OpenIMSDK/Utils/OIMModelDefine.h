@@ -111,10 +111,10 @@ typedef NS_ENUM(NSInteger, OIMReceiveMessageOpt) {
 
 
 typedef NS_ENUM(NSInteger, OIMGroupMemberRole) {
-    OIMGroupMemberRoleUndefine       = 0,    /// 未定义
-    OIMGroupMemberRoleMember         = 1,    /// 群成员
-    OIMGroupMemberRoleSuper          = 2,    /// 群主
-    OIMGroupMemberRoleAdmin          = 3,    /// 群管理员
+    OIMGroupMemberRoleAll       = 0,    /// 所有，查询可用
+    OIMGroupMemberRoleMember    = 1,    /// 群成员
+    OIMGroupMemberRoleSuper     = 2,    /// 群主
+    OIMGroupMemberRoleAdmin     = 3,    /// 群管理员
     
 };
 

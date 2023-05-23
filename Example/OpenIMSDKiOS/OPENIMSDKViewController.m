@@ -321,7 +321,42 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
 
 - (void)initSDK {
     
+    NSString *userID = [OIMManager.manager getLoginUser];
+    
+    [OIMManager.manager getSelfInfoWithOnSuccess:^(OIMUserInfo * _Nullable userInfo) {
+    } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+    }];
+    [OIMManager.manager getUsersInfo:@[]
+                           onSuccess:^(NSArray<OIMFullUserInfo *> * _Nullable userInfos) {
+    } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+    }];
+    [OIMManager.manager setAppBackgroundStatus:YES
+                                     onSuccess:^(NSString * _Nullable data) {
+    } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+    }];
     NSLog(@"\n\n-----初始化------");
+    [OIMManager.manager logoutWithOnSuccess:^(NSString * _Nullable data) {
+            
+        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+            
+        }];
+    
+    OIMInitConfig *config = [OIMInitConfig new];
+    config.apiAddr = @"";
+    config.wsAddr = @"";
+    
+    BOOL success = [OIMManager.manager initSDKWithConfig:config
+                                            onConnecting:^{
+        
+    } onConnectFailure:^(NSInteger code, NSString * _Nullable msg) {
+        
+    } onConnectSuccess:^{
+        
+    } onKickedOffline:^{
+        
+    } onUserTokenExpired:^{
+        
+    }];
     
     BOOL initSuccess = [OIMManager.manager initSDKWithApiAdrr:API_ADDRESS
                                                        wsAddr:WS_ADDRESS
@@ -341,7 +376,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         NSLog(@"\nuser token expired");
     }];
     
-    NSLog(@"初始化成功与否：%d", initSuccess);
+    NSLog(@"初始化成功与否：%d", success);
 }
 
 - (void)login {
@@ -357,6 +392,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
             } onFailure:^(NSInteger code, NSString * _Nullable msg) {
                 NSLog(@"msg");
             }];
+            
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
@@ -413,6 +449,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
 }
 
 - (void)getUsersInfo {
+
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
         
@@ -551,7 +588,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
-        [OIMManager.manager getDesignatedFriendsInfo:@[OTHER_USER_ID]
+        [OIMManager.manager getSpecifiedFriendsInfo:@[OTHER_USER_ID]
                                            onSuccess:^(NSArray<OIMFullUserInfo *> * _Nullable userInfos) {
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
@@ -668,6 +705,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
        
         [OIMManager.manager joinGroup:GROUP_ID
                                reqMsg:nil
+                           joinSource:OIMJoinTypeSearch
                             onSuccess:^(NSString * _Nullable data) {
             
             callback(nil, nil);
@@ -708,7 +746,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
-        [OIMManager.manager getGroupsInfo:@[GROUP_ID]
+        [OIMManager.manager getSpecifiedGroupsInfo:@[GROUP_ID]
                                 onSuccess:^(NSArray<OIMGroupInfo *> * _Nullable groupsInfo) {
             
             callback(nil, nil);
@@ -757,8 +795,8 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
-        [OIMManager.manager getGroupMembersInfo:GROUP_ID
-                                           uids:@[OTHER_USER_ID]
+        [OIMManager.manager getSpecifiedGroupMembersInfo:GROUP_ID
+                                                 usersID:@[OTHER_USER_ID]
                                       onSuccess:^(NSArray<OIMGroupMemberInfo *> * _Nullable groupMembersInfo) {
             
             callback(nil, nil);
@@ -774,7 +812,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
        
         [OIMManager.manager kickGroupMember:GROUP_ID
                                      reason:@"没有理由"
-                                       uids:@[OTHER_USER_ID]
+                                    usersID:@[OTHER_USER_ID]
                                   onSuccess:^(NSArray<OIMSimpleResultInfo *> * _Nullable results) {
             
             callback(nil, nil);
@@ -805,7 +843,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
        
         [OIMManager.manager inviteUserToGroup:GROUP_ID
                                        reason:@"邀请不"
-                                         uids:@[OTHER_USER_ID]
+                                      usersID:@[OTHER_USER_ID]
                                     onSuccess:^(NSArray<OIMSimpleResultInfo *> * _Nullable results) {
             
             callback(nil, nil);
@@ -819,7 +857,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
-        [OIMManager.manager getGroupApplicationListWithOnSuccess:^(NSArray<OIMGroupApplicationInfo *> * _Nullable groupsInfo) {
+        [OIMManager.manager getGroupApplicationListAsProcessorWithOnSuccess:^(NSArray<OIMGroupApplicationInfo *> * _Nullable groupsInfo) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
@@ -832,7 +870,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
-        [OIMManager.manager getSendGroupApplicationListWithOnSuccess:^(NSArray<OIMGroupApplicationInfo *> * _Nullable groupsInfo) {
+        [OIMManager.manager getGroupApplicationListAsApplicantWithOnSuccess:^(NSArray<OIMGroupApplicationInfo *> * _Nullable groupsInfo) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {

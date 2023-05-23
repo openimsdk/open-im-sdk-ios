@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) NSString *notification;
 @property (nonatomic, nullable, copy) NSString *introduction;
 @property (nonatomic, nullable, copy) NSString *groupFaceURL;
-@property (nonatomic, nullable, copy) NSString *createTime;
+@property (nonatomic, assign) NSInteger createTime;
 @property (nonatomic, assign) NSInteger status;
 @property (nonatomic, nullable, copy) NSString *creatorUserID;
 @property (nonatomic, assign) NSInteger groupType;
