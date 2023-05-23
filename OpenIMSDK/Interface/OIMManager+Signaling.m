@@ -11,9 +11,9 @@
 @implementation OIMManager (Signaling)
 
 - (OIMSignalingInfo *)signalingInvite:(OIMInvitationInfo *)invitation
-        offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
-              onSuccess:(OIMSignalingResultCallback)onSuccess
-              onFailure:(OIMFailureCallback)onFailure {
+                      offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
+                            onSuccess:(OIMSignalingResultCallback)onSuccess
+                            onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
             onSuccess([OIMInvitationResultInfo mj_objectWithKeyValues:data]);
@@ -37,7 +37,7 @@
     }
     
     info.offlinePushInfo = offlinePushInfo;
-        
+    
     if (invitation.sessionType == OIMConversationTypeGroup) {
         Open_im_sdkSignalingInviteInGroup(callback, [self operationId], info.mj_JSONString);
     } else {
@@ -48,9 +48,9 @@
 }
 
 - (OIMSignalingInfo *)signalingInviteInGroup:(OIMInvitationInfo *)invitation
-               offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
-                     onSuccess:(OIMSignalingResultCallback)onSuccess
-                     onFailure:(OIMFailureCallback)onFailure {
+                             offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
+                                   onSuccess:(OIMSignalingResultCallback)onSuccess
+                                   onFailure:(OIMFailureCallback)onFailure {
     return [self signalingInvite:invitation offlinePushInfo:offlinePushInfo onSuccess:onSuccess onFailure:onFailure];
 }
 
@@ -62,7 +62,7 @@
             onSuccess([OIMInvitationResultInfo mj_objectWithKeyValues:data]);
         }
     } onFailure:onFailure];
-        
+    
     Open_im_sdkSignalingAccept(callback, [self operationId], invitation.mj_JSONString);
 }
 
@@ -99,7 +99,7 @@
             onSuccess([OIMParticipantConnectedInfo mj_objectWithKeyValues:data]);
         }
     } onFailure:onFailure];
-        
+    
     Open_im_sdkSignalingGetRoomByGroupID(callback, [self operationId], groupID);
 }
 
@@ -111,7 +111,7 @@
             onSuccess([OIMInvitationResultInfo mj_objectWithKeyValues:data]);
         }
     } onFailure:onFailure];
-        
+    
     Open_im_sdkSignalingGetTokenByRoomID(callback, [self operationId], groupID);
 }
 
@@ -152,15 +152,15 @@
     }
     
     params[@"inviteeUserIDList"] = inviteeUserIDList ?: [NSArray new];
-        
+    
     Open_im_sdkSignalingCreateMeeting(callback, [self operationId], params.mj_JSONString);
 }
 
-- (void)signalingCreateMeeting:(NSString *)meetingID
-                   meetingName:(nullable NSString *)meetingName
-           participantNickname:(nullable NSString *)participantNickname
-                     onSuccess:(nullable OIMSignalingResultCallback)onSuccess
-                     onFailure:(nullable OIMFailureCallback)onFailure {
+- (void)signalingJoinMeeting:(NSString *)meetingID
+                 meetingName:(nullable NSString *)meetingName
+         participantNickname:(nullable NSString *)participantNickname
+                   onSuccess:(nullable OIMSignalingResultCallback)onSuccess
+                   onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
             onSuccess([OIMInvitationResultInfo mj_objectWithKeyValues:data]);
@@ -177,8 +177,21 @@
     if (participantNickname != nil) {
         params[@"participantNickname"] = participantNickname;
     }
-        
+    
     Open_im_sdkSignalingJoinMeeting(callback, [self operationId], params.mj_JSONString);
+}
+
+- (void)signalingOperateStream:(NSString *)roomID
+                        userID:(NSString *)userID
+                    streamType:(NSString *)streamType
+                          mute:(BOOL)mute
+                       muteAll:(BOOL)muteAll
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure {
+    
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSignalingOperateStream(callback, [self operationId], streamType, roomID, userID, mute, muteAll);;
 }
 
 - (void)signalingUpdateMeetingInfo:(NSString *)roomID

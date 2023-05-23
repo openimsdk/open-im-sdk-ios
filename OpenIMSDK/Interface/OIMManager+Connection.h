@@ -9,7 +9,34 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface OIMInitConfig : NSObject
+
+// 设备类型
+@property (nonatomic, assign) NSInteger platform;
+// SDK的API地址
+@property (nonatomic, copy) NSString *apiAddr;
+// SDK的Web Socket地址
+@property (nonatomic, copy) NSString *wsAddr;
+// 默认Documents/下
+@property (nonatomic, copy, nullable) NSString *dataDir;
+// 日志等级默认6
+@property (nonatomic, assign) NSInteger logLevel;
+// 默认minio
+@property (nonatomic, copy, nullable) NSString *objectStorage;
+@property (nonatomic, assign) BOOL encryption;
+@property (nonatomic, assign) BOOL compression;
+@property (nonatomic, assign) BOOL isExternal;
+
+@end
+
 @interface OIMManager (Connection)
+
+- (BOOL)initSDKWithConfig:(OIMInitConfig *)config
+             onConnecting:(nullable OIMVoidCallback)onConnecting
+         onConnectFailure:(nullable OIMFailureCallback)onConnectFailure
+         onConnectSuccess:(nullable OIMVoidCallback)onConnectSuccess
+          onKickedOffline:(nullable OIMVoidCallback)onKickedOffline
+       onUserTokenExpired:(nullable OIMVoidCallback)onUserTokenExpired;
 
 /* 初始化
  * @param platform 平台
@@ -36,6 +63,19 @@ onUserTokenExpired:(nullable OIMVoidCallback)onUserTokenExpired;
                    dataDir:(NSString * _Nullable)dataDir
                   logLevel:(NSInteger)logLevel
              objectStorage:(NSString * _Nullable)os
+              onConnecting:(nullable OIMVoidCallback)onConnecting
+          onConnectFailure:(nullable OIMFailureCallback)onConnectFailure
+          onConnectSuccess:(nullable OIMVoidCallback)onConnectSuccess
+           onKickedOffline:(nullable OIMVoidCallback)onKickedOffline
+        onUserTokenExpired:(nullable OIMVoidCallback)onUserTokenExpired;
+
+- (BOOL)initSDKWithApiAdrr:(NSString *)apiAddr
+                    wsAddr:(NSString *)wsAddr
+                   dataDir:(NSString * _Nullable)dataDir
+                  logLevel:(NSInteger)logLevel
+             objectStorage:(NSString * _Nullable)os
+          enableEncryption:(BOOL)encryption
+         turnOnCompression:(BOOL)compression
               onConnecting:(nullable OIMVoidCallback)onConnecting
           onConnectFailure:(nullable OIMFailureCallback)onConnectFailure
           onConnectSuccess:(nullable OIMVoidCallback)onConnectSuccess

@@ -33,17 +33,17 @@ NS_ASSUME_NONNULL_BEGIN
  * @param offlinePushInfo 离线push消息
  */
 - (OIMSignalingInfo *)signalingInvite:(OIMInvitationInfo *)invitation
-        offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
-              onSuccess:(nullable OIMSignalingResultCallback)onSuccess
-              onFailure:(nullable OIMFailureCallback)onFailure;
+                      offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
+                            onSuccess:(nullable OIMSignalingResultCallback)onSuccess
+                            onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  *  邀请群里某些人加入音视频 - 只在于参数的设置
  */
 - (OIMSignalingInfo *)signalingInviteInGroup:(OIMInvitationInfo *)invitation
-               offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
-                     onSuccess:(nullable OIMSignalingResultCallback)onSuccess
-                     onFailure:(nullable OIMFailureCallback)onFailure;
+                             offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
+                                   onSuccess:(nullable OIMSignalingResultCallback)onSuccess
+                                   onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  *  同意某人音视频邀请
@@ -146,11 +146,11 @@ NS_ASSUME_NONNULL_BEGIN
  @param meetingName 会议主题
  @param participantNickname 加入房间显示的名称
  */
-- (void)signalingCreateMeeting:(NSString *)meetingID
-                   meetingName:(nullable NSString *)meetingName
-           participantNickname:(nullable NSString *)participantNickname
-                     onSuccess:(nullable OIMSignalingResultCallback)onSuccess
-                     onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)signalingJoinMeeting:(NSString *)meetingID
+                 meetingName:(nullable NSString *)meetingName
+         participantNickname:(nullable NSString *)participantNickname
+                   onSuccess:(nullable OIMSignalingResultCallback)onSuccess
+                   onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
  会议室 管理员对指定的某一个入会人员设置禁言

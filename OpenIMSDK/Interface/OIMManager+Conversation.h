@@ -147,6 +147,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)resetConversationGroupAtType:(NSString *)conversationID
                            onSuccess:(nullable OIMSuccessCallback)onSuccess
                            onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 隐藏会话，不删除聊天记录；
+ * 如果有新消息到达，会话会再次出现。
+ */
+- (void)hideConversation:(NSString *)conversationID
+               onSuccess:(nullable OIMSuccessCallback)onSuccess
+               onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

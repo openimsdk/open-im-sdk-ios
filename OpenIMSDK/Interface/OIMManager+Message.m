@@ -504,7 +504,19 @@
     Open_im_sdkGetAdvancedHistoryMessageList(callback, [self operationId], opts.mj_JSONString);
 }
 
-- (void)findMessageList:(OIMFindMessageListParam *)param
+- (void)getAdvancedHistoryMessageListReverse:(OIMGetAdvancedHistoryMessageListParam *)opts
+                                   onSuccess:(nullable OIMGetAdvancedHistoryMessageListCallback)onSuccess
+                                   onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMGetAdvancedHistoryMessageListInfo mj_objectWithKeyValues:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetAdvancedHistoryMessageListReverse(callback, [self operationId], opts.mj_JSONString);
+}
+
+- (void)findMessageList:(NSArray<OIMFindMessageListParam *> *)param
               onSuccess:(OIMMessageSearchCallback)onSuccess
               onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
@@ -513,15 +525,30 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkFindMessageList(callback, [self operationId], param.mj_JSONString);
+    NSArray *params = [OIMFindMessageListParam mj_keyValuesArrayWithObjectArray:param];
+    
+    Open_im_sdkFindMessageList(callback, [self operationId], params.mj_JSONString);
 }
 
 - (void)setAppBadge:(NSInteger)count
           onSuccess:(OIMSuccessCallback)onSuccess
           onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-        
+    
     Open_im_sdkSetAppBadge(callback, [self operationId], (int32_t)count);
+}
+
+- (void)addMessageReactionExtensions:(OIMMessageInfo *)message
+               reactionExtensionList:(NSArray<OIMKeyValue *> *)list
+                           onSuccess:(OIMKeyValueResultCallback)onSuccess
+                           onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess(nil, [OIMKeyValue mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkAddMessageReactionExtensions(callback, [self operationId], message.mj_JSONString, [OIMKeyValue mj_keyValuesArrayWithObjectArray:list].mj_JSONString);
 }
 
 - (void)setMessageReactionExtensions:(OIMMessageInfo *)message
@@ -555,7 +582,25 @@
                                onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMKeyValues mj_objectArrayWithKeyValuesArray:data]);
+            NSArray<OIMKeyValues *> *keyValues = [OIMKeyValues mj_objectArrayWithKeyValuesArray:data];
+            
+            [keyValues enumerateObjectsUsingBlock:^(OIMKeyValues * _Nonnull keyValue, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([keyValue.reactionExtensionList isKindOfClass:NSDictionary.class]) {
+                    NSMutableDictionary *extensions = keyValue.reactionExtensionList.mutableCopy;
+                    
+                    NSEnumerator *enumerator = keyValue.reactionExtensionList.keyEnumerator;
+                    NSString *key = @"";
+                    
+                    while (key = [enumerator nextObject]) {
+                        NSDictionary *value = extensions[key];
+                        OIMKeyValue *obj = [OIMKeyValue mj_objectWithKeyValues:value];
+                        extensions[key] = obj;
+                    }
+                    keyValue.reactionExtensionList = extensions;
+                }
+            }];
+            
+            onSuccess(keyValues);
         }
     } onFailure:onFailure];
     
@@ -568,7 +613,25 @@
                                    onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMKeyValues mj_objectArrayWithKeyValuesArray:data]);
+            NSArray<OIMKeyValues *> *keyValues = [OIMKeyValues mj_objectArrayWithKeyValuesArray:data];
+            
+            [keyValues enumerateObjectsUsingBlock:^(OIMKeyValues * _Nonnull keyValue, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([keyValue.reactionExtensionList isKindOfClass:NSDictionary.class]) {
+                    NSMutableDictionary *extensions = keyValue.reactionExtensionList.mutableCopy;
+                    
+                    NSEnumerator *enumerator = extensions.keyEnumerator;
+                    NSString *key = @"";
+                    
+                    while (key = [enumerator nextObject]) {
+                        NSDictionary *value = extensions[key];
+                        OIMKeyValue *obj = [OIMKeyValue mj_objectWithKeyValues:value];
+                        extensions[key] = obj;
+                    }
+                    keyValue.reactionExtensionList = extensions;
+                }
+            }];
+            
+            onSuccess(keyValues);
         }
     } onFailure:onFailure];
     

@@ -111,6 +111,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSTimeInterval hasReadTime;
 
+@property (nonatomic, assign) BOOL isReact;
+
+@property (nonatomic, assign) BOOL isExternalExtensions;
+
 @end
 
 @interface OIMReceiptInfo : NSObject

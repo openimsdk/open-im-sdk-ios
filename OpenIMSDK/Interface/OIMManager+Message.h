@@ -515,9 +515,17 @@ NS_ASSUME_NONNULL_BEGIN
                             onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
+ * Advanced Message 系列使用
+ @param opts lastMinSeq  是上一次拉取回调给的值，上下文，第二次拉取需要回传
+ */
+- (void)getAdvancedHistoryMessageListReverse:(OIMGetAdvancedHistoryMessageListParam *)opts
+                                   onSuccess:(nullable OIMGetAdvancedHistoryMessageListCallback)onSuccess
+                                   onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
  查找消息列表
  */
-- (void)findMessageList:(OIMFindMessageListParam *)param
+- (void)findMessageList:(NSArray<OIMFindMessageListParam *> *)param
               onSuccess:(nullable OIMMessageSearchCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
@@ -527,6 +535,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setAppBadge:(NSInteger)count
           onSuccess:(nullable OIMSuccessCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)addMessageReactionExtensions:(OIMMessageInfo *)message
+               reactionExtensionList:(NSArray<OIMKeyValue *> *)list
+                           onSuccess:(OIMKeyValueResultCallback)onSuccess
+                           onFailure:(OIMFailureCallback)onFailure;
 
 - (void)setMessageReactionExtensions:(OIMMessageInfo *)message
                reactionExtensionList:(NSArray<OIMKeyValue *> *)list
