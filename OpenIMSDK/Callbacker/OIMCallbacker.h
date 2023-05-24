@@ -43,7 +43,9 @@ typedef void (^OIMFriendApplicationCallback)(OIMFriendApplication * _Nullable fr
 typedef void (^OIMFriendApplicationsCallback)(NSArray <OIMFriendApplication *> * _Nullable friendApplications);
 
 typedef void (^OIMFriendInfoCallback)(OIMFriendInfo * _Nullable friendInfo);
+typedef void (^OIMFriendsInfoCallback)(NSArray<OIMFriendInfo *> * _Nullable friendInfo);
 typedef void (^OIMBlackInfoCallback)(OIMBlackInfo * _Nullable blackInfo);
+typedef void (^OIMBlacksInfoCallback)(NSArray<OIMBlackInfo *> * _Nullable blackInfo);
 typedef void (^OIMSearchUsersInfoCallback)(NSArray<OIMSearchUserInfo *> * _Nullable usersInfo);
 
 typedef void (^OIMGroupApplicationCallback)(OIMGroupApplicationInfo * _Nullable groupApplication);
