@@ -147,7 +147,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface OIMMessageRevoked : NSObject
+@interface OIMMessageRevokedInfo : NSObject
 
 /*
  * 撤回者的id

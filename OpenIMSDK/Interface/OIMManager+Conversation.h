@@ -67,9 +67,9 @@ NS_ASSUME_NONNULL_BEGIN
  * 删除一个会话
  * @param conversationID    会话ID
  */
-- (void)deleteConversation:(NSString *)conversationID
-                 onSuccess:(nullable OIMSuccessCallback)onSuccess
-                 onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)deleteConversationFromLocalAndSvr:(NSString *)conversationID
+                                onSuccess:(nullable OIMSuccessCallback)onSuccess
+                                onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 删除所有会话

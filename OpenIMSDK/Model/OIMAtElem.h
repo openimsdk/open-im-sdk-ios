@@ -44,18 +44,18 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * at 引用消息
  */
-@property (nonatomic, nullable, strong) OIMQuoteElem *quoteMessage;
+@property (nonatomic, nullable, strong) OIMMessageInfo *quoteMessage;
 
 /*
  * 自己是否被@了
  */
-@property (nonatomic, assign) BOOL isAtSelf;
+@property (nonatomic, assign, readonly) BOOL isAtSelf;
 
 
 /*
  * 是否@全体成员
  */
-@property (nonatomic, assign) BOOL isAtAll;
+@property (nonatomic, assign, readonly) BOOL isAtAll;
 
 @end
 

@@ -143,7 +143,7 @@
     Open_im_sdkDeleteFriend(callback, [self operationId], friendUserID);
 }
 
-- (void)searchFriends:(OIMSearchUserParam *)searchParam
+- (void)searchFriends:(OIMSearchFriendsParam *)searchParam
             onSuccess:(nullable OIMSearchUsersInfoCallback)onSuccess
             onFailure:(nullable OIMFailureCallback)onFailure {
     
@@ -151,7 +151,7 @@
     
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMSearchUserInfo mj_objectArrayWithKeyValuesArray:data]);
+            onSuccess([OIMSearchFriendsInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     

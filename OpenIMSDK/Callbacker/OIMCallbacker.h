@@ -46,7 +46,7 @@ typedef void (^OIMFriendInfoCallback)(OIMFriendInfo * _Nullable friendInfo);
 typedef void (^OIMFriendsInfoCallback)(NSArray<OIMFriendInfo *> * _Nullable friendInfo);
 typedef void (^OIMBlackInfoCallback)(OIMBlackInfo * _Nullable blackInfo);
 typedef void (^OIMBlacksInfoCallback)(NSArray<OIMBlackInfo *> * _Nullable blackInfo);
-typedef void (^OIMSearchUsersInfoCallback)(NSArray<OIMSearchUserInfo *> * _Nullable usersInfo);
+typedef void (^OIMSearchUsersInfoCallback)(NSArray<OIMSearchFriendsInfo *> * _Nullable usersInfo);
 
 typedef void (^OIMGroupApplicationCallback)(OIMGroupApplicationInfo * _Nullable groupApplication);
 typedef void (^OIMGroupsApplicationCallback)(NSArray <OIMGroupApplicationInfo *> * _Nullable groupsInfo);
@@ -64,7 +64,7 @@ typedef void (^OIMMessagesInfoCallback)(NSArray <OIMMessageInfo *> * _Nullable m
 typedef void (^OIMMessageSearchCallback)(OIMSearchResultInfo * _Nullable result);
 
 typedef void (^OIMReceiptCallback)(NSArray <OIMReceiptInfo *> * _Nullable msgReceiptList);
-typedef void (^OIMRevokedCallback)(OIMMessageRevoked * _Nullable msgRovoked);
+typedef void (^OIMRevokedCallback)(OIMMessageRevokedInfo * _Nullable msgRovoked);
 
 typedef void (^OIMSignalingInvitationCallback)(OIMSignalingInfo * _Nullable result);
 typedef void (^OIMSignalingResultCallback)(OIMInvitationResultInfo * _Nullable result);
@@ -240,7 +240,7 @@ typedef void (^OIMKeyValuesResultCallback)(NSArray <OIMKeyValues *> * _Nullable 
 /*
  * 有新的会话
  */
-- (void)onNewConversation:(NSArray <OIMConversationInfo *> *) conversations;
+- (void)onNewConversation:(NSArray <OIMConversationInfo *> *)conversations;
 
 /*
  * 某些会话的关键信息发生变化（
@@ -250,7 +250,7 @@ typedef void (^OIMKeyValuesResultCallback)(NSArray <OIMKeyValues *> * _Nullable 
 /*
  * 会话未读总数变更通知
  */
-- (void)onTotalUnreadMessageCountChanged:(NSInteger) totalUnreadCount;
+- (void)onTotalUnreadMessageCountChanged:(NSInteger)totalUnreadCount;
 
 @end
 
@@ -278,7 +278,7 @@ typedef void (^OIMKeyValuesResultCallback)(NSArray <OIMKeyValues *> * _Nullable 
  */
 - (void)onRecvMessageRevoked:(NSString *)msgID;
 
-- (void)onNewRecvMessageRevoked:(OIMMessageRevoked *)messageRevoked;
+- (void)onNewRecvMessageRevoked:(OIMMessageRevokedInfo *)messageRevoked;
 
 - (void)onRecvMessageExtensionsAdded:(NSString *)msgID reactionExtensionList:(NSArray<OIMKeyValue *> *)reactionExtensionList;
 

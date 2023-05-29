@@ -506,7 +506,7 @@
 
 - (void)onNewRecvMessageRevoked:(NSString *)messageRevoked {
     
-    OIMMessageRevoked *revoked = [OIMMessageRevoked mj_objectWithKeyValues:messageRevoked];
+    OIMMessageRevokedInfo *revoked = [OIMMessageRevokedInfo mj_objectWithKeyValues:messageRevoked];
     
     [self dispatchMainThread:^{
         if (self.onNewRecvMessageRevoked) {

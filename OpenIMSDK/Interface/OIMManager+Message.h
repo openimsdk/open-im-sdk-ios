@@ -391,9 +391,9 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param message   为OIMMessageInfo
  */
-- (void)deleteMessage:(OIMMessageInfo *)message
-            onSuccess:(nullable OIMSuccessCallback)onSuccess
-            onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)deleteMessageFromLocalAndSvr:(OIMMessageInfo *)message
+                           onSuccess:(nullable OIMSuccessCallback)onSuccess
+                           onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 本地删除一条消息，卸载APP后会重新获取到
@@ -414,7 +414,7 @@ NS_ASSUME_NONNULL_BEGIN
                      onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
- * 清空单聊的本地/远端历史记录
+ * 清空单聊的本地&远端历史记录
  *
  * @param userID   用户的ID
  */

@@ -65,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface OIMSearchUserInfo : OIMFriendInfo
+@interface OIMSearchFriendsInfo : OIMFriendInfo
 
 @property (nonatomic, assign) OIMRelationship relationship;
 

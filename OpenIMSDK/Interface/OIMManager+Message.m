@@ -372,9 +372,9 @@
     Open_im_sdkMarkMessageAsReadByConID(callback, [self operationId], conversationID, msgIDList.mj_JSONString);
 }
 
-- (void)deleteMessage:(OIMMessageInfo *)message
-            onSuccess:(nullable OIMSuccessCallback)onSuccess
-            onFailure:(nullable OIMFailureCallback)onFailure {
+- (void)deleteMessageFromLocalAndSvr:(OIMMessageInfo *)message
+                           onSuccess:(nullable OIMSuccessCallback)onSuccess
+                           onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
     Open_im_sdkDeleteMessageFromLocalAndSvr(callback, [self operationId], message.mj_JSONString);

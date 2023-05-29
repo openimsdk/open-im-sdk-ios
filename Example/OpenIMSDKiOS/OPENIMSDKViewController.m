@@ -314,7 +314,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         NSLog(@"onRecvGroupReadReceipt:%@", msgReceiptList);
     } onRecvNewMessage:^(OIMMessageInfo * _Nullable message) {
         
-    } onNewRecvMessageRevoked:^(OIMMessageRevoked * _Nullable msgRovoked) {
+    } onNewRecvMessageRevoked:^(OIMMessageRevokedInfo * _Nullable msgRovoked) {
         
     }];
 }
@@ -561,7 +561,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
-        [OIMManager.manager getBlackListWithOnSuccess:^(NSArray<OIMFullUserInfo *> * _Nullable userInfos) {
+        [OIMManager.manager getBlackListWithOnSuccess:^(NSArray<OIMBlackInfo *> * _Nullable blackInfo) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
@@ -589,7 +589,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
         [OIMManager.manager getSpecifiedFriendsInfo:@[OTHER_USER_ID]
-                                           onSuccess:^(NSArray<OIMFullUserInfo *> * _Nullable userInfos) {
+                                          onSuccess:^(NSArray<OIMFriendInfo *> * _Nullable friendInfo) {
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
             callback(@(code), msg);
@@ -657,13 +657,13 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
-        OIMSearchUserParam *t = [OIMSearchUserParam new];
+        OIMSearchFriendsParam *t = [OIMSearchFriendsParam new];
         t.keywordList = @[@"x2"];
         t.isSearchRemark = YES;
         t.isSearchUserID = YES;
         
         [OIMManager.manager searchFriends:t
-                              onSuccess:^(NSArray<OIMSearchUserInfo *> * _Nullable usersInfo) {
+                              onSuccess:^(NSArray<OIMSearchFriendsInfo *> * _Nullable usersInfo) {
             
         
             callback(nil, nil);
@@ -1497,7 +1497,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
        
-        [OIMManager.manager deleteConversation:CONVERSASTION_ID
+        [OIMManager.manager deleteConversationFromLocalAndSvr:CONVERSASTION_ID
                                      onSuccess:^(NSString * _Nullable data) {
             
             callback(nil, nil);

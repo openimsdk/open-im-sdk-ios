@@ -125,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  *  本地搜索好友
  */
-- (void)searchFriends:(OIMSearchUserParam *)searchParam
+- (void)searchFriends:(OIMSearchFriendsParam *)searchParam
             onSuccess:(nullable OIMSearchUsersInfoCallback)onSuccess
             onFailure:(nullable OIMFailureCallback)onFailure;
 @end

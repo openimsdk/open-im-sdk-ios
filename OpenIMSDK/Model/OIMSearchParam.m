@@ -37,7 +37,7 @@
 
 @end
 
-@implementation OIMSearchUserParam
+@implementation OIMSearchFriendsParam
 
 @end
 
