@@ -25,13 +25,13 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 获取收到的好友申请，既哪些人申请加我为好友
  */
-- (void)getFriendApplicationListWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
+- (void)getFriendApplicationListAsRecipientWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
                                     onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 发出的好友申请
  */
-- (void)getSendFriendApplicationListWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
+- (void)getFriendApplicationListAsApplicantWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
                                         onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
@@ -83,13 +83,13 @@ NS_ASSUME_NONNULL_BEGIN
  * @param usersID 用户id列表
  */
 - (void)getSpecifiedFriendsInfo:(NSArray <NSString *> *)usersID
-                      onSuccess:(nullable OIMFriendsInfoCallback)onSuccess
+                      onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
                       onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 获取所有好友的相关信息
  */
-- (void)getFriendListWithOnSuccess:(nullable OIMFriendsInfoCallback)onSuccess
+- (void)getFriendListWithOnSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
                          onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*

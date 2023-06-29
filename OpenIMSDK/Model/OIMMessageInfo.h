@@ -18,7 +18,7 @@
 #import "OIMNotificationElem.h"
 #import "OIMFaceElem.h"
 #import "OIMAttachedInfoElem.h"
-#import "OIMModelDefine.h"
+#import "OIMDefine.h"
 #import "OIMMessageElem.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -83,6 +83,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) OIMOfflinePushInfo *offlinePush;
 
+@property (nonatomic, nullable, strong) OIMTextElem *textElem;
+
+@property (nonatomic, nullable, strong) OIMCardElem *cardElem;
+
 @property (nonatomic, nullable, strong) OIMPictureElem *pictureElem;
 
 @property (nonatomic, nullable, strong) OIMSoundElem *soundElem;
@@ -93,7 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, strong) OIMMergeElem *mergeElem;
 
-@property (nonatomic, nullable, strong) OIMAtElem *atElem;
+@property (nonatomic, nullable, strong) OIMAtTextElem *atTextElem;
 
 @property (nonatomic, nullable, strong) OIMLocationElem *locationElem;
 
@@ -107,7 +111,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, strong) OIMAttachedInfoElem *attachedInfoElem;
 
-@property (nonatomic, nullable, strong) OIMMessageEntityElem *messageEntityElem;
+@property (nonatomic, nullable, strong) OIMAdvancedTextElem *advancedTextElem;
+
+@property (nonatomic, nullable, strong) OIMTypingElem *typingElem;
 
 @property (nonatomic, assign) NSTimeInterval hasReadTime;
 
@@ -172,6 +178,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *sourceMessageSenderNickname;
 
 @property (nonatomic, assign) OIMConversationType sessionType;
+
+@property (nonatomic, copy) NSString *ex;
 
 @end
 

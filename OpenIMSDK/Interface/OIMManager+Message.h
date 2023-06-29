@@ -6,6 +6,7 @@
 //
 
 #import "OIMManager.h"
+#import "PutFileCallbackProxy.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,16 +24,23 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (OIMMessageInfo *)createTextMessage:(NSString *)text;
 
+
+/**
+   可配套createTextAtMessage使用，将@所有人标识插入指定位置
+ */
++ (OIMAtInfo *)createAtAllFlag:(NSString *)displayText;
+
+
 /*
  * 创建@文本消息
  *
  * @param text      内容
- * @param atUidList 用户id列表
+ * @param atUsersID 用户id列表
  * @param atUsersInfo 用户在群内的信息
  * @param message 引用消息的时候使用
  */
 + (OIMMessageInfo *)createTextAtMessage:(NSString *)text
-                              atUidList:(NSArray<NSString *> *)atUidList
+                              atUsersID:(NSArray<NSString *> *)atUsersID
                             atUsersInfo:(NSArray<OIMAtInfo *> *)atUsersInfo
                                 message:(OIMMessageInfo * _Nullable)message;
 
@@ -213,7 +221,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param content String
 */
-+ (OIMMessageInfo *)createCardMessage:(NSString *)content;
++ (OIMMessageInfo *)createCardMessage:(OIMCardElem *)card;
 
 /*
  * 创建自定义消息
@@ -286,63 +294,16 @@ NS_ASSUME_NONNULL_BEGIN
                 onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
- * 获取历史记录
- *
- * @param userID       拉取单个用户之间的聊天消息
- * @param groupID      拉取群的聊天消息
- * @param startClientMsgID      起始的消息clientMsgID，第一次拉取为""
- * @param count        拉取消息的数量
- */
-- (void)getHistoryMessageListWithUserId:(NSString * _Nullable)userID
-                                groupID:(NSString * _Nullable)groupID
-                       startClientMsgID:(NSString * _Nullable)startClientMsgID
-                                  count:(NSInteger)count
-                              onSuccess:(nullable OIMMessagesInfoCallback)onSuccess
-                              onFailure:(nullable OIMFailureCallback)onFailure;
-/*
- * 获取历史记录
- * conversationID、userID、groupID选择其一
- * @param conversationID   会话ID, 大群必须使用
- * @param userID       拉取单个用户之间的聊天消息
- * @param groupID      拉取群的聊天消息
- * @param startClientMsgID      起始的消息clientMsgID，第一次拉取为""
- * @param count        拉取消息的数量
- */
-- (void)getHistoryMessageList:(NSString * _Nullable)conversationID
-                       userId:(NSString * _Nullable)userID
-                      groupID:(NSString * _Nullable)groupID
-             startClientMsgID:(NSString * _Nullable)startClientMsgID
-                        count:(NSInteger)count
-                    onSuccess:(nullable OIMMessagesInfoCallback)onSuccess
-                    onFailure:(nullable OIMFailureCallback)onFailure;
-
-/*
- * 反序获取历史记录 - 拉取的聊天记录为发送时间大于startClientMsgID发送时间的升序列表
- *
- */
-- (void)getHistoryMessageListReverse:(OIMGetMessageOptions *)options
-                           onSuccess:(nullable OIMMessagesInfoCallback)onSuccess
-                           onFailure:(nullable OIMFailureCallback)onFailure;
-
-/*
  * 撤回一条消息
  *
- * @param message   为OIMMessageInfo
+ * @param conversationID 会话ID
+ * @param clientMsgID    消息ID
  *
  */
-- (void)revokeMessage:(OIMMessageInfo *)message
-            onSuccess:(nullable OIMSuccessCallback)onSuccess
-            onFailure:(nullable OIMFailureCallback)onFailure DEPRECATED_MSG_ATTRIBUTE("Use [newRevokeMessage:onSuccess:onFailure]");
-
-/*
- * 撤回一条消息 - 支持管理员撤回消息；支持撤回tips显示在原来的位置
- *
- * @param message   为OIMMessageInfo
- *
- */
-- (void)newRevokeMessage:(OIMMessageInfo *)message
-               onSuccess:(nullable OIMSuccessCallback)onSuccess
-               onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)revokeMessage:(NSString *)conversationID
+          clientMsgID:(NSString *)clientMsgID
+            onSuccess:(OIMSuccessCallback)onSuccess
+            onFailure:(OIMFailureCallback)onFailure ;
 
 /*
  * 单聊正在输入消息
@@ -355,102 +316,46 @@ NS_ASSUME_NONNULL_BEGIN
                  onSuccess:(nullable OIMSuccessCallback)onSuccess
                  onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 标记已读
- *
- * @param userID    用户ID
- * @param msgIDList 消息ID的列表 ["er4er","3er4"]，传[]则标记所有, clientMsgID
+/**
+ 标记会话已读
  */
-- (void)markC2CMessageAsRead:(NSString *)userID
-                   msgIDList:(NSArray <NSString *> *)msgIDList
-                   onSuccess:(nullable OIMSuccessCallback)onSuccess
-                   onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)markConversationMessageAsRead:(NSString *)conversationID
+                            onSuccess:(OIMSuccessCallback)onSuccess
+                            onFailure:(OIMFailureCallback)onFailure;
 
 /*
- * 标记群聊已读
- *
- * @param groupID   群ID
- * @param msgIDList 消息ID的列表 ["er4er","3er4"]，传[]则标记所有, clientMsgID
- */
-- (void)markGroupMessageAsRead:(NSString *)groupID
-                     msgIDList:(NSArray <NSString *> *)msgIDList
-                     onSuccess:(nullable OIMSuccessCallback)onSuccess
-                     onFailure:(nullable OIMFailureCallback)onFailure;
-
-/*
- * 标记会话已读
+ * 标记消息已读
  *
  */
-- (void)markMessageAsReadByConID:(NSString *)conversationID
-                       msgIDList:(NSArray <NSString *> *)msgIDList
+- (void)markMessageAsReadByMsgID:(NSString *)conversationID
+                    clientMsgIDs:(NSArray <NSString *> *)clientMsgIDs
                        onSuccess:(nullable OIMSuccessCallback)onSuccess
                        onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 删除一条消息
- *
- * @param message   为OIMMessageInfo
+/**
+ 从本地删除一条消息
  */
-- (void)deleteMessageFromLocalAndSvr:(OIMMessageInfo *)message
-                           onSuccess:(nullable OIMSuccessCallback)onSuccess
-                           onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)deleteMessageFromLocalStorage:(NSString *)conversationID
+                          clientMsgID:(NSString *)clientMsgID
+                            onSuccess:(OIMSuccessCallback)onSuccess
+                            onFailure:(OIMFailureCallback)onFailure;
 
-/*
- * 本地删除一条消息，卸载APP后会重新获取到
- *
- * @param message   为OIMMessageInfo
+/**
+ 删除一条消息  本地 & 服务器
  */
-- (void)deleteMessageFromLocalStorage:(OIMMessageInfo *)message
-                            onSuccess:(nullable OIMSuccessCallback)onSuccess
-                            onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)deleteMessage:(NSString *)conversationID
+          clientMsgID:(NSString *)clientMsgID
+            onSuccess:(nullable OIMSuccessCallback)onSuccess
+            onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 清空单聊的历史记录
- *
- * @param userID   用户的ID
- */
-- (void)clearC2CHistoryMessage:(NSString *)userID
-                     onSuccess:(nullable OIMSuccessCallback)onSuccess
-                     onFailure:(nullable OIMFailureCallback)onFailure;
-
-/*
- * 清空单聊的本地&远端历史记录
- *
- * @param userID   用户的ID
- */
-- (void)clearC2CHistoryMessageFromLocalAndSvr:(NSString *)userID
-                                    onSuccess:(nullable OIMSuccessCallback)onSuccess
-                                    onFailure:(nullable OIMFailureCallback)onFailure;
-
-/*
- * 清空群聊的历史记录
- *
- * @param groupID   群ID
- */
-- (void)clearGroupHistoryMessage:(NSString *)groupID
-                       onSuccess:(nullable OIMSuccessCallback)onSuccess
-                       onFailure:(nullable OIMFailureCallback)onFailure;
-
-/*
- * 清空群聊的本地/远端历史记录
- *
- * @param groupID   群ID
- */
-- (void)clearGroupHistoryMessageFromLocalAndSvr:(NSString *)groupID
-                                      onSuccess:(nullable OIMSuccessCallback)onSuccess
-                                      onFailure:(nullable OIMFailureCallback)onFailure;
-
-
-/*
- * 本地删除消息
- *
+/**
+ 从本地删除所有消息
  */
 - (void)deleteAllMsgFromLocalWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
                                  onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 本地/远端删除消息
- *
+/**
+ 删除所有消息  本地 & 服务器
  */
 - (void)deleteAllMsgFromLocalAndSvrWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
                                        onFailure:(nullable OIMFailureCallback)onFailure;
@@ -482,8 +387,6 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 查找本地消息
  *
- * @param groupID   群ID
- * @param sendID    发送者ID
  */
 - (void)searchLocalMessages:(OIMSearchParam *)param
                   onSuccess:(nullable OIMMessageSearchCallback)onSuccess
@@ -493,10 +396,14 @@ NS_ASSUME_NONNULL_BEGIN
  * 独立上传文件到初始化sdk的objectStorage（发送多媒体消息不需调用此函数，其在sdk内部自动上传）
  *
  */
-- (void)uploadFileWithFullPath:(NSString *)path
-                    onProgress:(nullable OIMNumberCallback)onProgress
-                     onSuccess:(nullable OIMSuccessCallback)onSuccess
-                     onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)putFile:(NSString *)fullPath
+          putID:(NSString * _Nullable)putID
+           name:(NSString * _Nullable)name
+        onStart:(OIMPutStartCallback)onStart
+     onProgress:(OIMProgressCallback)onProgress
+   onCompletion:(OIMPutCompletionCallback)onCompletion
+      onSuccess:(OIMSuccessCallback)onSuccess
+      onFailure:(OIMFailureCallback)onFailure;
 
 /*
  * 全局设置消息提示
@@ -535,30 +442,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setAppBadge:(NSInteger)count
           onSuccess:(nullable OIMSuccessCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
-
-- (void)addMessageReactionExtensions:(OIMMessageInfo *)message
-               reactionExtensionList:(NSArray<OIMKeyValue *> *)list
-                           onSuccess:(OIMKeyValueResultCallback)onSuccess
-                           onFailure:(OIMFailureCallback)onFailure;
-
-- (void)setMessageReactionExtensions:(OIMMessageInfo *)message
-               reactionExtensionList:(NSArray<OIMKeyValue *> *)list
-                           onSuccess:(nullable OIMKeyValueResultCallback)onSuccess
-                           onFailure:(nullable OIMFailureCallback)onFailure;
-
-- (void)deleteMessageReactionExtensions:(OIMMessageInfo *)message
-                  reactionExtensionList:(NSArray<NSString *> *)list
-                              onSuccess:(nullable OIMKeyValueResultCallback)onSuccess
-                              onFailure:(nullable OIMFailureCallback)onFailure;
-
-- (void)getMessageListReactionExtensions:(NSArray<OIMMessageInfo *> *)messages
-                               onSuccess:(nullable OIMKeyValuesResultCallback)onSuccess
-                               onFailure:(nullable OIMFailureCallback)onFailure;
-
-- (void)getMessageListSomeReactionExtensions:(NSArray<OIMMessageInfo *> *)messages
-                                keyValueList:(NSArray<OIMKeyValue *> *)kvList
-                                   onSuccess:(nullable OIMKeyValuesResultCallback)onSuccess
-                                   onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

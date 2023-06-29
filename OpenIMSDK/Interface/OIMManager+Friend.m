@@ -21,7 +21,7 @@
     Open_im_sdkAddFriend(callback, [self operationId], param.mj_JSONString);
 }
 
-- (void)getFriendApplicationListWithOnSuccess:(OIMFriendApplicationsCallback)onSuccess
+- (void)getFriendApplicationListAsRecipientWithOnSuccess:(OIMFriendApplicationsCallback)onSuccess
                                     onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
@@ -29,10 +29,11 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetRecvFriendApplicationList(callback, [self operationId]);
+    
+    Open_im_sdkGetFriendApplicationListAsRecipient(callback, [self operationId]);
 }
 
-- (void)getSendFriendApplicationListWithOnSuccess:(OIMFriendApplicationsCallback)onSuccess
+- (void)getFriendApplicationListAsApplicantWithOnSuccess:(OIMFriendApplicationsCallback)onSuccess
                                         onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
@@ -40,7 +41,7 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetSendFriendApplicationList(callback, [self operationId]);
+    Open_im_sdkGetFriendApplicationListAsApplicant(callback, [self operationId]);
 }
 
 - (void)acceptFriendApplication:(NSString *)userID
@@ -91,7 +92,7 @@
 }
 
 - (void)getSpecifiedFriendsInfo:(NSArray<NSString *> *)usersID
-                      onSuccess:(OIMFriendsInfoCallback)onSuccess
+                      onSuccess:(OIMFullUsersInfoCallback)onSuccess
                       onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
@@ -99,10 +100,10 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetDesignatedFriendsInfo(callback, [self operationId], usersID.mj_JSONString);
+    Open_im_sdkGetSpecifiedFriendsInfo(callback, [self operationId], usersID.mj_JSONString);
 }
 
-- (void)getFriendListWithOnSuccess:(OIMFriendsInfoCallback)onSuccess
+- (void)getFriendListWithOnSuccess:(OIMFullUsersInfoCallback)onSuccess
                          onFailure:(OIMFailureCallback)onFailure {
     
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {

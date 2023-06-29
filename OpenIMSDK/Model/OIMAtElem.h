@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface OIMAtElem : NSObject
+@interface OIMAtTextElem : NSObject
 
 /*
  * at 消息内容

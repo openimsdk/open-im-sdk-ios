@@ -61,7 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
                        onGroupApplicationAdded:(OIMGroupApplicationCallback)onGroupApplicationAdded
                      onGroupApplicationDeleted:(OIMGroupApplicationCallback)onGroupApplicationDeleted
                     onGroupApplicationAccepted:(OIMGroupApplicationCallback)onGroupApplicationAccepted
-                    onGroupApplicationRejected:(OIMGroupApplicationCallback)onGroupApplicationRejected;
+                    onGroupApplicationRejected:(OIMGroupApplicationCallback)onGroupApplicationRejected
+                              onGroupDismissed:(nullable OIMGroupInfoCallback)onGroupDismissed;
 
 /*
  * 添加消息监听
@@ -130,12 +131,6 @@ NS_ASSUME_NONNULL_BEGIN
                                         onStreamChange:(nullable OIMSignalingMeetingStreamEventCallback)onStreamChange;
 
 - (void)setSignalingListenerWithOnReceiveCustomSignal:(OIMStringCallback)onReceiveCustomSignal;
-
-/*
- * 设置组织架构监听
- */
-- (void)setOrganizationListenerWithOrganizationUpdated:(OIMVoidCallback)onOrganizationUpdated;
- 
 
 /*
  * 设置工作圈监听

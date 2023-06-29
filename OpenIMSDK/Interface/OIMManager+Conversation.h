@@ -40,14 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
                                 onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
- * 获取会话ID
- * @param sessionType   会话的类型，单聊为1，群聊为2
- * @param sourceID  单聊为用户ID，群聊为群ID
- */
-- (NSString *)getConversationIDBySessionType:(OIMConversationType)sessionType
-                                    sourceID:(NSString *)sourceID;
-
-/*
  * 获取多个会话列表
  * @param ids   会话ID的列表
  */
@@ -59,17 +51,17 @@ NS_ASSUME_NONNULL_BEGIN
  * 本地删除一个会话
  * @param conversationID    会话ID
  */
-- (void)deleteConversationFromLocalStorage:(NSString *)conversationID
-                                 onSuccess:(nullable OIMSuccessCallback)onSuccess
-                                 onFailure:(nullable OIMFailureCallback)onFailure;
-
-/*
- * 删除一个会话
- * @param conversationID    会话ID
- */
-- (void)deleteConversationFromLocalAndSvr:(NSString *)conversationID
+- (void)deleteConversationAndDeleteAllMsg:(NSString *)conversationID
                                 onSuccess:(nullable OIMSuccessCallback)onSuccess
                                 onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 清空一个会话 本地 & 服务器
+ * @param conversationID    会话ID
+ */
+- (void)clearConversationAndDeleteAllMsg:(NSString *)conversationID
+                               onSuccess:(nullable OIMSuccessCallback)onSuccess
+                               onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 删除所有会话
@@ -117,7 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 设置会话免打扰状态
  *
  */
-- (void)setConversationRecvMessageOpt:(NSArray <NSString *> *)conversationIDs
+- (void)setConversationRecvMessageOpt:(NSString *)conversationID
                                status:(OIMReceiveMessageOpt)status
                             onSuccess:(nullable OIMSuccessCallback)onSuccess
                             onFailure:(nullable OIMFailureCallback)onFailure;
@@ -126,19 +118,19 @@ NS_ASSUME_NONNULL_BEGIN
  * 设置私聊, 可做“阅后即焚”功能
  *
  */
-- (void)setOneConversationPrivateChat:(NSString *)conversationID
-                            isPrivate:(BOOL)isPrivate
-                            onSuccess:(nullable OIMSuccessCallback)onSuccess
-                            onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)setConversationPrivateChat:(NSString *)conversationID
+                         isPrivate:(BOOL)isPrivate
+                         onSuccess:(nullable OIMSuccessCallback)onSuccess
+                         onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 设置私聊, 可做“阅后即焚”时间设置功能
  *
  */
-- (void)setOneConversationBurnDuration:(NSString *)conversationID
-                              duration:(NSInteger)burnDuration
-                             onSuccess:(nullable OIMSuccessCallback)onSuccess
-                             onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)setConversationBurnDuration:(NSString *)conversationID
+                           duration:(NSInteger)burnDuration
+                          onSuccess:(nullable OIMSuccessCallback)onSuccess
+                          onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 重置at标准位
@@ -155,6 +147,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)hideConversation:(NSString *)conversationID
                onSuccess:(nullable OIMSuccessCallback)onSuccess
                onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 清空未读数
+ *
+ */
+- (void)markConversationMessageAsRead:(NSString *)conversationID
+                            onSuccess:(nullable OIMSuccessCallback)onSuccess
+                            onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

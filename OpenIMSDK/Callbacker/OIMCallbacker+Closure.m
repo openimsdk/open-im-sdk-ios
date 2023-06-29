@@ -52,7 +52,8 @@
                        onGroupApplicationAdded:(OIMGroupApplicationCallback)onGroupApplicationAdded
                      onGroupApplicationDeleted:(OIMGroupApplicationCallback)onGroupApplicationDeleted
                     onGroupApplicationAccepted:(OIMGroupApplicationCallback)onGroupApplicationAccepted
-                    onGroupApplicationRejected:(OIMGroupApplicationCallback)onGroupApplicationRejected {
+                    onGroupApplicationRejected:(OIMGroupApplicationCallback)onGroupApplicationRejected
+                              onGroupDismissed:(OIMGroupInfoCallback)onGroupDismissed {
     self.onGroupInfoChanged = onGroupInfoChanged;
     self.onJoinedGroupAdded = onJoinedGroupAdded;
     self.onJoinedGroupDeleted = onJoinedGroupDeleted;
@@ -62,6 +63,7 @@
     self.onGroupApplicationDeleted = onGroupApplicationDeleted;
     self.onGroupApplicationAccepted = onGroupApplicationAccepted;
     self.onGroupApplicationRejected = onGroupApplicationRejected;
+    self.onGroupDismissed = onGroupDismissed;
 }
 
 - (void)setAdvancedMsgListenerWithOnRecvMessageRevoked:(OIMStringCallback)onRecvMessageRevoked
@@ -160,11 +162,6 @@
 
 - (void)setSignalingListenerWithOnReceiveCustomSignal:(OIMStringCallback)onReceiveCustomSignal {
     self.onReceiveCustomSignal = onReceiveCustomSignal;
-}
-
-- (void)setOrganizationListenerWithOrganizationUpdated:(OIMVoidCallback)onOrganizationUpdated {
-    
-    self.organizationUpdated = onOrganizationUpdated;
 }
 
 - (void)setWorkMomentsListenerWithOrganizationUpdated:(OIMVoidCallback)onRecvNewNotification {

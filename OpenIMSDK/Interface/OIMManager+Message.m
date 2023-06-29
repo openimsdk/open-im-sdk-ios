@@ -27,15 +27,23 @@
     return [self convertToMessageInfo:json];
 }
 
++ (OIMAtInfo *)createAtAllFlag:(NSString *)displayText {
+    OIMAtInfo *all = [OIMAtInfo new];
+    all.atUserID = Open_im_sdkGetAtAllTag([[NSUUID UUID]UUIDString]);
+    all.groupNickname = displayText ?: @"Mention All";
+    
+    return all;
+}
+
 + (OIMMessageInfo *)createTextAtMessage:(NSString *)text
-                              atUidList:(NSArray<NSString *> *)atUidList
+                              atUsersID:(NSArray<NSString *> *)atUsersID
                             atUsersInfo:(NSArray<OIMAtInfo *> *)atUsersInfo
                                 message:(OIMMessageInfo *)message {
     
     NSArray *atUsers = [OIMAtInfo mj_keyValuesArrayWithObjectArray:atUsersInfo];
     NSString *atUsersJson = [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:atUsers options:0 error:nil] encoding:NSUTF8StringEncoding];
     
-    NSString *json = Open_im_sdkCreateTextAtMessage([OIMManager.manager operationId], text, atUidList.mj_JSONString, atUsersJson, message ? message.mj_JSONString : @"");
+    NSString *json = Open_im_sdkCreateTextAtMessage([OIMManager.manager operationId], text, atUsersID.mj_JSONString, atUsersJson, message ? message.mj_JSONString : @"");
     
     return [self convertToMessageInfo:json];
 }
@@ -43,7 +51,7 @@
 + (OIMMessageInfo *)createTextAtAllMessage:(NSString *)text
                                displayText:(NSString *)displayText
                                    message:(OIMMessageInfo * _Nullable)message {
-    NSString *json = Open_im_sdkCreateTextAtMessage([OIMManager.manager operationId], text, @[Open_im_sdkGetAtAllTag()].mj_JSONString, @[@{Open_im_sdkGetAtAllTag(): displayText ?: @"@全体成员"}].mj_JSONString, message ? message.mj_JSONString : @"");
+    NSString *json = Open_im_sdkCreateTextAtMessage([OIMManager.manager operationId], text, @[Open_im_sdkGetAtAllTag([[NSUUID UUID]UUIDString])].mj_JSONString, @[@{Open_im_sdkGetAtAllTag([[NSUUID UUID]UUIDString]): displayText ?: @"@全体成员"}].mj_JSONString, message ? message.mj_JSONString : @"");
     
     return [self convertToMessageInfo:json];
 }
@@ -188,8 +196,9 @@
     return [self convertToMessageInfo:json];
 }
 
-+ (OIMMessageInfo *)createCardMessage:(NSString *)content {
-    NSString *json = Open_im_sdkCreateCardMessage([OIMManager.manager operationId], content);
++ (OIMMessageInfo *)createCardMessage:(OIMCardElem *)card {
+    
+    NSString *json = Open_im_sdkCreateCardMessage([OIMManager.manager operationId], card.mj_JSONString);
     
     return [self convertToMessageInfo:json];
 }
@@ -268,72 +277,13 @@
     Open_im_sdkSendMessageNotOss(callback, [self operationId], message.mj_JSONString, recvID, groupID, offlinePushInfo.mj_JSONString);
 }
 
-- (void)getHistoryMessageListWithUserId:(NSString *)userID
-                                groupID:(NSString *)groupID
-                       startClientMsgID:(NSString *)startClientMsgID
-                                  count:(NSInteger)count
-                              onSuccess:(OIMMessagesInfoCallback)onSuccess
-                              onFailure:(OIMFailureCallback)onFailure {
-    
-    [self getHistoryMessageList:nil
-                         userId:userID
-                        groupID:groupID
-               startClientMsgID:startClientMsgID
-                          count:count
-                      onSuccess:onSuccess
-                      onFailure:onFailure];
-}
-
-- (void)getHistoryMessageList:(NSString * _Nullable)conversationID
-                       userId:(NSString * _Nullable)userID
-                      groupID:(NSString * _Nullable)groupID
-             startClientMsgID:(NSString * _Nullable)startClientMsgID
-                        count:(NSInteger)count
-                    onSuccess:(nullable OIMMessagesInfoCallback)onSuccess
-                    onFailure:(nullable OIMFailureCallback)onFailure {
-    
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            onSuccess([OIMMessageInfo mj_objectArrayWithKeyValuesArray:data]);
-        }
-    } onFailure:onFailure];
-    
-    NSDictionary *param = @{@"userID": userID ?: @"",
-                            @"groupID": groupID ?: @"",
-                            @"conversationID": conversationID ?: @"",
-                            @"startClientMsgID": startClientMsgID ?: @"",
-                            @"count": @(count)};
-    
-    Open_im_sdkGetHistoryMessageList(callback, [self operationId], param.mj_JSONString);
-}
-
-- (void)getHistoryMessageListReverse:(OIMGetMessageOptions *)options
-                           onSuccess:(nullable OIMMessagesInfoCallback)onSuccess
-                           onFailure:(nullable OIMFailureCallback)onFailure {
-    
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            onSuccess([OIMMessageInfo mj_objectArrayWithKeyValuesArray:data]);
-        }
-    } onFailure:onFailure];
-    
-    Open_im_sdkGetHistoryMessageListReverse(callback, [self operationId], options.mj_JSONString);
-}
-
-- (void)revokeMessage:(OIMMessageInfo *)message
+- (void)revokeMessage:(NSString *)conversationID
+          clientMsgID:(NSString *)clientMsgID
             onSuccess:(OIMSuccessCallback)onSuccess
             onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkRevokeMessage(callback, [self operationId], message.mj_JSONString);
-}
-
-- (void)newRevokeMessage:(OIMMessageInfo *)message
-               onSuccess:(OIMSuccessCallback)onSuccess
-               onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-    
-    Open_im_sdkNewRevokeMessage(callback, [self operationId], message.mj_JSONString);
+    Open_im_sdkRevokeMessage(callback, [self operationId], conversationID, clientMsgID);
 }
 
 - (void)typingStatusUpdate:(NSString *)recvID
@@ -345,79 +295,39 @@
     Open_im_sdkTypingStatusUpdate(callback, [self operationId], recvID, msgTip);
 }
 
-- (void)markC2CMessageAsRead:(NSString *)userID
-                   msgIDList:(NSArray<NSString *> *)msgIDList
-                   onSuccess:(OIMSuccessCallback)onSuccess
-                   onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-    
-    Open_im_sdkMarkC2CMessageAsRead(callback, [self operationId], userID, msgIDList.mj_JSONString);
-}
-
-- (void)markGroupMessageAsRead:(NSString *)groupID
-                     msgIDList:(NSArray <NSString *> *)msgIDList
-                     onSuccess:(nullable OIMSuccessCallback)onSuccess
-                     onFailure:(nullable OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-    
-    Open_im_sdkMarkGroupMessageAsRead(callback, [self operationId], groupID, msgIDList.mj_JSONString);
-}
-
-- (void)markMessageAsReadByConID:(NSString *)conversationID
-                       msgIDList:(NSArray<NSString *> *)msgIDList
-                       onSuccess:(OIMSuccessCallback)onSuccess
-                       onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-    
-    Open_im_sdkMarkMessageAsReadByConID(callback, [self operationId], conversationID, msgIDList.mj_JSONString);
-}
-
-- (void)deleteMessageFromLocalAndSvr:(OIMMessageInfo *)message
-                           onSuccess:(nullable OIMSuccessCallback)onSuccess
-                           onFailure:(nullable OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-    
-    Open_im_sdkDeleteMessageFromLocalAndSvr(callback, [self operationId], message.mj_JSONString);
-}
-
-- (void)deleteMessageFromLocalStorage:(OIMMessageInfo *)message
+- (void)markConversationMessageAsRead:(NSString *)conversationID
                             onSuccess:(OIMSuccessCallback)onSuccess
                             onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkDeleteMessageFromLocalStorage(callback, [self operationId], message.mj_JSONString);
+    Open_im_sdkMarkConversationMessageAsRead(callback, [self operationId], conversationID);
 }
 
-- (void)clearC2CHistoryMessage:(NSString *)userID
-                     onSuccess:(OIMSuccessCallback)onSuccess
-                     onFailure:(OIMFailureCallback)onFailure {
+- (void)markMessageAsReadByMsgID:(NSString *)conversationID
+                    clientMsgIDs:(NSArray <NSString *> *)clientMsgIDs
+                       onSuccess:(nullable OIMSuccessCallback)onSuccess
+                       onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkClearC2CHistoryMessage(callback, [self operationId], userID);
+    Open_im_sdkMarkMessagesAsReadByMsgID(callback, [self operationId], conversationID, clientMsgIDs.mj_JSONString);
 }
 
-- (void)clearC2CHistoryMessageFromLocalAndSvr:(NSString *)userID
-                                    onSuccess:(OIMSuccessCallback)onSuccess
-                                    onFailure:(OIMFailureCallback)onFailure {
+- (void)deleteMessage:(NSString *)conversationID
+          clientMsgID:(NSString *)clientMsgID
+            onSuccess:(nullable OIMSuccessCallback)onSuccess
+            onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkClearC2CHistoryMessageFromLocalAndSvr(callback, [self operationId], userID);
+    Open_im_sdkDeleteMessage(callback, [self operationId], conversationID, clientMsgID);
 }
 
-- (void)clearGroupHistoryMessage:(NSString *)groupID
-                       onSuccess:(OIMSuccessCallback)onSuccess
-                       onFailure:(OIMFailureCallback)onFailure {
+- (void)deleteMessageFromLocalStorage:(NSString *)conversationID
+                          clientMsgID:(NSString *)clientMsgID
+                            onSuccess:(OIMSuccessCallback)onSuccess
+                            onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkClearGroupHistoryMessage(callback, [self operationId], groupID);
-}
-
-- (void)clearGroupHistoryMessageFromLocalAndSvr:(NSString *)groupID
-                                      onSuccess:(OIMSuccessCallback)onSuccess
-                                      onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-    
-    Open_im_sdkClearGroupHistoryMessageFromLocalAndSvr(callback, [self operationId], groupID);
+    Open_im_sdkDeleteMessageFromLocalStorage(callback, [self operationId], conversationID, clientMsgID);
 }
 
 - (void)deleteAllMsgFromLocalWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
@@ -474,14 +384,23 @@
     Open_im_sdkSearchLocalMessages(callback, [self operationId], param.mj_JSONString);
 }
 
-- (void)uploadFileWithFullPath:(NSString *)path
-                    onProgress:(OIMNumberCallback)onProgress
-                     onSuccess:(OIMSuccessCallback)onSuccess
-                     onFailure:(OIMFailureCallback)onFailure {
+- (void)putFile:(NSString *)fullPath
+          putID:(NSString * _Nullable)putID
+           name:(NSString * _Nullable)name
+        onStart:(OIMPutStartCallback)onStart
+     onProgress:(OIMProgressCallback)onProgress
+   onCompletion:(OIMPutCompletionCallback)onCompletion
+      onSuccess:(OIMSuccessCallback)onSuccess
+      onFailure:(OIMFailureCallback)onFailure {
     
-    SendMessageCallbackProxy *callback = [[SendMessageCallbackProxy alloc]initWithOnSuccess:onSuccess onProgress:onProgress onFailure:onFailure];
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    PutFileCallbackProxy *progress = [[PutFileCallbackProxy alloc]initWithOnStart:onStart onProgress:onProgress onCompletion:onCompletion];
     
-    Open_im_sdkUploadFile(callback, [self operationId], path);
+    NSDictionary *param = @{@"putID": putID ?: fullPath.lastPathComponent,
+                            @"name": name ?: fullPath.lastPathComponent,
+                            @"filepath": fullPath};
+    
+    Open_im_sdkPutFile(callback, [self operationId], param.mj_JSONString, progress);
 }
 
 - (void)setGlobalRecvMessageOpt:(OIMReceiveMessageOpt)opt
@@ -536,105 +455,5 @@
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
     Open_im_sdkSetAppBadge(callback, [self operationId], (int32_t)count);
-}
-
-- (void)addMessageReactionExtensions:(OIMMessageInfo *)message
-               reactionExtensionList:(NSArray<OIMKeyValue *> *)list
-                           onSuccess:(OIMKeyValueResultCallback)onSuccess
-                           onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            onSuccess(nil, [OIMKeyValue mj_objectArrayWithKeyValuesArray:data]);
-        }
-    } onFailure:onFailure];
-    
-    Open_im_sdkAddMessageReactionExtensions(callback, [self operationId], message.mj_JSONString, [OIMKeyValue mj_keyValuesArrayWithObjectArray:list].mj_JSONString);
-}
-
-- (void)setMessageReactionExtensions:(OIMMessageInfo *)message
-               reactionExtensionList:(NSArray<OIMKeyValue *> *)list
-                           onSuccess:(OIMKeyValueResultCallback)onSuccess
-                           onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            onSuccess(nil, [OIMKeyValue mj_objectArrayWithKeyValuesArray:data]);
-        }
-    } onFailure:onFailure];
-    
-    Open_im_sdkSetMessageReactionExtensions(callback, [self operationId], message.mj_JSONString, [OIMKeyValue mj_keyValuesArrayWithObjectArray:list].mj_JSONString);
-}
-
-- (void)deleteMessageReactionExtensions:(OIMMessageInfo *)message
-                  reactionExtensionList:(NSArray<NSString *> *)list
-                              onSuccess:(OIMKeyValueResultCallback)onSuccess
-                              onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            onSuccess(nil, [OIMKeyValue mj_objectArrayWithKeyValuesArray:data]);
-        }
-    } onFailure:onFailure];
-    
-    Open_im_sdkDeleteMessageReactionExtensions(callback, [self operationId], message.mj_JSONString, list.mj_JSONString);
-}
-
-- (void)getMessageListReactionExtensions:(NSArray<OIMMessageInfo *> *)messages
-                               onSuccess:(OIMKeyValuesResultCallback)onSuccess
-                               onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            NSArray<OIMKeyValues *> *keyValues = [OIMKeyValues mj_objectArrayWithKeyValuesArray:data];
-            
-            [keyValues enumerateObjectsUsingBlock:^(OIMKeyValues * _Nonnull keyValue, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([keyValue.reactionExtensionList isKindOfClass:NSDictionary.class]) {
-                    NSMutableDictionary *extensions = keyValue.reactionExtensionList.mutableCopy;
-                    
-                    NSEnumerator *enumerator = keyValue.reactionExtensionList.keyEnumerator;
-                    NSString *key = @"";
-                    
-                    while (key = [enumerator nextObject]) {
-                        NSDictionary *value = extensions[key];
-                        OIMKeyValue *obj = [OIMKeyValue mj_objectWithKeyValues:value];
-                        extensions[key] = obj;
-                    }
-                    keyValue.reactionExtensionList = extensions;
-                }
-            }];
-            
-            onSuccess(keyValues);
-        }
-    } onFailure:onFailure];
-    
-    Open_im_sdkGetMessageListReactionExtensions(callback, [self operationId], [OIMMessageInfo mj_keyValuesArrayWithObjectArray:messages].mj_JSONString);
-}
-
-- (void)getMessageListSomeReactionExtensions:(NSArray<OIMMessageInfo *> *)messages
-                                keyValueList:(NSArray<OIMKeyValue *> *)kvList
-                                   onSuccess:(OIMKeyValuesResultCallback)onSuccess
-                                   onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            NSArray<OIMKeyValues *> *keyValues = [OIMKeyValues mj_objectArrayWithKeyValuesArray:data];
-            
-            [keyValues enumerateObjectsUsingBlock:^(OIMKeyValues * _Nonnull keyValue, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([keyValue.reactionExtensionList isKindOfClass:NSDictionary.class]) {
-                    NSMutableDictionary *extensions = keyValue.reactionExtensionList.mutableCopy;
-                    
-                    NSEnumerator *enumerator = extensions.keyEnumerator;
-                    NSString *key = @"";
-                    
-                    while (key = [enumerator nextObject]) {
-                        NSDictionary *value = extensions[key];
-                        OIMKeyValue *obj = [OIMKeyValue mj_objectWithKeyValues:value];
-                        extensions[key] = obj;
-                    }
-                    keyValue.reactionExtensionList = extensions;
-                }
-            }];
-            
-            onSuccess(keyValues);
-        }
-    } onFailure:onFailure];
-    
-    Open_im_sdkGetMessageListSomeReactionExtensions(callback, [self operationId],  [OIMMessageInfo mj_keyValuesArrayWithObjectArray:messages].mj_JSONString,  [OIMKeyValue mj_keyValuesArrayWithObjectArray:messages].mj_JSONString);
 }
 @end

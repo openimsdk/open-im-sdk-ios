@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OIMModelDefine.h"
+#import "OIMDefine.h"
 
 @class OIMMessageInfo;
 

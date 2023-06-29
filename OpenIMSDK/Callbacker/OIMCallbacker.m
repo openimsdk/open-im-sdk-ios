@@ -15,7 +15,6 @@
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMConversationListener> *conversationListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMAdvancedMsgListener> *advancedMsgListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMSignalingListener> *signalingListeners;
-@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMOrganizationListener> *organizationListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMWorkMomentsListener> *workMomentsListeners;
 
 @end
@@ -32,9 +31,6 @@
     Open_im_sdkSetGroupListener(self);
     Open_im_sdkSetConversationListener(self);
     Open_im_sdkSetAdvancedMsgListener(self);
-    Open_im_sdkSetSignalingListener(self);
-    Open_im_sdkSetOrganizationListener(self);
-    Open_im_sdkSetWorkMomentsListener(self);
 }
 
 - (void)dispatchMainThread:(void (NS_NOESCAPE ^)(void))todo {
@@ -91,14 +87,6 @@
     }
     
     return _signalingListeners;
-}
-
-- (OIMGCDMulticastDelegate<OIMOrganizationListener> *)organizationListeners {
-    if (_organizationListeners == nil) {
-        _organizationListeners = (OIMGCDMulticastDelegate <OIMOrganizationListener> *)[[OIMGCDMulticastDelegate alloc] init];
-    }
-    
-    return _organizationListeners;
 }
 
 - (OIMGCDMulticastDelegate<OIMWorkMomentsListener> *)workMomentsListeners {
@@ -158,14 +146,6 @@
 
 - (void)removeSignalingListener:(id<OIMSignalingListener>)listener {
     [self.signalingListeners removeDelegate:listener];
-}
-
-- (void)addOrganizationListener:(id<OIMOrganizationListener>)listener{
-    [self.organizationListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
-}
-
-- (void)removeOrganizationListener:(id<OIMOrganizationListener>)listener {
-    [self.organizationListeners removeDelegate:listener];
 }
 
 - (void)addWorkMomentsListener:(id<OIMWorkMomentsListener>)listener {
@@ -466,6 +446,18 @@
     }];
 }
 
+- (void)onGroupDismissed:(NSString *)groupInfo {
+    OIMGroupInfo *info = [OIMGroupInfo mj_objectWithKeyValues:groupInfo];
+    
+    [self dispatchMainThread:^{
+        if (self.onGroupDismissed) {
+            self.onGroupDismissed(info);
+        }
+
+        [self.groupListeners onGroupDismissed:info];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Message
 
@@ -561,6 +553,18 @@
         }
         
         [self.advancedMsgListeners onRecvMessageExtensionsDeleted:msgID reactionExtensionList:reactionExtensionKeyList.mj_JSONObject];
+    }];
+}
+
+- (void)onMsgDeleted:(NSString *)message {
+    OIMMessageInfo *msg = [OIMMessageInfo mj_objectWithKeyValues:message];
+
+    [self dispatchMainThread:^{
+        if (self.onMessageDeleted) {
+            self.onMessageDeleted(msg);
+        }
+        
+        [self.advancedMsgListeners onMsgDeleted:msg];
     }];
 }
 
@@ -780,29 +784,16 @@
 }
 
 #pragma mark -
-#pragma mark - Organization
-
-- (void)onOrganizationUpdated {
-    [self dispatchMainThread:^{
-        if (self.organizationUpdated) {
-            self.organizationUpdated();
-        }
-        
-        [self.organizationListeners onOrganizationUpdated];
-    }];
-}
-
 #pragma mark -
-#pragma mark - Organization
 
-- (void)onRecvNewNotification {
-    [self dispatchMainThread:^{
-        if (self.recvNewNotification) {
-            self.recvNewNotification();
-        }
-        
-        [self.workMomentsListeners onRecvNewNotification];
-    }];
-}
+//- (void)onRecvNewNotification {
+//    [self dispatchMainThread:^{
+//        if (self.recvNewNotification) {
+//            self.recvNewNotification();
+//        }
+//        
+//        [self.workMomentsListeners onRecvNewNotification];
+//    }];
+//}
 
 @end

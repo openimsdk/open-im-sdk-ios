@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OpenIMSDK'
-  s.version          = '2.3.6'
+  s.version          = '3.0.0-beta'
   s.summary          = 'Open-IM-SDK'
 
 # This description is used to generate tags and improve search results.
@@ -35,10 +35,10 @@ Pod::Spec.new do |s|
     ss.source_files = 'OpenIMSDK/Utils/*.{h,m}'
   end
 
-  s.subspec 'Callback' do |ss|
+  s.subspec 'CallbackProxy' do |ss|
     ss.dependency 'OpenIMSDK/Utils'
 
-    ss.source_files = 'OpenIMSDK/Callback/*.{h,m}'
+    ss.source_files = 'OpenIMSDK/CallbackProxy/*.{h,m}'
   end
 
   s.subspec 'Model' do |ss|
@@ -49,7 +49,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Interface' do |ss|
     ss.dependency 'OpenIMSDK/Model'
-    ss.dependency 'OpenIMSDK/Callback'
+    ss.dependency 'OpenIMSDK/CallbackProxy'
     ss.dependency 'OpenIMSDK/Callbacker'
 
     ss.source_files = 'OpenIMSDK/Interface/*.{h,m}'
@@ -71,9 +71,10 @@ Pod::Spec.new do |s|
       'ARCHS[sdk=iphonesimulator*]' => '$(ARCHS_STANDARD_64_BIT)', 'DEFINES_MODULE' => 'YES'
   }
 
-
+  s.frameworks = 'SystemConfiguration'
+  
   s.static_framework = true
 
-  s.dependency 'OpenIMSDKCore', '2.3.6'
+  s.dependency 'OpenIMSDKCore', '3.0.0-beta'
   s.dependency 'MJExtension'
 end

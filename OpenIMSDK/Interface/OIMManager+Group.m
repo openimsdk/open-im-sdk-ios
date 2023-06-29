@@ -10,8 +10,7 @@
 
 @implementation OIMManager (Group)
 
-- (void)createGroup:(OIMGroupCreateInfo *)groupBaseInfo
-         memberList:(NSArray<OIMGroupMemberBaseInfo *> *)list
+- (void)createGroup:(OIMGroupCreateInfo *)groupCreateInfo
           onSuccess:(OIMGroupInfoCallback)onSuccess
           onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
@@ -19,8 +18,8 @@
             onSuccess([OIMGroupInfo mj_objectWithKeyValues:data]);
         }
     } onFailure:onFailure];
-    
-    Open_im_sdkCreateGroup(callback, [self operationId], groupBaseInfo.mj_JSONString, [OIMGroupMemberBaseInfo mj_keyValuesArrayWithObjectArray:list].mj_JSONString);
+        
+    Open_im_sdkCreateGroup(callback, [self operationId], groupCreateInfo.mj_JSONString);
 }
 
 - (void)joinGroup:(NSString *)groupID
@@ -62,20 +61,19 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetGroupsInfo(callback, [self operationId], groupsID.mj_JSONString);
+    Open_im_sdkGetSpecifiedGroupsInfo(callback, [self operationId], groupsID.mj_JSONString);
 }
 
-- (void)setGroupInfo:(NSString *)groupID
-           groupInfo:(OIMGroupBaseInfo *)info
+- (void)setGroupInfo:(OIMGroupInfo *)info
            onSuccess:(OIMSuccessCallback)onSuccess
            onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkSetGroupInfo(callback, [self operationId], groupID, info.mj_JSONString);
+    Open_im_sdkSetGroupInfo(callback, [self operationId], info.mj_JSONString);
 }
 
 - (void)getGroupMemberList:(NSString *)groupID
-                    filter:(OIMGroupMemberRole)filter
+                    filter:(OIMGroupMemberFilter)filter
                     offset:(NSInteger)offset
                      count:(NSInteger)count
                  onSuccess:(OIMGroupMembersInfoCallback)onSuccess
@@ -100,12 +98,12 @@
     } onFailure:onFailure];
     
     
-    Open_im_sdkGetGroupMembersInfo(callback, [self operationId], groupID, usersID.mj_JSONString);
+    Open_im_sdkGetSpecifiedGroupMembersInfo(callback, [self operationId], groupID, usersID.mj_JSONString);
 }
 
 - (void)kickGroupMember:(NSString *)groupID
                  reason:(NSString *)reason
-                usersID:(NSArray *)usersID
+                usersID:(NSArray <NSString *> *)usersID
               onSuccess:(OIMSimpleResultsCallback)onSuccess
               onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
@@ -141,7 +139,7 @@
     Open_im_sdkInviteUserToGroup(callback, [self operationId], groupID, reason ?: @"", usersID.mj_JSONString);
 }
 
-- (void)getGroupApplicationListAsProcessorWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
+- (void)getGroupApplicationListAsRecipientWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
                                               onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
@@ -149,10 +147,10 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetRecvGroupApplicationList(callback, [self operationId]);
+    Open_im_sdkGetGroupApplicationListAsRecipient(callback, [self operationId]);
 }
 
-- (void)getGroupApplicationListAsApplicantWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
+- (void)getGetGroupApplicationListAsApplicantWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
                                               onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
@@ -160,7 +158,7 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetSendGroupApplicationList(callback, [self operationId]);
+    Open_im_sdkGetGroupApplicationListAsApplicant(callback, [self operationId]);
 }
 
 - (void)acceptGroupApplication:(NSString *)groupID

@@ -14,10 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 创建群
  *
- * @param list  创建群是选择的成员.
  */
-- (void)createGroup:(OIMGroupCreateInfo *)groupBaseInfo
-         memberList:(NSArray<OIMGroupMemberBaseInfo *> *)list
+- (void)createGroup:(OIMGroupCreateInfo *)groupCreateInfo
           onSuccess:(nullable OIMGroupInfoCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
 
@@ -62,8 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 设置或更新群资料
  *
  */
-- (void)setGroupInfo:(NSString *)groupID
-           groupInfo:(OIMGroupBaseInfo *)info
+- (void)setGroupInfo:(OIMGroupInfo *)groupInfo
            onSuccess:(nullable OIMSuccessCallback)onSuccess
            onFailure:(nullable OIMFailureCallback)onFailure;
 
@@ -76,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param count   成员个数
  */
 - (void)getGroupMemberList:(NSString *)groupID
-                    filter:(OIMGroupMemberRole)filter
+                    filter:(OIMGroupMemberFilter)filter
                     offset:(NSInteger)offset
                      count:(NSInteger)count
                  onSuccess:(nullable OIMGroupMembersInfoCallback)onSuccess
@@ -103,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)kickGroupMember:(NSString *)groupID
                  reason:(NSString * _Nullable)reason
-                usersID:(NSArray *)usersID
+                usersID:(NSArray <NSString *> *)usersID
               onSuccess:(nullable OIMSimpleResultsCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
@@ -135,7 +132,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 作为群主或者管理员，获取收到的群成员申请进群列表。
  *
  */
-- (void)getGroupApplicationListAsProcessorWithOnSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
+- (void)getGroupApplicationListAsRecipientWithOnSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
                                               onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*

@@ -34,6 +34,7 @@ typedef void (^OIMSimpleResultCallback)(OIMSimpleResultInfo * _Nullable result);
 typedef void (^OIMSimpleResultsCallback)(NSArray <OIMSimpleResultInfo *> * _Nullable results);
 
 typedef void (^OIMUserInfoCallback)(OIMUserInfo * _Nullable userInfo);
+typedef void (^OIMUsersInfoCallback)(NSArray <OIMUserInfo *> * _Nullable usersInfo);
 typedef void (^OIMUsersCallback)(NSArray <OIMFullUserInfo *> * _Nullable userInfos);
 typedef void (^OIMFullUserInfoCallback)(OIMFullUserInfo * _Nullable userInfo);
 typedef void (^OIMFullUsersInfoCallback)(NSArray <OIMFullUserInfo *> * _Nullable userInfos);
@@ -217,6 +218,11 @@ typedef void (^OIMKeyValuesResultCallback)(NSArray <OIMKeyValues *> * _Nullable 
  */
 - (void)onGroupApplicationRejected:(OIMGroupApplicationInfo *)groupApplication;
 
+/**
+ 群解散
+ */
+- (void)onGroupDismissed:(OIMGroupInfo *)changeInfo;
+
 @end
 
 @protocol OIMConversationListener <NSObject>
@@ -285,6 +291,8 @@ typedef void (^OIMKeyValuesResultCallback)(NSArray <OIMKeyValues *> * _Nullable 
 - (void)onRecvMessageExtensionsDeleted:(NSString *)msgID reactionExtensionList:(NSArray<NSString *> *)reactionExtensionList;
 
 - (void)onRecvMessageExtensionsChanged:(NSString *)msgID reactionExtensionKeyList:(NSArray<OIMKeyValue *> *)reactionExtensionKeyList;
+
+- (void)onMsgDeleted:(OIMMessageInfo *)message;
 
 @end
 
@@ -381,9 +389,7 @@ Open_im_sdk_callbackOnConversationListener,
 Open_im_sdk_callbackOnFriendshipListener,
 Open_im_sdk_callbackOnGroupListener,
 Open_im_sdk_callbackOnUserListener,
-Open_im_sdk_callbackOnSignalingListener,
-Open_im_sdk_callbackOnOrganizationListener,
-Open_im_sdk_callbackOnWorkMomentsListener
+Open_im_sdk_callbackOnSignalingListener
 >
 
 + (instancetype)callbacker;
@@ -446,6 +452,7 @@ Open_im_sdk_callbackOnWorkMomentsListener
 @property (nonatomic, nullable, copy) OIMGroupApplicationCallback onGroupApplicationDeleted;
 @property (nonatomic, nullable, copy) OIMGroupApplicationCallback onGroupApplicationAccepted;
 @property (nonatomic, nullable, copy) OIMGroupApplicationCallback onGroupApplicationRejected;
+@property (nonatomic, nullable, copy) OIMGroupInfoCallback onGroupDismissed;
 
 /*
  *  设置群组监听器
@@ -486,7 +493,7 @@ Open_im_sdk_callbackOnWorkMomentsListener
 @property (nonatomic, nullable, copy) OIMKeyValueResultCallback onRecvMessageExtensionsChanged;
 @property (nonatomic, nullable, copy) OIMStringArrayCallback onRecvMessageExtensionsDeleted;
 @property (nonatomic, nullable, copy) OIMKeyValueResultCallback onRecvMessageExtensionsAdded;
-
+@property (nonatomic, nullable, copy) OIMMessageInfoCallback onMessageDeleted;
 /*
  *  添加高级消息的事件监听器
  */
@@ -516,16 +523,6 @@ Open_im_sdk_callbackOnWorkMomentsListener
 - (void)addSignalingListener:(id<OIMSignalingListener>)listener NS_SWIFT_NAME(addSignalingListener(listener:));
 
 - (void)removeSignalingListener:(id<OIMSignalingListener>)listener NS_SWIFT_NAME(removeSignalingListener(listener:));
-
-
-/// 组织架构监听
-/// 在InitSDK成功后，Login之前设置
-@property (nonatomic, nullable, copy) OIMVoidCallback organizationUpdated;
-
-
-- (void)addOrganizationListener:(id<OIMOrganizationListener>)listener NS_SWIFT_NAME(addOrganizationListener(listener:));
-
-- (void)removeOrganizationListener:(id<OIMOrganizationListener>)listener NS_SWIFT_NAME(removeOrganizationListener(listener:));
 
 
 /// 工作圈监听
