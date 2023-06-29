@@ -81,6 +81,10 @@
     return Open_im_sdkGetLoginUserID();
 }
 
+- (NSInteger)getLoginStatus {
+    return Open_im_sdkGetLoginStatus();
+}
+
 - (NSString *)operationId {
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval time = [date timeIntervalSince1970] * 1000;
@@ -88,13 +92,22 @@
 }
 
 - (void)applicationDidEnterBackground:(NSNotification *)note {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:nil onFailure:nil];
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        
+    } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+        
+    }];
 
     Open_im_sdkSetAppBackgroundStatus(callback, [self operationId], YES);
 }
 
 - (void)applicationWillEnterForeground:(NSNotification *)note {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:nil onFailure:nil];
+
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        
+    } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+        
+    }];
 
     Open_im_sdkSetAppBackgroundStatus(callback, [self operationId], NO);
 }
@@ -102,8 +115,14 @@
 - (void)reachabilityChanged:(NSNotification *)note {
     Reachability *reachability = [note object];
     NSParameterAssert([reachability isKindOfClass:[Reachability class]]);
+
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         
-    Open_im_sdkNetworkStatusChanged(nil, [self operationId]);
+    } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+        
+    }];
+    
+    Open_im_sdkNetworkStatusChanged(callback, [self operationId]);
 }
 
 @end

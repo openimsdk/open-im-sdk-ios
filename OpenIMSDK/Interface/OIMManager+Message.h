@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
-   配套createTextAtMessage使用，将@所有人标识插入指定位置
+   可配套createTextAtMessage使用，将@所有人标识插入指定位置
  */
 + (OIMAtInfo *)createAtAllFlag:(NSString *)displayText;
 
@@ -296,7 +296,8 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 撤回一条消息
  *
- * @param message   为OIMMessageInfo
+ * @param conversationID 会话ID
+ * @param clientMsgID    消息ID
  *
  */
 - (void)revokeMessage:(NSString *)conversationID
