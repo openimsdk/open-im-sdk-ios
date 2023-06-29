@@ -14,9 +14,6 @@
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMGroupListener> *groupListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMConversationListener> *conversationListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMAdvancedMsgListener> *advancedMsgListeners;
-@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMSignalingListener> *signalingListeners;
-@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMOrganizationListener> *organizationListeners;
-@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMWorkMomentsListener> *workMomentsListeners;
 
 @end
 
@@ -32,9 +29,6 @@
     Open_im_sdkSetGroupListener(self);
     Open_im_sdkSetConversationListener(self);
     Open_im_sdkSetAdvancedMsgListener(self);
-    Open_im_sdkSetSignalingListener(self);
-    Open_im_sdkSetOrganizationListener(self);
-    Open_im_sdkSetWorkMomentsListener(self);
 }
 
 - (void)dispatchMainThread:(void (NS_NOESCAPE ^)(void))todo {
@@ -85,30 +79,6 @@
     return _advancedMsgListeners;
 }
 
-- (OIMGCDMulticastDelegate<OIMSignalingListener> *)signalingListeners {
-    if (_signalingListeners == nil) {
-        _signalingListeners = (OIMGCDMulticastDelegate <OIMSignalingListener> *)[[OIMGCDMulticastDelegate alloc] init];
-    }
-    
-    return _signalingListeners;
-}
-
-- (OIMGCDMulticastDelegate<OIMOrganizationListener> *)organizationListeners {
-    if (_organizationListeners == nil) {
-        _organizationListeners = (OIMGCDMulticastDelegate <OIMOrganizationListener> *)[[OIMGCDMulticastDelegate alloc] init];
-    }
-    
-    return _organizationListeners;
-}
-
-- (OIMGCDMulticastDelegate<OIMWorkMomentsListener> *)workMomentsListeners {
-    if (_workMomentsListeners == nil) {
-        _workMomentsListeners = (OIMGCDMulticastDelegate <OIMWorkMomentsListener> *)[[OIMGCDMulticastDelegate alloc] init];
-    }
-    
-    return _workMomentsListeners;
-}
-
 #pragma mark -
 #pragma mark - Add/Remove listener
 
@@ -150,30 +120,6 @@
 
 - (void)removeAdvancedMsgListener:(id<OIMAdvancedMsgListener>)listener {
     [self.advancedMsgListeners removeDelegate:listener];
-}
-
-- (void)addSignalingListener:(id<OIMSignalingListener>)listener {
-    [self.signalingListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
-}
-
-- (void)removeSignalingListener:(id<OIMSignalingListener>)listener {
-    [self.signalingListeners removeDelegate:listener];
-}
-
-- (void)addOrganizationListener:(id<OIMOrganizationListener>)listener{
-    [self.organizationListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
-}
-
-- (void)removeOrganizationListener:(id<OIMOrganizationListener>)listener {
-    [self.organizationListeners removeDelegate:listener];
-}
-
-- (void)addWorkMomentsListener:(id<OIMWorkMomentsListener>)listener {
-    [self.workMomentsListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
-}
-
-- (void)removeWorkMomentsListener:(id<OIMWorkMomentsListener>)listener {
-    [self.workMomentsListeners removeDelegate:listener];
 }
 
 #pragma mark -
@@ -466,6 +412,18 @@
     }];
 }
 
+- (void)onGroupDismissed:(NSString *)groupInfo {
+    OIMGroupInfo *info = [OIMGroupInfo mj_objectWithKeyValues:groupInfo];
+    
+    [self dispatchMainThread:^{
+        if (self.onGroupDismissed) {
+            self.onGroupDismissed(info);
+        }
+
+        [self.groupListeners onGroupDismissed:info];
+    }];
+}
+
 #pragma mark -
 #pragma mark - Message
 
@@ -506,7 +464,7 @@
 
 - (void)onNewRecvMessageRevoked:(NSString *)messageRevoked {
     
-    OIMMessageRevoked *revoked = [OIMMessageRevoked mj_objectWithKeyValues:messageRevoked];
+    OIMMessageRevokedInfo *revoked = [OIMMessageRevokedInfo mj_objectWithKeyValues:messageRevoked];
     
     [self dispatchMainThread:^{
         if (self.onNewRecvMessageRevoked) {
@@ -561,6 +519,18 @@
         }
         
         [self.advancedMsgListeners onRecvMessageExtensionsDeleted:msgID reactionExtensionList:reactionExtensionKeyList.mj_JSONObject];
+    }];
+}
+
+- (void)onMsgDeleted:(NSString *)message {
+    OIMMessageInfo *msg = [OIMMessageInfo mj_objectWithKeyValues:message];
+
+    [self dispatchMainThread:^{
+        if (self.onMessageDeleted) {
+            self.onMessageDeleted(msg);
+        }
+        
+        [self.advancedMsgListeners onMsgDeleted:msg];
     }];
 }
 
@@ -630,178 +600,6 @@
         }
         
         [self.conversationListeners onTotalUnreadMessageCountChanged:totalUnreadCount];
-    }];
-}
-
-#pragma mark -
-#pragma mark - Signaling
-
-- (void)onInvitationCancelled:(NSString * _Nullable)invitationCancelledCallback {
-    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:invitationCancelledCallback];
-    
-    [self dispatchMainThread:^{
-        if (self.onInvitationCancelled) {
-            self.onInvitationCancelled(info);
-        }
-      
-        [self.signalingListeners onInvitationCancelled:info];
-    }];
-}
-
-- (void)onInvitationTimeout:(NSString * _Nullable)invitationTimeoutCallback {
-    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:invitationTimeoutCallback];
-    
-    [self dispatchMainThread:^{
-        if (self.onInvitationTimeout) {
-            self.onInvitationTimeout(info);
-        }
-        
-        [self.signalingListeners onInvitationTimeout:info];
-    }];
-}
-
-- (void)onInviteeAccepted:(NSString * _Nullable)inviteeAcceptedCallback {
-    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:inviteeAcceptedCallback];
-    
-    [self dispatchMainThread:^{
-        if (self.onInviteeAccepted) {
-            self.onInviteeAccepted(info);
-        }
-        
-        [self.signalingListeners onInviteeAccepted:info];
-    }];
-}
-
-- (void)onInviteeAcceptedByOtherDevice:(NSString * _Nullable)inviteeAcceptedCallback {
-    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:inviteeAcceptedCallback];
-    
-    [self dispatchMainThread:^{
-        if (self.onInviteeAcceptedByOtherDevice) {
-            self.onInviteeAcceptedByOtherDevice(info);
-        }
-        
-        [self.signalingListeners onInviteeAcceptedByOtherDevice:info];
-    }];
-}
-
-- (void)onInviteeRejected:(NSString * _Nullable)inviteeRejectedCallback {
-    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:inviteeRejectedCallback];
-    
-    [self dispatchMainThread:^{
-        if (self.onInviteeRejected) {
-            self.onInviteeRejected(info);
-        }
-        
-        [self.signalingListeners onInviteeRejected:info];
-    }];
-}
-
-- (void)onInviteeRejectedByOtherDevice:(NSString * _Nullable)inviteeRejectedCallback {
-    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:inviteeRejectedCallback];
-    
-    [self dispatchMainThread:^{
-        if (self.onInviteeRejectedByOtherDevice) {
-            self.onInviteeRejectedByOtherDevice(info);
-        }
-        
-        [self.signalingListeners onInviteeRejectedByOtherDevice:info];
-    }];
-}
-
-- (void)onReceiveNewInvitation:(NSString * _Nullable)receiveNewInvitationCallback {
-    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:receiveNewInvitationCallback];
-    
-    [self dispatchMainThread:^{
-        if (self.onReceiveNewInvitation) {
-            self.onReceiveNewInvitation(info);
-        }
-        
-        [self.signalingListeners onReceiveNewInvitation:info];
-    }];
-}
-
-- (void)onHangUp:(NSString *)hangUpCallback {
-    OIMSignalingInfo *info = [OIMSignalingInfo mj_objectWithKeyValues:hangUpCallback];
-    
-    [self dispatchMainThread:^{
-        if (self.onHunguUp) {
-            self.onHunguUp(info);
-        }
-        
-        [self.signalingListeners onHunguUp:info];
-    }];
-}
-
-- (void)onRoomParticipantConnected:(NSString *)onRoomParticipantConnectedCallback {
-    OIMParticipantConnectedInfo *info = [OIMParticipantConnectedInfo mj_objectWithKeyValues:onRoomParticipantConnectedCallback];
-    
-    [self dispatchMainThread:^{
-        if (self.onRoomParticipantConnected) {
-            self.onRoomParticipantConnected(info);
-        }
-        
-        [self.signalingListeners onRoomParticipantConnected:info];
-    }];
-}
-
-- (void)onRoomParticipantDisconnected:(NSString *)onRoomParticipantDisconnectedCallback {
-    OIMParticipantConnectedInfo *info = [OIMParticipantConnectedInfo mj_objectWithKeyValues:onRoomParticipantDisconnectedCallback];
-    
-    [self dispatchMainThread:^{
-        if (self.onRoomParticipantDisconnected) {
-            self.onRoomParticipantDisconnected(info);
-        }
-        
-        [self.signalingListeners onRoomParticipantDisconnected:info];
-    }];
-}
-
-- (void)onStreamChange:(NSString *)OnStreamChangeCallback {
-    OIMMeetingStreamEvent *info = [OIMMeetingStreamEvent mj_objectWithKeyValues:OnStreamChangeCallback];
-    
-    [self dispatchMainThread:^{
-        if (self.onStreamChange) {
-            self.onStreamChange(info);
-        }
-        
-        [self.signalingListeners onStreamChange:info];
-    }];
-}
-
-- (void)onReceiveCustomSignal:(NSString *)customSignalCallback {
-    
-    [self dispatchMainThread:^{
-        if (self.onReceiveCustomSignal) {
-            self.onReceiveCustomSignal(customSignalCallback);
-        }
-        
-        [self.signalingListeners onReceiveCustomSignal:customSignalCallback];
-    }];
-}
-
-#pragma mark -
-#pragma mark - Organization
-
-- (void)onOrganizationUpdated {
-    [self dispatchMainThread:^{
-        if (self.organizationUpdated) {
-            self.organizationUpdated();
-        }
-        
-        [self.organizationListeners onOrganizationUpdated];
-    }];
-}
-
-#pragma mark -
-#pragma mark - Organization
-
-- (void)onRecvNewNotification {
-    [self dispatchMainThread:^{
-        if (self.recvNewNotification) {
-            self.recvNewNotification();
-        }
-        
-        [self.workMomentsListeners onRecvNewNotification];
     }];
 }
 

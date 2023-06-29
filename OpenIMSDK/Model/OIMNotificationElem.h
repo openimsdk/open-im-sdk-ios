@@ -15,8 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, copy) NSString *detail;
 
-@property (nonatomic, nullable, copy) NSString *defaultTips;
-
 /// 以下字段是从detail里面decode出来的
 @property (nonatomic, nullable, strong, readonly) OIMGroupMemberInfo *opUser;
 

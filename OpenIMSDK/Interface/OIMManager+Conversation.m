@@ -47,11 +47,6 @@
     Open_im_sdkGetOneConversation(callback, [self operationId], sessionType, sourceID);
 }
 
-- (NSString *)getConversationIDBySessionType:(OIMConversationType )sessionType
-                                    sourceID:(NSString *)sourceID {
-    return Open_im_sdkGetConversationIDBySessionType(sourceID, sessionType);
-}
-
 - (void)getMultipleConversation:(NSArray<NSString *> *)ids
                       onSuccess:(OIMConversationsInfoCallback)onSuccess
                       onFailure:(OIMFailureCallback)onFailure {
@@ -64,21 +59,21 @@
     Open_im_sdkGetMultipleConversation(callback, [self operationId], ids.mj_JSONString);
 }
 
-- (void)deleteConversationFromLocalStorage:(NSString *)conversationID
-                                 onSuccess:(nullable OIMSuccessCallback)onSuccess
-                                 onFailure:(nullable OIMFailureCallback)onFailure {
+- (void)deleteConversationAndDeleteAllMsg:(NSString *)conversationID
+                                onSuccess:(nullable OIMSuccessCallback)onSuccess
+                                onFailure:(nullable OIMFailureCallback)onFailure {
     
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkDeleteConversation(callback, [self operationId], conversationID);
+    Open_im_sdkDeleteConversationAndDeleteAllMsg(callback, [self operationId], conversationID);
 }
 
-- (void)deleteConversation:(NSString *)conversationID
-                 onSuccess:(OIMSuccessCallback)onSuccess
-                 onFailure:(OIMFailureCallback)onFailure {
+- (void)clearConversationAndDeleteAllMsg:(NSString *)conversationID
+                               onSuccess:(OIMSuccessCallback)onSuccess
+                               onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkDeleteConversationFromLocalAndSvr(callback, [self operationId], conversationID);
+    Open_im_sdkClearConversationAndDeleteAllMsg(callback, [self operationId], conversationID);
 }
 
 - (void)deleteAllConversationFromLocalWithOnSuccess:(OIMSuccessCallback)onSuccess
@@ -129,31 +124,31 @@
     Open_im_sdkGetConversationRecvMessageOpt(callback, [self operationId], conversationIDs.mj_JSONString);
 }
 
-- (void)setConversationRecvMessageOpt:(NSArray<NSString *> *)conversationIDs
+- (void)setConversationRecvMessageOpt:(NSString *)conversationID
                                status:(OIMReceiveMessageOpt)status
                             onSuccess:(OIMSuccessCallback)onSuccess
                             onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkSetConversationRecvMessageOpt(callback, [self operationId], conversationIDs.mj_JSONString, status);
+    Open_im_sdkSetConversationRecvMessageOpt(callback, [self operationId], conversationID, status);
 }
 
-- (void)setOneConversationPrivateChat:(NSString *)conversationID
+- (void)setConversationPrivateChat:(NSString *)conversationID
                             isPrivate:(BOOL)isPrivate
                             onSuccess:(OIMSuccessCallback)onSuccess
                             onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkSetOneConversationPrivateChat(callback, [self operationId], conversationID, isPrivate);
+    Open_im_sdkSetConversationPrivateChat(callback, [self operationId], conversationID, isPrivate);
 }
 
-- (void)setOneConversationBurnDuration:(NSString *)conversationID
+- (void)setConversationBurnDuration:(NSString *)conversationID
                               duration:(NSInteger)burnDuration
                              onSuccess:(OIMSuccessCallback)onSuccess
                              onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkSetOneConversationBurnDuration(callback, [self operationId], conversationID, (int32_t)burnDuration);
+    Open_im_sdkSetConversationBurnDuration(callback, [self operationId], conversationID, (int32_t)burnDuration);
 }
 
 - (void)resetConversationGroupAtType:(NSString *)conversationID
@@ -170,5 +165,13 @@
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
     Open_im_sdkHideConversation(callback, [self operationId], conversationID);
+}
+
+- (void)markConversationMessageAsRead:(NSString *)conversationID
+                            onSuccess:(nullable OIMSuccessCallback)onSuccess
+                            onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+
+    Open_im_sdkMarkConversationMessageAsRead(callback, [self operationId], conversationID);
 }
 @end

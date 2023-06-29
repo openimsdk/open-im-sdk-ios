@@ -13,7 +13,6 @@
     OIMNumberCallback _onProgress;
 }
 
-
 @end
 
 @implementation SendMessageCallbackProxy

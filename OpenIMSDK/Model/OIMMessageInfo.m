@@ -53,7 +53,7 @@
 
 @end
 
-@implementation OIMMessageRevoked
+@implementation OIMMessageRevokedInfo
 
 @end
 

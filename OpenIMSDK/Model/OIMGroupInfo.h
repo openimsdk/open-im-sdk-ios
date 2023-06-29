@@ -6,12 +6,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OIMModelDefine.h"
+#import "OIMDefine.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMGroupBaseInfo : NSObject
 
+@property (nonatomic, assign) OIMGroupType groupType;
 @property (nonatomic, nullable, copy) NSString *groupName;
 @property (nonatomic, nullable, copy) NSString *notification;
 @property (nonatomic, nullable, copy) NSString *introduction;
@@ -20,28 +21,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface OIMGroupCreateInfo : OIMGroupBaseInfo
+@interface OIMGroupCreateInfo : NSObject
 
-@property (nonatomic, assign) OIMGroupType groupType;
+@property (nonatomic, strong) OIMGroupBaseInfo *groupInfo;
+@property (nonatomic, copy) NSArray <NSString *> *memberUserIDs;
+@property (nonatomic, copy) NSArray <NSString *> *adminUserIDs;
+@property (nonatomic, copy) NSString *ownerUserID;
 
 @end
 
 /// 群组信息
 ///
-@interface OIMGroupInfo : OIMGroupCreateInfo
+@interface OIMGroupInfo : OIMGroupBaseInfo
 
 @property (nonatomic, nullable, copy) NSString *groupID;
-@property (nonatomic, nullable, copy) NSString *ownerUserID;
-@property (nonatomic, assign) NSInteger createTime;
-@property (nonatomic, assign) NSInteger memberCount;
+@property (nonatomic, assign, readonly) NSInteger createTime;
+@property (nonatomic, assign, readonly) NSInteger memberCount;
 /// 群状态：0正常，1被封，2解散，3禁言
-@property (nonatomic, assign) OIMGroupStatus status;
-@property (nonatomic, copy) NSString *creatorUserID;
+@property (nonatomic, assign, readonly) OIMGroupStatus status;
+@property (nonatomic, copy, readonly) NSString *creatorUserID;
 @property (nonatomic, assign) OIMGroupVerificationType needVerification;
 @property (nonatomic, assign) NSInteger lookMemberInfo;
 @property (nonatomic, assign) NSInteger applyMemberFriend;
-@property (nonatomic, assign) NSInteger notificationUpdateTime;
-@property (nonatomic, copy) NSString *notificationUserID;
+@property (nonatomic, assign, readonly) NSInteger notificationUpdateTime;
+@property (nonatomic, copy, readonly) NSString *notificationUserID;
 
 @end
 

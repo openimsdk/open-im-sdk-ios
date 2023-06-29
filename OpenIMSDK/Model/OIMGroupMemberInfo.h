@@ -6,8 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-#import "OIMModelDefine.h"
+#import "OIMDefine.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

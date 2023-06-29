@@ -12,7 +12,7 @@
 
 @end
 
-@implementation OIMMessageEntityElem
+@implementation OIMAdvancedTextElem
 
 + (NSDictionary *)mj_objectClassInArray
 {
@@ -22,5 +22,17 @@
 @end
 
 @implementation OIMMessageElem
+
+@end
+
+@implementation OIMTextElem
+
+@end
+
+@implementation OIMCardElem
+
+@end
+
+@implementation OIMTypingElem
 
 @end

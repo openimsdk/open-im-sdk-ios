@@ -10,8 +10,7 @@
 
 @implementation OIMManager (Group)
 
-- (void)createGroup:(OIMGroupCreateInfo *)groupBaseInfo
-         memberList:(NSArray<OIMGroupMemberBaseInfo *> *)list
+- (void)createGroup:(OIMGroupCreateInfo *)groupCreateInfo
           onSuccess:(OIMGroupInfoCallback)onSuccess
           onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
@@ -20,34 +19,27 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkCreateGroup(callback, [self operationId], groupBaseInfo.mj_JSONString, [OIMGroupMemberBaseInfo mj_keyValuesArrayWithObjectArray:list].mj_JSONString);
-}
-
-- (void)joinGroup:(NSString *)gid
-           reqMsg:(NSString *)reqMsg
-        onSuccess:(OIMSuccessCallback)onSuccess
-        onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    NSString *t = groupCreateInfo.mj_JSONString;
     
-    Open_im_sdkJoinGroup(callback, [self operationId], gid, reqMsg ?: @"", OIMJoinTypeSearch);
+    Open_im_sdkCreateGroup(callback, [self operationId], groupCreateInfo.mj_JSONString);
 }
 
-- (void)joinGroup:(NSString *)gid
+- (void)joinGroup:(NSString *)groupID
            reqMsg:(NSString *)reqMsg
        joinSource:(OIMJoinType)joinSource
         onSuccess:(OIMSuccessCallback)onSuccess
         onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkJoinGroup(callback, [self operationId], gid, reqMsg ?: @"", joinSource);
+    Open_im_sdkJoinGroup(callback, [self operationId], groupID, reqMsg ?: @"", joinSource);
 }
 
-- (void)quitGroup:(NSString *)gid
+- (void)quitGroup:(NSString *)groupID
         onSuccess:(OIMSuccessCallback)onSuccess
         onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkQuitGroup(callback, [self operationId], gid);
+    Open_im_sdkQuitGroup(callback, [self operationId], groupID);
 }
 
 
@@ -62,29 +54,28 @@
     Open_im_sdkGetJoinedGroupList(callback, [self operationId]);
 }
 
-- (void)getGroupsInfo:(NSArray *)gids
-            onSuccess:(OIMGroupsInfoCallback)onSuccess
-            onFailure:(OIMFailureCallback)onFailure {
+- (void)getSpecifiedGroupsInfo:(NSArray <NSString *> *)groupsID
+                     onSuccess:(nullable OIMGroupsInfoCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
             onSuccess([OIMGroupInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetGroupsInfo(callback, [self operationId], gids.mj_JSONString);
+    Open_im_sdkGetSpecifiedGroupsInfo(callback, [self operationId], groupsID.mj_JSONString);
 }
 
-- (void)setGroupInfo:(NSString *)gid
-           groupInfo:(OIMGroupBaseInfo *)info
+- (void)setGroupInfo:(OIMGroupInfo *)info
            onSuccess:(OIMSuccessCallback)onSuccess
            onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkSetGroupInfo(callback, [self operationId], gid, info.mj_JSONString);
+    Open_im_sdkSetGroupInfo(callback, [self operationId], info.mj_JSONString);
 }
 
-- (void)getGroupMemberList:(NSString *)groupId
-                    filter:(OIMGroupMemberRole)filter
+- (void)getGroupMemberList:(NSString *)groupID
+                    filter:(OIMGroupMemberFilter)filter
                     offset:(NSInteger)offset
                      count:(NSInteger)count
                  onSuccess:(OIMGroupMembersInfoCallback)onSuccess
@@ -95,13 +86,13 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetGroupMemberList(callback, [self operationId], groupId, (int32_t)filter, (int32_t)offset, (int32_t)count);
+    Open_im_sdkGetGroupMemberList(callback, [self operationId], groupID, (int32_t)filter, (int32_t)offset, (int32_t)count);
 }
 
-- (void)getGroupMembersInfo:(NSString *)groupId
-                       uids:(NSArray<NSString *> *)uids
-                  onSuccess:(OIMGroupMembersInfoCallback)onSuccess
-                  onFailure:(OIMFailureCallback)onFailure {
+- (void)getSpecifiedGroupMembersInfo:(NSString *)groupID
+                             usersID:(NSArray <NSString *> *)usersID
+                           onSuccess:(nullable OIMGroupMembersInfoCallback)onSuccess
+                           onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
             onSuccess([OIMGroupMemberInfo mj_objectArrayWithKeyValuesArray:data]);
@@ -109,12 +100,12 @@
     } onFailure:onFailure];
     
     
-    Open_im_sdkGetGroupMembersInfo(callback, [self operationId], groupId, uids.mj_JSONString);
+    Open_im_sdkGetSpecifiedGroupMembersInfo(callback, [self operationId], groupID, usersID.mj_JSONString);
 }
 
-- (void)kickGroupMember:(NSString *)groupId
+- (void)kickGroupMember:(NSString *)groupID
                  reason:(NSString *)reason
-                   uids:(NSArray *)uids
+                usersID:(NSArray <NSString *> *)usersID
               onSuccess:(OIMSimpleResultsCallback)onSuccess
               onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
@@ -124,21 +115,21 @@
     } onFailure:onFailure];
     
     
-    Open_im_sdkKickGroupMember(callback, [self operationId], groupId, reason ?: @"", uids.mj_JSONString);
+    Open_im_sdkKickGroupMember(callback, [self operationId], groupID, reason ?: @"", usersID.mj_JSONString);
 }
 
-- (void)transferGroupOwner:(NSString *)groupId
-                  newOwner:(NSString *)uid
+- (void)transferGroupOwner:(NSString *)groupID
+                  newOwner:(NSString *)userID
                  onSuccess:(OIMSuccessCallback)onSuccess
                  onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkTransferGroupOwner(callback, [self operationId], groupId, uid);
+    Open_im_sdkTransferGroupOwner(callback, [self operationId], groupID, userID);
 }
 
-- (void)inviteUserToGroup:(NSString *)groupId
+- (void)inviteUserToGroup:(NSString *)groupID
                    reason:(NSString *)reason
-                     uids:(NSArray <NSString *> *)uids
+                  usersID:(NSArray <NSString *> *)usersID
                 onSuccess:(OIMSimpleResultsCallback)onSuccess
                 onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
@@ -147,49 +138,49 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkInviteUserToGroup(callback, [self operationId], groupId, reason ?: @"", uids.mj_JSONString);
+    Open_im_sdkInviteUserToGroup(callback, [self operationId], groupID, reason ?: @"", usersID.mj_JSONString);
 }
 
-- (void)getGroupApplicationListWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
-                                   onFailure:(OIMFailureCallback)onFailure {
+- (void)getGroupApplicationListAsRecipientWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
+                                              onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
             onSuccess([OIMGroupApplicationInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetRecvGroupApplicationList(callback, [self operationId]);
+    Open_im_sdkGetGroupApplicationListAsRecipient(callback, [self operationId]);
 }
 
-- (void)getSendGroupApplicationListWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
-                                       onFailure:(OIMFailureCallback)onFailure {
+- (void)getGetGroupApplicationListAsApplicantWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
+                                              onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
             onSuccess([OIMGroupApplicationInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetSendGroupApplicationList(callback, [self operationId]);
+    Open_im_sdkGetGroupApplicationListAsApplicant(callback, [self operationId]);
 }
 
-- (void)acceptGroupApplication:(NSString *)groupId
+- (void)acceptGroupApplication:(NSString *)groupID
                     fromUserId:(NSString *)fromUserID
                      handleMsg:(NSString *)handleMsg
                      onSuccess:(OIMSuccessCallback)onSuccess
                      onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkAcceptGroupApplication(callback, [self operationId], groupId, fromUserID, handleMsg ?: @"");
+    Open_im_sdkAcceptGroupApplication(callback, [self operationId], groupID, fromUserID, handleMsg ?: @"");
 }
 
-- (void)refuseGroupApplication:(NSString *)groupId
+- (void)refuseGroupApplication:(NSString *)groupID
                     fromUserId:(NSString *)fromUserID
                      handleMsg:(NSString *)handleMsg
                      onSuccess:(OIMSuccessCallback)onSuccess
                      onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkRefuseGroupApplication(callback, [self operationId], groupId, fromUserID, handleMsg ?: @"");
+    Open_im_sdkRefuseGroupApplication(callback, [self operationId], groupID, fromUserID, handleMsg ?: @"");
 }
 
 - (void)dismissGroup:(NSString *)groupID

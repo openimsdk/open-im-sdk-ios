@@ -14,7 +14,7 @@
 
 @end
 
-@implementation OIMAtElem
+@implementation OIMAtTextElem
 
 + (NSDictionary *)mj_objectClassInArray
 {
@@ -24,7 +24,7 @@
 - (BOOL)isAtAll {
     return self.atUserList.count > 0 &&
     [self.atUserList.firstObject isKindOfClass:[NSString class]] &&
-    [self.atUserList.firstObject isEqualToString:Open_im_sdkGetAtAllTag()];
+    [self.atUserList.firstObject isEqualToString:Open_im_sdkGetAtAllTag([[NSUUID UUID]UUIDString])];
 }
 
 @end

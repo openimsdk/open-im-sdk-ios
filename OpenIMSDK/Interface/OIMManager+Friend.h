@@ -14,10 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 添加朋友
  *
- * @param uid    对方userID
+ * @param userID    对方userID
  * @param reqMessage 请求消息
  */
-- (void)addFriend:(NSString *)uid
+- (void)addFriend:(NSString *)userID
        reqMessage:(NSString * _Nullable)reqMessage
         onSuccess:(nullable OIMSuccessCallback)onSuccess
         onFailure:(nullable OIMFailureCallback)onFailure;
@@ -25,20 +25,20 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 获取收到的好友申请，既哪些人申请加我为好友
  */
-- (void)getFriendApplicationListWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
+- (void)getFriendApplicationListAsRecipientWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
                                     onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 发出的好友申请
  */
-- (void)getSendFriendApplicationListWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
+- (void)getFriendApplicationListAsApplicantWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
                                         onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 同意某人的好友申请
- * @param uid 用户id
+ * @param userID 用户id
  */
-- (void)acceptFriendApplication:(NSString *)uid
+- (void)acceptFriendApplication:(NSString *)userID
                       handleMsg:(NSString *)msg
               onSuccess:(nullable OIMSuccessCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
@@ -46,9 +46,9 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 拒绝好友申请
  *
- * @param uid  用户ID
+ * @param userID  用户ID
  */
-- (void)refuseFriendApplication:(NSString *)uid
+- (void)refuseFriendApplication:(NSString *)userID
                       handleMsg:(NSString *)msg
               onSuccess:(nullable OIMSuccessCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
@@ -56,9 +56,9 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 加入黑名单
  *
- * @param uid  用户ID
+ * @param userID  用户ID
  */
-- (void)addToBlackList:(NSString *)uid
+- (void)addToBlackList:(NSString *)userID
              onSuccess:(nullable OIMSuccessCallback)onSuccess
              onFailure:(nullable OIMFailureCallback)onFailure;
 
@@ -67,24 +67,24 @@ NS_ASSUME_NONNULL_BEGIN
  *
  */
 - (void)getBlackListWithOnSuccess:(nullable OIMBlacksInfoCallback)onSuccess
-                         onFailure:(nullable OIMFailureCallback)onFailure;
+                        onFailure:(nullable OIMFailureCallback)onFailure;
 /*
  * 移除黑名单
  *
- * @param uid  用户ID
+ * @param userID  用户ID
  */
-- (void)removeFromBlackList:(NSString *)uid
+- (void)removeFromBlackList:(NSString *)userID
                   onSuccess:(nullable OIMSuccessCallback)onSuccess
                   onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 获取指定好友列表的相关信息
  *
- * @param uids 用户id列表
+ * @param usersID 用户id列表
  */
-- (void)getDesignatedFriendsInfo:(NSArray <NSString *> *)uids
-                       onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
-                       onFailure:(nullable OIMFailureCallback)onFailure;
+- (void)getSpecifiedFriendsInfo:(NSArray <NSString *> *)usersID
+                      onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
+                      onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
  * 获取所有好友的相关信息
@@ -98,7 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @param uidList userID列表
 */
-- (void)checkFriend:(NSArray <NSString *> *)uids
+- (void)checkFriend:(NSArray <NSString *> *)usersID
           onSuccess:(nullable OIMSimpleResultsCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
 
@@ -123,16 +123,9 @@ NS_ASSUME_NONNULL_BEGIN
            onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
- *  搜索好友
- */
-- (void)searchUsers:(OIMSearchUserParam *)searchParam
-          onSuccess:(nullable OIMSearchUsersInfoCallback)onSuccess
-          onFailure:(nullable OIMFailureCallback)onFailure DEPRECATED_MSG_ATTRIBUTE("Use [searchFriends:onSuccess:onFailure]");
-
-/*
  *  本地搜索好友
  */
-- (void)searchFriends:(OIMSearchUserParam *)searchParam
+- (void)searchFriends:(OIMSearchFriendsParam *)searchParam
             onSuccess:(nullable OIMSearchUsersInfoCallback)onSuccess
             onFailure:(nullable OIMFailureCallback)onFailure;
 @end

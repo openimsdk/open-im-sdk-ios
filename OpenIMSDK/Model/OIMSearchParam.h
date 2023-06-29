@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OIMModelDefine.h"
+#import "OIMDefine.h"
 
 @class OIMMessageInfo;
 
@@ -78,7 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 // 查询好友使用
-@interface OIMSearchUserParam : NSObject
+@interface OIMSearchFriendsParam : NSObject
 
 // 搜索关键词，目前仅支持一个关键词搜索，不能为空
 @property (nonatomic, copy) NSArray *keywordList;

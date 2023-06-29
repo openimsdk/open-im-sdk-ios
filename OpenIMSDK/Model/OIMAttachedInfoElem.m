@@ -12,6 +12,10 @@
 
 @end
 
+@implementation OIMUploadProgress
+
+@end
+
 @implementation OIMAttachedInfoElem
 
 + (NSDictionary *)mj_objectClassInArray

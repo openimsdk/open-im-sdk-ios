@@ -52,7 +52,8 @@
                        onGroupApplicationAdded:(OIMGroupApplicationCallback)onGroupApplicationAdded
                      onGroupApplicationDeleted:(OIMGroupApplicationCallback)onGroupApplicationDeleted
                     onGroupApplicationAccepted:(OIMGroupApplicationCallback)onGroupApplicationAccepted
-                    onGroupApplicationRejected:(OIMGroupApplicationCallback)onGroupApplicationRejected {
+                    onGroupApplicationRejected:(OIMGroupApplicationCallback)onGroupApplicationRejected
+                              onGroupDismissed:(OIMGroupInfoCallback)onGroupDismissed {
     self.onGroupInfoChanged = onGroupInfoChanged;
     self.onJoinedGroupAdded = onJoinedGroupAdded;
     self.onJoinedGroupDeleted = onJoinedGroupDeleted;
@@ -62,6 +63,7 @@
     self.onGroupApplicationDeleted = onGroupApplicationDeleted;
     self.onGroupApplicationAccepted = onGroupApplicationAccepted;
     self.onGroupApplicationRejected = onGroupApplicationRejected;
+    self.onGroupDismissed = onGroupDismissed;
 }
 
 - (void)setAdvancedMsgListenerWithOnRecvMessageRevoked:(OIMStringCallback)onRecvMessageRevoked
@@ -115,61 +117,6 @@
 
 - (void)setSelfUserInfoUpdateListener:(OIMUserInfoCallback)onUserInfoUpdate {
     self.onSelfInfoUpdated = onUserInfoUpdate;
-}
-
-- (void)setSignalingListenerWithOnReceiveNewInvitation:(OIMSignalingInvitationCallback)onReceiveNewInvitation
-                                     onInviteeAccepted:(OIMSignalingInvitationCallback)onInviteeAccepted
-                                     onInviteeRejected:(OIMSignalingInvitationCallback)onInviteeRejected
-                                 onInvitationCancelled:(OIMSignalingInvitationCallback)onInvitationCancelled
-                                   onInvitationTimeout:(OIMSignalingInvitationCallback)onInvitationTimeout
-                        onInviteeRejectedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeRejectedByOtherDevice
-                        onInviteeAcceptedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeAcceptedByOtherDevice {
-    [self setSignalingListenerWithOnReceiveNewInvitation:onReceiveNewInvitation
-                                       onInviteeAccepted:onInviteeAccepted
-                                       onInviteeRejected:onReceiveNewInvitation
-                                   onInvitationCancelled:onInvitationCancelled
-                                     onInvitationTimeout:onInvitationTimeout
-                          onInviteeRejectedByOtherDevice:onInviteeRejectedByOtherDevice
-                          onInviteeAcceptedByOtherDevice:onInviteeAcceptedByOtherDevice
-                              onRoomParticipantConnected:nil
-                           onRoomParticipantDisconnected:nil
-                                          onStreamChange:nil];
-}
-
-- (void)setSignalingListenerWithOnReceiveNewInvitation:(OIMSignalingInvitationCallback)onReceiveNewInvitation
-                                     onInviteeAccepted:(OIMSignalingInvitationCallback)onInviteeAccepted
-                                     onInviteeRejected:(OIMSignalingInvitationCallback)onInviteeRejected
-                                 onInvitationCancelled:(OIMSignalingInvitationCallback)onInvitationCancelled
-                                   onInvitationTimeout:(OIMSignalingInvitationCallback)onInvitationTimeout
-                        onInviteeRejectedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeRejectedByOtherDevice
-                        onInviteeAcceptedByOtherDevice:(OIMSignalingInvitationCallback)onInviteeAcceptedByOtherDevice
-                            onRoomParticipantConnected:(OIMSignalingParticipantChangeCallback)onRoomParticipantConnected
-                         onRoomParticipantDisconnected:(OIMSignalingParticipantChangeCallback)onRoomParticipantDisconnected
-                                        onStreamChange:(OIMSignalingMeetingStreamEventCallback)onStreamChange {
-    self.onReceiveNewInvitation = onReceiveNewInvitation;
-    self.onInviteeAccepted = onInviteeAccepted;
-    self.onInviteeRejected = onInviteeRejected;
-    self.onInvitationCancelled = onInvitationCancelled;
-    self.onInvitationTimeout = onInvitationTimeout;
-    self.onInviteeRejectedByOtherDevice = onInviteeRejectedByOtherDevice;
-    self.onInviteeAcceptedByOtherDevice = onInviteeAcceptedByOtherDevice;
-    self.onRoomParticipantConnected = onRoomParticipantConnected;
-    self.onRoomParticipantDisconnected = onRoomParticipantDisconnected;
-    self.onStreamChange = onStreamChange;
-}
-
-- (void)setSignalingListenerWithOnReceiveCustomSignal:(OIMStringCallback)onReceiveCustomSignal {
-    self.onReceiveCustomSignal = onReceiveCustomSignal;
-}
-
-- (void)setOrganizationListenerWithOrganizationUpdated:(OIMVoidCallback)onOrganizationUpdated {
-    
-    self.organizationUpdated = onOrganizationUpdated;
-}
-
-- (void)setWorkMomentsListenerWithOrganizationUpdated:(OIMVoidCallback)onRecvNewNotification {
-    
-    self.recvNewNotification = onRecvNewNotification;
 }
 
 @end

@@ -6,11 +6,13 @@
 //
 
 #import "OIMManager.h"
+#import "Reachability.h"
+#import "CallbackProxy.h"
 
 @interface OIMManager ()
 {
     OIMCallbacker *_callbacker;
-    UIBackgroundTaskIdentifier _backgroundTaskIdentifier;
+    Reachability *internetReachability;
 }
 
 @end
@@ -30,6 +32,31 @@
     return instance;
 }
 
+- (instancetype)init {
+    if (self = [super init]) {
+        // app从后台进入前台都会调用这个方法
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationWillEnterForeground:)
+                                                     name:UIApplicationWillEnterForegroundNotification
+                                                   object:nil];
+        // 添加检测app进入后台的观察者
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationDidEnterBackground:)
+                                                     name:UIApplicationDidEnterBackgroundNotification
+                                                   object:nil];
+    
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(reachabilityChanged:)
+                                                     name:kReachabilityChangedNotification
+                                                   object:nil];
+        
+        internetReachability = [Reachability reachabilityForInternetConnection];
+        [internetReachability startNotifier];
+    }
+    
+    return self;
+}
+
 + (OIMCallbacker *)callbacker {
     return [OIMManager manager].callbacker;
 }
@@ -43,21 +70,40 @@
 
 + (NSString *)sdkSdkVersion
 {
-    return Open_im_sdkSdkVersion();
+    return Open_im_sdkGetSdkVersion();
 }
 
 - (NSString *)getLoginUid {
-    return Open_im_sdkGetLoginUser();
+    return Open_im_sdkGetLoginUserID();
 }
 
 - (NSString *)getLoginUser {
-    return Open_im_sdkGetLoginUser();
+    return Open_im_sdkGetLoginUserID();
 }
 
 - (NSString *)operationId {
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval time = [date timeIntervalSince1970] * 1000;
     return [NSString stringWithFormat:@"%ld", (NSInteger)time];
+}
+
+- (void)applicationDidEnterBackground:(NSNotification *)note {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:nil onFailure:nil];
+
+    Open_im_sdkSetAppBackgroundStatus(callback, [self operationId], YES);
+}
+
+- (void)applicationWillEnterForeground:(NSNotification *)note {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:nil onFailure:nil];
+
+    Open_im_sdkSetAppBackgroundStatus(callback, [self operationId], NO);
+}
+
+- (void)reachabilityChanged:(NSNotification *)note {
+    Reachability *reachability = [note object];
+    NSParameterAssert([reachability isKindOfClass:[Reachability class]]);
+        
+    Open_im_sdkNetworkStatusChanged(nil, [self operationId]);
 }
 
 @end
