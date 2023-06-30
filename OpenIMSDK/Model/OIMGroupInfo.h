@@ -37,9 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) NSString *groupID;
 @property (nonatomic, assign, readonly) NSInteger createTime;
 @property (nonatomic, assign, readonly) NSInteger memberCount;
-/// 群状态：0正常，1被封，2解散，3禁言
 @property (nonatomic, assign, readonly) OIMGroupStatus status;
 @property (nonatomic, copy, readonly) NSString *creatorUserID;
+@property (nonatomic, copy, readonly) NSString *ownerUserID;
 @property (nonatomic, assign) OIMGroupVerificationType needVerification;
 @property (nonatomic, assign) NSInteger lookMemberInfo;
 @property (nonatomic, assign) NSInteger applyMemberFriend;
