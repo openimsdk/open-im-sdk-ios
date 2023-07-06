@@ -81,10 +81,6 @@
     return Open_im_sdkGetLoginUserID();
 }
 
-- (NSInteger)getLoginStatus {
-    return Open_im_sdkGetLoginStatus();
-}
-
 - (NSString *)operationId {
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval time = [date timeIntervalSince1970] * 1000;

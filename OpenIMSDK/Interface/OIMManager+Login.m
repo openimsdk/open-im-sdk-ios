@@ -29,7 +29,7 @@
 }
 
 - (NSInteger)getLoginStatus {
-    return Open_im_sdkGetLoginStatus();
+    return Open_im_sdkGetLoginStatus([self operationId]);
 }
 
 - (void)logoutWithOnSuccess:(OIMSuccessCallback)onSuccess

@@ -31,7 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSString *)getLoginUid;
 - (NSString *)getLoginUser;
-- (NSInteger)getLoginStatus;
 
 - (NSString *)operationId;
 @end
