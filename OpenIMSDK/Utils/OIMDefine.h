@@ -19,7 +19,7 @@ typedef void (^OIMFailureCallback)(NSInteger code, NSString * _Nullable msg);
 typedef void (^OIMNumberCallback)(NSInteger number);
 typedef void (^OIMStringCallback)(NSString * _Nullable item);
 typedef void (^OIMStringArrayCallback)(NSString * _Nullable value1, NSArray<NSString *> * _Nullable value2);
-
+typedef void (^OIMObjectCallback)(NSDictionary * _Nullable item);
 
 /*
  *  消息类型
@@ -71,15 +71,16 @@ typedef NS_ENUM(NSInteger, OIMMessageContentType) {
     OIMMessageContentTypeGroupMemberInfoSetNotification = 1516,
     OIMMessageContentTypeGroupMemberSetToAdminNotification = 1517,
     OIMMessageContentTypeGroupMemberSetToOrdinaryUserNotification = 1518,
-    OIMMessageContentTypeGroupAnnouncement = 1519, // 群公告
-    OIMMessageContentTypeGroupSetNameNotification = 1520, // 修改群名称
+    OIMMessageContentTypeGroupAnnouncement = 1519,              /// 群公告
+    OIMMessageContentTypeGroupSetNameNotification = 1520,       /// 修改群名称
     OIMMessageContentTypeSuperGroupUpdateNotification = 1651,
     OIMMessageContentTypeConversationPrivateChatNotification = 1701,
     OIMMessageContentTypeOrganizationChangedNotification = 1801,
     OIMMessageContentTypeIsPrivateMessage = 1701,               /// 阅后即焚通知
-    OIMMessageContentTypeRevoke = 2101,                 /// 撤回消息
-    OIMMessageContentTypeHasReadReceipt = 2150,         /// 单聊已读回执
-    OIMMessageContentTypeGroupHasReadReceipt = 2155,    /// 群已读回执
+    OIMMessageContentTypeBusiness = 2001,                       /// 业务通知
+    OIMMessageContentTypeRevoke = 2101,                         /// 撤回消息
+    OIMMessageContentTypeHasReadReceipt = 2150,                 /// 单聊已读回执
+    OIMMessageContentTypeGroupHasReadReceipt = 2155,            /// 群已读回执
 
 };
 

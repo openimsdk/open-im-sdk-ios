@@ -23,7 +23,6 @@
 #import "OIMSimpleRequstInfo.h"
 #import "OIMSignalingInfo.h"
 #import "OIMDepartmentInfo.h"
-#import "OIMMomentsInfo.h"
 
 @import OpenIMCore;
 
@@ -77,8 +76,6 @@ typedef void (^OIMDepartmentInfoCallback)(NSArray <OIMDepartmentInfo *> * _Nulla
 typedef void (^OIMDepartmentMembersInfoCallback)(NSArray <OIMDepartmentMemberInfo *> * _Nullable members);
 typedef void (^OIMUserInDepartmentInfoCallback)(NSArray <OIMUserInDepartmentInfo *> * _Nullable members);
 typedef void (^OIMDepartmentMemberAndSubInfoCallback)(OIMDepartmentMemberAndSubInfo * _Nullable items);
-
-typedef void (^OIMMomentsInfoCallback)(NSArray <OIMMomentsInfo *> * _Nullable items);
 
 typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMessageListInfo * _Nullable result);
 typedef void (^OIMKeyValueResultCallback)(NSString * _Nullable msgID, NSArray <OIMKeyValue *> * _Nullable result);
@@ -296,6 +293,14 @@ typedef void (^OIMKeyValuesResultCallback)(NSArray <OIMKeyValues *> * _Nullable 
 
 @end
 
+/// IMSDK 主核心回调
+@protocol OIMCustomBusinessListener <NSObject>
+@optional
+
+- (void)onRecvCustomBusinessMessage:(NSDictionary <NSString *, id>* _Nullable)businessMessage;
+
+@end
+
 
 @interface OIMCallbacker : NSObject
 <
@@ -304,7 +309,8 @@ Open_im_sdk_callbackOnAdvancedMsgListener,
 Open_im_sdk_callbackOnConversationListener,
 Open_im_sdk_callbackOnFriendshipListener,
 Open_im_sdk_callbackOnGroupListener,
-Open_im_sdk_callbackOnUserListener
+Open_im_sdk_callbackOnUserListener,
+Open_im_sdk_callbackOnCustomBusinessListener
 >
 
 + (instancetype)callbacker;
@@ -418,6 +424,19 @@ Open_im_sdk_callbackOnUserListener
  *  移除高级消息的事件监听器
  */
 - (void)removeAdvancedMsgListener:(id<OIMAdvancedMsgListener>)listener NS_SWIFT_NAME(removeAdvancedMsgListener(listener:));
+
+/// 自定义消息监听
+@property (nonatomic, nullable, copy) OIMObjectCallback onRecvCustomBusinessMessage;
+
+/**
+ *  添加 IM 监听
+ */
+- (void)addCustomBusinessListener:(id<OIMCustomBusinessListener>)listener NS_SWIFT_NAME(addCustomBusinessListener(listener:));
+
+/**
+ *  移除 IM 监听
+ */
+- (void)removeCustomBusinessListener:(id<OIMCustomBusinessListener>)listener NS_SWIFT_NAME(removeCustomBusinessListener(listener:));
 
 @end
 

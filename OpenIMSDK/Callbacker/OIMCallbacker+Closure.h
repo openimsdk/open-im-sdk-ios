@@ -97,6 +97,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setSelfUserInfoUpdateListener:(OIMUserInfoCallback)onUserInfoUpdate;
 
+/*
+ * 自定义消息
+ *
+ */
+- (void)setRecvCustomBusinessMessageListener:(OIMStringCallback)onRecvCustomBusinessMessage;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -119,4 +119,8 @@
     self.onSelfInfoUpdated = onUserInfoUpdate;
 }
 
+- (void)setRecvCustomBusinessMessageListener:(OIMObjectCallback)onRecvCustomBusinessMessage {
+    self.onRecvCustomBusinessMessage = onRecvCustomBusinessMessage;
+}
+
 @end

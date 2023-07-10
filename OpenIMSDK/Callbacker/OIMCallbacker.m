@@ -14,6 +14,7 @@
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMGroupListener> *groupListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMConversationListener> *conversationListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMAdvancedMsgListener> *advancedMsgListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMCustomBusinessListener> *customBusinessListeners;
 
 @end
 
@@ -29,6 +30,7 @@
     Open_im_sdkSetGroupListener(self);
     Open_im_sdkSetConversationListener(self);
     Open_im_sdkSetAdvancedMsgListener(self);
+    Open_im_sdkSetCustomBusinessListener(self);
 }
 
 - (void)dispatchMainThread:(void (NS_NOESCAPE ^)(void))todo {
@@ -79,6 +81,13 @@
     return _advancedMsgListeners;
 }
 
+- (OIMGCDMulticastDelegate<OIMCustomBusinessListener> *)customBusinessListeners {
+    if (_customBusinessListeners == nil) {
+        _customBusinessListeners = (OIMGCDMulticastDelegate <OIMCustomBusinessListener> *)[[OIMGCDMulticastDelegate alloc] init];
+    }
+    return _customBusinessListeners;
+}
+
 #pragma mark -
 #pragma mark - Add/Remove listener
 
@@ -120,6 +129,14 @@
 
 - (void)removeAdvancedMsgListener:(id<OIMAdvancedMsgListener>)listener {
     [self.advancedMsgListeners removeDelegate:listener];
+}
+
+- (void)addCustomBusinessListener:(id<OIMCustomBusinessListener>)listener {
+    [self.customBusinessListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
+}
+
+- (void)removeCustomBusinessListener:(id<OIMCustomBusinessListener>)listener {
+    [self.customBusinessListeners removeDelegate:listener];
 }
 
 #pragma mark -
@@ -600,6 +617,21 @@
         }
         
         [self.conversationListeners onTotalUnreadMessageCountChanged:totalUnreadCount];
+    }];
+}
+
+#pragma mark -
+#pragma mark - CustomBusiness
+
+- (void)onRecvCustomBusinessMessage:(NSString *)businessMessage {
+    NSDictionary *output = businessMessage.mj_JSONObject;
+    
+    [self dispatchMainThread:^{
+        if (self.onRecvCustomBusinessMessage) {
+            self.onRecvCustomBusinessMessage(output);
+        }
+
+        [self.customBusinessListeners onRecvCustomBusinessMessage:output];
     }];
 }
 
