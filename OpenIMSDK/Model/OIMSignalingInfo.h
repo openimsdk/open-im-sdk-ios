@@ -133,7 +133,7 @@ NS_ASSUME_NONNULL_BEGIN
 // 会议相关
 @interface OIMMeetingInfo : NSObject
 
-@property (nonatomic, copy) NSString *meetingID;
+@property (nonatomic, copy) NSString *roomID;
 @property (nonatomic, copy) NSString *meetingName;
 @property (nonatomic, copy) NSString *hostUserID;
 @property (nonatomic, assign) NSTimeInterval createTime;
@@ -153,7 +153,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMMeetingStreamEvent : NSObject
 
-@property (nonatomic, copy) NSString *meetingID;
+@property (nonatomic, copy) NSString *roomID;
 @property (nonatomic, copy) NSString *streamType;
 @property (nonatomic, assign) BOOL mute;
 @end

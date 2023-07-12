@@ -302,6 +302,72 @@ typedef void (^OIMKeyValuesResultCallback)(NSArray <OIMKeyValues *> * _Nullable 
 @end
 
 
+/// 音视频监听器
+@protocol OIMSignalingListener <NSObject>
+@optional
+
+/*
+ *  被邀请者收到：音视频通话邀请
+ */
+- (void)onReceiveNewInvitation:(OIMSignalingInfo *)signalingInfo;
+
+/*
+ *  邀请者收到：被邀请者同意音视频通话
+ */
+- (void)onInviteeAccepted:(OIMSignalingInfo *)signalingInfo;
+
+/*
+ *  邀请者收到：被邀请者拒绝音视频通话
+ */
+- (void)onInviteeRejected:(OIMSignalingInfo *)signalingInfo;
+
+/*
+ *  被邀请者收到：邀请者取消音视频通话
+ */
+- (void)onInvitationCancelled:(OIMSignalingInfo *)signalingInfo;
+
+/*
+ *  邀请者收到：被邀请者超时未接通
+ */
+- (void)onInvitationTimeout:(OIMSignalingInfo *)signalingInfo;
+
+/*
+ *  被邀请者（其他端）收到：比如被邀请者在手机拒接，在pc上会收到此回调
+ */
+- (void)onInviteeRejectedByOtherDevice:(OIMSignalingInfo *)signalingInfo;
+
+/*
+ *  被邀请者（其他端）收到：比如被邀请者在手机拒接，在pc上会收到此回调
+ */
+- (void)onInviteeAcceptedByOtherDevice:(OIMSignalingInfo *)signalingInfo;
+
+/*
+ *  被挂断
+ */
+- (void)onHunguUp:(OIMSignalingInfo *)signalingInfo;
+
+/*
+ *  加入房间 群用户收到：加群房间人数改变
+ */
+- (void)onRoomParticipantConnected:(OIMParticipantConnectedInfo *)connectedInfo;
+
+/*
+ * 离开房间
+ */
+- (void)onRoomParticipantDisconnected:(OIMParticipantConnectedInfo *)disconnectedInfo;
+
+/*
+ * 流变化
+ */
+- (void)onStreamChange:(OIMMeetingStreamEvent *)meettingInfo;
+
+/*
+ * 接收自定义信号
+ */
+- (void)onReceiveCustomSignal:(NSString *)customSignalCallback;
+
+@end
+
 @interface OIMCallbacker : NSObject
 <
 Open_im_sdk_callbackOnConnListener,
@@ -310,7 +376,8 @@ Open_im_sdk_callbackOnConversationListener,
 Open_im_sdk_callbackOnFriendshipListener,
 Open_im_sdk_callbackOnGroupListener,
 Open_im_sdk_callbackOnUserListener,
-Open_im_sdk_callbackOnCustomBusinessListener
+Open_im_sdk_callbackOnCustomBusinessListener,
+Open_im_sdk_callbackOnSignalingListener
 >
 
 + (instancetype)callbacker;
@@ -437,6 +504,25 @@ Open_im_sdk_callbackOnCustomBusinessListener
  *  移除 IM 监听
  */
 - (void)removeCustomBusinessListener:(id<OIMCustomBusinessListener>)listener NS_SWIFT_NAME(removeCustomBusinessListener(listener:));
+
+/// 音视频监听
+/// 在InitSDK成功后，Login之前设置
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onReceiveNewInvitation;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInviteeAccepted;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInviteeRejected;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInvitationCancelled;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInvitationTimeout;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInviteeRejectedByOtherDevice;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onInviteeAcceptedByOtherDevice;
+@property (nonatomic, nullable, copy) OIMSignalingInvitationCallback onHunguUp;
+@property (nonatomic, nullable, copy) OIMSignalingParticipantChangeCallback onRoomParticipantConnected;
+@property (nonatomic, nullable, copy) OIMSignalingParticipantChangeCallback onRoomParticipantDisconnected;
+@property (nonatomic, nullable, copy) OIMSignalingMeetingStreamEventCallback onStreamChange;
+@property (nonatomic, nullable, copy) OIMStringCallback onReceiveCustomSignal;
+
+- (void)addSignalingListener:(id<OIMSignalingListener>)listener NS_SWIFT_NAME(addSignalingListener(listener:));
+
+- (void)removeSignalingListener:(id<OIMSignalingListener>)listener NS_SWIFT_NAME(removeSignalingListener(listener:));
 
 @end
 
