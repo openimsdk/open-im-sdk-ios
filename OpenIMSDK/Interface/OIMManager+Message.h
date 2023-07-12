@@ -6,7 +6,7 @@
 //
 
 #import "OIMManager.h"
-#import "PutFileCallbackProxy.h"
+#import "UploadFileCallbackProxy.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -396,12 +396,11 @@ NS_ASSUME_NONNULL_BEGIN
  * 独立上传文件到初始化sdk的objectStorage（发送多媒体消息不需调用此函数，其在sdk内部自动上传）
  *
  */
-- (void)putFile:(NSString *)fullPath
-          putID:(NSString * _Nullable)putID
+- (void)uploadFile:(NSString *)fullPath
            name:(NSString * _Nullable)name
-        onStart:(OIMPutStartCallback)onStart
-     onProgress:(OIMProgressCallback)onProgress
-   onCompletion:(OIMPutCompletionCallback)onCompletion
+          cause:(NSString * _Nullable)cause
+     onProgress:(OIMUploadProgressCallback)onProgress
+   onCompletion:(OIMUploadCompletionCallback)onCompletion
       onSuccess:(OIMSuccessCallback)onSuccess
       onFailure:(OIMFailureCallback)onFailure;
 

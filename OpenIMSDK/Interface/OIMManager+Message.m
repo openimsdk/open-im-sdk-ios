@@ -384,23 +384,23 @@
     Open_im_sdkSearchLocalMessages(callback, [self operationId], param.mj_JSONString);
 }
 
-- (void)putFile:(NSString *)fullPath
-          putID:(NSString * _Nullable)putID
+- (void)uploadFile:(NSString *)fullPath
            name:(NSString * _Nullable)name
-        onStart:(OIMPutStartCallback)onStart
-     onProgress:(OIMProgressCallback)onProgress
-   onCompletion:(OIMPutCompletionCallback)onCompletion
+          cause:(NSString * _Nullable)cause
+     onProgress:(OIMUploadProgressCallback)onProgress
+   onCompletion:(OIMUploadCompletionCallback)onCompletion
       onSuccess:(OIMSuccessCallback)onSuccess
       onFailure:(OIMFailureCallback)onFailure {
     
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-    PutFileCallbackProxy *progress = [[PutFileCallbackProxy alloc]initWithOnStart:onStart onProgress:onProgress onCompletion:onCompletion];
+    UploadFileCallbackProxy *upload = [[UploadFileCallbackProxy alloc]initWithOnProgress:onProgress onCompletion:onCompletion];
     
-    NSDictionary *param = @{@"putID": putID ?: fullPath.lastPathComponent,
+    NSDictionary *param = @{@"putID": fullPath.lastPathComponent,
                             @"name": name ?: fullPath.lastPathComponent,
-                            @"filepath": fullPath};
+                            @"filepath": fullPath,
+                            @"cause": cause ?: @""};
     
-    Open_im_sdkPutFile(callback, [self operationId], param.mj_JSONString, progress);
+    Open_im_sdkUploadFile(callback, [self operationId], param.mj_JSONString, upload);
 }
 
 - (void)setGlobalRecvMessageOpt:(OIMReceiveMessageOpt)opt
@@ -457,103 +457,4 @@
     Open_im_sdkSetAppBadge(callback, [self operationId], (int32_t)count);
 }
 
-- (void)addMessageReactionExtensions:(OIMMessageInfo *)message
-               reactionExtensionList:(NSArray<OIMKeyValue *> *)list
-                           onSuccess:(OIMKeyValueResultCallback)onSuccess
-                           onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            onSuccess(nil, [OIMKeyValue mj_objectArrayWithKeyValuesArray:data]);
-        }
-    } onFailure:onFailure];
-    
-//    Open_im_sdkAddMessageReactionExtensions(callback, [self operationId], message.mj_JSONString, [OIMKeyValue mj_keyValuesArrayWithObjectArray:list].mj_JSONString);
-}
-
-- (void)setMessageReactionExtensions:(OIMMessageInfo *)message
-               reactionExtensionList:(NSArray<OIMKeyValue *> *)list
-                           onSuccess:(OIMKeyValueResultCallback)onSuccess
-                           onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            onSuccess(nil, [OIMKeyValue mj_objectArrayWithKeyValuesArray:data]);
-        }
-    } onFailure:onFailure];
-    
-//    Open_im_sdkSetMessageReactionExtensions(callback, [self operationId], message.mj_JSONString, [OIMKeyValue mj_keyValuesArrayWithObjectArray:list].mj_JSONString);
-}
-
-- (void)deleteMessageReactionExtensions:(OIMMessageInfo *)message
-                  reactionExtensionList:(NSArray<NSString *> *)list
-                              onSuccess:(OIMKeyValueResultCallback)onSuccess
-                              onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            onSuccess(nil, [OIMKeyValue mj_objectArrayWithKeyValuesArray:data]);
-        }
-    } onFailure:onFailure];
-    
-//    Open_im_sdkDeleteMessageReactionExtensions(callback, [self operationId], message.mj_JSONString, list.mj_JSONString);
-}
-
-- (void)getMessageListReactionExtensions:(NSArray<OIMMessageInfo *> *)messages
-                               onSuccess:(OIMKeyValuesResultCallback)onSuccess
-                               onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            NSArray<OIMKeyValues *> *keyValues = [OIMKeyValues mj_objectArrayWithKeyValuesArray:data];
-            
-            [keyValues enumerateObjectsUsingBlock:^(OIMKeyValues * _Nonnull keyValue, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([keyValue.reactionExtensionList isKindOfClass:NSDictionary.class]) {
-                    NSMutableDictionary *extensions = keyValue.reactionExtensionList.mutableCopy;
-                    
-                    NSEnumerator *enumerator = keyValue.reactionExtensionList.keyEnumerator;
-                    NSString *key = @"";
-                    
-                    while (key = [enumerator nextObject]) {
-                        NSDictionary *value = extensions[key];
-                        OIMKeyValue *obj = [OIMKeyValue mj_objectWithKeyValues:value];
-                        extensions[key] = obj;
-                    }
-                    keyValue.reactionExtensionList = extensions;
-                }
-            }];
-            
-            onSuccess(keyValues);
-        }
-    } onFailure:onFailure];
-    
-//    Open_im_sdkGetMessageListReactionExtensions(callback, [self operationId], [OIMMessageInfo mj_keyValuesArrayWithObjectArray:messages].mj_JSONString);
-}
-
-- (void)getMessageListSomeReactionExtensions:(NSArray<OIMMessageInfo *> *)messages
-                                keyValueList:(NSArray<OIMKeyValue *> *)kvList
-                                   onSuccess:(OIMKeyValuesResultCallback)onSuccess
-                                   onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            NSArray<OIMKeyValues *> *keyValues = [OIMKeyValues mj_objectArrayWithKeyValuesArray:data];
-            
-            [keyValues enumerateObjectsUsingBlock:^(OIMKeyValues * _Nonnull keyValue, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([keyValue.reactionExtensionList isKindOfClass:NSDictionary.class]) {
-                    NSMutableDictionary *extensions = keyValue.reactionExtensionList.mutableCopy;
-                    
-                    NSEnumerator *enumerator = extensions.keyEnumerator;
-                    NSString *key = @"";
-                    
-                    while (key = [enumerator nextObject]) {
-                        NSDictionary *value = extensions[key];
-                        OIMKeyValue *obj = [OIMKeyValue mj_objectWithKeyValues:value];
-                        extensions[key] = obj;
-                    }
-                    keyValue.reactionExtensionList = extensions;
-                }
-            }];
-            
-            onSuccess(keyValues);
-        }
-    } onFailure:onFailure];
-    
-//    Open_im_sdkGetMessageListSomeReactionExtensions(callback, [self operationId],  [OIMMessageInfo mj_keyValuesArrayWithObjectArray:messages].mj_JSONString,  [OIMKeyValue mj_keyValuesArrayWithObjectArray:messages].mj_JSONString);
-}
 @end
