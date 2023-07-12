@@ -1311,15 +1311,12 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
 - (void)uploadFile {
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
-        
-        [OIMManager.manager putFile:[[NSBundle mainBundle]pathForResource:@"file_test.zip" ofType:nil]
-                              putID:[[NSUUID UUID]UUIDString]
-                               name:@"file_test.zip"
-                            onStart:^(NSInteger currentBytes, NSInteger totalBytes) {
+        [OIMManager.manager uploadFile:[[NSBundle mainBundle]pathForResource:@"file_test.zip" ofType:nil]
+                                  name:nil
+                                 cause:nil
+                            onProgress:^(NSInteger saveBytes, NSInteger currentBytes, NSInteger totalBytes) {
             
-        } onProgress:^(NSInteger saveBytes, NSInteger currentBytes, NSInteger totalBytes) {
-            
-        } onCompletion:^(NSInteger totalBytes, NSInteger putType) {
+        } onCompletion:^(NSInteger totalBytes, NSString * _Nonnull url, NSInteger putType) {
             
         } onSuccess:^(NSString * _Nullable data) {
             

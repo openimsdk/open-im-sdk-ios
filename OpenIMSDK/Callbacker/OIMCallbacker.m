@@ -551,6 +551,10 @@
     }];
 }
 
+- (void)onRecvOfflineNewMessage:(NSString * _Nullable)message {
+    
+}
+
 #pragma mark -
 #pragma mark - Conversation
 
