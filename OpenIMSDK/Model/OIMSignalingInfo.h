@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMSignalingInfo : NSObject
 
-@property (nonatomic, copy) NSString *opUserID;
+@property (nonatomic, copy) NSString *userID;
 
 @property (nonatomic, strong) OIMInvitationInfo *invitation;
 

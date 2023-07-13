@@ -11,7 +11,7 @@
 @implementation OIMMessageInfo (extension)
 
 - (BOOL)isSelf {
-    return [self.sendID isEqualToString:[OIMManager.manager getLoginUid]];
+    return [self.sendID isEqualToString:[OIMManager.manager getLoginUserID]];
 }
 
 + (OIMMessageInfo *)convertToMessageInfo:(NSString *)json {
