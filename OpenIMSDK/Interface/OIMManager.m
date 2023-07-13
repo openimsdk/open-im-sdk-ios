@@ -73,11 +73,7 @@
     return Open_im_sdkGetSdkVersion();
 }
 
-- (NSString *)getLoginUid {
-    return Open_im_sdkGetLoginUserID();
-}
-
-- (NSString *)getLoginUser {
+- (NSString *)getLoginUserID {
     return Open_im_sdkGetLoginUserID();
 }
 

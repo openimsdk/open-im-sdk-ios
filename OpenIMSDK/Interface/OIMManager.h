@@ -29,8 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
  * 获取登录用户uid
  */
-- (NSString *)getLoginUid;
-- (NSString *)getLoginUser;
+- (NSString *)getLoginUserID;
 
 - (NSString *)operationId;
 @end
