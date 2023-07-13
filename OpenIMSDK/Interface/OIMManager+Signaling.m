@@ -21,13 +21,13 @@
     } onFailure:onFailure];
     
     invitation.sessionType = invitation.groupID.length == 0 ? OIMConversationTypeC2C : OIMConversationTypeGroup;
-    invitation.inviterUserID = invitation.inviterUserID ?: self.getLoginUid;
+    invitation.inviterUserID = invitation.inviterUserID ?: [self getLoginUserID];
     invitation.mediaType = invitation.mediaType.length == 0 ? @"video" : invitation.mediaType;
     invitation.roomID = invitation.roomID.length == 0 ? [[NSUUID UUID]UUIDString].lowercaseString : invitation.roomID;
     
     OIMSignalingInfo *info = [OIMSignalingInfo new];
     info.invitation = invitation;
-    info.opUserID = [self getLoginUid];
+    info.userID = [self getLoginUserID];
     
     if (invitation.groupID.length > 0) {
         if (!offlinePushInfo) {
