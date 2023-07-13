@@ -30,10 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * 获取登录状态
  *
- * LoginSuccess = 101
- * Logining          = 102
- * LoginFailed     = 103
- * LogoutCmd     = 201
+ * Logout   = 1
+ * Logging = 2
+ * Logged  = 3
  */
 - (NSInteger)getLoginStatus;
 
