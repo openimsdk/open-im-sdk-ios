@@ -21,7 +21,6 @@
 #import "OIMSearchResultInfo.h"
 #import "OIMSimpleResultInfo.h"
 #import "OIMSimpleRequstInfo.h"
-#import "OIMSignalingInfo.h"
 #import "OIMDepartmentInfo.h"
 
 @import OpenIMCore;
@@ -66,20 +65,8 @@ typedef void (^OIMMessageSearchCallback)(OIMSearchResultInfo * _Nullable result)
 typedef void (^OIMReceiptCallback)(NSArray <OIMReceiptInfo *> * _Nullable msgReceiptList);
 typedef void (^OIMRevokedCallback)(OIMMessageRevokedInfo * _Nullable msgRovoked);
 
-typedef void (^OIMSignalingInvitationCallback)(OIMSignalingInfo * _Nullable result);
-typedef void (^OIMSignalingResultCallback)(OIMInvitationResultInfo * _Nullable result);
-typedef void (^OIMSignalingParticipantChangeCallback)(OIMParticipantConnectedInfo * _Nullable result);
-typedef void (^OIMSignalingMeetingsInfoCallback)(OIMMeetingInfoList * _Nullable result);
-typedef void (^OIMSignalingMeetingStreamEventCallback)(OIMMeetingStreamEvent * _Nullable result);
-
-typedef void (^OIMDepartmentInfoCallback)(NSArray <OIMDepartmentInfo *> * _Nullable departmentList);
-typedef void (^OIMDepartmentMembersInfoCallback)(NSArray <OIMDepartmentMemberInfo *> * _Nullable members);
-typedef void (^OIMUserInDepartmentInfoCallback)(NSArray <OIMUserInDepartmentInfo *> * _Nullable members);
-typedef void (^OIMDepartmentMemberAndSubInfoCallback)(OIMDepartmentMemberAndSubInfo * _Nullable items);
-
 typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMessageListInfo * _Nullable result);
-typedef void (^OIMKeyValueResultCallback)(NSString * _Nullable msgID, NSArray <OIMKeyValue *> * _Nullable result);
-typedef void (^OIMKeyValuesResultCallback)(NSArray <OIMKeyValues *> * _Nullable result);
+
 /// IMSDK 主核心回调
 @protocol OIMSDKListener <NSObject>
 @optional
@@ -279,9 +266,7 @@ typedef void (^OIMKeyValuesResultCallback)(NSArray <OIMKeyValues *> * _Nullable 
 /*
  *  收到消息撤回
  */
-- (void)onRecvMessageRevoked:(NSString *)msgID;
-
-- (void)onNewRecvMessageRevoked:(OIMMessageRevokedInfo *)messageRevoked;
+- (void)onRecvMessageRevoked:(OIMMessageRevokedInfo *)messageRevoked;
 
 - (void)onRecvMessageExtensionsAdded:(NSString *)msgID reactionExtensionList:(NSArray<OIMKeyValue *> *)reactionExtensionList;
 
@@ -409,11 +394,7 @@ Open_im_sdk_callbackOnCustomBusinessListener
 @property (nonatomic, nullable, copy) OIMMessageInfoCallback onRecvNewMessage;
 @property (nonatomic, nullable, copy) OIMReceiptCallback onRecvC2CReadReceipt;
 @property (nonatomic, nullable, copy) OIMReceiptCallback onRecvGroupReadReceipt;
-@property (nonatomic, nullable, copy) OIMStringCallback onRecvMessageRevoked;
-@property (nonatomic, nullable, copy) OIMRevokedCallback onNewRecvMessageRevoked;
-@property (nonatomic, nullable, copy) OIMKeyValueResultCallback onRecvMessageExtensionsChanged;
-@property (nonatomic, nullable, copy) OIMStringArrayCallback onRecvMessageExtensionsDeleted;
-@property (nonatomic, nullable, copy) OIMKeyValueResultCallback onRecvMessageExtensionsAdded;
+@property (nonatomic, nullable, copy) OIMRevokedCallback onRecvMessageRevoked;
 @property (nonatomic, nullable, copy) OIMMessageInfoCallback onMessageDeleted;
 /*
  *  添加高级消息的事件监听器

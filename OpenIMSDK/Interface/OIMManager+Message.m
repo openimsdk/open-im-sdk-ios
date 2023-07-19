@@ -295,14 +295,6 @@
     Open_im_sdkTypingStatusUpdate(callback, [self operationId], recvID, msgTip);
 }
 
-- (void)markConversationMessageAsRead:(NSString *)conversationID
-                            onSuccess:(OIMSuccessCallback)onSuccess
-                            onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-    
-    Open_im_sdkMarkConversationMessageAsRead(callback, [self operationId], conversationID);
-}
-
 - (void)markMessageAsReadByMsgID:(NSString *)conversationID
                     clientMsgIDs:(NSArray <NSString *> *)clientMsgIDs
                        onSuccess:(nullable OIMSuccessCallback)onSuccess

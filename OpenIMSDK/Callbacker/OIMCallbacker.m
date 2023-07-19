@@ -468,27 +468,16 @@
     }];
 }
 
-- (void)onRecvMessageRevoked:(NSString * _Nullable)msgId {
-    
-    [self dispatchMainThread:^{
-        if (self.onRecvMessageRevoked) {
-            self.onRecvMessageRevoked(msgId);
-        }
-        
-        [self.advancedMsgListeners onRecvMessageRevoked:msgId];
-    }];
-}
-
 - (void)onNewRecvMessageRevoked:(NSString *)messageRevoked {
     
     OIMMessageRevokedInfo *revoked = [OIMMessageRevokedInfo mj_objectWithKeyValues:messageRevoked];
     
     [self dispatchMainThread:^{
-        if (self.onNewRecvMessageRevoked) {
-            self.onNewRecvMessageRevoked(revoked);
+        if (self.onRecvMessageRevoked) {
+            self.onRecvMessageRevoked(revoked);
         }
         
-        [self.advancedMsgListeners onNewRecvMessageRevoked:revoked];
+        [self.advancedMsgListeners onRecvMessageRevoked:revoked];
     }];
 }
 
@@ -501,41 +490,6 @@
         }
         
         [self.advancedMsgListeners onRecvNewMessage:msg];
-    }];
-}
-
-- (void)onRecvMessageExtensionsAdded:(NSString* _Nullable)msgID reactionExtensionList:(NSString* _Nullable)reactionExtensionList {
-    NSArray *msg = [OIMKeyValue mj_objectArrayWithKeyValuesArray:reactionExtensionList];
-    
-    [self dispatchMainThread:^{
-        if (self.onRecvMessageExtensionsAdded) {
-            self.onRecvMessageExtensionsAdded(msgID, msg);
-        }
-        
-        [self.advancedMsgListeners onRecvMessageExtensionsAdded:msgID reactionExtensionList:msg];
-    }];
-}
-
-- (void)onRecvMessageExtensionsChanged:(NSString* _Nullable)msgID reactionExtensionList:(NSString* _Nullable)reactionExtensionList {
-    NSArray *msg = [OIMKeyValue mj_objectArrayWithKeyValuesArray:reactionExtensionList];
-    
-    [self dispatchMainThread:^{
-        if (self.onRecvMessageExtensionsChanged) {
-            self.onRecvMessageExtensionsChanged(msgID, msg);
-        }
-        
-        [self.advancedMsgListeners onRecvMessageExtensionsChanged:msgID reactionExtensionKeyList:msg];
-    }];
-}
-
-- (void)onRecvMessageExtensionsDeleted:(NSString* _Nullable)msgID reactionExtensionKeyList:(NSString* _Nullable)reactionExtensionKeyList {
-    
-    [self dispatchMainThread:^{
-        if (self.onRecvMessageExtensionsDeleted) {
-            self.onRecvMessageExtensionsDeleted(msgID, reactionExtensionKeyList.mj_JSONObject);
-        }
-        
-        [self.advancedMsgListeners onRecvMessageExtensionsDeleted:msgID reactionExtensionList:reactionExtensionKeyList.mj_JSONObject];
     }];
 }
 
@@ -552,6 +506,18 @@
 }
 
 - (void)onRecvOfflineNewMessage:(NSString * _Nullable)message {
+    
+}
+
+- (void)onRecvMessageExtensionsAdded:(NSString * _Nullable)msgID reactionExtensionList:(NSString * _Nullable)reactionExtensionList {
+    
+}
+
+- (void)onRecvMessageExtensionsChanged:(NSString * _Nullable)msgID reactionExtensionList:(NSString * _Nullable)reactionExtensionList {
+    
+}
+
+- (void)onRecvMessageExtensionsDeleted:(NSString * _Nullable)msgID reactionExtensionKeyList:(NSString * _Nullable)reactionExtensionKeyList {
     
 }
 

@@ -44,7 +44,7 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetOneConversation(callback, [self operationId], sessionType, sourceID);
+    Open_im_sdkGetOneConversation(callback, [self operationId], (int32_t)sessionType, sourceID);
 }
 
 - (void)getMultipleConversation:(NSArray<NSString *> *)ids

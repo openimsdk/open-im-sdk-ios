@@ -18,9 +18,7 @@
             onSuccess([OIMGroupInfo mj_objectWithKeyValues:data]);
         }
     } onFailure:onFailure];
-    
-    NSString *t = groupCreateInfo.mj_JSONString;
-    
+        
     Open_im_sdkCreateGroup(callback, [self operationId], groupCreateInfo.mj_JSONString);
 }
 
@@ -152,7 +150,7 @@
     Open_im_sdkGetGroupApplicationListAsRecipient(callback, [self operationId]);
 }
 
-- (void)getGetGroupApplicationListAsApplicantWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
+- (void)getGroupApplicationListAsApplicantWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
                                               onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
@@ -312,4 +310,5 @@
     
     Open_im_sdkSearchGroupMembers(callback, [self operationId], searchParam.mj_JSONString);
 }
+
 @end
