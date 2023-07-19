@@ -20,7 +20,7 @@
         }
     } onFailure:onFailure];
     
-    invitation.sessionType = invitation.groupID.length == 0 ? OIMConversationTypeC2C : OIMConversationTypeGroup;
+    invitation.sessionType = invitation.groupID.length == 0 ? OIMConversationTypeC2C : OIMConversationTypeSuperGroup;
     invitation.inviterUserID = invitation.inviterUserID ?: [self getLoginUserID];
     invitation.mediaType = invitation.mediaType.length == 0 ? @"video" : invitation.mediaType;
     invitation.roomID = invitation.roomID.length == 0 ? [[NSUUID UUID]UUIDString].lowercaseString : invitation.roomID;
@@ -28,17 +28,9 @@
     OIMSignalingInfo *info = [OIMSignalingInfo new];
     info.invitation = invitation;
     info.userID = [self getLoginUserID];
-    
-    if (invitation.groupID.length > 0) {
-        if (!offlinePushInfo) {
-            offlinePushInfo = [OIMOfflinePushInfo new];
-        }
-        offlinePushInfo.title = @"有群邀请你加入音视频";
-    }
-    
     info.offlinePushInfo = offlinePushInfo;
     
-    if (invitation.sessionType == OIMConversationTypeGroup) {
+    if (invitation.sessionType == OIMConversationTypeSuperGroup) {
         Open_im_sdkSignalingInviteInGroup(callback, [self operationId], info.mj_JSONString);
     } else {
         Open_im_sdkSignalingInvite(callback, [self operationId], info.mj_JSONString);

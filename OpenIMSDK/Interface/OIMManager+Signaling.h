@@ -133,7 +133,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param inviteeUserIDList 被邀请人ID列表
  */
 - (void)signalingCreateMeeting:(NSString *)meetingName
-             meetingHostUserID:(nullable NSString *)meetingHostUserID
+             meetingHostUserID:(NSString *)meetingHostUserID
                      startTime:(nullable NSNumber *)startTime
                meetingDuration:(nullable NSNumber *)meetingDuration
              inviteeUserIDList:(nullable NSArray *)inviteeUserIDList
