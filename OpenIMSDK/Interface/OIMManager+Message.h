@@ -316,13 +316,6 @@ NS_ASSUME_NONNULL_BEGIN
                  onSuccess:(nullable OIMSuccessCallback)onSuccess
                  onFailure:(nullable OIMFailureCallback)onFailure;
 
-/**
- 标记会话已读
- */
-- (void)markConversationMessageAsRead:(NSString *)conversationID
-                            onSuccess:(OIMSuccessCallback)onSuccess
-                            onFailure:(OIMFailureCallback)onFailure;
-
 /*
  * 标记消息已读
  *
