@@ -1,6 +1,6 @@
 
 ## 可以免费商用，必须在app启动页加上 (由OpenIM提供技术支持)
-![avatar](https://openim-1253691595.cos.ap-nanjing.myqcloud.com/WechatIMG20.jpeg)
+<img src="https://openim-1253691595.cos.ap-nanjing.myqcloud.com/WechatIMG20.jpeg" alt="image" style="width: 200px; " />
 # OpenIMSDK
 
 [![Version](https://img.shields.io/cocoapods/v/OpenIMSDK.svg?style=flat)](https://cocoapods.org/pods/OpenIMSDK)
