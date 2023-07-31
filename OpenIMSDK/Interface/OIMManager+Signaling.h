@@ -142,8 +142,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  加入会议
- @param meetingID 会议ID
- @param meetingName 会议主题
+ @param roomID 会议ID
+ @param name 会议主题
  @param participantNickname 加入房间显示的名称
  */
 - (void)signalingJoinMeeting:(NSString *)roomID
