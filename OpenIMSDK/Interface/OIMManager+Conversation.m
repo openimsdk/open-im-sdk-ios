@@ -185,7 +185,7 @@
 }
 
 - (void)setConversationMsgDestructTime:(NSString *)conversationID
-                     msgDestructTime:(BOOL)msgDestructTime
+                     msgDestructTime:(NSInteger)msgDestructTime
                          onSuccess:(nullable OIMSuccessCallback)onSuccess
                          onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];

@@ -170,7 +170,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  */
 - (void)setConversationMsgDestructTime:(NSString *)conversationID
-                     msgDestructTime:(BOOL)msgDestructTime
+                     msgDestructTime:(NSInteger)msgDestructTime
                          onSuccess:(nullable OIMSuccessCallback)onSuccess
                          onFailure:(nullable OIMFailureCallback)onFailure;
 
