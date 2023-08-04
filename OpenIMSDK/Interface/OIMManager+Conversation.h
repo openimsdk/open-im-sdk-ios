@@ -155,6 +155,25 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)markConversationMessageAsRead:(NSString *)conversationID
                             onSuccess:(nullable OIMSuccessCallback)onSuccess
                             onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 设置定期删除
+ *
+ */
+- (void)setConversationIsMsgDestruct:(NSString *)conversationID
+                     isMsgDestruct:(BOOL)isMsgDestruct
+                         onSuccess:(nullable OIMSuccessCallback)onSuccess
+                         onFailure:(nullable OIMFailureCallback)onFailure;
+
+/*
+ * 设置定期删除时长
+ *
+ */
+- (void)setConversationMsgDestructTime:(NSString *)conversationID
+                     msgDestructTime:(BOOL)msgDestructTime
+                         onSuccess:(nullable OIMSuccessCallback)onSuccess
+                         onFailure:(nullable OIMFailureCallback)onFailure;
+
 @end
 
 NS_ASSUME_NONNULL_END

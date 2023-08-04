@@ -61,6 +61,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, copy) NSString *ex;
 
+/// 定期删除消息
+@property (nonatomic, assign) BOOL isMsgDestruct;
+// 定期删除时长
+@property (nonatomic, assign) NSTimeInterval msgDestructTime;
+
 @end
 
 /// 免打扰会话信息
