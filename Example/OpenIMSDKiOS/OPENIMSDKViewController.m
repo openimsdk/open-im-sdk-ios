@@ -61,7 +61,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.titles = @[@"登陆", @"用户信息", @"好友", @"群", @"消息", @"会话", @"组织架构"];
+    self.titles = @[@"登陆", @"用户信息", @"好友", @"群", @"消息", @"会话"];
     self.funcs = @[
         @[@{OIM_LIST_CELL_TITLE: @"登陆", OIM_LIST_CELL_FUNC: @"login"},
           @{OIM_LIST_CELL_TITLE: @"登陆状态", OIM_LIST_CELL_FUNC: @"loginStatus"},
