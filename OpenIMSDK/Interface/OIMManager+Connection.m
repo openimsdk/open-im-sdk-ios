@@ -69,4 +69,8 @@
     Open_im_sdkSetHeartbeatInterval(heartbeatInterval);
 }
 
+- (void)unInitSDK {
+    Open_im_sdkUnInitSDK([self operationId]);
+}
+
 @end

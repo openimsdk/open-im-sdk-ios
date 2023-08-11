@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setHeartbeatInterval:(NSInteger)heartbeatInterval;
 
+- (void)unInitSDK;
 @end
 
 NS_ASSUME_NONNULL_END
