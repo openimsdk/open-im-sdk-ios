@@ -78,7 +78,13 @@
 }
 
 - (void)setSelfUserInfoUpdateListener:(OIMUserInfoCallback)onUserInfoUpdate {
+    [self setSelfUserInfoUpdateListenerWithUserInfoUpdate:onUserInfoUpdate onUserStatusChanged:nil];
+}
+
+- (void)setSelfUserInfoUpdateListenerWithUserInfoUpdate:(OIMUserInfoCallback)onUserInfoUpdate
+                                    onUserStatusChanged:(OIMUserStatusInfoCallback)onUserStatusChanged {
     self.onSelfInfoUpdated = onUserInfoUpdate;
+    self.onUserStatusChanged = onUserStatusChanged;
 }
 
 - (void)setRecvCustomBusinessMessageListener:(OIMObjectCallback)onRecvCustomBusinessMessage {

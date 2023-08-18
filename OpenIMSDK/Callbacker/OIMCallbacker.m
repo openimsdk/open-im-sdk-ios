@@ -205,6 +205,14 @@
     }];
 }
 
+- (void)onUserStatusChanged:(NSString *)statusMap {
+    [self dispatchMainThread:^{
+        if (self.onUserStatusChanged) {
+            self.onUserStatusChanged([OIMUserStatusInfo mj_objectWithKeyValues:statusMap]);
+        }
+    }];
+}
+
 #pragma mark -
 #pragma mark - Friend
 

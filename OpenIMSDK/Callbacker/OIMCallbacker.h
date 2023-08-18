@@ -37,6 +37,7 @@ typedef void (^OIMUsersCallback)(NSArray <OIMFullUserInfo *> * _Nullable userInf
 typedef void (^OIMFullUserInfoCallback)(OIMFullUserInfo * _Nullable userInfo);
 typedef void (^OIMFullUsersInfoCallback)(NSArray <OIMFullUserInfo *> * _Nullable userInfos);
 typedef void (^OIMBlacksInfoCallback)(NSArray <OIMBlackInfo *> * _Nullable blackInfos);
+typedef void (^OIMUserStatusInfoCallback)(OIMUserStatusInfo * _Nullable statusInfo);
 
 typedef void (^OIMFriendApplicationCallback)(OIMFriendApplication * _Nullable friendApplication);
 typedef void (^OIMFriendApplicationsCallback)(NSArray <OIMFriendApplication *> * _Nullable friendApplications);
@@ -323,6 +324,7 @@ Open_im_sdk_callbackOnCustomBusinessListener
 /// 用户监听
 /// 在InitSDK成功后，Login之前设置，本登录用户个人资料有变化时回调
 @property (nonatomic, nullable, copy) OIMUserInfoCallback onSelfInfoUpdated;
+@property (nonatomic, nullable, copy) OIMUserStatusInfoCallback onUserStatusChanged;
 
 /// 好友监听
 /// 在InitSDK成功后，Login之前设置，好友相关信息有变化时回调

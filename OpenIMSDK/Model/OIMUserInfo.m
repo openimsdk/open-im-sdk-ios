@@ -10,3 +10,7 @@
 @implementation OIMUserInfo
 
 @end
+
+@implementation OIMUserStatusInfo
+
+@end
