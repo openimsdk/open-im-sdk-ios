@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) OIMMessageContentType contentType;
 
-@property (nonatomic, assign) NSInteger platformID;
+@property (nonatomic, assign) OIMPlatform senderPlatformID;
 
 @property (nonatomic, nullable, copy) NSString *senderNickname;
 

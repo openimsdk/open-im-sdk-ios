@@ -82,8 +82,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setSelfUserInfoUpdateListener:(OIMUserInfoCallback)onUserInfoUpdate;
 
-- (void)setSelfUserInfoUpdateListenerWithUserInfoUpdate:(OIMUserInfoCallback)onUserInfoUpdate
-                                    onUserStatusChanged:(nullable OIMUserStatusInfoCallback)onUserStatusChanged;
+- (void)setUserListenerWithUserInfoUpdate:(nullable OIMUserInfoCallback)onUserInfoUpdate
+                      onUserStatusChanged:(nullable OIMUserStatusInfoCallback)onUserStatusChanged;
 
 /*
  * 自定义消息

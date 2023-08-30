@@ -10,6 +10,13 @@
 
 typedef NS_ENUM(NSInteger, OIMPlatform) {
     iPhone = 1, // iPhone
+    android = 2,
+    windows = 3,
+    macOS = 4,
+    web = 5,
+    miniWeb = 6,
+    linux = 7,
+    androidPad = 8,
     iPad = 9,   // iPad
 };
 
@@ -74,8 +81,6 @@ typedef NS_ENUM(NSInteger, OIMMessageContentType) {
     OIMMessageContentTypeGroupAnnouncement = 1519,              /// 群公告
     OIMMessageContentTypeGroupSetNameNotification = 1520,       /// 修改群名称
     OIMMessageContentTypeSuperGroupUpdateNotification = 1651,
-    OIMMessageContentTypeConversationPrivateChatNotification = 1701,
-    OIMMessageContentTypeOrganizationChangedNotification = 1801,
     OIMMessageContentTypeIsPrivateMessage = 1701,               /// 阅后即焚通知
     OIMMessageContentTypeBusiness = 2001,                       /// 业务通知
     OIMMessageContentTypeRevoke = 2101,                         /// 撤回消息

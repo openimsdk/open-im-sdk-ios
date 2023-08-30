@@ -78,11 +78,11 @@
 }
 
 - (void)setSelfUserInfoUpdateListener:(OIMUserInfoCallback)onUserInfoUpdate {
-    [self setSelfUserInfoUpdateListenerWithUserInfoUpdate:onUserInfoUpdate onUserStatusChanged:nil];
+    [self setUserListenerWithUserInfoUpdate:onUserInfoUpdate onUserStatusChanged:nil];
 }
 
-- (void)setSelfUserInfoUpdateListenerWithUserInfoUpdate:(OIMUserInfoCallback)onUserInfoUpdate
-                                    onUserStatusChanged:(OIMUserStatusInfoCallback)onUserStatusChanged {
+- (void)setUserListenerWithUserInfoUpdate:(OIMUserInfoCallback)onUserInfoUpdate
+                      onUserStatusChanged:(OIMUserStatusInfoCallback)onUserStatusChanged {
     self.onSelfInfoUpdated = onUserInfoUpdate;
     self.onUserStatusChanged = onUserStatusChanged;
 }

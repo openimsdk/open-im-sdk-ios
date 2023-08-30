@@ -38,6 +38,7 @@ typedef void (^OIMFullUserInfoCallback)(OIMFullUserInfo * _Nullable userInfo);
 typedef void (^OIMFullUsersInfoCallback)(NSArray <OIMFullUserInfo *> * _Nullable userInfos);
 typedef void (^OIMBlacksInfoCallback)(NSArray <OIMBlackInfo *> * _Nullable blackInfos);
 typedef void (^OIMUserStatusInfoCallback)(OIMUserStatusInfo * _Nullable statusInfo);
+typedef void (^OIMUserStatusInfosCallback)(NSArray <OIMUserStatusInfo *> * _Nullable statusInfos);
 
 typedef void (^OIMFriendApplicationCallback)(OIMFriendApplication * _Nullable friendApplication);
 typedef void (^OIMFriendApplicationsCallback)(NSArray <OIMFriendApplication *> * _Nullable friendApplications);
@@ -95,6 +96,21 @@ typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMe
  * 在线时票据过期：此时您需要生成新的 UserToken 并再次重新登录。
  */
 - (void)onUserTokenExpired;
+
+@end
+
+/// 用户状态回调
+@protocol OIMUserListener <NSObject>
+@optional
+/*
+ *  用户信息改变
+ */
+- (void)onSelfInfoUpdated:(OIMUserInfo *)info;
+
+/*
+ * 用户状态更改
+ */
+- (void)onUserStatusChanged:(OIMUserStatusInfo *)info;
 
 @end
 
@@ -279,7 +295,7 @@ typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMe
 
 @end
 
-/// IMSDK 主核心回调
+/// IM自定义业务回调
 @protocol OIMCustomBusinessListener <NSObject>
 @optional
 
@@ -325,6 +341,16 @@ Open_im_sdk_callbackOnCustomBusinessListener
 /// 在InitSDK成功后，Login之前设置，本登录用户个人资料有变化时回调
 @property (nonatomic, nullable, copy) OIMUserInfoCallback onSelfInfoUpdated;
 @property (nonatomic, nullable, copy) OIMUserStatusInfoCallback onUserStatusChanged;
+
+/**
+ *  添加 User 监听
+ */
+- (void)addUserListener:(id<OIMUserListener>)listener NS_SWIFT_NAME(addUserListener(listener:));
+
+/**
+ *  移除 User 监听
+ */
+- (void)removeUserListener:(id<OIMUserListener>)listener NS_SWIFT_NAME(removeUserListener(listener:));
 
 /// 好友监听
 /// 在InitSDK成功后，Login之前设置，好友相关信息有变化时回调

@@ -10,6 +10,7 @@
 
 @interface OIMCallbacker ()
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMSDKListener> *sdkListeners;
+@property (nonatomic, strong) OIMGCDMulticastDelegate <OIMUserListener> *userListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMFriendshipListener> *friendshipListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMGroupListener> *groupListeners;
 @property (nonatomic, strong) OIMGCDMulticastDelegate <OIMConversationListener> *conversationListeners;
@@ -51,6 +52,13 @@
         _sdkListeners = (OIMGCDMulticastDelegate <OIMSDKListener> *)[[OIMGCDMulticastDelegate alloc] init];
     }
     return _sdkListeners;
+}
+
+- (OIMGCDMulticastDelegate<OIMUserListener> *)userListeners {
+    if (_userListeners == nil) {
+        _userListeners = (OIMGCDMulticastDelegate <OIMUserListener> *)[[OIMGCDMulticastDelegate alloc] init];
+    }
+    return _userListeners;
 }
 
 - (OIMGCDMulticastDelegate<OIMFriendshipListener> *)friendshipListeners {
@@ -97,6 +105,14 @@
 
 - (void)removeIMSDKListener:(id<OIMSDKListener>)listener {
     [self.sdkListeners removeDelegate:listener];
+}
+
+- (void)addUserListener:(id<OIMUserListener>)listener {
+    [self.userListeners addDelegate:listener delegateQueue:dispatch_get_main_queue()];
+}
+
+- (void)removeUserListener:(id<OIMUserListener>)listener {
+    [self.userListeners removeDelegate:listener];
 }
 
 - (void)addFriendListener:(id<OIMFriendshipListener>)listener {
@@ -197,19 +213,26 @@
 #pragma mark - User
 
 - (void)onSelfInfoUpdated:(NSString * _Nullable)userInfo {
+    OIMUserInfo *info = [OIMUserInfo mj_objectWithKeyValues:userInfo];
     
     [self dispatchMainThread:^{
         if (self.onSelfInfoUpdated) {
-            self.onSelfInfoUpdated([OIMUserInfo mj_objectWithKeyValues:userInfo]);
+            self.onSelfInfoUpdated(info);
         }
+        
+        [self.userListeners onSelfInfoUpdated:info];
     }];
 }
 
 - (void)onUserStatusChanged:(NSString *)statusMap {
+    OIMUserStatusInfo *info = [OIMUserStatusInfo mj_objectWithKeyValues:statusMap];
+    
     [self dispatchMainThread:^{
         if (self.onUserStatusChanged) {
-            self.onUserStatusChanged([OIMUserStatusInfo mj_objectWithKeyValues:statusMap]);
+            self.onUserStatusChanged(info);
         }
+        
+        [self.userListeners onUserStatusChanged:info];
     }];
 }
 

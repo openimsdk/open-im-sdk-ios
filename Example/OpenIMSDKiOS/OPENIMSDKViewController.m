@@ -237,8 +237,9 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
 - (void)callback {
     // 亦可使用protocol的方式，请参阅sdk的callback头文件
     
-    
-    [OIMManager.callbacker setSelfUserInfoUpdateListener:^(OIMUserInfo * _Nullable userInfo) {
+    [OIMManager.callbacker setUserListenerWithUserInfoUpdate:^(OIMUserInfo * _Nullable userInfo) {
+        
+    } onUserStatusChanged:^(OIMUserStatusInfo * _Nullable statusInfo) {
         
     }];
     

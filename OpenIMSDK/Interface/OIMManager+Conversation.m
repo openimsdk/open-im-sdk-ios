@@ -47,6 +47,11 @@
     Open_im_sdkGetOneConversation(callback, [self operationId], (int32_t)sessionType, sourceID);
 }
 
+- (NSString *)getConversationIDBySessionType:(OIMConversationType)sessionType
+                                    sourceID:(NSString *)sourceID {
+    return Open_im_sdkGetConversationIDBySessionType([self operationId], sourceID, sessionType);
+}
+
 - (void)getMultipleConversation:(NSArray<NSString *> *)ids
                       onSuccess:(OIMConversationsInfoCallback)onSuccess
                       onFailure:(OIMFailureCallback)onFailure {

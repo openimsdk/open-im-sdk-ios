@@ -47,6 +47,11 @@ NS_ASSUME_NONNULL_BEGIN
                        onSuccess:(nullable OIMConversationsInfoCallback)onSuccess
                        onFailure:(nullable OIMFailureCallback)onFailure;
 
+
+- (NSString *)getConversationIDBySessionType:(OIMConversationType)sessionType
+                                    sourceID:(NSString *)sourceID;
+
+
 /*
  * 本地删除一个会话
  * @param conversationID    会话ID

@@ -36,11 +36,38 @@ NS_ASSUME_NONNULL_BEGIN
                        onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- *   更新FMC token
+ *  更新FMC token
  */
 - (void)updateFcmToken:(NSString *)fmcToken
              onSuccess:(nullable OIMSuccessCallback)onSuccess
              onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ *  订阅用户的在线状态
+ */
+- (void)subscribeUsersStatus:(NSArray<NSString *> *)userIDs
+                   onSuccess:(nullable OIMUserStatusInfosCallback)onSuccess
+                   onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ *  取消订阅用户的在线状态
+ */
+- (void)unsubscribeUsersStatus:(NSArray<NSString *> *)userIDs
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ *  获取所有已订阅用户的在线状态
+ */
+- (void)getSubscribeUsersStatusWithOnSuccess:(nullable OIMUserStatusInfosCallback)onSuccess
+                                   onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ *  普通用户获取用户状态
+ */
+- (void)getUserStatus:(NSArray<NSString *> *)userIDs
+            onSuccess:(nullable OIMUserStatusInfosCallback)onSuccess
+            onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END
