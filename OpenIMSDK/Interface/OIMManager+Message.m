@@ -449,4 +449,14 @@
     Open_im_sdkSetAppBadge(callback, [self operationId], (int32_t)count);
 }
 
+- (void)setMessageLocalEx:(NSString *)conversationID
+              clientMsgID:(NSString *)clientMsgID
+                  localEx: (NSString *)localEx
+                onSuccess:(OIMSuccessCallback)onSuccess
+                onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+
+    Open_im_sdkSetMessageLocalEx(callback, [self operationId], conversationID, clientMsgID, localEx);
+}
+
 @end

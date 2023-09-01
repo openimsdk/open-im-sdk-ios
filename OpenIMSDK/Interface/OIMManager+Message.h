@@ -434,6 +434,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setAppBadge:(NSInteger)count
           onSuccess:(nullable OIMSuccessCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ 例如存储消息的本地状态
+ */
+- (void)setMessageLocalEx:(NSString *)conversationID
+              clientMsgID:(NSString *)clientMsgID
+                  localEx: (NSString *)localEx
+                onSuccess:(OIMSuccessCallback)onSuccess
+                onFailure:(OIMFailureCallback)onFailure;
+
 @end
 
 NS_ASSUME_NONNULL_END
