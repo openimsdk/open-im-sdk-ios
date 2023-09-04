@@ -102,6 +102,6 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetUsersInfoStranger(callback, [self operationId], userIDs.mj_JSONString, groupID);
+    Open_im_sdkGetUsersInfoStranger(callback, [self operationId], userIDs.mj_JSONString, groupID ?: @"");
 }
 @end

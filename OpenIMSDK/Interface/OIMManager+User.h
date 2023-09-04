@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
             onFailure:(nullable OIMFailureCallback)onFailure;
 
 - (void)getUsersInfoStranger:(NSArray<NSString *> *)userIDs
-                     groupID:(NSString *)groupID
+                     groupID:(NSString * _Nullable)groupID
                    onSuccess:(nullable OIMUsersInfoCallback)onSuccess
                    onFailure:(nullable OIMFailureCallback)onFailure;
 @end
