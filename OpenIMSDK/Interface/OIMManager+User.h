@@ -68,6 +68,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getUserStatus:(NSArray<NSString *> *)userIDs
             onSuccess:(nullable OIMUserStatusInfosCallback)onSuccess
             onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)getUsersInfoStranger:(NSArray<NSString *> *)userIDs
+                     groupID:(NSString *)groupID
+                   onSuccess:(nullable OIMUsersInfoCallback)onSuccess
+                   onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -91,4 +91,17 @@
         
     Open_im_sdkGetUserStatus(callback, [self operationId], userIDs.mj_JSONString);
 }
+
+- (void)getUsersInfoStranger:(NSArray<NSString *> *)userIDs
+                     groupID:(NSString *)groupID
+                   onSuccess:(nullable OIMUsersInfoCallback)onSuccess
+                   onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMUserInfo mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetUsersInfoStranger(callback, [self operationId], userIDs.mj_JSONString, groupID);
+}
 @end
