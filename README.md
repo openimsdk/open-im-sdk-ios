@@ -1,4 +1,4 @@
-# JavaScript/TypeScript Client SDK for OpenIM 👨‍💻💬
+# iOS Client SDK for OpenIM 👨‍💻💬
 
 Use this SDK to add instant messaging capabilities to your app. By connecting to a self-hosted [OpenIM](https://www.openim.online/) server, you can quickly integrate instant messaging capabilities into your app with just a few lines of code.
 
