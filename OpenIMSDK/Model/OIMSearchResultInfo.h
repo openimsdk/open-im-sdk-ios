@@ -13,14 +13,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMSearchResultItemInfo : NSObject
-
-/*
- * 会话ID
+/**
+ * Conversation ID
  */
 @property (nonatomic, copy) NSString *conversationID;
-
-/*
- * 这个会话下的消息数量
+/**
+ * Number of messages in this conversation
  */
 @property (nonatomic, assign) NSInteger messageCount;
 
@@ -29,27 +27,25 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *showName;
 
 @property (nonatomic, copy) NSString *faceURL;
-
-/*
- * OIMMessageInfo的列表
+/**
+ * List of OIMMessageInfo
  */
 @property (nonatomic, copy) NSArray <OIMMessageInfo *> *messageList;
 
 @end
 
 @interface OIMSearchResultInfo : NSObject
-
-/*
- * 获取到的总的消息数量
+/**
+ * Total number of messages obtained
  */
 @property (nonatomic, assign) NSInteger totalCount;
-
-/*
- * 搜索结果
+/**
+ * Search results
  */
 @property (nonatomic, copy) NSArray <OIMSearchResultItemInfo *> *searchResultItems;
-
-// 仅适用于findMessageList函数的回调结果
+/**
+ *  Only applicable to the callback result of the findMessageList function
+ */
 @property (nonatomic, copy) NSArray <OIMSearchResultItemInfo *> *findResultItems;
 
 @end

@@ -21,7 +21,6 @@
 #import "OIMSearchResultInfo.h"
 #import "OIMSimpleResultInfo.h"
 #import "OIMSimpleRequstInfo.h"
-#import "OIMDepartmentInfo.h"
 
 @import OpenIMCore;
 
@@ -69,240 +68,234 @@ typedef void (^OIMRevokedCallback)(OIMMessageRevokedInfo * _Nullable msgRovoked)
 
 typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMessageListInfo * _Nullable result);
 
-/// IMSDK 主核心回调
+/// IMSDK Core Callbacks
 @protocol OIMSDKListener <NSObject>
 @optional
-/*
- *  SDK 正在连接到服务器
+/**
+ *  SDK is connecting to the server.
  */
 - (void)onConnecting;
 
-/*
- * SDK 已经成功连接到服务器
+/**
+ * SDK has successfully connected to the server.
  */
 - (void)onConnectSuccess;
 
-/*
- * SDK 连接服务器失败
+/**
+ * SDK connection to the server has failed.
  */
-- (void)onConnectFailed:(NSInteger)code err:(NSString*)err;
+- (void)onConnectFailed:(NSInteger)code err:(NSString *)err;
 
-/*
- * 当前用户被踢下线，此时可以 UI 提示用户
+/**
+ * The current user has been kicked offline. You can show a UI notification to the user.
  */
 - (void)onKickedOffline;
 
-/*
- * 在线时票据过期：此时您需要生成新的 UserToken 并再次重新登录。
+/**
+ * Token has expired while online: You need to generate a new UserToken and re-login.
  */
 - (void)onUserTokenExpired;
 
 @end
 
-/// 用户状态回调
+/// User Status Callbacks
 @protocol OIMUserListener <NSObject>
 @optional
-/*
- *  用户信息改变
+/**
+ * User information has been updated.
  */
 - (void)onSelfInfoUpdated:(OIMUserInfo *)info;
 
-/*
- * 用户状态更改
+/**
+ * User status has changed.
  */
 - (void)onUserStatusChanged:(OIMUserStatusInfo *)info;
 
 @end
 
-/// 资料关系链回调
+/// Profile and Relationship Callbacks
 @protocol OIMFriendshipListener <NSObject>
 @optional
 
-/*
- *  好友申请新增通知
+/**
+ * New friend application notification.
  */
 - (void)onFriendApplicationAdded:(OIMFriendApplication *)application;
 
-/*
- *  好友申请被拒绝
+/**
+ * Friend application has been rejected.
  */
 - (void)onFriendApplicationRejected:(OIMFriendApplication *)application;
 
-/*
- *  好友申请被接受
+/**
+ * Friend application has been accepted.
  */
 - (void)onFriendApplicationAccepted:(OIMFriendApplication *)application;
 
-/*
- *  好友申请被删除
+/**
+ * Friend application has been deleted.
  */
 - (void)onFriendApplicationDeleted:(OIMFriendApplication *)application;
 
-/*
- *  好友新增通知
+/**
+ * New friend notification.
  */
 - (void)onFriendAdded:(OIMFriendInfo *)info;
 
-/*
- *  好友删除通知
+/**
+ * Friend deletion notification.
  */
 - (void)onFriendDeleted:(OIMFriendInfo *)info;
 
-/*
- *  好友资料变更通知
+/**
+ * Friend profile change notification.
  */
 - (void)onFriendInfoChanged:(OIMFriendInfo *)info;
 
-/*
- *  黑名单新增通知
+/**
+ * New blacklist notification.
  */
 - (void)onBlackAdded:(OIMBlackInfo *)info;
 
-/*
- *  黑名单删除通知
+/**
+ * Blacklist deletion notification.
  */
 - (void)onBlackDeleted:(OIMBlackInfo *)info;
 
 @end
 
-/// IMSDK 群组事件回调
+/// IMSDK Group Event Callbacks
 @protocol OIMGroupListener <NSObject>
 @optional
 
-/*
- *  有新成员加入群
+/**
+ *  New member joined the group.
  */
 - (void)onGroupMemberAdded:(OIMGroupMemberInfo *)memberInfo;
 
-/*
- *  有成员离开群
+/**
+ *  Member left the group.
  */
 - (void)onGroupMemberDeleted:(OIMGroupMemberInfo *)memberInfo;
 
-/*
- *  某成员信息发生变更
+/**
+ *  Information of a member in the group has changed.
  */
 - (void)onGroupMemberInfoChanged:(OIMGroupMemberInfo *)changeInfo;
 
-/*
- *  例如有邀请进群， UI列表会展示新的item
+/**
+ *  Callback for group addition.
  */
 - (void)onJoinedGroupAdded:(OIMGroupInfo *)groupInfo;
 
-/*
- *  例如群里被踢， UI列表会删除这个的item
+/**
+ *  Callback for group removal.
  */
 - (void)onJoinedGroupDeleted:(OIMGroupInfo *)groupInfo;
 
-/*
- *  某个已加入的群的信息被修改了
+/**
+ *  Information of a group that the user has joined has been modified.
  */
 - (void)onGroupInfoChanged:(OIMGroupInfo *)changeInfo;
 
-/*
- *  群申请被接受
+/**
+ *  Group application has been accepted.
  */
 - (void)onGroupApplicationAccepted:(OIMGroupApplicationInfo *)groupApplication;
 
-/*
- *  有人申请加群
+/**
+ *  Someone has applied to join the group.
  */
 - (void)onGroupApplicationAdded:(OIMGroupApplicationInfo *)groupApplication;
 
-/*
- *  群申请有删除
+/**
+ *  Group application has been deleted.
  */
 - (void)onGroupApplicationDeleted:(OIMGroupApplicationInfo *)groupApplication;
 
-/*
- *  群申请有拒绝
+/**
+ *  Group application has been rejected.
  */
 - (void)onGroupApplicationRejected:(OIMGroupApplicationInfo *)groupApplication;
 
 /**
- 群解散
+ *  Group has been disbanded.
  */
 - (void)onGroupDismissed:(OIMGroupInfo *)changeInfo;
 
 @end
 
+/// Conversation Event Callbacks
 @protocol OIMConversationListener <NSObject>
 @optional
 
-/*
- * 同步服务器会话开始
+/**
+ * Synchronization with the server has started for conversations.
  */
 - (void)onSyncServerStart;
 
-/*
- * 同步服务器会话完成
+/**
+ * Synchronization with the server for conversations has completed.
  */
 - (void)onSyncServerFinish;
 
-/*
- * 同步服务器会话失败
+/**
+ * Synchronization with the server for conversations has failed.
  */
 - (void)onSyncServerFailed;
 
-/*
- * 有新的会话
+/**
+ * New conversations have been added.
  */
 - (void)onNewConversation:(NSArray <OIMConversationInfo *> *)conversations;
 
-/*
- * 某些会话的关键信息发生变化（
+/**
+ * Key information of certain conversations has changed.
  */
 - (void)onConversationChanged:(NSArray <OIMConversationInfo *> *)conversations;
 
-/*
- * 会话未读总数变更通知
+/**
+ * Notification of changes in the total unread message count of conversations.
  */
 - (void)onTotalUnreadMessageCountChanged:(NSInteger)totalUnreadCount;
 
 @end
 
-/// 高级消息监听器
+/// Advanced Message Listener
 @protocol OIMAdvancedMsgListener <NSObject>
 @optional
 
-/*
- *  收到新消息
+/**
+ * Received a new message.
  */
 - (void)onRecvNewMessage:(OIMMessageInfo *)msg;
 
-/*
- *  单聊消息已读回执
+/**
+ * Read receipt for one-on-one messages.
  */
 - (void)onRecvC2CReadReceipt:(NSArray<OIMReceiptInfo *> *)receiptList;
 
-/*
- *  群聊消息已读回执
+/**
+ * Read receipt for group chat messages.
  */
 - (void)onRecvGroupReadReceipt:(NSArray<OIMReceiptInfo *> *)groupMsgReceiptList;
 
-/*
- *  收到消息撤回
+/**
+ * Received a message retraction.
  */
 - (void)onRecvMessageRevoked:(OIMMessageRevokedInfo *)messageRevoked;
-
-- (void)onRecvMessageExtensionsAdded:(NSString *)msgID reactionExtensionList:(NSArray<OIMKeyValue *> *)reactionExtensionList;
-
-- (void)onRecvMessageExtensionsDeleted:(NSString *)msgID reactionExtensionList:(NSArray<NSString *> *)reactionExtensionList;
-
-- (void)onRecvMessageExtensionsChanged:(NSString *)msgID reactionExtensionKeyList:(NSArray<OIMKeyValue *> *)reactionExtensionKeyList;
 
 - (void)onMsgDeleted:(OIMMessageInfo *)message;
 
 @end
 
-/// IM自定义业务回调
+/// Custom Business Callbacks for IM
 @protocol OIMCustomBusinessListener <NSObject>
 @optional
 
 - (void)onRecvCustomBusinessMessage:(NSDictionary <NSString *, id>* _Nullable)businessMessage;
 
 @end
-
 
 @interface OIMCallbacker : NSObject
 <
@@ -319,8 +312,8 @@ Open_im_sdk_callbackOnCustomBusinessListener
 
 - (void)setListener;
 
-/// 链接监听
-/// 在InitSDK时设置，在IM连接状态有变化时回调
+/// Connection Listener
+/// Set during InitSDK, called when the IM connection status changes.
 @property (nonatomic, nullable, copy) OIMVoidCallback connecting;
 @property (nonatomic, nullable, copy) OIMFailureCallback connectFailure;
 @property (nonatomic, nullable, copy) OIMVoidCallback connectSuccess;
@@ -328,32 +321,32 @@ Open_im_sdk_callbackOnCustomBusinessListener
 @property (nonatomic, nullable, copy) OIMVoidCallback userTokenExpired;
 
 /**
- *  添加 IM 监听
+ * Add IM SDK listener.
  */
 - (void)addIMSDKListener:(id<OIMSDKListener>)listener;
 
 /**
- *  移除 IM 监听
+ * Remove IM SDK listener.
  */
 - (void)removeIMSDKListener:(id<OIMSDKListener>)listener;
 
-/// 用户监听
-/// 在InitSDK成功后，Login之前设置，本登录用户个人资料有变化时回调
+/// User Listener
+/// Set after a successful InitSDK and before Login, called when the personal profile of the logged-in user changes.
 @property (nonatomic, nullable, copy) OIMUserInfoCallback onSelfInfoUpdated;
 @property (nonatomic, nullable, copy) OIMUserStatusInfoCallback onUserStatusChanged;
 
 /**
- *  添加 User 监听
+ * Add User listener.
  */
 - (void)addUserListener:(id<OIMUserListener>)listener NS_SWIFT_NAME(addUserListener(listener:));
 
 /**
- *  移除 User 监听
+ * Remove User listener.
  */
 - (void)removeUserListener:(id<OIMUserListener>)listener NS_SWIFT_NAME(removeUserListener(listener:));
 
-/// 好友监听
-/// 在InitSDK成功后，Login之前设置，好友相关信息有变化时回调
+/// Friendship Listener
+/// Set after a successful InitSDK and before Login, called when friend-related information changes.
 @property (nonatomic, nullable, copy) OIMFriendApplicationCallback onFriendApplicationAdded;
 @property (nonatomic, nullable, copy) OIMFriendApplicationCallback onFriendApplicationDeleted;
 @property (nonatomic, nullable, copy) OIMFriendApplicationCallback onFriendApplicationAccepted;
@@ -365,17 +358,17 @@ Open_im_sdk_callbackOnCustomBusinessListener
 @property (nonatomic, nullable, copy) OIMBlackInfoCallback onBlackDeleted;
 
 /**
- *  添加关系链监听器
+ * Add Friendship listener.
  */
 - (void)addFriendListener:(id<OIMFriendshipListener>)listener NS_SWIFT_NAME(addFriendListener(listener:));
 
 /**
- *   移除关系链监听器
+ * Remove Friendship listener.
  */
 - (void)removeFriendListener:(id<OIMFriendshipListener>)listener NS_SWIFT_NAME(removeFriendListener(listener:));
 
-/// 群组监听
-/// 在InitSDK成功后，Login之前设置，群组相关信息有变化时回调
+/// Group Listener
+/// Set after a successful InitSDK and before Login, called when group-related information changes.
 @property (nonatomic, nullable, copy) OIMGroupInfoCallback onGroupInfoChanged;
 @property (nonatomic, nullable, copy) OIMGroupInfoCallback onJoinedGroupAdded;
 @property (nonatomic, nullable, copy) OIMGroupInfoCallback onJoinedGroupDeleted;
@@ -388,18 +381,18 @@ Open_im_sdk_callbackOnCustomBusinessListener
 @property (nonatomic, nullable, copy) OIMGroupApplicationCallback onGroupApplicationRejected;
 @property (nonatomic, nullable, copy) OIMGroupInfoCallback onGroupDismissed;
 
-/*
- *  设置群组监听器
+/**
+ * Set group listener.
  */
 - (void)addGroupListener:(id<OIMGroupListener>)listener NS_SWIFT_NAME(addGroupListener(listener:));
 
-/*
- *  设置群组监听器
+/**
+ * Remove group listener.
  */
 - (void)removeGroupListener:(id<OIMGroupListener>)listener NS_SWIFT_NAME(removeGroupListener(listener:));
 
-/// 会话监听
-/// 在InitSDK成功后，Login之前设置，会话相关信息有变化时回调
+/// Conversation Listener
+/// Set after a successful InitSDK and before Login, called when conversation-related information changes.
 @property (nonatomic, nullable, copy) OIMVoidCallback syncServerStart;
 @property (nonatomic, nullable, copy) OIMVoidCallback syncServerFinish;
 @property (nonatomic, nullable, copy) OIMVoidCallback syncServerFailed;
@@ -407,43 +400,43 @@ Open_im_sdk_callbackOnCustomBusinessListener
 @property (nonatomic, nullable, copy) OIMConversationsInfoCallback onConversationChanged;
 @property (nonatomic, nullable, copy) OIMNumberCallback onTotalUnreadMessageCountChanged;
 
-/*
- *  添加会话监听器
+/**
+ * Add conversation listener.
  */
 - (void)addConversationListener:(id<OIMConversationListener>)listener NS_SWIFT_NAME(addConversationListener(listener:));
 
-/*
- *  移除会话监听器
+/**
+ * Remove conversation listener.
  */
 - (void)removeConversationListener:(id<OIMConversationListener>)listener NS_SWIFT_NAME(removeConversationListener(listener:));
 
-/// 消息监听
-/// 在InitSDK成功后，Login之前设置，消息相关信息有变化时回调
+/// Message Listener
+/// Set after a successful InitSDK and before Login, called when message-related information changes.
 @property (nonatomic, nullable, copy) OIMMessageInfoCallback onRecvNewMessage;
 @property (nonatomic, nullable, copy) OIMReceiptCallback onRecvC2CReadReceipt;
 @property (nonatomic, nullable, copy) OIMReceiptCallback onRecvGroupReadReceipt;
 @property (nonatomic, nullable, copy) OIMRevokedCallback onRecvMessageRevoked;
 @property (nonatomic, nullable, copy) OIMMessageInfoCallback onMessageDeleted;
-/*
- *  添加高级消息的事件监听器
+/**
+ * Add advanced message event listener.
  */
 - (void)addAdvancedMsgListener:(id<OIMAdvancedMsgListener>)listener NS_SWIFT_NAME(addAdvancedMsgListener(listener:));
 
-/*
- *  移除高级消息的事件监听器
+/**
+ * Remove advanced message event listener.
  */
 - (void)removeAdvancedMsgListener:(id<OIMAdvancedMsgListener>)listener NS_SWIFT_NAME(removeAdvancedMsgListener(listener:));
 
-/// 自定义消息监听
+/// Custom Business Message Listener
 @property (nonatomic, nullable, copy) OIMObjectCallback onRecvCustomBusinessMessage;
 
 /**
- *  添加 IM 监听
+ * Add IM listener for custom business events.
  */
 - (void)addCustomBusinessListener:(id<OIMCustomBusinessListener>)listener NS_SWIFT_NAME(addCustomBusinessListener(listener:));
 
 /**
- *  移除 IM 监听
+ * Remove IM listener for custom business events.
  */
 - (void)removeCustomBusinessListener:(id<OIMCustomBusinessListener>)listener NS_SWIFT_NAME(removeCustomBusinessListener(listener:));
 

@@ -11,24 +11,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMInitConfig : NSObject
 
-// 设备类型 默认根据userInterfaceIdiom设置iPhone / iPad
+// Device type, default setting is based on userInterfaceIdiom for iPhone/iPad
 @property (nonatomic, assign) OIMPlatform platform;
-// SDK的API地址
+// SDK's API address
 @property (nonatomic, copy) NSString *apiAddr;
-// SDK的Web Socket地址
+// SDK's WebSocket address
 @property (nonatomic, copy) NSString *wsAddr;
-// 默认 Documents/下
+// Default is under Documents/
 @property (nonatomic, copy, nullable) NSString *dataDir;
-// 日志等级默认6
+// Log level, default is 6
 @property (nonatomic, assign) NSInteger logLevel;
-// 默认minio
+// Default is "minio"
 @property (nonatomic, copy, nullable) NSString *objectStorage;
-// 加密，默认NO
+// Encryption, default is NO
 @property (nonatomic, assign) BOOL encryption;
-// 压缩，默认NO
+// Compression, default is NO
 @property (nonatomic, assign) BOOL compression;
 @property (nonatomic, assign) BOOL isExternal;
-// 日志输入本地，默认YES
+// Log output to local, default is YES
 @property (nonatomic, assign) BOOL isLogStandardOutput;
 @property (nonatomic, copy, nullable) NSString *logFilePath;
 
@@ -43,8 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
           onKickedOffline:(OIMVoidCallback)onKickedOffline
        onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired;
 
-/*
- * 设置心跳间隔
+/**
+ * Set heartbeat interval
  */
 - (void)setHeartbeatInterval:(NSInteger)heartbeatInterval;
 

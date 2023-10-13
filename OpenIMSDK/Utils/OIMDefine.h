@@ -24,53 +24,54 @@ typedef void (^OIMVoidCallback)(void);
 typedef void (^OIMSuccessCallback)(NSString * _Nullable data);
 typedef void (^OIMFailureCallback)(NSInteger code, NSString * _Nullable msg);
 typedef void (^OIMNumberCallback)(NSInteger number);
+typedef void (^OIMBoolCallback)(BOOL result);
 typedef void (^OIMStringCallback)(NSString * _Nullable item);
 typedef void (^OIMStringArrayCallback)(NSString * _Nullable value1, NSArray<NSString *> * _Nullable value2);
 typedef void (^OIMObjectCallback)(NSDictionary * _Nullable item);
 
 /*
- *  消息类型
+ * Message Types
  */
 typedef NS_ENUM(NSInteger, OIMMessageContentType) {
-    OIMMessageContentTypeText = 101,                /// 文本消息
-    OIMMessageContentTypeImage = 102,               /// 图片消息
-    OIMMessageContentTypeAudio = 103,               /// 语音消息
-    OIMMessageContentTypeVideo = 104,               /// 视频消息
-    OIMMessageContentTypeFile = 105,                /// 文件消息
-    OIMMessageContentTypeAt = 106,                  /// @消息
-    OIMMessageContentTypeMerge = 107,               /// 合并消息
-    OIMMessageContentTypeCard = 108,                /// 名片消息
-    OIMMessageContentTypeLocation = 109,            /// 位置消息
-    OIMMessageContentTypeCustom = 110,              /// 自定义消息
-    OIMMessageContentTypeTyping = 113,              /// 正在输入状态
-    OIMMessageContentTypeQuote = 114,               /// 引用消息
-    OIMMessageContentTypeFace = 115,                /// 动图消息
-    OIMMessageContentTypeAdvancedText = 117,        /// Advanced消息
-    OIMMessageContentTypeCustomMsgNotTriggerConversation = 119,      /// 后端API会用到
-    OIMMessageContentTypeCustomMsgOnlineOnly = 120,      /// 后端API会用到
-    /// 以下皆是通知消息枚举
-    OIMMessageContentTypeFriendAppApproved = 1201,              /// 同意加好友申请通知
-    OIMMessageContentTypeFriendAppRejected = 1202,              /// 拒绝加好友申请通知
-    OIMMessageContentTypeFriendApplication = 1203,              /// 加好友通知
-    OIMMessageContentTypeFriendAdded = 1204,                    /// 添加好友通知
-    OIMMessageContentTypeFriendDeleted = 1205,                  /// 删除好友通知
-    OIMMessageContentTypeFriendRemarkSet = 1206,                /// 设置好友备注通知
-    OIMMessageContentTypeBlackAdded = 1207,                     /// 加黑名单通知
-    OIMMessageContentTypeBlackDeleted = 1208,                   /// 移除黑名单通知
-    OIMMessageContentTypeConversationOptChange = 1300,          /// 会话免打扰设置通知
-    OIMMessageContentTypeUserInfoUpdated = 1303,                /// 个人信息变更通知
-    OIMMessageContentTypeOANotification = 1400,                 /// oa 通知
-    OIMMessageContentTypeGroupCreated = 1501,                   /// 群创建通知
-    OIMMessageContentTypeGroupInfoSet = 1502,                   /// 更新群信息通知
-    OIMMessageContentTypeJoinGroupApplication = 1503,           /// 申请加群通知
-    OIMMessageContentTypeMemberQuit = 1504,                     /// 群成员退出通知
-    OIMMessageContentTypeGroupAppAccepted = 1505,               /// 同意加群申请通知
-    OIMMessageContentTypeGroupAppRejected = 1506,               /// 拒绝加群申请通知
-    OIMMessageContentTypeGroupOwnerTransferred = 1507,          /// 群主更换通知
-    OIMMessageContentTypeMemberKicked = 1508,                   /// 群成员被踢通知
-    OIMMessageContentTypeMemberInvited = 1509,                  /// 邀请群成员通知
-    OIMMessageContentTypeMemberEnter = 1510,                    /// 群成员进群通知
-    OIMMessageContentTypeDismissGroup = 1511,                   /// 解散群通知
+    OIMMessageContentTypeText = 101,              /// Text message
+    OIMMessageContentTypeImage = 102,             /// Image message
+    OIMMessageContentTypeAudio = 103,             /// Audio message
+    OIMMessageContentTypeVideo = 104,             /// Video message
+    OIMMessageContentTypeFile = 105,              /// File message
+    OIMMessageContentTypeAt = 106,                /// @ message
+    OIMMessageContentTypeMerge = 107,             /// Merged message
+    OIMMessageContentTypeCard = 108,              /// Card message
+    OIMMessageContentTypeLocation = 109,          /// Location message
+    OIMMessageContentTypeCustom = 110,            /// Custom message
+    OIMMessageContentTypeTyping = 113,            /// Typing message
+    OIMMessageContentTypeQuote = 114,             /// Quoted message
+    OIMMessageContentTypeFace = 115,              /// Animated GIF message
+    OIMMessageContentTypeAdvancedText = 117,      /// Advanced message
+    OIMMessageContentTypeCustomMsgNotTriggerConversation = 119,  /// Backend API-specific
+    OIMMessageContentTypeCustomMsgOnlineOnly = 120,            /// Backend API-specific
+    /// The following are notification message enums
+    OIMMessageContentTypeFriendAppApproved = 1201,          /// Friend request approved notification
+    OIMMessageContentTypeFriendAppRejected = 1202,          /// Friend request rejected notification
+    OIMMessageContentTypeFriendApplication = 1203,          /// Friend request notification
+    OIMMessageContentTypeFriendAdded = 1204,                /// Friend added notification
+    OIMMessageContentTypeFriendDeleted = 1205,              /// Friend deleted notification
+    OIMMessageContentTypeFriendRemarkSet = 1206,            /// Friend remark set notification
+    OIMMessageContentTypeBlackAdded = 1207,                 /// Added to blacklist notification
+    OIMMessageContentTypeBlackDeleted = 1208,               /// Removed from blacklist notification
+    OIMMessageContentTypeConversationOptChange = 1300,      /// Conversation notification settings
+    OIMMessageContentTypeUserInfoUpdated = 1303,            /// User info updated notification
+    OIMMessageContentTypeOANotification = 1400,             /// OA notification
+    OIMMessageContentTypeGroupCreated = 1501,               /// Group created notification
+    OIMMessageContentTypeGroupInfoSet = 1502,               /// Group info updated notification
+    OIMMessageContentTypeJoinGroupApplication = 1503,       /// Join group application notification
+    OIMMessageContentTypeMemberQuit = 1504,                 /// Member quit group notification
+    OIMMessageContentTypeGroupAppAccepted = 1505,           /// Join group application accepted notification
+    OIMMessageContentTypeGroupAppRejected = 1506,           /// Join group application rejected notification
+    OIMMessageContentTypeGroupOwnerTransferred = 1507,      /// Group owner transferred notification
+    OIMMessageContentTypeMemberKicked = 1508,               /// Member kicked from group notification
+    OIMMessageContentTypeMemberInvited = 1509,              /// Member invited to group notification
+    OIMMessageContentTypeMemberEnter = 1510,                /// Member entered group notification
+    OIMMessageContentTypeDismissGroup = 1511,               /// Group dismissed notification
     OIMMessageContentTypeGroupMemberMutedNotification = 1512,
     OIMMessageContentTypeGroupMemberCancelMutedNotification = 1513,
     OIMMessageContentTypeGroupMutedNotification = 1514,
@@ -78,84 +79,83 @@ typedef NS_ENUM(NSInteger, OIMMessageContentType) {
     OIMMessageContentTypeGroupMemberInfoSetNotification = 1516,
     OIMMessageContentTypeGroupMemberSetToAdminNotification = 1517,
     OIMMessageContentTypeGroupMemberSetToOrdinaryUserNotification = 1518,
-    OIMMessageContentTypeGroupAnnouncement = 1519,              /// 群公告
-    OIMMessageContentTypeGroupSetNameNotification = 1520,       /// 修改群名称
+    OIMMessageContentTypeGroupAnnouncement = 1519,          /// Group announcement
+    OIMMessageContentTypeGroupSetNameNotification = 1520,   /// Group name updated
     OIMMessageContentTypeSuperGroupUpdateNotification = 1651,
-    OIMMessageContentTypeIsPrivateMessage = 1701,               /// 阅后即焚通知
-    OIMMessageContentTypeBusiness = 2001,                       /// 业务通知
-    OIMMessageContentTypeRevoke = 2101,                         /// 撤回消息
-    OIMMessageContentTypeHasReadReceipt = 2150,                 /// 单聊已读回执
-    OIMMessageContentTypeGroupHasReadReceipt = 2155,            /// 群已读回执
-
+    OIMMessageContentTypeIsPrivateMessage = 1701,           /// Burn after reading notification
+    OIMMessageContentTypeBusiness = 2001,                   /// Business notification
+    OIMMessageContentTypeRevoke = 2101,                     /// Message revoked
+    OIMMessageContentTypeHasReadReceipt = 2150,             /// Read receipt for one-to-one chat
+    OIMMessageContentTypeGroupHasReadReceipt = 2155,        /// Group read receipt
 };
 
 /*
- *  消息状态
+ * Message Status
  */
 typedef NS_ENUM(NSInteger, OIMMessageStatus) {
-    OIMMessageStatusUndefine = 0,   /// 为定义
-    OIMMessageStatusSending = 1,    /// 发送中
-    OIMMessageStatusSendSuccess,    /// 发送成功
-    OIMMessageStatusSendFailure,    /// 发送失败
-    OIMMessageStatusDeleted,        /// 已删除
-    OIMMessageStatusRevoke          /// 已撤回，客户端不用关心
+    OIMMessageStatusUndefine = 0,   /// Undefined
+    OIMMessageStatusSending = 1,    /// Sending
+    OIMMessageStatusSendSuccess,    /// Send success
+    OIMMessageStatusSendFailure,    /// Send failure
+    OIMMessageStatusDeleted,        /// Deleted
+    OIMMessageStatusRevoke          /// Revoked (client does not need to be concerned)
 };
 
 /*
- *  会话类型
+ * Conversation Types
  */
 typedef NS_ENUM(NSInteger, OIMConversationType) {
     OIMConversationTypeUndefine = 0,
-    OIMConversationTypeC2C,                 /// 单聊
-    OIMConversationTypeGroup,               /// 群聊
-    OIMConversationTypeSuperGroup = 3,      /// 超级大群
-    OIMConversationTypeNotification = 4     /// 通知
+    OIMConversationTypeC2C,                 /// One-to-one chat
+    OIMConversationTypeGroup,               /// Group chat
+    OIMConversationTypeSuperGroup = 3,      /// Super group
+    OIMConversationTypeNotification = 4     /// Notification
 };
 
 /*
- *  标识消息级别
+ * Message Level
  */
 typedef NS_ENUM(NSInteger, OIMMessageLevel) {
-    OIMMessageLevelUser = 100,  /// 用户
-    OIMMessageLevelSystem = 200 /// 系统
+    OIMMessageLevelUser = 100,  /// User
+    OIMMessageLevelSystem = 200 /// System
 };
 
 /*
- *  消息接收选项
+ * Message Receiving Options
  */
 typedef NS_ENUM(NSInteger, OIMReceiveMessageOpt) {
-    OIMReceiveMessageOptReceive = 0,    /// 在线正常接收消息，离线时会进行 APNs 推送
-    OIMReceiveMessageOptNotReceive = 1, /// 不会接收到消息，离线不会有推送通知
-    OIMReceiveMessageOptNotNotify = 2,  /// 在线正常接收消息，离线不会有推送通知
+    OIMReceiveMessageOptReceive = 0,    /// Receive messages online and receive APNs notifications when offline
+    OIMReceiveMessageOptNotReceive = 1, /// Do not receive messages and no push notifications when offline
+    OIMReceiveMessageOptNotNotify = 2,  /// Receive messages online but no push notifications when offline
 };
 
 typedef NS_ENUM(NSInteger, OIMGroupMemberFilter) {
-    OIMGroupMemberFilterAll               = 0,    /// 所有，查询可用
-    OIMGroupMemberFilterOwner             = 1,    /// 群主
-    OIMGroupMemberFilterAdmin             = 2,    /// 群管理员
-    OIMGroupMemberFilterMember            = 3,    /// 群成员
-    OIMGroupMemberFilterAdminAndMember    = 4,    /// 管理员和成员
-    OIMGroupMemberFilterSuperAndAdmin     = 5,    /// 群主和管理员
+    OIMGroupMemberFilterAll = 0,               /// All members, suitable for querying
+    OIMGroupMemberFilterOwner = 1,             /// Group owner
+    OIMGroupMemberFilterAdmin = 2,             /// Group admin
+    OIMGroupMemberFilterMember = 3,            /// Group member
+    OIMGroupMemberFilterAdminAndMember = 4,    /// Admins and members
+    OIMGroupMemberFilterSuperAndAdmin = 5,     /// Group owner and admins
 };
 
 typedef NS_ENUM(NSInteger, OIMGroupMemberRole) {
-    OIMGroupMemberRoleOwner     = 100,   /// 群主
-    OIMGroupMemberRoleAdmin     = 60,    /// 群管理员
-    OIMGroupMemberRoleMember    = 20,    /// 群成员
+    OIMGroupMemberRoleOwner = 100,   /// Group owner
+    OIMGroupMemberRoleAdmin = 60,    /// Group admin
+    OIMGroupMemberRoleMember = 20,  /// Group member
 };
 
 /*
- *  性别类型
+ * Gender Types
  */
 typedef NS_ENUM(NSInteger, OIMGender)  {
-    OIMGenderMale = 1,  /// 男性
-    OIMGenderFemale /// 女性
+    OIMGenderMale = 1,      /// Male
+    OIMGenderFemale        /// Female
 };
 
 typedef NS_ENUM(NSInteger, OIMApplicationStatus) {
-    OIMApplicationStatusDecline = -1,   /// 已拒绝
-    OIMApplicationStatusNormal = 0,     /// 等待处理
-    OIMApplicationStatusAccept = 1,     /// 已同意
+    OIMApplicationStatusDecline = -1,  /// Declined
+    OIMApplicationStatusNormal = 0,    /// Waiting for processing
+    OIMApplicationStatusAccept = 1,    /// Accepted
 };
 
 typedef NS_ENUM(NSInteger, OIMRelationship) {
@@ -172,40 +172,40 @@ typedef NS_ENUM(NSInteger, OIMGroupAtType) {
 };
 
 /*
- *  进群验证设置选项
+ * Group Entry Verification Options
  */
 typedef NS_ENUM(NSInteger,  OIMGroupVerificationType) {
-    OIMGroupVerificationTypeApplyNeedVerificationInviteDirectly = 0,    /// 申请需要同意 邀请直接进
-    OIMGroupVerificationTypeAllNeedVerification = 1,                    /// 所有人进群需要验证，除了群主管理员邀
-    OIMGroupVerificationTypeDirectly = 2,                               /// 直接进群
+    OIMGroupVerificationTypeApplyNeedVerificationInviteDirectly = 0,    /// Apply requires approval, invite directly
+    OIMGroupVerificationTypeAllNeedVerification = 1,                    /// Everyone entering the group requires verification, except for group owner and admin invitations
+    OIMGroupVerificationTypeDirectly = 2,                               /// Enter the group directly
 };
 
 /**
- 群类型
+ Group Types
  */
 typedef NS_ENUM(NSInteger, OIMGroupType) {
-    OIMGroupTypeNormal = 0,     /// 普通群
-    OIMGroupTypeSuper = 1,      /// 超级群
-    OIMGroupTypeWorking = 2,    /// 工作群
+    OIMGroupTypeNormal = 0,     /// Normal group
+    OIMGroupTypeSuper = 1,      /// Super group
+    OIMGroupTypeWorking = 2,    /// Working group
 };
 
 /**
- 群状态
+ Group Status
  */
 typedef NS_ENUM(NSInteger, OIMGroupStatus) {
-    OIMGroupStatusOk = 0,       /// 正常
-    OIMGroupStatusBanChat = 1,  /// 被封
-    OIMGroupStatusDismissed = 2,/// 解散
-    OIMGroupStatusMuted = 3,    /// 禁言
+    OIMGroupStatusOk = 0,       /// Normal
+    OIMGroupStatusBanChat = 1,  /// Banned
+    OIMGroupStatusDismissed = 2,/// Dismissed
+    OIMGroupStatusMuted = 3,    /// Muted
 };
 
 /**
- 入群方式
+ Joining Group Methods
  */
 typedef NS_ENUM(int32_t, OIMJoinType) {
-    OIMJoinTypeInvited = 2, /// 通过邀请
-    OIMJoinTypeSearch = 3,  /// 通过搜索
-    OIMJoinTypeQRCode = 4   /// 通过二维码
+    OIMJoinTypeInvited = 2, /// Joining by invitation
+    OIMJoinTypeSearch = 3,  /// Joining by search
+    OIMJoinTypeQRCode = 4   /// Joining by QR code
 };
 
 #endif /* IMDefine_h */

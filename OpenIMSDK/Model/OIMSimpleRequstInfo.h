@@ -12,14 +12,17 @@ NS_ASSUME_NONNULL_BEGIN
 @interface OIMSimpleRequstInfo : NSObject
 
 @property (nonatomic, nullable, copy) NSString *toUserID;
-
-// 仅 添加好友申请
+/**
+ *  Only for adding friend requests
+ */
 @property (nonatomic, nullable, copy) NSString *reqMsg;
-
-// 仅 设置好友备注
+/**
+ *  Only for setting friend remarks
+ */
 @property (nonatomic, nullable, copy) NSString *remark;
-
-// 仅 同意某人的好友申请
+/**
+ *  Only for approving a friend request from someone
+ */
 @property (nonatomic, nullable, copy) NSString *handleMsg;
 
 @end

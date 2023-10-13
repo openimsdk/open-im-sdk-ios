@@ -11,119 +11,119 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMManager (Friend)
 
-/*
- * 添加朋友
+/**
+ * Add a friend
  *
- * @param userID    对方userID
- * @param reqMessage 请求消息
+ * @param userID    User ID of the other person
+ * @param reqMessage Request message
  */
 - (void)addFriend:(NSString *)userID
        reqMessage:(NSString * _Nullable)reqMessage
         onSuccess:(nullable OIMSuccessCallback)onSuccess
         onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 获取收到的好友申请，既哪些人申请加我为好友
+/**
+ * Get received friend applications, i.e., people who have applied to be friends with me
  */
 - (void)getFriendApplicationListAsRecipientWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
                                     onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 发出的好友申请
+/**
+ * Friend applications sent by the current user
  */
 - (void)getFriendApplicationListAsApplicantWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
                                         onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 同意某人的好友申请
- * @param userID 用户id
+/**
+ * Accept a friend application from someone
+ * @param userID User ID
  */
 - (void)acceptFriendApplication:(NSString *)userID
                       handleMsg:(NSString *)msg
               onSuccess:(nullable OIMSuccessCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 拒绝好友申请
+/**
+ * Reject a friend application
  *
- * @param userID  用户ID
+ * @param userID  User ID
  */
 - (void)refuseFriendApplication:(NSString *)userID
                       handleMsg:(NSString *)msg
               onSuccess:(nullable OIMSuccessCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 加入黑名单
+/**
+ * Add to the blacklist
  *
- * @param userID  用户ID
+ * @param userID  User ID
  */
 - (void)addToBlackList:(NSString *)userID
              onSuccess:(nullable OIMSuccessCallback)onSuccess
              onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 黑名单
- *
+/**
+ * Blacklist
  */
 - (void)getBlackListWithOnSuccess:(nullable OIMBlacksInfoCallback)onSuccess
                         onFailure:(nullable OIMFailureCallback)onFailure;
-/*
- * 移除黑名单
+
+/**
+ * Remove from the blacklist
  *
- * @param userID  用户ID
+ * @param userID  User ID
  */
 - (void)removeFromBlackList:(NSString *)userID
                   onSuccess:(nullable OIMSuccessCallback)onSuccess
                   onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 获取指定好友列表的相关信息
+/**
+ * Get related information for a specified list of friends
  *
- * @param usersID 用户id列表
+ * @param usersID List of user IDs
  */
 - (void)getSpecifiedFriendsInfo:(NSArray <NSString *> *)usersID
                       onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
                       onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 获取所有好友的相关信息
+/**
+ * Get information for all friends
  */
 - (void)getFriendListWithOnSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
                          onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 检查是否好友关系，即是否在登录用户的好友列表中。注意：好友是双向关系。
- * result为1表示好友（并且不是黑名单）
+/**
+ * Check if there is a friend relationship, i.e., if the user is in the friend list of the logged-in user. Note: Friendship is a two-way relationship.
+ * A result of 1 means the user is a friend (and not in the blacklist).
  *
- * @param uidList userID列表
+ * @param usersID User ID list
 */
 - (void)checkFriend:(NSArray <NSString *> *)usersID
           onSuccess:(nullable OIMSimpleResultsCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 设置好友备注
+/**
+ * Set a friend's remark
  *
- * @param uid 用户id
- * @param remark 备注信息
+ * @param uid User ID
+ * @param remark Remark information
  */
 - (void)setFriendRemark:(NSString *)uid
                  remark:(NSString * _Nullable)remark
               onSuccess:(nullable OIMSuccessCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 删除好友，好友是双向关系，此函数仅仅删除自己的好友
+/**
+ * Delete a friend; friendship is a two-way relationship, this function only deletes the user's own friend
  *
- * @param friendUserID  好友ID
+ * @param friendUserID  Friend's ID
  */
 - (void)deleteFriend:(NSString *)friendUserID
            onSuccess:(nullable OIMSuccessCallback)onSuccess
            onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- *  本地搜索好友
+/**
+ * Local friend search
  */
 - (void)searchFriends:(OIMSearchFriendsParam *)searchParam
             onSuccess:(nullable OIMSearchUsersInfoCallback)onSuccess

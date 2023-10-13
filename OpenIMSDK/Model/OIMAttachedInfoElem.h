@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// 已读用户
+/// Users who have read the message
 ///
 @interface OIMGroupHasReadInfo : NSObject
 
@@ -18,7 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSInteger hasReadCount;
 
-// 发送此条消息时的群人数
+/**
+ *  Number of group members at the time of sending this message
+ */
 @property (nonatomic, assign) NSInteger groupMemberCount;
 
 @end

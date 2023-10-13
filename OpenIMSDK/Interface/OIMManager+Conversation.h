@@ -12,150 +12,139 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMManager (Conversation)
 
-/*
- * 获取会话列表
- *
+/**
+ * Get the list of conversations
  */
 - (void)getAllConversationListWithOnSuccess:(nullable OIMConversationsInfoCallback)onSuccess
                                   onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 分页获取会话列表
- * @param offset    起始偏移量
- * @param count 拉取会话的数量
+/**
+ * Get a paginated list of conversations
+ * @param offset    Starting offset
+ * @param count Number of conversations to fetch
  */
 - (void)getConversationListSplitWithOffset:(NSInteger)offset
                                      count:(NSInteger)count
                                  onSuccess:(nullable OIMConversationsInfoCallback)onSuccess
                                  onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 获取一个会话，如果不存在会自动创建
- * @param sessionType   会话的类型，单聊为1，群聊为2
- * @param sourceID  单聊为用户ID，群聊为群ID
+/**
+ * Get a conversation; it will be automatically created if it doesn't exist
+ * @param sessionType   Type of the conversation, 1 for one-on-one, 2 for group
+ * @param sourceID  User ID for one-on-one or group ID for group
  */
 - (void)getOneConversationWithSessionType:(OIMConversationType)sessionType
                                  sourceID:(NSString *)sourceID
                                 onSuccess:(nullable OIMConversationInfoCallback)onSuccess
                                 onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 获取多个会话列表
- * @param ids   会话ID的列表
+/**
+ * Get multiple conversation lists
+ * @param ids   List of conversation IDs
  */
-- (void)getMultipleConversation:(NSArray <NSString *> *)ids
+- (void)getMultipleConversation:(NSArray <NSString *> *)conversationIDs
                        onSuccess:(nullable OIMConversationsInfoCallback)onSuccess
                        onFailure:(nullable OIMFailureCallback)onFailure;
-
 
 - (NSString *)getConversationIDBySessionType:(OIMConversationType)sessionType
                                     sourceID:(NSString *)sourceID;
 
-
-/*
- * 本地删除一个会话
- * @param conversationID    会话ID
+/**
+ * Delete a conversation locally
+ * @param conversationID    Conversation ID
  */
 - (void)deleteConversationAndDeleteAllMsg:(NSString *)conversationID
                                 onSuccess:(nullable OIMSuccessCallback)onSuccess
                                 onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 清空一个会话 本地 & 服务器
- * @param conversationID    会话ID
+/**
+ * Clear a conversation both locally and on the server
+ * @param conversationID    Conversation ID
  */
 - (void)clearConversationAndDeleteAllMsg:(NSString *)conversationID
                                onSuccess:(nullable OIMSuccessCallback)onSuccess
                                onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 删除所有会话
- *
+/**
+ * Delete all conversations
  */
 - (void)deleteAllConversationFromLocalWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
                                           onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 设置会话的草稿
- * @param conversationID    会话ID
- * @param draftText 草稿文本，如果为""则为删除草稿
+/**
+ * Set the draft for a conversation
+ * @param conversationID    Conversation ID
+ * @param draftText Draft text; if it's "", the draft will be deleted
  */
 - (void)setConversationDraft:(NSString *)conversationID
                    draftText:(NSString *)draftText
                    onSuccess:(nullable OIMSuccessCallback)onSuccess
                    onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 置顶会话
- * @param conversationID    会话ID
- * @param isPinned  为YES时，代表置顶会话，为NO时代表取消置顶
+/**
+ * Pin or unpin a conversation
+ * @param conversationID    Conversation ID
+ * @param isPinned  If YES, the conversation will be pinned; if NO, it will be unpinned
  */
 - (void)pinConversation:(NSString *)conversationID
                isPinned:(BOOL)isPinned
               onSuccess:(nullable OIMSuccessCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 获取总的消息未读数
- *
+/**
+ * Get the total number of unread messages
  */
 - (void)getTotalUnreadMsgCountWithOnSuccess:(nullable OIMNumberCallback)onSuccess
                                   onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 获取会话免打扰状态
- *
+/**
+ * Get the "do not disturb" status for a conversation
  */
 - (void)getConversationRecvMessageOpt:(NSArray <NSString *> *)conversationIDs
                             onSuccess:(nullable OIMConversationNotDisturbInfoCallback)onSuccess
                             onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 设置会话免打扰状态
- *
+/**
+ * Set the "do not disturb" status for a conversation
  */
 - (void)setConversationRecvMessageOpt:(NSString *)conversationID
                                status:(OIMReceiveMessageOpt)status
                             onSuccess:(nullable OIMSuccessCallback)onSuccess
                             onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 设置私聊, 可做“阅后即焚”功能
- *
+/**
+ * Set private chat mode, can be used for "self-destructing" messages
  */
 - (void)setConversationPrivateChat:(NSString *)conversationID
                          isPrivate:(BOOL)isPrivate
                          onSuccess:(nullable OIMSuccessCallback)onSuccess
                          onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 设置私聊, 可做“阅后即焚”时间设置功能
- *
+/**
+ * Set private chat mode with a self-destruct timer
  */
 - (void)setConversationBurnDuration:(NSString *)conversationID
                            duration:(NSInteger)burnDuration
                           onSuccess:(nullable OIMSuccessCallback)onSuccess
                           onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 重置at标准位
- *
+/**
+ * Reset the at symbol for a conversation
  */
 - (void)resetConversationGroupAtType:(NSString *)conversationID
                            onSuccess:(nullable OIMSuccessCallback)onSuccess
                            onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 隐藏会话，不删除聊天记录；
- * 如果有新消息到达，会话会再次出现。
+/**
+ * Hide a conversation without deleting chat history;
+ * If new messages arrive, the conversation will reappear.
  */
 - (void)hideConversation:(NSString *)conversationID
                onSuccess:(nullable OIMSuccessCallback)onSuccess
                onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 清空未读数
- *
+/**
+ * Clear unread messages
  */
 - (void)markConversationMessageAsRead:(NSString *)conversationID
                             onSuccess:(nullable OIMSuccessCallback)onSuccess

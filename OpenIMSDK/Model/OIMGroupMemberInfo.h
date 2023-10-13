@@ -10,30 +10,38 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// 群成员信息
+/// Group Member Information
 ///
 @interface OIMGroupMemberBaseInfo : NSObject
 
 @property (nonatomic, nullable, copy) NSString *userID;
-// 角色
+
 @property (nonatomic, assign) OIMGroupMemberRole roleLevel;
 
 @end
 
-/// 群成员信息
-/// 
+/// Group Member Information
+///
 @interface OIMGroupMemberInfo : OIMGroupMemberBaseInfo
 
 @property (nonatomic, nullable, copy) NSString *groupID;
 @property (nonatomic, nullable, copy) NSString *nickname;
 @property (nonatomic, nullable, copy) NSString *faceURL;
-// 加入时间
+/**
+ *  Join time
+ */
 @property (nonatomic, assign) NSInteger joinTime;
-// 入群方式
+/**
+ *  Method of joining
+ */
 @property (nonatomic, assign) OIMJoinType joinSource;
-// 操作者id
+/**
+ *  Operator's ID
+ */
 @property (nonatomic, nullable, copy) NSString *operatorUserID;
-// 被禁言结束时间戳s
+/**
+ *  Mute end timestamp (in seconds)
+ */
 @property (nonatomic, assign) NSTimeInterval muteEndTime;
 
 @property (nonatomic, copy) NSString *inviterUserID;

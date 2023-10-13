@@ -311,4 +311,15 @@
     Open_im_sdkSearchGroupMembers(callback, [self operationId], searchParam.mj_JSONString);
 }
 
+- (void)isJoinedGroup:(NSString *)groupID
+            onSuccess:(OIMBoolCallback)onSuccess
+            onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([data isEqualToString:@"true"]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkIsJoinGroup(callback, [self operationId], groupID);
+}
 @end

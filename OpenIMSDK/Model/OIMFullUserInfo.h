@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// 用户公开信息，主要是基本信息，不包括手机等其它隐私字段
+/// Public user information, mainly basic information, excluding other privacy fields such as phone number.
 ///
 @interface OIMPublicUserInfo : NSObject
 
@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// 黑名单信息，黑名单用户基本信息，注意黑名单是双向关系。
+/// Blacklist information, basic information of users in the blacklist. Note that the blacklist is a mutual relationship.
 ///
 @interface OIMBlackInfo : OIMPublicUserInfo
 
@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) NSString *ex;
 @end
 
-/// 好友信息，黑名单用户基本信息，注意黑名单是双向关系。
+/// Friend information, basic information of users who are friends. Note that the blacklist is a mutual relationship.
 ///
 @interface OIMFriendInfo : OIMPublicUserInfo
 
@@ -71,15 +71,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*
- 整合了PublicUserInfo， FriendInfo和BlackInfo
- getuserinfo时，
- 如果是好友，publicInfo和friendInfo会设置，
- 如果是黑名单，publicinfo和blackInfo会设置
- 如果即时好友，也是黑名单，则publicInfo， friendInfo，blackInfo都会设置
+/**
+ Integrates PublicUserInfo, FriendInfo, and BlackInfo.
+ When getting user information:
+ - If it's a friend, publicInfo and friendInfo will be set.
+ - If it's in the blacklist, publicInfo and blackInfo will be set.
+ - If it's both a friend and in the blacklist, all three will be set.
 
- getfriend时
- 如果是黑名单，则friendInfo和blackInfo会设置， 但publicInfo不设置
+ When getting friend information:
+ - If it's in the blacklist, friendInfo and blackInfo will be set, but publicInfo is not set.
  */
 @interface OIMFullUserInfo : NSObject
 

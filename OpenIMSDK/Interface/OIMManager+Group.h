@@ -11,20 +11,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMManager (Group)
 
-/*
- * 创建群
- *
+/**
+ * Create a group
  */
 - (void)createGroup:(OIMGroupCreateInfo *)groupBaseInfo
           onSuccess:(nullable OIMGroupInfoCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 申请加入群组
+/**
+ * Apply to join a group
  *
- * @param gid    群组ID
- * @param reqMsg 进群申请消息
- * @param joinSource 进群方式
+ * @param groupID    Group ID
+ * @param reqMsg Request message for joining the group
+ * @param joinSource Method of joining
  */
 - (void)joinGroup:(NSString *)groupID
            reqMsg:(NSString * _Nullable)reqMsg
@@ -32,45 +31,42 @@ NS_ASSUME_NONNULL_BEGIN
         onSuccess:(OIMSuccessCallback)onSuccess
         onFailure:(OIMFailureCallback)onFailure;
 
-/*
- * 退群
- *
+/**
+ * Quit a group
  */
 - (void)quitGroup:(NSString *)groupID
         onSuccess:(nullable OIMSuccessCallback)onSuccess
         onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 获取已加入的群列表
- *
+/**
+ * Get the list of joined groups
  */
 - (void)getJoinedGroupListWithOnSuccess:(nullable OIMGroupsInfoCallback)onSuccess
                                 onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 批量获取群资料
+/**
+ * Batch get group information
  *
- * @param gids 群ID集合
+ * @param groupsID Group ID collection
  */
 - (void)getSpecifiedGroupsInfo:(NSArray <NSString *> *)groupsID
                      onSuccess:(nullable OIMGroupsInfoCallback)onSuccess
                      onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 设置或更新群资料
- *
+/**
+ * Set or update group information
  */
 - (void)setGroupInfo:(OIMGroupInfo *)groupInfo
            onSuccess:(nullable OIMSuccessCallback)onSuccess
            onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 获取群成员
+/**
+ * Get group members
  *
- * @param groupId 群组ID
- * @param filter  过滤成员，0不过滤，1群的创建者，2管理员；默认值0
- * @param offset  起始偏移
- * @param count   成员个数
+ * @param groupId Group ID
+ * @param filter Member filter, 0 for no filter, 1 for group creator, 2 for administrator; default value is 0
+ * @param offset Starting offset
+ * @param count Member count
  */
 - (void)getGroupMemberList:(NSString *)groupID
                     filter:(OIMGroupMemberFilter)filter
@@ -79,24 +75,23 @@ NS_ASSUME_NONNULL_BEGIN
                  onSuccess:(nullable OIMGroupMembersInfoCallback)onSuccess
                  onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 获取指定群成员列表
+/**
+ * Get a list of specified group members
  *
- * @param groupId 群组ID
- * @param uidList 群成员ID
- * 
- **/
+ * @param groupId Group ID
+ * @param uidList Group member IDs
+ */
 - (void)getSpecifiedGroupMembersInfo:(NSString *)groupID
                              usersID:(NSArray <NSString *> *)usersID
                            onSuccess:(nullable OIMGroupMembersInfoCallback)onSuccess
                            onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 踢出群
+/**
+ * Remove members from a group
  *
- * @param groupId 群组ID
- * @param reason  说明
- * @param uidList 被要踢出群的用户id列表
+ * @param groupId Group ID
+ * @param reason Reason for removal
+ * @param uidList List of user IDs to be removed from the group
  */
 - (void)kickGroupMember:(NSString *)groupID
                  reason:(NSString * _Nullable)reason
@@ -104,23 +99,23 @@ NS_ASSUME_NONNULL_BEGIN
               onSuccess:(nullable OIMSimpleResultsCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 转让群主，只有群主能操作
+/**
+ * Transfer group ownership, only the group owner can perform this action
  *
- * @param groupId  群组ID
- * @param uid  新群主用户ID
+ * @param groupId Group ID
+ * @param uid New group owner's user ID
  */
 - (void)transferGroupOwner:(NSString *)groupID
                   newOwner:(NSString *)userID
                  onSuccess:(nullable OIMSuccessCallback)onSuccess
                  onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 邀请某些人进群，群里所有成员可以操作
+/**
+ * Invite certain people to join a group; all group members can perform this action
  *
- * @param groupId 群组ID
- * @param uids 被邀请用户id列表
- * @param reason  邀请说明
+ * @param groupId Group ID
+ * @param uids List of user IDs to be invited
+ * @param reason Invitation message
  */
 - (void)inviteUserToGroup:(NSString *)groupID
                    reason:(NSString *)reason
@@ -128,26 +123,24 @@ NS_ASSUME_NONNULL_BEGIN
                 onSuccess:(nullable OIMSimpleResultsCallback)onSuccess
                 onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 作为群主或者管理员，获取收到的群成员申请进群列表。
- *
+/**
+ * Get a list of group member applications received by administrators or group owners
  */
 - (void)getGroupApplicationListAsRecipientWithOnSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
                                               onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 发出的入群申请
- *
+/**
+ * Group applications sent by the current user
  */
 - (void)getGroupApplicationListAsApplicantWithOnSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
                                               onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 管理员或者群主同意某人进入某群
+/**
+ * Accept someone's application to join a group as an administrator or group owner
  *
- * @param groupId   群ID
- * @param fromUserID 申请进群的用户ID
- * @param handleMsg   处理的消息
+ * @param groupId Group ID
+ * @param fromUserID User ID of the user applying to join the group
+ * @param handleMsg Handling message
  */
 - (void)acceptGroupApplication:(NSString *)groupID
                     fromUserId:(NSString *)fromUserID
@@ -156,11 +149,11 @@ NS_ASSUME_NONNULL_BEGIN
                      onFailure:(nullable OIMFailureCallback)onFailure;
 
 /*
- * 管理员或者群主拒绝某人进入某群
+ * Reject someone's application to join a group as an administrator or group owner
  *
- * @param groupId   群ID
- * @param fromUserID 申请进群的用户ID
- * @param handleMsg   处理的消息
+ * @param groupId Group ID
+ * @param fromUserID User ID of the user applying to join the group
+ * @param handleMsg Handling message
  */
 - (void)refuseGroupApplication:(NSString *)groupID
                     fromUserId:(NSString *)fromUserID
@@ -168,17 +161,17 @@ NS_ASSUME_NONNULL_BEGIN
                      onSuccess:(nullable OIMSuccessCallback)onSuccess
                      onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 解散群
+/**
+ * Disband a group
  *
- * @param groupId   群ID
+ * @param groupId Group ID
  */
 - (void)dismissGroup:(NSString *)groupID
            onSuccess:(nullable OIMSuccessCallback)onSuccess
            onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- *  禁言或取消禁言某群成员 mutedSeconds为0时取消禁言
+/**
+ * Mute or unmute a group member, mutedSeconds is set to 0 for unmuting
  */
 - (void)changeGroupMemberMute:(NSString *)groupID
                        userID:(NSString *)userID
@@ -186,24 +179,23 @@ NS_ASSUME_NONNULL_BEGIN
            onSuccess:(nullable OIMSuccessCallback)onSuccess
            onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- *  禁言或取消禁言某群
+/**
+ * Mute or unmute a group
  */
 - (void)changeGroupMute:(NSString *)groupID
                  isMute:(BOOL)isMute
               onSuccess:(nullable OIMSuccessCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
-
-/*
- *  搜索群，通过群名称或者群ID
+/**
+ * Search for groups by group name or group ID
  */
 - (void)searchGroups:(OIMSearchGroupParam *)searchParam
            onSuccess:(nullable OIMGroupsInfoCallback)onSuccess
            onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- *  设置群成员昵称
+/**
+ * Set group member nickname
  */
 - (void)setGroupMemberNickname:(NSString *)groupID
                         userID:(NSString *)userID
@@ -211,8 +203,8 @@ NS_ASSUME_NONNULL_BEGIN
                      onSuccess:(nullable OIMSuccessCallback)onSuccess
                      onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- *  设置群成员级别
+/**
+ * Set group member role level
  */
 - (void)setGroupMemberRoleLevel:(NSString *)groupID
                          userID:(NSString *)userID
@@ -221,12 +213,13 @@ NS_ASSUME_NONNULL_BEGIN
                       onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 根据加入时间分页获取组成员列表
- @param groupID 群ID
- @param joinTimeBegin 加入开始时间
- @param joinTimeEnd 加入结束时间
- @param offset 开始下标
- @param count 总数
+ * Get the list of group members based on join time
+ * @param groupID Group ID
+ * @param joinTimeBegin Start time for joining
+ * @param joinTimeEnd End time for joining
+ * @param offset Starting index
+ * @param count Total count
+ * @param filterUserIDList List of user IDs to filter
  */
 - (void)getGroupMemberListByJoinTimeFilter:(NSString *)groupID
                                     offset:(NSInteger)offset
@@ -238,9 +231,9 @@ NS_ASSUME_NONNULL_BEGIN
                                  onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 进群验证设置选项
- @param groupID 群ID
- @param needVerification 进群设置
+ * Set group verification option for joining
+ * @param groupID Group ID
+ * @param needVerification Joining settings
  */
 - (void)setGroupVerification:(NSString *)groupID
             needVerification:(OIMGroupVerificationType)needVerification
@@ -248,17 +241,17 @@ NS_ASSUME_NONNULL_BEGIN
                    onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 获取管理者和拥有者
- @param groupID 群ID
+ * Get the list of managers and owners
+ * @param groupID Group ID
  */
 - (void)getGroupMemberOwnerAndAdmin:(NSString *)groupID
                           onSuccess:(nullable OIMGroupMembersInfoCallback)onSuccess
                           onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 群成员之间是否可添加好友
- @param groupID 群ID
- @param rule 0: 默认可行 1: 不可行
+ * Determine whether group members can add each other as friends
+ * @param groupID Group ID
+ * @param rule 0: Default behavior, 1: Not allowed
  */
 - (void)setGroupApplyMemberFriend:(NSString *)groupID
                              rule:(int32_t)rule
@@ -266,9 +259,9 @@ NS_ASSUME_NONNULL_BEGIN
                           onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 查看群成员信息
- @param groupID 群ID
- @param rule 0: 默认可行 1: 不可行
+ * View group member information
+ * @param groupID Group ID
+ * @param rule 0: Default behavior, 1: Not allowed
  */
 - (void)setGroupLookMemberInfo:(NSString *)groupID
                           rule:(int32_t)rule
@@ -276,11 +269,19 @@ NS_ASSUME_NONNULL_BEGIN
                      onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 搜索群成员
+ * Search group members
  */
 - (void)searchGroupMembers:(OIMSearchGroupMembersParam *)searchParam
                  onSuccess:(nullable OIMGroupMembersInfoCallback)onSuccess
                  onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ * Check if the user has joined the group
+ */
+- (void)isJoinedGroup:(NSString *)groupID
+            onSuccess:(nullable OIMBoolCallback)onSuccess
+            onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END
+

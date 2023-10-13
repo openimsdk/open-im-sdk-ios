@@ -11,28 +11,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMFileElem : NSObject
 
-/*
- * 文件本地资源地址
+/**
+ * Local resource address of the file
  */
 @property (nonatomic, nullable, copy) NSString *filePath;
 
-/*
- *
+/**
+ * UUID
  */
 @property (nonatomic, nullable, copy) NSString *uuID;
 
-/*
- * oss地址
+/**
+ * OSS address
  */
 @property (nonatomic, nullable, copy) NSString *sourceUrl;
 
-/*
- * 文件名称
+/**
+ * File name
  */
 @property (nonatomic, nullable, copy) NSString *fileName;
 
-/*
- * 文件大小
+/**
+ * File size
  */
 @property (nonatomic, assign) NSInteger fileSize;
 

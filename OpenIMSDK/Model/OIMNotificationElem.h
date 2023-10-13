@@ -15,13 +15,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, copy) NSString *detail;
 
-/// 以下字段是从detail里面decode出来的
+/**
+ *  The following fields are decoded from the 'detail' field
+ */
 @property (nonatomic, nullable, strong, readonly) OIMGroupMemberInfo *opUser;
 
 @property (nonatomic, nullable, strong, readonly) OIMGroupMemberInfo *quitUser;
 
 @property (nonatomic, nullable, strong, readonly) OIMGroupMemberInfo *entrantUser;
-/// 群改变新群主的信息
+/**
+ *  Information about the new group owner after a group change
+ */
 @property (nonatomic, nullable, strong, readonly) OIMGroupMemberInfo *groupNewOwner;
 
 @property (nonatomic, nullable, strong, readonly) OIMGroupInfo *group;

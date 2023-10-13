@@ -12,9 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface OIMSimpleResultInfo : NSObject
 
 @property (nonatomic, nullable, copy) NSString *userID;
-
-/*
- * checkFriend: result为1表示好友（并且不是黑名单）
+/**
+ * For checkFriend: a result of 1 indicates a friend (and not in the blacklist).
  */
 @property (nonatomic, assign) NSInteger result;
 

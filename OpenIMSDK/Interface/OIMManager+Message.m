@@ -51,7 +51,7 @@
 + (OIMMessageInfo *)createTextAtAllMessage:(NSString *)text
                                displayText:(NSString *)displayText
                                    message:(OIMMessageInfo * _Nullable)message {
-    NSString *json = Open_im_sdkCreateTextAtMessage([OIMManager.manager operationId], text, @[Open_im_sdkGetAtAllTag([[NSUUID UUID]UUIDString])].mj_JSONString, @[@{Open_im_sdkGetAtAllTag([[NSUUID UUID]UUIDString]): displayText ?: @"@全体成员"}].mj_JSONString, message ? message.mj_JSONString : @"");
+    NSString *json = Open_im_sdkCreateTextAtMessage([OIMManager.manager operationId], text, @[Open_im_sdkGetAtAllTag([[NSUUID UUID]UUIDString])].mj_JSONString, @[@{Open_im_sdkGetAtAllTag([[NSUUID UUID]UUIDString]): displayText ?: @"@all members"}].mj_JSONString, message ? message.mj_JSONString : @"");
     
     return [self convertToMessageInfo:json];
 }
@@ -68,11 +68,12 @@
     return [self convertToMessageInfo:json];
 }
 
-+ (OIMMessageInfo *)createImageMessageByURL:(OIMPictureInfo *)source
++ (OIMMessageInfo *)createImageMessageByURL:(NSString *)sourcePath
+                              sourcePicture:(OIMPictureInfo *)source
                                  bigPicture:(OIMPictureInfo *)big
                             snapshotPicture:(OIMPictureInfo *)snapshot {
     
-    NSString *json = Open_im_sdkCreateImageMessageByURL([OIMManager.manager operationId], source.mj_JSONString, big.mj_JSONString, snapshot.mj_JSONString);
+    NSString *json = Open_im_sdkCreateImageMessageByURL([OIMManager.manager operationId], sourcePath, source.mj_JSONString, big.mj_JSONString, snapshot.mj_JSONString);
     
     return [self convertToMessageInfo:json];
 }

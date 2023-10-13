@@ -34,12 +34,12 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        // app从后台进入前台都会调用这个方法
+        // This method will be called when the app enters the foreground from the background.
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationWillEnterForeground:)
                                                      name:UIApplicationWillEnterForegroundNotification
                                                    object:nil];
-        // 添加检测app进入后台的观察者
+        //Add an observer to detect when the app enters the background
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationDidEnterBackground:)
                                                      name:UIApplicationDidEnterBackgroundNotification

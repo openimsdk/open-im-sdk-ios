@@ -10,64 +10,52 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMVideoElem : NSObject
-
-/*
- * 视频本地资源地址
+/**
+ * Local video resource path
  */
 @property (nonatomic, nullable, copy) NSString *videoPath;
-
-/*
- * 视频唯一ID
+/**
+ * Unique ID of the video
  */
 @property (nonatomic, nullable, copy) NSString *videoUUID;
-
-/*
- * 视频oss地址
+/**
+ * Video OSS (Object Storage Service) address
  */
 @property (nonatomic, nullable, copy) NSString *videoUrl;
-
-/*
- * 视频类型
+/**
+ * Video type
  */
 @property (nonatomic, nullable, copy) NSString *videoType;
-
-/*
- * 视频大小
+/**
+ * Video size
  */
 @property (nonatomic, assign) NSInteger videoSize;
-
-/*
- * 视频时长
+/**
+ * Video duration
  */
 @property (nonatomic, assign) NSInteger duration;
-
-/*
- * 视频快照本地地址
+/**
+ * Local snapshot (thumbnail) path of the video
  */
 @property (nonatomic, nullable, copy) NSString *snapshotPath;
-
-/*
- * 视频快照唯一ID
+/**
+ * Unique ID of the video snapshot
  */
 @property (nonatomic, nullable, copy) NSString *snapshotUUID;
-
-/*
- * 视频快照大小
+/**
+ * Snapshot size
  */
 @property (nonatomic, assign) NSInteger snapshotSize;
-
-/*
- * 视频快照oss地址
+/**
+ * Snapshot OSS address
  */
 @property (nonatomic, nullable, copy) NSString *snapshotUrl;
-
-/*
- * 视频快照宽度
+/**
+ * Snapshot width
  */
 @property (nonatomic, assign) CGFloat snapshotWidth;
-
-/*
- * 视频快照高度
+/**
+ * Snapshot height
  */
 @property (nonatomic, assign) CGFloat snapshotHeight;
 

@@ -11,67 +11,67 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMManager (User)
 
-/*
- * 根据uid批量查询用户信息
+/**
+ * Batch query user information by uid
  *
- * @param uids 用户id列表
+ * @param uids List of user IDs
  */
 - (void)getUsersInfo:(NSArray <NSString *> *)uids
            onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
            onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 修改当前登录用户信息
+/**
+ * Modify the information of the currently logged-in user
  *
  */
 - (void)setSelfInfo:(OIMUserInfo *)userInfo
           onSuccess:(nullable OIMSuccessCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 当前登录用户信息
+/**
+ * Information of the currently logged-in user
  *
  */
 - (void)getSelfInfoWithOnSuccess:(nullable OIMUserInfoCallback)onSuccess
                        onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- *  更新FMC token
+ * Update FCM token
  */
-- (void)updateFcmToken:(NSString *)fmcToken
+- (void)updateFcmToken:(NSString *)fcmToken
              onSuccess:(nullable OIMSuccessCallback)onSuccess
              onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- *  订阅用户的在线状态
+ * Subscribe to the online status of users
  */
 - (void)subscribeUsersStatus:(NSArray<NSString *> *)userIDs
                    onSuccess:(nullable OIMUserStatusInfosCallback)onSuccess
                    onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- *  取消订阅用户的在线状态
+ * Unsubscribe from the online status of users
  */
 - (void)unsubscribeUsersStatus:(NSArray<NSString *> *)userIDs
                      onSuccess:(nullable OIMSuccessCallback)onSuccess
                      onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- *  获取所有已订阅用户的在线状态
+ * Get the online status of all subscribed users
  */
 - (void)getSubscribeUsersStatusWithOnSuccess:(nullable OIMUserStatusInfosCallback)onSuccess
                                    onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- *  普通用户获取用户状态
+ * Get user status for regular users
  */
 - (void)getUserStatus:(NSArray<NSString *> *)userIDs
             onSuccess:(nullable OIMUserStatusInfosCallback)onSuccess
             onFailure:(nullable OIMFailureCallback)onFailure;
 
-- (void)getUsersInfoStranger:(NSArray<NSString *> *)userIDs
+- (void)getUsersInfoWithCache:(NSArray<NSString *> *)userIDs
                      groupID:(NSString * _Nullable)groupID
-                   onSuccess:(nullable OIMUsersInfoCallback)onSuccess
+                   onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
                    onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 

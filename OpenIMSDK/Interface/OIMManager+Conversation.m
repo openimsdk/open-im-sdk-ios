@@ -52,7 +52,7 @@
     return Open_im_sdkGetConversationIDBySessionType([self operationId], sourceID, sessionType);
 }
 
-- (void)getMultipleConversation:(NSArray<NSString *> *)ids
+- (void)getMultipleConversation:(NSArray<NSString *> *)conversationIDs
                       onSuccess:(OIMConversationsInfoCallback)onSuccess
                       onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
@@ -61,7 +61,7 @@
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetMultipleConversation(callback, [self operationId], ids.mj_JSONString);
+    Open_im_sdkGetMultipleConversation(callback, [self operationId], conversationIDs.mj_JSONString);
 }
 
 - (void)deleteConversationAndDeleteAllMsg:(NSString *)conversationID

@@ -13,31 +13,29 @@ NS_ASSUME_NONNULL_BEGIN
 @interface OIMMessageInfo (extension)
 
 /*
- *  是否是发送出去的消息
+ *  Whether the message is sent by self.
  */
 - (BOOL)isSelf;
 
 /*
- * 创建文本消息
+ * Create a text message.
  *
- * @param text 内容
+ * @param text Content
  */
 + (OIMMessageInfo *)createTextMessage:(NSString *)text;
 
-
 /**
-   可配套createTextAtMessage使用，将@所有人标识插入指定位置
+ * Complement the use of createTextAtMessage, insert the "@all" flag at a specified position.
  */
 + (OIMAtInfo *)createAtAllFlag:(NSString *)displayText;
 
-
 /*
- * 创建@文本消息
+ * Create an @ text message.
  *
- * @param text      内容
- * @param atUsersID 用户id列表
- * @param atUsersInfo 用户在群内的信息
- * @param message 引用消息的时候使用
+ * @param text       Content
+ * @param atUsersID  User IDs to mention
+ * @param atUsersInfo User information in the group
+ * @param message    Message to reference
  */
 + (OIMMessageInfo *)createTextAtMessage:(NSString *)text
                               atUsersID:(NSArray<NSString *> *)atUsersID
@@ -45,63 +43,59 @@ NS_ASSUME_NONNULL_BEGIN
                                 message:(OIMMessageInfo * _Nullable)message;
 
 /*
- * 创建@全体成员文本消息
+ * Create an @ all members text message.
  *
- * @param text      内容
- * @param displayText 展示的内容, 例如“@全体成员“
- * @param message 引用消息的时候使用
+ * @param text        Content
+ * @param displayText Display text, e.g., "@All members"
+ * @param message     Message to reference
  */
 + (OIMMessageInfo *)createTextAtAllMessage:(NSString *)text
                                displayText:(NSString * _Nullable)displayText
                                    message:(OIMMessageInfo * _Nullable)message;
 
 /*
- * 创建图片消息（
- * initSDK时传入了数据缓存路径，如路径：A，这时需要你将图片复制到A路径下后，如 A/pic/a.png路径，imagePath的值：“/pic/.png”
+ * Create an image message. (If you provided a data cache path during initSDK, you need to copy the image to that path. For example, if the path is "A", you should copy the image to "A/pic/a.png", and the imagePath should be "/pic/a.png").
  *
- * @param imagePath 相对路径
+ * @param imagePath Relative path
  */
 + (OIMMessageInfo *)createImageMessage:(NSString *)imagePath;
 
 /*
- * 创建图片消息
+ * Create an image message.
  *
- * @param imagePath 绝对路径
+ * @param imagePath Absolute path
  */
 + (OIMMessageInfo *)createImageMessageFromFullPath:(NSString *)imagePath;
 
 /*
- * 创建音频消息
- * 例如：自行上传的文件，然后使用返回的url发送消息
+ * Create an audio message. For example: upload your own audio file and then use the returned URL to send the message.
  *
  */
-+ (OIMMessageInfo *)createImageMessageByURL:(OIMPictureInfo *)source
++ (OIMMessageInfo *)createImageMessageByURL:(NSString *)sourcePath
+                              sourcePicture:(OIMPictureInfo *)source
                                  bigPicture:(OIMPictureInfo *)big
                             snapshotPicture:(OIMPictureInfo *)snapshot;
-                                   
 
 /*
- * 创建声音消息
- * initSDK时传入了数据缓存路径，如路径：A，这时需要你将声音文件复制到A路径下后，如 A/voice/a.m4c路径，soundPath的值：“/voice/.m4c”
+ * Create a sound message. (If you provided a data cache path during initSDK, you need to copy the sound file to that path. For example, if the path is "A", you should copy the sound file to "A/voice/a.m4c", and the soundPath should be "/voice/a.m4c").
  *
- * @param soundPath 相对路径
- * @param duration  时长
+ * @param soundPath Relative path
+ * @param duration  Duration
  */
 + (OIMMessageInfo *)createSoundMessage:(NSString *)soundPath
                               duration:(NSInteger)duration;
 
 /*
- * 创建声音消息
+ * Create a sound message.
  *
- * @param soundPath 绝对路径
- * @param duration  时长
+ * @param soundPath Absolute path
+ * @param duration  Duration
  */
 + (OIMMessageInfo *)createSoundMessageFromFullPath:(NSString *)soundPath
                                           duration:(NSInteger)duration;
 
 /*
- * 创建音频消息
- * 例如：自行上传的文件，然后使用返回的url发送消息
+ * Create an audio message. For example: upload your own audio file and then use the returned URL to send the message.
  *
  */
 + (OIMMessageInfo *)createSoundMessageByURL:(NSString *)fileURL
@@ -109,13 +103,12 @@ NS_ASSUME_NONNULL_BEGIN
                                        size:(NSInteger)size;
 
 /*
- * 创建视频消息
- * initSDK时传入了数据缓存路径，如路径：A，这时需要你将声音文件复制到A路径下后，如 A/video/a.mp4路径，soundPath的值：“/video/.mp4”
+ * Create a video message. (If you provided a data cache path during initSDK, you need to copy the video file to that path. For example, if the path is "A", you should copy the video file to "A/video/a.mp4", and the videoPath should be "/video/a.mp4").
  *
- * @param videoPath    视频相对路径
- * @param videoType    mine type
- * @param duration     时长
- * @param snapshotPath 缩略图相对路径
+ * @param videoPath    Relative video path
+ * @param videoType    MIME type
+ * @param duration     Duration
+ * @param snapshotPath Relative path of the snapshot
  */
 + (OIMMessageInfo *)createVideoMessage:(NSString *)videoPath
                              videoType:(NSString *)videoType
@@ -123,13 +116,12 @@ NS_ASSUME_NONNULL_BEGIN
                           snapshotPath:(NSString *)snapshotPath;
 
 /*
- * 创建视频消息
+ * Create a video message.
  *
- * @param videoPath    绝对路径
- * @param videoType    mine type
- * @param duration     时长
- * @param snapshotPath 缩略图绝对路径
- *
+ * @param videoPath    Absolute video path
+ * @param videoType    MIME type
+ * @param duration     Duration
+ * @param snapshotPath Absolute snapshot path
  */
 + (OIMMessageInfo *)createVideoMessageFromFullPath:(NSString *)videoPath
                                          videoType:(NSString *)videoType
@@ -137,137 +129,132 @@ NS_ASSUME_NONNULL_BEGIN
                                       snapshotPath:(NSString *)snapshotPath;
 
 /*
- * 创建视频频消息
- * 例如：自行上传的文件，然后使用返回的url发送消息
+ * Create a video message. For example: upload your own video file and then use the returned URL to send the message.
  *
  */
 + (OIMMessageInfo *)createVideoMessageByURL:(NSString *)fileURL
                                   videoType:(NSString * _Nullable)videoType
                                    duration:(NSInteger)duration
                                       size:(NSInteger)size
-                                   snapshot:(NSString * _Nullable)snapshotURL
-;
+                                   snapshot:(NSString * _Nullable)snapshotURL;
 
 /*
- * 创建文件消息
- * initSDK时传入了数据缓存路径，如路径：A，这时需要你将声音文件复制到A路径下后，如 A/file/a.txt路径，soundPath的值：“/file/.txt”
+ * Create a file message. (If you provided a data cache path during initSDK, you need to copy the file to that path. For example, if the path is "A", you should copy the file to "A/file/a.txt", and the filePath should be "/file/a.txt").
  *
- * @param filePath 相对路径
- * @param fileName 文件名
+ * @param filePath Relative path
+ * @param fileName File name
  */
 + (OIMMessageInfo *)createFileMessage:(NSString *)filePath
                              fileName:(NSString *)fileName;
 
 /*
- * 创建文件消息
- * initSDK时传入了数据缓存路径，如路径：A，这时需要你将声音文件复制到A路径下后，如 A/file/a.txt路径，soundPath的值：“/file/.txt”
+ * Create a file message.
+ * (If you provided a data cache path during initSDK, you need to copy the file to that path. For example, if the path is "A", you should copy the file to "A/file/a.txt", and the filePath should be "/file/a.txt").
  *
- * @param filePath 绝对路径
- * @param fileName 文件名
- *
- */
-+ (OIMMessageInfo *)createFileMessageFromFullPath:(NSString *)filePath
-                                         fileName:(NSString *)fileName;
-
-/*
- * 创建文件消息
- * 例如：自行上传的文件，然后使用返回的url发送消息
+ * @param filePath Absolute path
+ * @param fileName File name
  *
  */
-+ (OIMMessageInfo *)createFileMessageByURL:(NSString *)fileURL
-                                  fileName:(NSString * _Nullable)fileName
-                                      size:(NSInteger)size;
+ + (OIMMessageInfo *)createFileMessageFromFullPath:(NSString *)filePath
+                                          fileName:(NSString *)fileName;
 
-/*
- * 创建合并消息
- *
- * @param title       标题
- * @param summaryList 摘要
- * @param messageList 消息列表
- */
-+ (OIMMessageInfo *)createMergeMessage:(NSArray <OIMMessageInfo *> *)messages
-                                 title:(NSString *)title
-                           summaryList:(NSArray <NSString *> *)summarys;
+ /*
+  * Create a file message. For example: upload your own file and then use the returned URL to send the message.
+  *
+  */
+ + (OIMMessageInfo *)createFileMessageByURL:(NSString *)fileURL
+                                   fileName:(NSString * _Nullable)fileName
+                                       size:(NSInteger)size;
 
-/*
- * 创建转发消息
- *
- */
-+ (OIMMessageInfo *)createForwardMessage:(OIMMessageInfo *)message;
+ /*
+  * Create a merged message.
+  *
+  * @param title       Title
+  * @param summaryList Summaries
+  * @param messageList Message list
+  */
+ + (OIMMessageInfo *)createMergeMessage:(NSArray <OIMMessageInfo *> *)messages
+                                  title:(NSString *)title
+                            summaryList:(NSArray <NSString *> *)summaries;
 
-/*
- * 创建位置消息
- *
- * @param latitude    经度
- * @param longitude   纬度
- * @param description 描述消息
- */
-+ (OIMMessageInfo *)createLocationMessage:(NSString *)description
-                                 latitude:(double)latitude
-                                longitude:(double)longitude;
+ /*
+  * Create a forwarded message.
+  *
+  */
+ + (OIMMessageInfo *)createForwardMessage:(OIMMessageInfo *)message;
 
-/*
- * 创建引用消息
- *
- * @param text    内容
- * @param message 被引用的消息体
- * 
- */
-+ (OIMMessageInfo *)createQuoteMessage:(NSString *)text
-                               message:(OIMMessageInfo *)message;
+ /*
+  * Create a location message.
+  *
+  * @param description Description message
+  * @param latitude    Latitude
+  * @param longitude   Longitude
+  */
+ + (OIMMessageInfo *)createLocationMessage:(NSString *)description
+                                  latitude:(double)latitude
+                                 longitude:(double)longitude;
 
-/*
- * 创建名片消息
- *
- * @param content String
-*/
-+ (OIMMessageInfo *)createCardMessage:(OIMCardElem *)card;
+ /*
+  * Create a quoted message.
+  *
+  * @param text    Content
+  * @param message Message being quoted
+  *
+  */
+ + (OIMMessageInfo *)createQuoteMessage:(NSString *)text
+                                message:(OIMMessageInfo *)message;
 
-/*
- * 创建自定义消息
- *
- * @param data        json String
- * @param extension   json String
- * @param description 描述
- */
-+ (OIMMessageInfo *)createCustomMessage:(NSString *)data
-                              extension:(NSString * _Nullable)extension
-                            description:(NSString * _Nullable)description;
+ /*
+  * Create a business card message.
+  *
+  * @param content String
+  */
+ + (OIMMessageInfo *)createCardMessage:(OIMCardElem *)card;
 
-/*
- * 创建动图消息
- *
- */
-+ (OIMMessageInfo *)createFaceMessageWithIndex:(NSInteger)index
-                                          data:(NSString *)dataStr;
+ /*
+  * Create a custom message.
+  *
+  * @param data        JSON String
+  * @param extension   JSON String
+  * @param description Description
+  */
+ + (OIMMessageInfo *)createCustomMessage:(NSString *)data
+                               extension:(NSString * _Nullable)extension
+                             description:(NSString * _Nullable)description;
 
+ /*
+  * Create an animated sticker message.
+  *
+  */
+ + (OIMMessageInfo *)createFaceMessageWithIndex:(NSInteger)index
+                                           data:(NSString *)dataStr;
 
-/*
- * 创建高级消息
- *
- */
-+ (OIMMessageInfo *)createAdvancedTextMessage:(NSString *)text
-                            messageEntityList:(NSArray <OIMMessageEntity *> *)messageEntityList;
-
-/*
- * 创建高级引用消息
- *
- */
-+ (OIMMessageInfo *)createAdvancedQuoteMessage:(NSString *)text
-                                       message:(OIMMessageInfo *)message
+ /*
+  * Create an advanced message.
+  *
+  */
+ + (OIMMessageInfo *)createAdvancedTextMessage:(NSString *)text
                              messageEntityList:(NSArray <OIMMessageEntity *> *)messageEntityList;
+
+ /*
+  * Create an advanced quoted message.
+  *
+  */
+ + (OIMMessageInfo *)createAdvancedQuoteMessage:(NSString *)text
+                                        message:(OIMMessageInfo *)message
+                              messageEntityList:(NSArray <OIMMessageEntity *> *)messageEntityList;
 
 @end
 
 @interface OIMManager (Message)
 
-/*
- * 发送消息
+/**
+ * Send a message
  *
- * @param message       消息体为通过Create...Message创建的OIMMessageInfo
- * @param recvID        单聊的用户ID，如果为群聊则为""
- * @param groupID       群聊的群ID，如果为单聊则为""
- * @param offlinePushInfo 离线推送的消息为OIMOfflinePushInfo
+ * @param message       The message body created with Create...Message methods (OIMMessageInfo)
+ * @param recvID        User ID for one-on-one chat, or an empty string for group chat
+ * @param groupID       Group ID for group chat, or an empty string for one-on-one chat
+ * @param offlinePushInfo Offline push information for the message (OIMOfflinePushInfo)
  */
 - (void)sendMessage:(OIMMessageInfo *)message
              recvID:(NSString * _Nullable)recvID
@@ -277,13 +264,13 @@ NS_ASSUME_NONNULL_BEGIN
          onProgress:(nullable OIMNumberCallback)onProgress
           onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 发送消息不通过sdk内置OSS上传多媒体文件
+/**
+ * Send a message without uploading multimedia files through the built-in SDK Object Storage Service (OSS)
  *
- * @param message       消息体为通过Create...Message创建的OIMMessageInfo
- * @param recvID        单聊的用户ID，如果为群聊则为""
- * @param groupID       群聊的群ID，如果为单聊则为""
- * @param offlinePushInfo 离线推送的消息为OIMOfflinePushInfo
+ * @param message       The message body created with Create...Message methods (OIMMessageInfo)
+ * @param recvID        User ID for one-on-one chat, or an empty string for group chat
+ * @param groupID       Group ID for group chat, or an empty string for one-on-one chat
+ * @param offlinePushInfo Offline push information for the message (OIMOfflinePushInfo)
  */
 - (void)sendMessageNotOss:(OIMMessageInfo *)message
                    recvID:(NSString * _Nullable)recvID
@@ -293,32 +280,33 @@ NS_ASSUME_NONNULL_BEGIN
                onProgress:(nullable OIMNumberCallback)onProgress
                 onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 撤回一条消息
+/**
+ * Revoke a message
  *
- * @param conversationID 会话ID
- * @param clientMsgID    消息ID
- *
+ * @param conversationID Conversation ID
+ * @param clientMsgID    Message ID
  */
 - (void)revokeMessage:(NSString *)conversationID
           clientMsgID:(NSString *)clientMsgID
             onSuccess:(OIMSuccessCallback)onSuccess
             onFailure:(OIMFailureCallback)onFailure;
 
-/*
- * 单聊正在输入消息
+/**
+ * Typing status for one-on-one chat
  *
- * @param recvID    接收者的ID
- * @param msgTip    自定义的提示信息
+ * @param recvID    Receiver's ID
+ * @param msgTip    Customized tip message
  */
 - (void)typingStatusUpdate:(NSString *)recvID
                     msgTip:(NSString *)msgTip
                  onSuccess:(nullable OIMSuccessCallback)onSuccess
                  onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 标记消息已读
+/**
+ * Mark messages as read
  *
+ * @param conversationID    Conversation's ID
+ * @param clientMsgIDs      ClientMsg's IDs
  */
 - (void)markMessageAsReadByMsgID:(NSString *)conversationID
                     clientMsgIDs:(NSArray <NSString *> *)clientMsgIDs
@@ -326,7 +314,10 @@ NS_ASSUME_NONNULL_BEGIN
                        onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 从本地删除一条消息
+ * Delete a message from local storage
+ *
+ * @param conversationID    Conversation's ID
+ * @param clientMsgID      ClientMsg's ID
  */
 - (void)deleteMessageFromLocalStorage:(NSString *)conversationID
                           clientMsgID:(NSString *)clientMsgID
@@ -334,7 +325,10 @@ NS_ASSUME_NONNULL_BEGIN
                             onFailure:(OIMFailureCallback)onFailure;
 
 /**
- 删除一条消息  本地 & 服务器
+ * Delete a message from local and server
+ *
+ * @param conversationID    Conversation's ID
+ * @param clientMsgID      ClientMsg's ID
  */
 - (void)deleteMessage:(NSString *)conversationID
           clientMsgID:(NSString *)clientMsgID
@@ -342,22 +336,22 @@ NS_ASSUME_NONNULL_BEGIN
             onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 从本地删除所有消息
+ * Delete all messages from local storage
  */
 - (void)deleteAllMsgFromLocalWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
                                  onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 删除所有消息  本地 & 服务器
+ * Delete all messages from local and server
  */
 - (void)deleteAllMsgFromLocalAndSvrWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
                                        onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 插入一条单聊消息到本地
+/**
+ * Insert a one-on-one chat message into local storage
  *
- * @param recvID    接收用户ID
- * @param sendID    发送者ID
+ * @param recvID    Receiver's user ID
+ * @param sendID    Sender's user ID
  */
 - (void)insertSingleMessageToLocalStorage:(OIMMessageInfo *)message
                                    recvID:(NSString *)recvID
@@ -365,11 +359,11 @@ NS_ASSUME_NONNULL_BEGIN
                                 onSuccess:(nullable OIMMessageInfoCallback)onSuccess
                                 onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 插入一条群聊消息到本地
+/**
+ * Insert a group chat message into local storage
  *
- * @param groupID   群ID
- * @param sendID    发送者ID
+ * @param groupID   Group ID
+ * @param sendID    Sender's user ID
  */
 - (void)insertGroupMessageToLocalStorage:(OIMMessageInfo *)message
                                  groupID:(NSString * _Nullable)groupID
@@ -377,17 +371,21 @@ NS_ASSUME_NONNULL_BEGIN
                                onSuccess:(nullable OIMMessageInfoCallback)onSuccess
                                onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 查找本地消息
+/**
+ * Search for local messages
  *
+ * @param param     search param
  */
 - (void)searchLocalMessages:(OIMSearchParam *)param
                   onSuccess:(nullable OIMMessageSearchCallback)onSuccess
                   onFailure:(nullable OIMFailureCallback)onFailure;
 
-/*
- * 独立上传文件到初始化sdk的objectStorage（发送多媒体消息不需调用此函数，其在sdk内部自动上传）
+/**
+ * Independently upload a file to the initialized SDK's Object Storage Service (OSS) (Not needed for sending multimedia messages, as it is automatically done by the SDK internally)
  *
+ * @param fullPath  Absolute file path.
+ * @param name  file's name
+ * @param cause  file's catogery
  */
 - (void)uploadFile:(NSString *)fullPath
            name:(NSString * _Nullable)name
@@ -397,46 +395,57 @@ NS_ASSUME_NONNULL_BEGIN
       onSuccess:(OIMSuccessCallback)onSuccess
       onFailure:(OIMFailureCallback)onFailure;
 
-/*
- * 全局设置消息提示
+/**
+ * Set global message notification options
  *
+ * @param opt   receiving method.
  */
 - (void)setGlobalRecvMessageOpt:(OIMReceiveMessageOpt)opt
                       onSuccess:(nullable OIMSuccessCallback)onSuccess
                       onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- * Advanced Message 系列使用
- @param opts lastMinSeq  是上一次拉取回调给的值，上下文，第二次拉取需要回传
+ * Advanced Message Series Usage
+ *
+ * @param opts lastMinSeq  is the value passed in the last pull callback, context, to be passed back in the second pull
  */
 - (void)getAdvancedHistoryMessageList:(OIMGetAdvancedHistoryMessageListParam *)opts
                             onSuccess:(nullable OIMGetAdvancedHistoryMessageListCallback)onSuccess
                             onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- * Advanced Message 系列使用
- @param opts lastMinSeq  是上一次拉取回调给的值，上下文，第二次拉取需要回传
+ * Advanced Message Series Usage
+ *
+ * @param opts lastMinSeq  is the value passed in the last pull callback, context, to be passed back in the second pull
  */
 - (void)getAdvancedHistoryMessageListReverse:(OIMGetAdvancedHistoryMessageListParam *)opts
                                    onSuccess:(nullable OIMGetAdvancedHistoryMessageListCallback)onSuccess
                                    onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 查找消息列表
+ * Find a list of messages
+ *
+ * @param param   Find parameters.
  */
 - (void)findMessageList:(NSArray<OIMFindMessageListParam *> *)param
               onSuccess:(nullable OIMMessageSearchCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 设置角标使用，告知服务器 客户端现有的数量
+ * Set the application badge count and inform the server of the current count
+ *
+ * @param count Number of corners.
  */
 - (void)setAppBadge:(NSInteger)count
           onSuccess:(nullable OIMSuccessCallback)onSuccess
           onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- 例如存储消息的本地状态
+ * For example, store the local state of a message
+ * 
+ * @param conversationID    Conversation's ID
+ * @param clientMsgID      ClientMsg's ID
+ * @param localEx      ex
  */
 - (void)setMessageLocalEx:(NSString *)conversationID
               clientMsgID:(NSString *)clientMsgID

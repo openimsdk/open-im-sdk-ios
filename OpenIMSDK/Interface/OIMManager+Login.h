@@ -14,13 +14,13 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark - Login
 
-/*
- * 登录
- *
- * @param userID   用户ID
- *              uid来自于自身业务服务器
- * @param token 用户token
- *              token需要业务服务器向OpenIM服务端交换获取。
+/**
+ * Log in
+ * 
+ * @param userID   User ID
+ *              The UID is obtained from your own business server.
+ * @param token User token
+ *              The token needs to be obtained by the business server from the OpenIM server.
  */
 - (void)login:(NSString *)userID
         token:(NSString *)token
@@ -28,17 +28,15 @@ NS_ASSUME_NONNULL_BEGIN
     onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- * 获取登录状态
- *
+ * Get login status
  * Logout   = 1
  * Logging = 2
  * Logged  = 3
  */
 - (NSInteger)getLoginStatus;
 
-/*
- * 登出
- *
+/**
+ * Log out
  */
 - (void)logoutWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
                   onFailure:(nullable OIMFailureCallback)onFailure;

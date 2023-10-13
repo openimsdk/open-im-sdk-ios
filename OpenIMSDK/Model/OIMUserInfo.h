@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-///个人信息，所有信息都包括
+/// Personal information, including all details
 ///
 @interface OIMUserInfo : NSObject
 

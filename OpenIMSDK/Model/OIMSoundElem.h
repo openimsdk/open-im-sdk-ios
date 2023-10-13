@@ -10,29 +10,24 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMSoundElem : NSObject
-
-/*
- * 唯一ID
+/**
+ * Unique ID
  */
 @property (nonatomic, nullable, copy) NSString *uuID;
-
-/*
- * 本地资源地址
+/**
+ * Local resource path
  */
 @property (nonatomic, nullable, copy) NSString *soundPath;
-
-/*
- * oss地址
+/**
+ * OSS (Object Storage Service) address
  */
 @property (nonatomic, nullable, copy) NSString *sourceUrl;
-
-/*
- * 音频大小
+/**
+ * Audio size
  */
 @property (nonatomic, assign) NSInteger dataSize;
-
-/*
- * 音频时长
+/**
+ * Audio duration
  */
 @property (nonatomic, assign) NSInteger duration;
 

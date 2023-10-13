@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithOnSuccess:(OIMSuccessCallback)onSuccess
                         onFailure:(OIMFailureCallback)onFailure;
 
+- (instancetype)initWithAsyncOnSuccess:(OIMSuccessCallback)onSuccess
+                             onFailure:(OIMFailureCallback)onFailure;
+
 - (void)dispatchMainThread:(void (NS_NOESCAPE ^)(void))todo;
 @end
 

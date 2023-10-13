@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// 消息模型
+/// Message Model
 ///
 @interface OIMMessageInfo : NSObject
 
@@ -67,9 +67,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) NSString *groupID;
 
 @property (nonatomic, nullable, copy) NSString *content;
-
-/*
- *  消息唯一序列号
+/**
+ * Message unique sequence number
  */
 @property (nonatomic, assign) NSInteger seq;
 
@@ -125,23 +124,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMReceiptInfo : NSObject
 
-/*
- * 用户id - 单聊有效
+/**
+ * User ID - for one-on-one chat
  */
 @property (nonatomic, nullable, copy) NSString *userID;
 
-/*
- * group id - 群聊有效
+/**
+ * Group ID - for group chat
  */
 @property (nonatomic, nullable, copy) NSString *groupID;
 
-/*
- * 已读消息id
+/**
+ * Read message IDs
  */
 @property (nonatomic, nullable, copy) NSArray<NSString *> *msgIDList;
 
-/*
- * 阅读时间
+/**
+ * Reading time
  */
 @property (nonatomic, assign) NSInteger readTime;
 
@@ -155,15 +154,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMMessageRevokedInfo : NSObject
 
-/*
- * 撤回者的id
+/**
+ * ID of the revoker
  */
 @property (nonatomic, copy) NSString *revokerID;
 
 @property (nonatomic, copy) NSString *revokerNickname;
 
-/*
- * 撤回者的身份：例如：群主，群管理员
+/**
+ * Revoker's role, e.g., group owner, group administrator
  */
 @property (nonatomic, assign) OIMGroupMemberRole revokerRole;
 
@@ -208,9 +207,5 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSDictionary<NSString *, OIMKeyValue *> *reactionExtensionList;
 
 @end
-
-
-
-
 
 NS_ASSUME_NONNULL_END

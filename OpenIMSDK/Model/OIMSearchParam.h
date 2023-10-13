@@ -14,95 +14,113 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMSearchParam : NSObject
 
-/*
- * 会话ID，如果为空，则为全局搜素
+/**
+ * Conversation ID, if empty, it's a global search
  */
 @property (nonatomic, copy) NSString *conversationID;
 
-/*
- * 搜索关键词列表，目前仅支持一个关键词搜索
+/**
+ * Search keyword list, currently supports only one keyword search
  */
 @property (nonatomic, strong) NSArray *keywordList;
 
-/*
- * 关键词匹配模式，1代表与，2代表或，暂时未用
+/**
+ * Keyword match mode, 1 means AND, 2 means OR (currently unused)
  */
 @property (nonatomic, assign) NSInteger keywordListMatchType;
 
-/*
- * 指定消息发送的uid列表，暂时未用
+/**
+ * Specify the list of sender user IDs (currently unused)
  */
 @property (nonatomic, nullable, strong) NSArray *senderUserIDList;
 
-/*
- * 消息类型列表
+/**
+ * Message type list
  */
 @property (nonatomic, nullable, strong) NSArray *messageTypeList;
 
-/*
- * 搜索的起始时间点。默认为0即代表从现在开始搜索。UTC 时间戳，单位：秒
+/**
+ * Search start time point. Default is 0, meaning search from now. UTC timestamp, unit: seconds
  */
 @property (nonatomic, assign) NSInteger searchTimePosition;
 
-/*
- * 从起始时间点开始的过去时间范围，单位秒。默认为0即代表不限制时间范围，传24x60x60代表过去一天
+/**
+ * Time range from the start time point, in seconds. Default is 0, meaning no time limit. Provide 24x60x60 to represent the past day.
  */
 @property (nonatomic, assign) NSInteger searchTimePeriod;
 
-/*
- * 当前页数，起始第一页为 1,conversationID为空时候，即全局搜素情況下，无效
+/**
+ * Current page number, starting from the first page (1). It's invalid when conversationID is empty, i.e., in the global search context.
  */
 @property (nonatomic, assign) NSInteger pageIndex;
 
-/*
- * 每页数量，conversationID为空时候，即全局搜素情况下，无效
+/**
+ * Number of items per page. It's invalid when conversationID is empty, i.e., in the global search context.
  */
 @property (nonatomic, assign) NSInteger count;
 
 @end
 
-
-
-// 查询群使用
+// For group search
 @interface OIMSearchGroupParam : NSObject
 
-// 搜索关键词，目前仅支持一个关键词搜索，不能为空
+/**
+ * Search keywords, currently supports only one keyword (must not be empty)
+ */
 @property (nonatomic, copy) NSArray *keywordList;
 
-// 是否以关键词搜索群ID(注：两个不可以同时为false)，默认false
+/**
+ * Whether to search for group IDs based on keywords (note: both cannot be false at the same time). Default is false.
+ */
 @property (nonatomic, assign) BOOL isSearchGroupID;
 
-// 是否以关键词搜索群名字，默认false
+/**
+ * Whether to search for group names based on keywords. Default is false.
+ */
 @property (nonatomic, assign) BOOL isSearchGroupName;
 
 @end
 
-// 查询好友使用
+/// For friends search
+///
 @interface OIMSearchFriendsParam : NSObject
 
-// 搜索关键词，目前仅支持一个关键词搜索，不能为空
+/**
+ *  Search keywords, currently supports only one keyword (must not be empty)
+ */
 @property (nonatomic, copy) NSArray *keywordList;
 
-// 是否以关键词搜索UserID
+/**
+ *  Whether to search for user IDs based on keywords
+ */
 @property (nonatomic, assign) BOOL isSearchUserID;
 
-// 是否以关键词搜索昵称，默认false
+/**
+ *  Whether to search for nicknames based on keywords. Default is false.
+ */
 @property (nonatomic, assign) BOOL isSearchNickname;
 
-// 是否以关键词搜索备注，默认false
+/**
+ *  Whether to search for remarks based on keywords. Default is false.
+ */
 @property (nonatomic, assign) BOOL isSearchRemark;
 @end
 
-
-// 查询聊天记录使用
+/// For chat history search
+///
 @interface OIMGetMessageOptions : NSObject
 
 @property (nonatomic, copy, nullable) NSString *userID;
 @property (nonatomic, copy, nullable) NSString *groupID;
-@property (nonatomic, copy, nullable) NSString *conversationID; //会话ID，如果不为空则以会话ID获取，否则通过userID和groupID获取
-@property (nonatomic, copy, nullable) NSString *startClientMsgID; // 起始的消息clientMsgID
+/**
+ *  Conversation ID; if not empty, retrieve messages by conversation ID, otherwise use userID and groupID
+ */
+@property (nonatomic, copy, nullable) NSString *conversationID;
+/**
+ *  Start message clientMsgID
+ */
+@property (nonatomic, copy, nullable) NSString *startClientMsgID;
 @property (nonatomic, assign) NSInteger count;
-
 @end
 
 @interface OIMGetAdvancedHistoryMessageListParam : OIMGetMessageOptions
@@ -111,7 +129,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
 @interface OIMFindMessageListParam : NSObject
 
 @property (nonatomic, copy) NSString *conversationID;
@@ -119,46 +136,58 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray <NSString *> *clientMsgIDList;
 
 @end
-
-// 查询组织架构使用
+/**
+ *  For organization structure search
+ */
 @interface OIMSearchOrganizationParam : NSObject
-
-// 搜索关键词，目前仅支持一个关键词搜索，不能为空
+/**
+ *  Search keyword, currently supports only one keyword (must not be empty)
+ */
 @property (nonatomic, copy) NSString *keyword;
-
-// 是否以关键词搜索UserID
+/**
+ *  Whether to search user IDs based on keywords
+ */
 @property (nonatomic, assign) BOOL isSearchUserID;
-
-// 是否以关键词搜索昵称，默认false
+/**
+ *  Whether to search usernames based on keywords. Default is false.
+ */
 @property (nonatomic, assign) BOOL isSearchUserName;
-
-// 是否以英文搜索备注，默认false
+/**
+ *  Whether to search English names based on keywords. Default is false.
+ */
 @property (nonatomic, assign) BOOL isSearchEnglishName;
-
-// 是否以职位搜索备注，默认false
+/**
+ *  Whether to search positions based on keywords. Default is false.
+ */
 @property (nonatomic, assign) BOOL isSearchPosition;
-
-// 是否以移动号码搜索备注，默认false
+/**
+ *  Whether to search mobile numbers based on keywords. Default is false.
+ */
 @property (nonatomic, assign) BOOL isSearchMobile;
-
-// 是否以邮箱搜索备注，默认false
+/**
+ *  Whether to search email addresses based on keywords. Default is false.
+ */
 @property (nonatomic, assign) BOOL isSearchEmail;
-
-// 是否以电话号码搜索备注，默认false
+/**
+ *  Whether to search telephone numbers based on keywords. Default is false.
+ */
 @property (nonatomic, assign) BOOL isSearchTelephone;
 @end
 
-// 查询群成员使用
+/// For group members search
+///
 @interface OIMSearchGroupMembersParam : NSObject
 
 @property (nonatomic, copy) NSString *groupID;
 
 @property (nonatomic, copy) NSArray *keywordList;
-
-// 是否以关键词搜索UserID
+/**
+ *  Whether to search user IDs based on keywords
+ */
 @property (nonatomic, assign) BOOL isSearchUserID;
-
-// 是否以关键词搜索昵称，默认false
+/**
+ *  Whether to search member nicknames based on keywords. Default is false.
+ */
 @property (nonatomic, assign) BOOL isSearchMemberNickname;
 
 @property (nonatomic, assign) NSInteger offset;

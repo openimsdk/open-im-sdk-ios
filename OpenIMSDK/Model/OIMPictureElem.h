@@ -8,36 +8,35 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
 @interface OIMPictureInfo : NSObject
 
-/*
- * 唯一ID，可不设置
+/**
+ * Unique ID, can be left unset
  */
 @property (nonatomic, nullable, copy) NSString *uuID;
 
-/*
- * 图片类型, 可不设置
+/**
+ * Image type, can be left unset
  */
 @property (nonatomic, nullable, copy) NSString *type;
 
-/*
- * 图片大小
+/**
+ * Image size
  */
 @property (nonatomic, assign) NSInteger size;
 
-/*
- * 图片宽度
+/**
+ * Image width
  */
 @property (nonatomic, assign) CGFloat width;
 
-/*
- * 图片高度
+/**
+ * Image height
  */
 @property (nonatomic, assign) CGFloat height;
 
-/*
- * 图片oss地址
+/**
+ * Image OSS address
  */
 @property (nonatomic, copy) NSString *url;
 
@@ -45,23 +44,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMPictureElem : NSObject
 
-/*
- * 本地资源地址
+/**
+ * Local resource path
  */
 @property (nonatomic, nullable, copy) NSString *sourcePath;
 
-/*
- * 本地图片详情
+/**
+ * Local image details
  */
 @property (nonatomic, nullable, strong) OIMPictureInfo *sourcePicture;
 
-/*
- * 大图详情
+/**
+ * Big image details
  */
 @property (nonatomic, nullable, strong) OIMPictureInfo *bigPicture;
 
-/*
- * 缩略图详情
+/**
+ * Thumbnail image details
  */
 @property (nonatomic, nullable, strong) OIMPictureInfo *snapshotPicture;
 

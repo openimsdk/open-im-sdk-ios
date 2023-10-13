@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// 会话信息
+/// Conversation Information
 ///
 @interface OIMConversationBaseInfo : NSObject
 
@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// 会话信息
+/// Conversation Information
 ///
 @interface OIMConversationInfo : OIMConversationBaseInfo
 
@@ -47,12 +47,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) BOOL isPinned;
 
-/// 是否开启了私聊（阅后即焚）
+/**
+ *  Whether private chat (burn after reading) is enabled
+ */
 @property (nonatomic, assign) BOOL isPrivateChat;
-// 私聊时长
+/**
+ *  Private chat duration
+ */
 @property (nonatomic, assign) NSTimeInterval burnDuration;
 
-/// 是否还在组内，如果退群返回true
+/**
+ *  Whether still in the group, return true if left the group
+ */
 @property (nonatomic, assign) BOOL isNotInGroup;
 
 @property (nonatomic, nullable, copy) NSString *attachedInfo;
@@ -63,12 +69,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// 免打扰会话信息
+/// Do Not Disturb Conversation Information
 ///
 @interface OIMConversationNotDisturbInfo : OIMConversationBaseInfo
 
-/*
- * 免打扰状态
+/**
+ * Do Not Disturb Status
  */
 @property (nonatomic, assign) OIMReceiveMessageOpt result;
 
