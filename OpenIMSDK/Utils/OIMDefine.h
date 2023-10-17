@@ -144,14 +144,6 @@ typedef NS_ENUM(NSInteger, OIMGroupMemberRole) {
     OIMGroupMemberRoleMember = 20,  /// Group member
 };
 
-/*
- * Gender Types
- */
-typedef NS_ENUM(NSInteger, OIMGender)  {
-    OIMGenderMale = 1,      /// Male
-    OIMGenderFemale        /// Female
-};
-
 typedef NS_ENUM(NSInteger, OIMApplicationStatus) {
     OIMApplicationStatusDecline = -1,  /// Declined
     OIMApplicationStatusNormal = 0,    /// Waiting for processing

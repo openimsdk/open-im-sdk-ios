@@ -67,18 +67,4 @@
     return url;
 }
 
-- (OIMGender)gender {
-    OIMGender gender = OIMGenderMale;
-    
-    if (self.friendInfo != nil) {
-        gender = self.friendInfo.gender;
-    } else if (self.blackInfo != nil) {
-        gender = self.blackInfo.gender;
-    } else if (self.publicInfo != nil) {
-        gender = self.publicInfo.gender;
-    }
-    
-    return gender;
-}
-
 @end

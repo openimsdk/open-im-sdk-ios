@@ -21,15 +21,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, copy) NSString *fromFaceURL;
 
-@property (nonatomic, assign) OIMGender fromGender;
-
 @property (nonatomic, nullable, copy) NSString *toUserID;
 
 @property (nonatomic, nullable, copy) NSString *toNickname;
 
 @property (nonatomic, nullable, copy) NSString *toFaceURL;
-
-@property (nonatomic, assign) OIMGender toGender;
 
 @property (nonatomic, assign) OIMApplicationStatus handleResult;
 

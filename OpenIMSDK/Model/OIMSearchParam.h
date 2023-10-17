@@ -136,43 +136,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray <NSString *> *clientMsgIDList;
 
 @end
-/**
- *  For organization structure search
- */
-@interface OIMSearchOrganizationParam : NSObject
-/**
- *  Search keyword, currently supports only one keyword (must not be empty)
- */
-@property (nonatomic, copy) NSString *keyword;
-/**
- *  Whether to search user IDs based on keywords
- */
-@property (nonatomic, assign) BOOL isSearchUserID;
-/**
- *  Whether to search usernames based on keywords. Default is false.
- */
-@property (nonatomic, assign) BOOL isSearchUserName;
-/**
- *  Whether to search English names based on keywords. Default is false.
- */
-@property (nonatomic, assign) BOOL isSearchEnglishName;
-/**
- *  Whether to search positions based on keywords. Default is false.
- */
-@property (nonatomic, assign) BOOL isSearchPosition;
-/**
- *  Whether to search mobile numbers based on keywords. Default is false.
- */
-@property (nonatomic, assign) BOOL isSearchMobile;
-/**
- *  Whether to search email addresses based on keywords. Default is false.
- */
-@property (nonatomic, assign) BOOL isSearchEmail;
-/**
- *  Whether to search telephone numbers based on keywords. Default is false.
- */
-@property (nonatomic, assign) BOOL isSearchTelephone;
-@end
 
 /// For group members search
 ///

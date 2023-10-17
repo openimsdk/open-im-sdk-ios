@@ -20,8 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, copy) NSString *faceURL;
 
-@property (nonatomic, assign) OIMGender gender;
-
 @end
 
 /// Blacklist information, basic information of users in the blacklist. Note that the blacklist is a mutual relationship.
@@ -52,12 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger addSource;
 
 @property (nonatomic, nullable, copy) NSString *operatorUserID;
-
-@property (nonatomic, nullable, copy) NSString *phoneNumber;
-
-@property (nonatomic, assign) NSInteger birth;
-
-@property (nonatomic, nullable, copy) NSString *email;
 
 @property (nonatomic, nullable, copy) NSString *attachedInfo;
 
@@ -92,7 +84,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *userID;
 @property (nonatomic, copy, readonly) NSString *showName;
 @property (nonatomic, copy, readonly) NSString *faceURL;
-@property (nonatomic, assign, readonly) OIMGender gender;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Get multiple conversation lists
- * @param ids   List of conversation IDs
+ * @param conversationIDs   List of conversation IDs
  */
 - (void)getMultipleConversation:(NSArray <NSString *> *)conversationIDs
                        onSuccess:(nullable OIMConversationsInfoCallback)onSuccess

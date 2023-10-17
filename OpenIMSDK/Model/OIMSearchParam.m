@@ -48,7 +48,3 @@
 @implementation OIMSearchGroupMembersParam
 
 @end
-
-@implementation OIMSearchOrganizationParam
-
-@end

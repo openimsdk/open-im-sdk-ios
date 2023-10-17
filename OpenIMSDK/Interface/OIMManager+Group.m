@@ -241,6 +241,16 @@
     Open_im_sdkSetGroupMemberRoleLevel(callback, [self operationId], groupID, userID, roleLevel);
 }
 
+- (void)setGroupMemberInfo:(NSString *)groupID
+                    userID:(NSString *)userID
+                      ex:(NSString *)ex
+                 onSuccess:(nullable OIMSuccessCallback)onSuccess
+                 onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSetGroupMemberInfo(callback, [self operationId], ex);
+}
+
 - (void)getGroupMemberListByJoinTimeFilter:(NSString *)groupID
                                     offset:(NSInteger)offset
                                      count:(NSInteger)count

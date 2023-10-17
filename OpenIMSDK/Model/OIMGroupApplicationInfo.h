@@ -28,7 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) NSString *userID;
 @property (nonatomic, nullable, copy) NSString *nickname;
 @property (nonatomic, nullable, copy) NSString *userFaceURL;
-@property (nonatomic, assign) OIMGender gender;
 @property (nonatomic, assign) OIMApplicationStatus handleResult;
 @property (nonatomic, nullable, copy) NSString *reqMsg;
 @property (nonatomic, nullable, copy) NSString *handledMsg;
