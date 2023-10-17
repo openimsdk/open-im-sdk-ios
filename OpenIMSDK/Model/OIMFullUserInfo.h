@@ -75,8 +75,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface OIMFullUserInfo : NSObject
 
-@property (nonatomic, assign) OIMReceiveMessageOpt globalRecvMsgOpt;
-
 @property (nonatomic, nullable, strong) OIMPublicUserInfo *publicInfo;
 @property (nonatomic, nullable, strong) OIMFriendInfo *friendInfo;
 @property (nonatomic, nullable, strong) OIMBlackInfo *blackInfo;
