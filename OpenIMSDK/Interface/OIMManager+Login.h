@@ -29,11 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Get login status
- * Logout   = 1
- * Logging = 2
- * Logged  = 3
  */
-- (NSInteger)getLoginStatus;
+- (OIMLoginStatus)getLoginStatus;
 
 /**
  * Log out

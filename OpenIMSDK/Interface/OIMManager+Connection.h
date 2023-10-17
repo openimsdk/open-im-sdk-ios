@@ -21,13 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *dataDir;
 // Log level, default is 6
 @property (nonatomic, assign) NSInteger logLevel;
-// Default is "minio"
-@property (nonatomic, copy, nullable) NSString *objectStorage;
-// Encryption, default is NO
-@property (nonatomic, assign) BOOL encryption;
 // Compression, default is NO
 @property (nonatomic, assign) BOOL compression;
-@property (nonatomic, assign) BOOL isExternal;
 // Log output to local, default is YES
 @property (nonatomic, assign) BOOL isLogStandardOutput;
 @property (nonatomic, copy, nullable) NSString *logFilePath;

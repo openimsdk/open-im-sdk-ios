@@ -163,6 +163,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Disband a group
+ * Disband a group
  *
  * @param groupID Group ID
  */

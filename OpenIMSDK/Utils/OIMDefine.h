@@ -97,7 +97,6 @@ typedef NS_ENUM(NSInteger, OIMMessageStatus) {
     OIMMessageStatusSending = 1,    /// Sending
     OIMMessageStatusSendSuccess,    /// Send success
     OIMMessageStatusSendFailure,    /// Send failure
-    OIMMessageStatusDeleted,        /// Deleted
     OIMMessageStatusRevoke          /// Revoked (client does not need to be concerned)
 };
 
@@ -173,7 +172,7 @@ typedef NS_ENUM(NSInteger,  OIMGroupVerificationType) {
 };
 
 /**
- Group Types
+ * Group Types
  */
 typedef NS_ENUM(NSInteger, OIMGroupType) {
     OIMGroupTypeNormal = 0,     /// Normal group
@@ -182,7 +181,7 @@ typedef NS_ENUM(NSInteger, OIMGroupType) {
 };
 
 /**
- Group Status
+ * Group Status
  */
 typedef NS_ENUM(NSInteger, OIMGroupStatus) {
     OIMGroupStatusOk = 0,       /// Normal
@@ -192,12 +191,29 @@ typedef NS_ENUM(NSInteger, OIMGroupStatus) {
 };
 
 /**
- Joining Group Methods
+ * Joining Group Methods
  */
 typedef NS_ENUM(int32_t, OIMJoinType) {
     OIMJoinTypeInvited = 2, /// Joining by invitation
     OIMJoinTypeSearch = 3,  /// Joining by search
     OIMJoinTypeQRCode = 4   /// Joining by QR code
+};
+
+/**
+ * Is it allowed?
+ */
+typedef NS_ENUM(NSInteger, OIMAllowType) {
+    OIMJoinTypeAllowed = 0,
+    OIMJoinTypeNotAllowed = 1,
+};
+
+/**
+ * Is it allowed?
+ */
+typedef NS_ENUM(NSInteger, OIMLoginStatus) {
+    OIMLoginStatusLogout = 0,
+    OIMLoginStatusLogging = 1,
+    OIMLoginStatusLogged = 2,
 };
 
 #endif /* IMDefine_h */

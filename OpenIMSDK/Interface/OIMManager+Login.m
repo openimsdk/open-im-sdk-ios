@@ -28,7 +28,7 @@
     Open_im_sdkLogin(callback, [self operationId], userID, token);
 }
 
-- (NSInteger)getLoginStatus {
+- (OIMLoginStatus)getLoginStatus {
     return Open_im_sdkGetLoginStatus([self operationId]);
 }
 

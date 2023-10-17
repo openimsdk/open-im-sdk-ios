@@ -41,8 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *creatorUserID;
 @property (nonatomic, copy, readonly) NSString *ownerUserID;
 @property (nonatomic, assign) OIMGroupVerificationType needVerification;
-@property (nonatomic, assign) NSInteger lookMemberInfo;
-@property (nonatomic, assign) NSInteger applyMemberFriend;
+@property (nonatomic, assign) OIMAllowType lookMemberInfo;
+@property (nonatomic, assign) OIMAllowType applyMemberFriend;
 @property (nonatomic, assign) NSInteger notificationUpdateTime;
 @property (nonatomic, nullable, copy) NSString *notificationUserID;
 
