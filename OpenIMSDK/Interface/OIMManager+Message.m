@@ -296,7 +296,7 @@
     Open_im_sdkTypingStatusUpdate(callback, [self operationId], recvID, msgTip);
 }
 
-- (void)markMessageAsReadByMsgID:(NSString *)conversationID
+- (void)markMessageAsReadByConID:(NSString *)conversationID
                     clientMsgIDs:(NSArray <NSString *> *)clientMsgIDs
                        onSuccess:(nullable OIMSuccessCallback)onSuccess
                        onFailure:(nullable OIMFailureCallback)onFailure {

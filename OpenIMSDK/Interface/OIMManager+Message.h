@@ -308,7 +308,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param conversationID    Conversation's ID
  * @param clientMsgIDs      ClientMsg's IDs
  */
-- (void)markMessageAsReadByMsgID:(NSString *)conversationID
+- (void)markMessageAsReadByConID:(NSString *)conversationID
                     clientMsgIDs:(NSArray <NSString *> *)clientMsgIDs
                        onSuccess:(nullable OIMSuccessCallback)onSuccess
                        onFailure:(nullable OIMFailureCallback)onFailure;

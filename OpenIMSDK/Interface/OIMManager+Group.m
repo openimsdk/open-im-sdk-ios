@@ -243,12 +243,12 @@
 
 - (void)setGroupMemberInfo:(NSString *)groupID
                     userID:(NSString *)userID
-                      ex:(NSString *)ex
+                      info:(OIMGroupMemberInfo *)groupMemberInfo
                  onSuccess:(nullable OIMSuccessCallback)onSuccess
                  onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkSetGroupMemberInfo(callback, [self operationId], ex);
+    Open_im_sdkSetGroupMemberInfo(callback, [self operationId], groupMemberInfo.mj_JSONString);
 }
 
 - (void)getGroupMemberListByJoinTimeFilter:(NSString *)groupID

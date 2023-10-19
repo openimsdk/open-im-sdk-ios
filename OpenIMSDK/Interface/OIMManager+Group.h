@@ -213,9 +213,12 @@ NS_ASSUME_NONNULL_BEGIN
                       onSuccess:(nullable OIMSuccessCallback)onSuccess
                       onFailure:(nullable OIMFailureCallback)onFailure;
 
+/**
+ * Set group member's info
+ */
 - (void)setGroupMemberInfo:(NSString *)groupID
                     userID:(NSString *)userID
-                      ex:(NSString *)ex
+                      info:(OIMGroupMemberInfo *)groupMemberInfo
                  onSuccess:(nullable OIMSuccessCallback)onSuccess
                  onFailure:(nullable OIMFailureCallback)onFailure;
 
