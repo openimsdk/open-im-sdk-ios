@@ -81,7 +81,6 @@ typedef NS_ENUM(NSInteger, OIMMessageContentType) {
     OIMMessageContentTypeGroupMemberSetToOrdinaryUserNotification = 1518,
     OIMMessageContentTypeGroupAnnouncement = 1519,          /// Group announcement
     OIMMessageContentTypeGroupSetNameNotification = 1520,   /// Group name updated
-    OIMMessageContentTypeSuperGroupUpdateNotification = 1651,
     OIMMessageContentTypeIsPrivateMessage = 1701,           /// Burn after reading notification
     OIMMessageContentTypeBusiness = 2001,                   /// Business notification
     OIMMessageContentTypeRevoke = 2101,                     /// Message revoked
@@ -203,8 +202,8 @@ typedef NS_ENUM(int32_t, OIMJoinType) {
  * Is it allowed?
  */
 typedef NS_ENUM(NSInteger, OIMAllowType) {
-    OIMJoinTypeAllowed = 0,
-    OIMJoinTypeNotAllowed = 1,
+    OIMAllowTypeAllowed = 0,
+    OIMAllowTypeNotAllowed = 1,
 };
 
 /**

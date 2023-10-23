@@ -311,7 +311,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)markMessageAsReadByConID:(NSString *)conversationID
                     clientMsgIDs:(NSArray <NSString *> *)clientMsgIDs
                        onSuccess:(nullable OIMSuccessCallback)onSuccess
-                       onFailure:(nullable OIMFailureCallback)onFailure;
+                       onFailure:(nullable OIMFailureCallback)onFailure __attribute__((deprecated("This method is deprecated. Use markConversationMessageAsRead instead.")));
 
 /**
  * Delete a message from local storage
