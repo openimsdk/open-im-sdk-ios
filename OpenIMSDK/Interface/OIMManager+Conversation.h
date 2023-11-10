@@ -69,7 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Delete all conversations
  */
 - (void)deleteAllConversationFromLocalWithOnSuccess:(nullable OIMSuccessCallback)onSuccess
-                                          onFailure:(nullable OIMFailureCallback)onFailure;
+                                          onFailure:(nullable OIMFailureCallback)onFailure __attribute__((deprecated("Use hideAllConversations instead")));
 
 /**
  * Set the draft for a conversation
@@ -142,6 +142,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)hideConversation:(NSString *)conversationID
                onSuccess:(nullable OIMSuccessCallback)onSuccess
                onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)hideAllConversationsWithOnSuccess:(OIMSuccessCallback)onSuccess
+                               onFailure:(OIMFailureCallback)onFailure;
 
 /**
  * Clear unread messages

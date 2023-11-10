@@ -42,11 +42,12 @@
 }
 
 - (void)updateFcmToken:(NSString *)fmcToken
+            expireTime:(NSInteger)expireTime
              onSuccess:(OIMSuccessCallback)onSuccess
              onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
         
-    Open_im_sdkUpdateFcmToken(callback, [self operationId], fmcToken);
+    Open_im_sdkUpdateFcmToken(callback, [self operationId], fmcToken, expireTime);
 }
 
 - (void)subscribeUsersStatus:(NSArray<NSString *> *)userIDs

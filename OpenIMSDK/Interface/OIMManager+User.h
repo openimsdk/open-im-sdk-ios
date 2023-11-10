@@ -37,8 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Update FCM token
+ * @param fcmToken FCM Token
+ * @param expireTime expire time, unit: s
  */
 - (void)updateFcmToken:(NSString *)fcmToken
+            expireTime:(NSInteger)expireTime
              onSuccess:(nullable OIMSuccessCallback)onSuccess
              onFailure:(nullable OIMFailureCallback)onFailure;
 

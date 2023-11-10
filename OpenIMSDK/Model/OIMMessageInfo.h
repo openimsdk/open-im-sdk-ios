@@ -78,6 +78,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, copy) NSString *attachedInfo;
 
+@property (nonatomic, nullable, copy) NSString *localEx;
+
 @property (nonatomic, nullable, copy) NSString *ex;
 
 @property (nonatomic, strong) OIMOfflinePushInfo *offlinePush;
