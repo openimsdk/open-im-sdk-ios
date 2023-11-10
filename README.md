@@ -7,9 +7,9 @@ The underlying SDK core is implemented in [OpenIM SDK Core](https://github.com/o
 
 ## Documentation 📚
 
-Visit [https://doc.rentsoft.cn/](https://doc.rentsoft.cn/) for detailed documentation and guides.
+Visit [https://docs.openim.io/](https://docs.openim.io/) for detailed documentation and guides.
 
-For the SDK reference, see [Quick Start guide](https://doc.rentsoft.cn/sdks/quickstart/ios).
+For the SDK reference, see [Quick Start guide](https://docs.openim.io/sdks/quickstart/ios).
 
 ## Installation 💻
 
