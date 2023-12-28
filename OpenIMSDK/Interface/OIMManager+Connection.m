@@ -65,4 +65,13 @@
     Open_im_sdkUnInitSDK([self operationId]);
 }
 
+- (void)uploadLogsWithProgress:(OIMUploadProgressCallback)onProgress
+                     onSuccess:(OIMSuccessCallback)onSuccess
+                     onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    UploadLogsCallbackProxy *progress = [[UploadLogsCallbackProxy alloc] initWithOnProgress:onProgress];
+    
+    Open_im_sdkUploadLogs(callback, [self operationId], progress);
+}
 @end

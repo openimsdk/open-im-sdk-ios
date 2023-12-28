@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (OIMAtInfo *)createAtAllFlag:(NSString *)displayText;
 
++ (NSString *)getAtAllTag;
+
 /*
  * Create an @ text message.
  *

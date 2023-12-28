@@ -74,3 +74,37 @@
 }
 
 @end
+
+@interface UploadLogsCallbackProxy() {
+    OIMUploadProgressCallback onProgress;
+}
+
+@end
+
+@implementation UploadLogsCallbackProxy
+
+- (instancetype)initWithOnProgress:(OIMUploadProgressCallback)progress {
+    if (self = [super init]) {
+        onProgress = progress;
+    }
+    
+    return self;
+}
+
+- (void)onProgress:(int64_t)current size:(int64_t)size {
+    [self dispatchMainThread:^{
+        onProgress(current, current, size);
+    }];
+}
+
+- (void)dispatchMainThread:(void (NS_NOESCAPE ^)(void))todo {
+    if ([NSThread isMainThread]) {
+        todo();
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            todo();
+        });
+    }
+}
+@end
+

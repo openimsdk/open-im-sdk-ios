@@ -207,12 +207,12 @@ typedef NS_ENUM(NSInteger, OIMAllowType) {
 };
 
 /**
- * Is it allowed?
+ * login status
  */
 typedef NS_ENUM(NSInteger, OIMLoginStatus) {
-    OIMLoginStatusLogout = 0,
-    OIMLoginStatusLogging = 1,
-    OIMLoginStatusLogged = 2,
+    OIMLoginStatusLogout = 1,
+    OIMLoginStatusLogging = 2,
+    OIMLoginStatusLogged = 3,
 };
 
 #endif /* IMDefine_h */

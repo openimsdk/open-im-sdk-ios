@@ -22,4 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface UploadLogsCallbackProxy : NSObject <Open_im_sdk_callbackUploadLogProgress>
+
+- (instancetype)initWithOnProgress:(OIMUploadProgressCallback)progress;
+
+@end
 NS_ASSUME_NONNULL_END

@@ -29,10 +29,18 @@
 
 + (OIMAtInfo *)createAtAllFlag:(NSString *)displayText {
     OIMAtInfo *all = [OIMAtInfo new];
-    all.atUserID = Open_im_sdkGetAtAllTag([[NSUUID UUID]UUIDString]);
+    all.atUserID = [self getAtAllTag];
     all.groupNickname = displayText ?: @"Mention All";
     
     return all;
+}
+
++ (NSString *)getAtAllTag {
+    NSString *tag = Open_im_sdkGetAtAllTag([OIMManager.manager operationId]);
+    tag = [tag stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    tag = [tag stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+    
+    return tag;
 }
 
 + (OIMMessageInfo *)createTextAtMessage:(NSString *)text
