@@ -105,4 +105,12 @@
     
     Open_im_sdkGetUsersInfoWithCache(callback, [self operationId], userIDs.mj_JSONString, groupID ?: @"");
 }
+
+- (void)setSelfInfoEx:(OIMUserInfo *)userInfo
+            onSuccess:(nullable OIMSuccessCallback)onSuccess
+            onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+        
+    Open_im_sdkSetSelfInfoEx(callback, [self operationId], userInfo.mj_JSONString);
+}
 @end

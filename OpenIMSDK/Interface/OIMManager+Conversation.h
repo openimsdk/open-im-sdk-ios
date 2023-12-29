@@ -152,6 +152,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)markConversationMessageAsRead:(NSString *)conversationID
                             onSuccess:(nullable OIMSuccessCallback)onSuccess
                             onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)setConversationEx:(NSString *)conversationID
+                       ex:(NSString *)ex
+                onSuccess:(nullable OIMSuccessCallback)onSuccess
+                onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ * Search sessions based on session name.
+ */
+- (void)searchConversation:(NSString *)name
+                onSuccess:(nullable OIMConversationsInfoCallback)onSuccess
+                onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

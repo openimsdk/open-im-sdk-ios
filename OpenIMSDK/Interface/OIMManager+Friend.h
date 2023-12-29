@@ -62,6 +62,10 @@ NS_ASSUME_NONNULL_BEGIN
              onSuccess:(nullable OIMSuccessCallback)onSuccess
              onFailure:(nullable OIMFailureCallback)onFailure;
 
+- (void)addToBlackList:(NSString *)userID
+                    ex:(NSString * _Nullable)ex
+             onSuccess:(OIMSuccessCallback)onSuccess
+             onFailure:(OIMFailureCallback)onFailure;
 /**
  * Blacklist
  */
@@ -128,6 +132,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)searchFriends:(OIMSearchFriendsParam *)searchParam
             onSuccess:(nullable OIMSearchUsersInfoCallback)onSuccess
             onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)setFriendsEx:(NSArray<NSString *> *)friendIDs
+                  ex:(NSString *)ex
+           onSuccess:(nullable OIMSuccessCallback)onSuccess
+           onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

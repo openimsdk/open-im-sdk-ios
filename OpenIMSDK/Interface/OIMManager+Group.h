@@ -31,6 +31,13 @@ NS_ASSUME_NONNULL_BEGIN
         onSuccess:(OIMSuccessCallback)onSuccess
         onFailure:(OIMFailureCallback)onFailure;
 
+- (void)joinGroup:(NSString *)groupID
+           reqMsg:(NSString *)reqMsg
+       joinSource:(OIMJoinType)joinSource
+               ex:(NSString * _Nullable)ex
+        onSuccess:(OIMSuccessCallback)onSuccess
+        onFailure:(OIMFailureCallback)onFailure;
+
 /**
  * Quit a group
  */

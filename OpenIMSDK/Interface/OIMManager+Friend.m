@@ -67,9 +67,16 @@
 - (void)addToBlackList:(NSString *)userID
              onSuccess:(OIMSuccessCallback)onSuccess
              onFailure:(OIMFailureCallback)onFailure {
+    [self addToBlackList:userID ex:nil onSuccess:onSuccess onFailure:onFailure];
+}
+
+- (void)addToBlackList:(NSString *)userID
+                    ex:(NSString *)ex
+             onSuccess:(OIMSuccessCallback)onSuccess
+             onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkAddBlack(callback, [self operationId], userID);
+    Open_im_sdkAddBlack(callback, [self operationId], userID, ex);
 }
 
 - (void)getBlackListWithOnSuccess:(OIMBlacksInfoCallback)onSuccess
@@ -157,5 +164,14 @@
     } onFailure:onFailure];
     
     Open_im_sdkSearchFriends(callback, [self operationId], searchParam.mj_JSONString);
+}
+
+- (void)setFriendsEx:(NSArray<NSString *> *)friendIDs
+                  ex:(NSString *)ex
+           onSuccess:(OIMSuccessCallback)onSuccess
+           onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSetFriendsEx(callback, [self operationId], friendIDs.mj_JSONString, ex);
 }
 @end

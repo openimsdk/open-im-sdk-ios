@@ -29,7 +29,18 @@
         onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkJoinGroup(callback, [self operationId], groupID, reqMsg ?: @"", joinSource);
+    Open_im_sdkJoinGroup(callback, [self operationId], groupID, reqMsg ?: @"", joinSource, nil);
+}
+
+- (void)joinGroup:(NSString *)groupID
+           reqMsg:(NSString *)reqMsg
+       joinSource:(OIMJoinType)joinSource
+               ex:(NSString *)ex
+        onSuccess:(OIMSuccessCallback)onSuccess
+        onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkJoinGroup(callback, [self operationId], groupID, reqMsg ?: @"", joinSource, ex);
 }
 
 - (void)quitGroup:(NSString *)groupID

@@ -183,4 +183,25 @@
 
     Open_im_sdkMarkConversationMessageAsRead(callback, [self operationId], conversationID);
 }
+
+- (void)setConversationEx:(NSString *)conversationID
+                       ex:(NSString *)ex
+                onSuccess:(nullable OIMSuccessCallback)onSuccess
+                onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+
+    Open_im_sdkSetConversationEx(callback, [self operationId], conversationID, ex);
+}
+
+- (void)searchConversation:(NSString *)name
+                onSuccess:(nullable OIMConversationsInfoCallback)onSuccess
+                 onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMConversationInfo mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkSearchConversation(callback, [self operationId], name);
+}
 @end
