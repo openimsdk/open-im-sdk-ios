@@ -552,6 +552,10 @@
     
 }
 
+- (void)onRecvOnlineOnlyMessage:(NSString *)message {
+    
+}
+
 #pragma mark -
 #pragma mark - Conversation
 
@@ -619,6 +623,10 @@
         
         [self.conversationListeners onTotalUnreadMessageCountChanged:totalUnreadCount];
     }];
+}
+
+- (void)onConversationUserInputStatusChanged:(NSString *)change {
+    
 }
 
 #pragma mark -
