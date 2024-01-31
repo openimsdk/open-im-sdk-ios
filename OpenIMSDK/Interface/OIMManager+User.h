@@ -76,10 +76,11 @@ NS_ASSUME_NONNULL_BEGIN
                      groupID:(NSString * _Nullable)groupID
                    onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
                    onFailure:(nullable OIMFailureCallback)onFailure;
-
+/*
 - (void)setSelfInfoEx:(OIMUserInfo *)userInfo
             onSuccess:(nullable OIMSuccessCallback)onSuccess
             onFailure:(nullable OIMFailureCallback)onFailure;
+ */
 @end
 
 NS_ASSUME_NONNULL_END

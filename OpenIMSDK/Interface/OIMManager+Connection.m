@@ -66,12 +66,13 @@
 }
 
 - (void)uploadLogsWithProgress:(OIMUploadProgressCallback)onProgress
+                            ex:(NSString *)ex
                      onSuccess:(OIMSuccessCallback)onSuccess
                      onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
     UploadLogsCallbackProxy *progress = [[UploadLogsCallbackProxy alloc] initWithOnProgress:onProgress];
     
-    Open_im_sdkUploadLogs(callback, [self operationId], progress);
+    Open_im_sdkUploadLogs(callback, [self operationId], ex, progress);
 }
 @end
