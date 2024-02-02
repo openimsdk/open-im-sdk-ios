@@ -731,8 +731,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         [OIMManager.manager kickGroupMember:GROUP_ID
                                      reason:@"nothing"
                                     usersID:@[OTHER_USER_ID]
-                                  onSuccess:^(NSArray<OIMSimpleResultInfo *> * _Nullable results) {
-            
+                                  onSuccess:^(NSString * _Nullable data) {
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
             callback(@(code), msg);
@@ -762,7 +761,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         [OIMManager.manager inviteUserToGroup:GROUP_ID
                                        reason:@"reason"
                                       usersID:@[OTHER_USER_ID]
-                                    onSuccess:^(NSArray<OIMSimpleResultInfo *> * _Nullable results) {
+                                    onSuccess:^(NSString * _Nullable data) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
