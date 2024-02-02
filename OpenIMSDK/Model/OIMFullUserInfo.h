@@ -36,7 +36,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, copy) NSString *attachedInfo;
 
-@property (nonatomic, nullable, copy) NSString *ex;
 @end
 
 /// Friend information, basic information of users who are friends. Note that the blacklist is a mutual relationship.
@@ -55,7 +54,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, copy) NSString *attachedInfo;
 
-@property (nonatomic, nullable, copy) NSString *ex;
 
 @end
 
