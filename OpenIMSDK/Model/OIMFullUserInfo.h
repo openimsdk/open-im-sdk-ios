@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, copy) NSString *faceURL;
 
+@property (nonatomic, nullable, copy) NSString *ex;
+
 @end
 
 /// Blacklist information, basic information of users in the blacklist. Note that the blacklist is a mutual relationship.

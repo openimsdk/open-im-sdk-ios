@@ -103,7 +103,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)kickGroupMember:(NSString *)groupID
                  reason:(NSString * _Nullable)reason
                 usersID:(NSArray <NSString *> *)usersID
-              onSuccess:(nullable OIMSimpleResultsCallback)onSuccess
+              onSuccess:(nullable OIMSuccessCallback)onSuccess
               onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
@@ -127,7 +127,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)inviteUserToGroup:(NSString *)groupID
                    reason:(NSString *)reason
                   usersID:(NSArray <NSString *> *)usersID
-                onSuccess:(nullable OIMSimpleResultsCallback)onSuccess
+                onSuccess:(nullable OIMSuccessCallback)onSuccess
                 onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
