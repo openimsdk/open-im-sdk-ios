@@ -256,6 +256,24 @@
          onProgress:(OIMNumberCallback)onProgress
           onFailure:(OIMFailureCallback)onFailure {
     
+    [self sendMessage:message
+               recvID:recvID
+              groupID:groupID
+         isOnlineOnly:false
+      offlinePushInfo:offlinePushInfo
+            onSuccess:onSuccess
+           onProgress:onProgress
+            onFailure:onFailure];
+}
+
+- (void)sendMessage:(OIMMessageInfo *)message
+             recvID:(NSString * _Nullable)recvID
+            groupID:(NSString * _Nullable)groupID
+       isOnlineOnly:(BOOL)isOnlineOnly
+    offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
+          onSuccess:(nullable OIMMessageInfoCallback)onSuccess
+         onProgress:(nullable OIMNumberCallback)onProgress
+          onFailure:(nullable OIMFailureCallback)onFailure {
     assert(recvID.length != 0 || groupID.length != 0);
     
     SendMessageCallbackProxy *callback = [[SendMessageCallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
@@ -264,7 +282,7 @@
         }
     } onProgress:onProgress onFailure:onFailure];
     
-    Open_im_sdkSendMessage(callback, [self operationId], message.mj_JSONString, recvID ?: @"", groupID ?: @"", offlinePushInfo ? offlinePushInfo.mj_JSONString : @"{}");
+    Open_im_sdkSendMessage(callback, [self operationId], message.mj_JSONString, recvID ?: @"", groupID ?: @"", offlinePushInfo ? offlinePushInfo.mj_JSONString : @"{}", isOnlineOnly);
 }
 
 - (void)sendMessageNotOss:(OIMMessageInfo *)message
@@ -274,7 +292,26 @@
                 onSuccess:(OIMMessageInfoCallback)onSuccess
                onProgress:(OIMNumberCallback)onProgress
                 onFailure:(OIMFailureCallback)onFailure {
+    assert(recvID.length != 0 || groupID.length != 0);
     
+    [self sendMessageNotOss:message
+                     recvID:recvID
+                    groupID:groupID
+               isOnlineOnly:false
+            offlinePushInfo:offlinePushInfo
+                  onSuccess:onSuccess
+                 onProgress:onProgress
+                  onFailure:onFailure];
+}
+
+- (void)sendMessageNotOss:(OIMMessageInfo *)message
+                   recvID:(NSString *)recvID
+                  groupID:(NSString *)groupID
+             isOnlineOnly:(BOOL)isOnlineOnly
+          offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
+                onSuccess:(OIMMessageInfoCallback)onSuccess
+               onProgress:(OIMNumberCallback)onProgress
+                onFailure:(OIMFailureCallback)onFailure {
     assert(recvID.length != 0 || groupID.length != 0);
     
     SendMessageCallbackProxy *callback = [[SendMessageCallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
@@ -283,7 +320,7 @@
         }
     } onProgress:onProgress onFailure:onFailure];
     
-    Open_im_sdkSendMessageNotOss(callback, [self operationId], message.mj_JSONString, recvID, groupID, offlinePushInfo.mj_JSONString);
+    Open_im_sdkSendMessageNotOss(callback, [self operationId], message.mj_JSONString, recvID, groupID, offlinePushInfo.mj_JSONString, isOnlineOnly);
 }
 
 - (void)revokeMessage:(NSString *)conversationID

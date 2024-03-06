@@ -257,7 +257,17 @@ NS_ASSUME_NONNULL_BEGIN
  * @param recvID        User ID for one-on-one chat, or an empty string for group chat
  * @param groupID       Group ID for group chat, or an empty string for one-on-one chat
  * @param offlinePushInfo Offline push information for the message (OIMOfflinePushInfo)
+ * @param isOnlineOnly  Whether to send only online messages.
  */
+- (void)sendMessage:(OIMMessageInfo *)message
+             recvID:(NSString * _Nullable)recvID
+            groupID:(NSString * _Nullable)groupID
+       isOnlineOnly:(BOOL)isOnlineOnly
+    offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
+          onSuccess:(nullable OIMMessageInfoCallback)onSuccess
+         onProgress:(nullable OIMNumberCallback)onProgress
+          onFailure:(nullable OIMFailureCallback)onFailure;
+
 - (void)sendMessage:(OIMMessageInfo *)message
              recvID:(NSString * _Nullable)recvID
             groupID:(NSString * _Nullable)groupID
@@ -273,7 +283,18 @@ NS_ASSUME_NONNULL_BEGIN
  * @param recvID        User ID for one-on-one chat, or an empty string for group chat
  * @param groupID       Group ID for group chat, or an empty string for one-on-one chat
  * @param offlinePushInfo Offline push information for the message (OIMOfflinePushInfo)
+ * @param isOnlineOnly  Whether to send only online messages.
  */
+
+- (void)sendMessageNotOss:(OIMMessageInfo *)message
+                   recvID:(NSString * _Nullable)recvID
+                  groupID:(NSString * _Nullable)groupID
+             isOnlineOnly:(BOOL)isOnlineOnly
+          offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
+                onSuccess:(nullable OIMMessageInfoCallback)onSuccess
+               onProgress:(nullable OIMNumberCallback)onProgress
+                onFailure:(nullable OIMFailureCallback)onFailure;
+
 - (void)sendMessageNotOss:(OIMMessageInfo *)message
                    recvID:(NSString * _Nullable)recvID
                   groupID:(NSString * _Nullable)groupID
