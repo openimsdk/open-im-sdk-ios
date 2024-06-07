@@ -6,7 +6,12 @@
 //
 
 #import "OIMCustomElem.h"
+#import <MJExtension/MJExtension.h>
 
 @implementation OIMCustomElem
-@synthesize description;
+
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"description_" : @"description"};
+}
+
 @end

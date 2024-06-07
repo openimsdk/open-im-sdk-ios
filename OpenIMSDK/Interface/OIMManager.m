@@ -6,13 +6,13 @@
 //
 
 #import "OIMManager.h"
-#import "Reachability.h"
+#import "OIMReachability.h"
 #import "CallbackProxy.h"
 
 @interface OIMManager ()
 {
     OIMCallbacker *_callbacker;
-    Reachability *internetReachability;
+    OIMReachability *internetReachability;
 }
 
 @end
@@ -50,7 +50,7 @@
                                                      name:kReachabilityChangedNotification
                                                    object:nil];
         
-        internetReachability = [Reachability reachabilityForInternetConnection];
+        internetReachability = [OIMReachability reachabilityForInternetConnection];
         [internetReachability startNotifier];
     }
     
@@ -105,8 +105,8 @@
 }
 
 - (void)reachabilityChanged:(NSNotification *)note {
-    Reachability *reachability = [note object];
-    NSParameterAssert([reachability isKindOfClass:[Reachability class]]);
+    OIMReachability *reachability = [note object];
+    NSParameterAssert([reachability isKindOfClass:[OIMReachability class]]);
 
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable, copy) NSString *extension;
 
-@property (nonatomic, nullable, copy) NSString *description;
+@property (nonatomic, nullable, copy) NSString *description_;
 
 @end
 
