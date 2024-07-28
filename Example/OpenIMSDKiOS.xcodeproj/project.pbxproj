@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		06E322500E6F29AE7E3406B9 /* Pods_OpenIMSDKiOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC002E155A37FC7CD6D16335 /* Pods_OpenIMSDKiOS_Example.framework */; };
+		173F10BA2B3EDD49002826B9 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 173F10B92B3EDD49002826B9 /* libresolv.tbd */; };
 		17918D0727BC8F380040C924 /* OPENIMSDKTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17918D0627BC8F380040C924 /* OPENIMSDKTableViewCell.m */; };
 		17CADD2727C7227F0069C80E /* photo_test.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 17CADD2527C7227F0069C80E /* photo_test.jpeg */; };
 		17CADD2827C7227F0069C80E /* voice_test.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 17CADD2627C7227F0069C80E /* voice_test.m4a */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		173F10B92B3EDD49002826B9 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		17918D0527BC8F380040C924 /* OPENIMSDKTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPENIMSDKTableViewCell.h; sourceTree = "<group>"; };
 		17918D0627BC8F380040C924 /* OPENIMSDKTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPENIMSDKTableViewCell.m; sourceTree = "<group>"; };
 		17CADD2527C7227F0069C80E /* photo_test.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo_test.jpeg; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				173F10BA2B3EDD49002826B9 /* libresolv.tbd in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
@@ -137,6 +140,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				173F10B92B3EDD49002826B9 /* libresolv.tbd */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,

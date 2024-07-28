@@ -67,7 +67,6 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         @[@{OIM_LIST_CELL_TITLE: @"Login", OIM_LIST_CELL_FUNC: @"login"},
           @{OIM_LIST_CELL_TITLE: @"Login Status", OIM_LIST_CELL_FUNC: @"loginStatus"},
           @{OIM_LIST_CELL_TITLE: @"Logout", OIM_LIST_CELL_FUNC: @"logout"},
-          @{OIM_LIST_CELL_TITLE: @"Set Heartbeat", OIM_LIST_CELL_FUNC: @"setHeartbeatInterval"},
         ],
         
         @[@{OIM_LIST_CELL_TITLE: @"Get User Info", OIM_LIST_CELL_FUNC: @"getSelfInfo"},
@@ -245,11 +244,13 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         
     }];
     
-    [OIMManager.callbacker setConversationListenerWithOnSyncServerStart:^{
+    [OIMManager.callbacker setConversationListenerWithOnSyncServerStart:^(BOOL result) {
         
-    } onSyncServerFinish:^{
+    } onSyncServerFinish:^(BOOL result) {
         
-    } onSyncServerFailed:^{
+    } onSyncServerFailed:^(BOOL result) {
+        
+    } onSyncServerProgress:^(NSInteger number) {
         
     } onConversationChanged:^(NSArray<OIMConversationInfo *> * _Nullable conversations) {
         
@@ -306,6 +307,8 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     } onKickedOffline:^{
         
     } onUserTokenExpired:^{
+        
+    } onUserTokenInvalid:^(NSString * _Nullable item) {
         
     }];
 }
@@ -383,14 +386,6 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
             callback(@(code), msg);
         }];
-    }];
-}
-
-- (void)setHeartbeatInterval {
-    [self operate:_cmd
-             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
-        
-        [OIMManager.manager setHeartbeatInterval:30];
     }];
 }
 

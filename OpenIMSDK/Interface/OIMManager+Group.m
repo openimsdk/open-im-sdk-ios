@@ -63,6 +63,19 @@
     Open_im_sdkGetJoinedGroupList(callback, [self operationId]);
 }
 
+- (void)getJoinedGroupListPageWithOffset:(NSInteger)offset
+                                   count:(NSInteger)count
+                               onSuccess:(OIMGroupsInfoCallback)onSuccess
+                               onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMGroupInfo mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetJoinedGroupListPage(callback, [self operationId], (int32_t)offset, (int32_t)count);
+}
+
 - (void)getSpecifiedGroupsInfo:(NSArray <NSString *> *)groupsID
                      onSuccess:(nullable OIMGroupsInfoCallback)onSuccess
                      onFailure:(nullable OIMFailureCallback)onFailure {
@@ -332,4 +345,19 @@
     
     Open_im_sdkIsJoinGroup(callback, [self operationId], groupID);
 }
+
+- (void)getUsersInGroup:(NSString *)groupID
+                userIDs:(NSArray<NSString *> *)userIDs
+            onSuccess:(nullable OIMStringArrayCallback)onSuccess
+              onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            NSArray<NSString *> *users = data.mj_JSONObject;
+            onSuccess(nil, users);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetUsersInGroup(callback, [self operationId], groupID, userIDs.mj_JSONString);
+}
+
 @end

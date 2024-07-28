@@ -96,6 +96,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getFriendListWithOnSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
                          onFailure:(nullable OIMFailureCallback)onFailure;
 
+- (void)getFriendListPageWithOffset:(NSInteger)offset
+                              count:(NSInteger)count
+                          onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
+                          onFailure:(nullable OIMFailureCallback)onFailure;
+
 /**
  * Check if there is a friend relationship, i.e., if the user is in the friend list of the logged-in user. Note: Friendship is a two-way relationship.
  * A result of 1 means the user is a friend (and not in the blacklist).

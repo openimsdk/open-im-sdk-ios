@@ -209,6 +209,16 @@
     }];
 }
 
+- (void)onUserTokenInvalid:(NSString *)errMsg {
+    [self dispatchMainThread:^{
+        if (self.userTokenInvalid) {
+            self.userTokenInvalid(errMsg);
+        }
+
+        [self.sdkListeners onUserTokenInvalid:errMsg];
+    }];
+}
+
 #pragma mark -
 #pragma mark - User
 
@@ -585,33 +595,43 @@
     }];
 }
 
-- (void)onSyncServerFailed {
+- (void)onSyncServerFailed:(BOOL)reinstalled {
     [self dispatchMainThread:^{
         if (self.syncServerFailed) {
-            self.syncServerFailed();
+            self.syncServerFailed(reinstalled);
         }
         
-        [self.conversationListeners onSyncServerFailed];
+        [self.conversationListeners onSyncServerFailed:reinstalled];
     }];
 }
 
-- (void)onSyncServerFinish {
+- (void)onSyncServerFinish:(BOOL)reinstalled {
     [self dispatchMainThread:^{
         if (self.syncServerFinish) {
-            self.syncServerFinish();
+            self.syncServerFinish(reinstalled);
         }
 
-        [self.conversationListeners onSyncServerFinish];
+        [self.conversationListeners onSyncServerFinish:reinstalled];
     }];
 }
 
-- (void)onSyncServerStart {
+- (void)onSyncServerStart:(BOOL)reinstalled {
     [self dispatchMainThread:^{
         if (self.syncServerStart) {
-            self.syncServerStart();
+            self.syncServerStart(reinstalled);
         }
         
-        [self.conversationListeners onSyncServerStart];
+        [self.conversationListeners onSyncServerStart:reinstalled];
+    }];
+}
+
+- (void)onSyncServerProgress:(long)progress {
+    [self dispatchMainThread:^{
+        if (self.syncServerStart) {
+            self.syncServerStart(progress);
+        }
+        
+        [self.conversationListeners onSyncServerProgress:progress];
     }];
 }
 

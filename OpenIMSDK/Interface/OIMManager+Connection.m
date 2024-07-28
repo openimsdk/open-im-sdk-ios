@@ -35,13 +35,15 @@
          onConnectFailure:(OIMFailureCallback)onConnectFailure
          onConnectSuccess:(OIMVoidCallback)onConnectSuccess
           onKickedOffline:(OIMVoidCallback)onKickedOffline
-       onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired {
+       onUserTokenExpired:(OIMVoidCallback)onUserTokenExpired
+       onUserTokenInvalid:(OIMStringCallback)onUserTokenInvalid {
     
     [self class].callbacker.connecting = onConnecting;
     [self class].callbacker.connectFailure = onConnectFailure;
     [self class].callbacker.connectSuccess = onConnectSuccess;
     [self class].callbacker.kickedOffline = onKickedOffline;
     [self class].callbacker.userTokenExpired = onUserTokenExpired;
+    [self class].callbacker.userTokenInvalid = onUserTokenInvalid;
     
     NSMutableDictionary *param = [NSMutableDictionary new];
     
@@ -55,10 +57,6 @@
     param[@"isLogStandardOutput"] = @(config.isLogStandardOutput);
         
     return Open_im_sdkInitSDK([self class].callbacker, [self operationId], param.mj_JSONString);
-}
-
-- (void)setHeartbeatInterval:(NSInteger)heartbeatInterval {
-    Open_im_sdkSetHeartbeatInterval(heartbeatInterval);
 }
 
 - (void)unInitSDK {

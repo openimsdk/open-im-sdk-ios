@@ -18,9 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * Actively fetch conversation records at app startup, and later refresh data based on listener callbacks for conversation changes.
  */
-- (void)setConversationListenerWithOnSyncServerStart:(OIMVoidCallback)onSyncServerStart
-                                  onSyncServerFinish:(OIMVoidCallback)onSyncServerFinish
-                                  onSyncServerFailed:(OIMVoidCallback)onSyncServerFailed
+- (void)setConversationListenerWithOnSyncServerStart:(OIMBoolCallback)onSyncServerStart
+                                  onSyncServerFinish:(OIMBoolCallback)onSyncServerFinish
+                                  onSyncServerFailed:(OIMBoolCallback)onSyncServerFailed
+                                onSyncServerProgress:(OIMNumberCallback)onSyncServerProgress
                                onConversationChanged:(OIMConversationsInfoCallback)onConversationChanged
                                    onNewConversation:(OIMConversationsInfoCallback)onNewConversation
                     onTotalUnreadMessageCountChanged:(OIMNumberCallback)onTotalUnreadMessageCountChanged;

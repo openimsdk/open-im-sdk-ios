@@ -51,6 +51,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getJoinedGroupListWithOnSuccess:(nullable OIMGroupsInfoCallback)onSuccess
                                 onFailure:(nullable OIMFailureCallback)onFailure;
 
+- (void)getJoinedGroupListPageWithOffset:(NSInteger)offset
+                                   count:(NSInteger)count
+                               onSuccess:(nullable OIMGroupsInfoCallback)onSuccess
+                                onFailure:(nullable OIMFailureCallback)onFailure;
+
 /**
  * Batch get group information
  *
@@ -295,6 +300,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)isJoinedGroup:(NSString *)groupID
             onSuccess:(nullable OIMBoolCallback)onSuccess
+            onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)getUsersInGroup:(NSString *)groupID
+                userIDs:(NSArray<NSString *> *)userIDs
+            onSuccess:(nullable OIMStringArrayCallback)onSuccess
             onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 

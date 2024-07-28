@@ -122,6 +122,19 @@
     Open_im_sdkGetFriendList(callback, [self operationId]);
 }
 
+- (void)getFriendListPageWithOffset:(NSInteger)offset
+                              count:(NSInteger)count
+                          onSuccess:(OIMFullUsersInfoCallback)onSuccess
+                          onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess([OIMFullUserInfo mj_objectArrayWithKeyValuesArray:data]);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetFriendListPage(callback, [self operationId], (int32_t)offset, (int32_t)count);
+}
+
 - (void)checkFriend:(NSArray<NSString *> *)usersID
           onSuccess:(OIMSimpleResultsCallback)onSuccess
           onFailure:(OIMFailureCallback)onFailure {

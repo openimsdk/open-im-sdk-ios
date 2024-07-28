@@ -9,15 +9,15 @@
 
 @implementation OIMCallbacker (Closure)
 
-- (void)setConversationListenerWithOnSyncServerStart:(OIMVoidCallback)onSyncServerStart
-                                  onSyncServerFinish:(OIMVoidCallback)onSyncServerFinish
-                                  onSyncServerFailed:(OIMVoidCallback)onSyncServerFailed
-                               onConversationChanged:(OIMConversationsInfoCallback)onConversationChanged
-                                   onNewConversation:(OIMConversationsInfoCallback)onNewConversation
-                    onTotalUnreadMessageCountChanged:(OIMNumberCallback)onTotalUnreadMessageCountChanged {
+- (void)setConversationListenerWithOnSyncServerStart:(OIMBoolCallback)onSyncServerStart
+                                  onSyncServerFinish:(OIMBoolCallback)onSyncServerFinish
+                                  onSyncServerFailed:(OIMBoolCallback)onSyncServerFailed
+                                onSyncServerProgress:(OIMNumberCallback)onSyncServerProgress
+                               onConversationChanged:(OIMConversationsInfoCallback)onConversationChanged onNewConversation:(OIMConversationsInfoCallback)onNewConversation onTotalUnreadMessageCountChanged:(OIMNumberCallback)onTotalUnreadMessageCountChanged{
     self.syncServerStart = onSyncServerStart;
     self.syncServerFinish = onSyncServerFinish;
     self.syncServerFailed = onSyncServerFailed;
+    self.syncServerProgress = onSyncServerProgress;
     self.onConversationChanged = onConversationChanged;
     self.onNewConversation = onNewConversation;
     self.onTotalUnreadMessageCountChanged = onTotalUnreadMessageCountChanged;
