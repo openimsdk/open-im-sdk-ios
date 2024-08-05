@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)unInitSDK;
 
 - (void)uploadLogsWithProgress:(OIMUploadProgressCallback)onProgress
+                          line:(NSInteger )line
                             ex:(NSString *)ex
                      onSuccess:(OIMSuccessCallback)onSuccess
                      onFailure:(OIMFailureCallback)onFailure;

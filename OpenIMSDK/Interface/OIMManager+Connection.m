@@ -63,7 +63,8 @@
     Open_im_sdkUnInitSDK([self operationId]);
 }
 
-- (void)uploadLogsWithProgress:(OIMUploadProgressCallback)onProgress
+- (void)uploadLogsWithProgress:(OIMUploadProgressCallback)onProgress 
+                          line:(NSInteger )line
                             ex:(NSString *)ex
                      onSuccess:(OIMSuccessCallback)onSuccess
                      onFailure:(OIMFailureCallback)onFailure {
@@ -71,6 +72,6 @@
     
     UploadLogsCallbackProxy *progress = [[UploadLogsCallbackProxy alloc] initWithOnProgress:onProgress];
     
-    Open_im_sdkUploadLogs(callback, [self operationId], ex, progress);
+    Open_im_sdkUploadLogs(callback, [self operationId], @(line), ex, progress);
 }
 @end
