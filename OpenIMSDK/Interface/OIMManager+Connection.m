@@ -20,6 +20,7 @@
         self.isLogStandardOutput = YES;
         self.logLevel = 6;
         self.compression = NO;
+        self.systemType = @"native_iOS";
     }
     
     return self;
@@ -55,6 +56,7 @@
     param[@"isCompression"] = @(config.compression);
     param[@"logFilePath"] = config.logFilePath;
     param[@"isLogStandardOutput"] = @(config.isLogStandardOutput);
+    param[@"systemType"] = config.systemType;
         
     return Open_im_sdkInitSDK([self class].callbacker, [self operationId], param.mj_JSONString);
 }
@@ -72,6 +74,6 @@
     
     UploadLogsCallbackProxy *progress = [[UploadLogsCallbackProxy alloc] initWithOnProgress:onProgress];
     
-    Open_im_sdkUploadLogs(callback, [self operationId], @(line), ex, progress);
+    Open_im_sdkUploadLogs(callback, [self operationId], line, ex, progress);
 }
 @end

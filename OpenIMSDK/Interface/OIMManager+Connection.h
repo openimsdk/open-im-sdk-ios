@@ -26,7 +26,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL compression;
 // Log output to local, default is YES
 @property (nonatomic, assign) BOOL isLogStandardOutput;
+
 @property (nonatomic, copy, nullable) NSString *logFilePath;
+
+// for log
+@property (nonatomic, copy) NSString *systemType;
 
 @end
 
