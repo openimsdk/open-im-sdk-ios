@@ -80,4 +80,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// input status Information
+///
+@interface OIMInputStatusChangedData : NSObject
+
+@property (nonatomic, copy) NSString *conversationID;
+
+@property (nonatomic, copy) NSString *userID;
+// OIMPlatform
+@property (nonatomic, copy) NSArray<NSNumber *> *platformIDs;
+
+@end
+
 NS_ASSUME_NONNULL_END
