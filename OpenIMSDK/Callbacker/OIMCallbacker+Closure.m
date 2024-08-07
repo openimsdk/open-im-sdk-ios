@@ -13,7 +13,22 @@
                                   onSyncServerFinish:(OIMBoolCallback)onSyncServerFinish
                                   onSyncServerFailed:(OIMBoolCallback)onSyncServerFailed
                                 onSyncServerProgress:(OIMNumberCallback)onSyncServerProgress
-                               onConversationChanged:(OIMConversationsInfoCallback)onConversationChanged onNewConversation:(OIMConversationsInfoCallback)onNewConversation onTotalUnreadMessageCountChanged:(OIMNumberCallback)onTotalUnreadMessageCountChanged{
+                               onConversationChanged:(OIMConversationsInfoCallback)onConversationChanged onNewConversation:(OIMConversationsInfoCallback)onNewConversation onTotalUnreadMessageCountChanged:(OIMNumberCallback)onTotalUnreadMessageCountChanged {
+    [self setConversationListenerWithOnSyncServerStart:onSyncServerStart
+                                    onSyncServerFinish:onSyncServerFinish
+                                    onSyncServerFailed:onSyncServerFailed
+                                  onSyncServerProgress: onSyncServerProgress
+                                 onConversationChanged:onConversationChanged
+                                     onNewConversation:onNewConversation
+                      onTotalUnreadMessageCountChanged:onTotalUnreadMessageCountChanged
+                  onConversationUserInputStatusChanged:nil];
+}
+
+- (void)setConversationListenerWithOnSyncServerStart:(OIMBoolCallback)onSyncServerStart
+                                  onSyncServerFinish:(OIMBoolCallback)onSyncServerFinish
+                                  onSyncServerFailed:(OIMBoolCallback)onSyncServerFailed
+                                onSyncServerProgress:(OIMNumberCallback)onSyncServerProgress
+                               onConversationChanged:(OIMConversationsInfoCallback)onConversationChanged onNewConversation:(OIMConversationsInfoCallback)onNewConversation onTotalUnreadMessageCountChanged:(OIMNumberCallback)onTotalUnreadMessageCountChanged onConversationUserInputStatusChanged:(OIMInputStatusChangedCallback)onConversationUserInputStatusChanged {
     self.syncServerStart = onSyncServerStart;
     self.syncServerFinish = onSyncServerFinish;
     self.syncServerFailed = onSyncServerFailed;
@@ -21,6 +36,7 @@
     self.onConversationChanged = onConversationChanged;
     self.onNewConversation = onNewConversation;
     self.onTotalUnreadMessageCountChanged = onTotalUnreadMessageCountChanged;
+    self.onConversationUserInputStatusChanged = onConversationUserInputStatusChanged;
 }
 
 - (void)setFriendListenerWithOnBlackAdded:(OIMBlackInfoCallback)onBlackAdded

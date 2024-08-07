@@ -18,3 +18,7 @@
 @implementation OIMConversationNotDisturbInfo
 
 @end
+
+@implementation OIMInputStatusChangedData
+
+@end

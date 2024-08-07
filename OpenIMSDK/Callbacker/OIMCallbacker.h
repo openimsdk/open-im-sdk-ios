@@ -68,6 +68,8 @@ typedef void (^OIMRevokedCallback)(OIMMessageRevokedInfo * _Nullable msgRovoked)
 
 typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMessageListInfo * _Nullable result);
 
+typedef void (^OIMInputStatusChangedCallback)(NSArray<NSNumber *> *inputStatesChangedData);
+
 /// IMSDK Core Callbacks
 @protocol OIMSDKListener <NSObject>
 @optional
@@ -263,6 +265,11 @@ typedef void (^OIMGetAdvancedHistoryMessageListCallback)(OIMGetAdvancedHistoryMe
  */
 - (void)onTotalUnreadMessageCountChanged:(NSInteger)totalUnreadCount;
 
+/**
+ * User input status updates.
+ */
+- (void)onConversationUserInputStatusChanged:(OIMInputStatusChangedData *)inputStatusChangedData;
+
 @end
 
 /// Advanced Message Listener
@@ -405,6 +412,7 @@ Open_im_sdk_callbackOnCustomBusinessListener
 @property (nonatomic, nullable, copy) OIMConversationsInfoCallback onNewConversation;
 @property (nonatomic, nullable, copy) OIMConversationsInfoCallback onConversationChanged;
 @property (nonatomic, nullable, copy) OIMNumberCallback onTotalUnreadMessageCountChanged;
+@property (nonatomic, nullable, copy) OIMInputStatusChangedCallback onConversationUserInputStatusChanged;
 
 /**
  * Add conversation listener.
