@@ -164,6 +164,28 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)searchConversation:(NSString *)name
                 onSuccess:(nullable OIMConversationsInfoCallback)onSuccess
                 onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ * Typing status for one-on-one chat
+ *
+ * @param conversationID    Receiver's ID
+ * @param focus    Customized tip message
+ */
+- (void)changeInputStates:(NSString *)conversationID
+                    focus:(BOOL)focus
+                 onSuccess:(nullable OIMSuccessCallback)onSuccess
+                 onFailure:(nullable OIMFailureCallback)onFailure;
+
+/**
+ * Typing status for one-on-one chat
+ *
+ * @param conversationID    Conversation's ID
+ * @param userID    User's ID
+ */
+- (void)getInputstates:(NSString *)conversationID
+                userID:(NSString *)userID
+             onSuccess:(nullable OIMInputStatusChangedCallback)onSuccess
+             onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

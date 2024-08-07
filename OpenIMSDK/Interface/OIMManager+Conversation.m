@@ -204,4 +204,26 @@
     
     Open_im_sdkSearchConversation(callback, [self operationId], name);
 }
+
+- (void)changeInputStates:(NSString *)conversationID
+                    focus:(BOOL)focus
+                onSuccess:(OIMSuccessCallback)onSuccess
+                onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkChangeInputStates(callback, [self operationId], conversationID, focus);
+}
+
+- (void)getInputstates:(NSString *)conversationID
+                userID:(NSString *)userID
+             onSuccess:(OIMInputStatusChangedCallback)onSuccess
+             onFailure:(OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        if (onSuccess) {
+            onSuccess(data.mj_JSONObject);
+        }
+    } onFailure:onFailure];
+    
+    Open_im_sdkGetInputStates(callback, [self operationId], conversationID, userID);
+}
 @end

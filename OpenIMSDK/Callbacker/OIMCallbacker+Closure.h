@@ -26,6 +26,15 @@ NS_ASSUME_NONNULL_BEGIN
                                    onNewConversation:(OIMConversationsInfoCallback)onNewConversation
                     onTotalUnreadMessageCountChanged:(OIMNumberCallback)onTotalUnreadMessageCountChanged;
 
+- (void)setConversationListenerWithOnSyncServerStart:(OIMBoolCallback)onSyncServerStart
+                                  onSyncServerFinish:(OIMBoolCallback)onSyncServerFinish
+                                  onSyncServerFailed:(OIMBoolCallback)onSyncServerFailed
+                                onSyncServerProgress:(OIMNumberCallback)onSyncServerProgress
+                               onConversationChanged:(OIMConversationsInfoCallback)onConversationChanged
+                                   onNewConversation:(OIMConversationsInfoCallback)onNewConversation
+                    onTotalUnreadMessageCountChanged:(OIMNumberCallback)onTotalUnreadMessageCountChanged
+                onConversationUserInputStatusChanged:(nullable OIMInputStatusChangedCallback)onConversationUserInputStatusChanged;
+
 /**
  * Set friend relationship listeners
  *
