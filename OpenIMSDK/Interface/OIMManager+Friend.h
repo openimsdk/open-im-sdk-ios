@@ -89,20 +89,20 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)getSpecifiedFriendsInfo:(NSArray <NSString *> *)usersID
                     filterBlack:(BOOL)filterBlack
-                      onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
+                      onSuccess:(nullable OIMFriendsInfoCallback)onSuccess
                       onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
  * Get information for all friends
  */
 - (void)getFriendListWithFilterBlack:(BOOL)filterBlack
-                           onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
+                           onSuccess:(nullable OIMFriendsInfoCallback)onSuccess
                          onFailure:(nullable OIMFailureCallback)onFailure;
 
 - (void)getFriendListPageWithOffset:(NSInteger)offset
                               count:(NSInteger)count
                          filterBlack:(BOOL)filterBlack
-                          onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
+                          onSuccess:(nullable OIMFriendsInfoCallback)onSuccess
                           onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**

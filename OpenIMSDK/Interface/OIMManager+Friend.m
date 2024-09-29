@@ -100,11 +100,11 @@
 
 - (void)getSpecifiedFriendsInfo:(NSArray <NSString *> *)usersID
                     filterBlack:(BOOL)filterBlack
-                      onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
+                      onSuccess:(nullable OIMFriendsInfoCallback)onSuccess
                       onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMPublicUserInfo mj_objectArrayWithKeyValuesArray:data]);
+            onSuccess([OIMFriendInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
@@ -112,12 +112,12 @@
 }
 
 - (void)getFriendListWithFilterBlack:(BOOL)filterBlack
-                           onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
+                           onSuccess:(nullable OIMFriendsInfoCallback)onSuccess
                          onFailure:(nullable OIMFailureCallback)onFailure {
     
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMPublicUserInfo mj_objectArrayWithKeyValuesArray:data]);
+            onSuccess([OIMFriendInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
@@ -127,11 +127,11 @@
 - (void)getFriendListPageWithOffset:(NSInteger)offset
                               count:(NSInteger)count
                         filterBlack:(BOOL)filterBlack
-                          onSuccess:(OIMPublicUsersInfoCallback)onSuccess
+                          onSuccess:(OIMFriendsInfoCallback)onSuccess
                           onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMPublicUserInfo mj_objectArrayWithKeyValuesArray:data]);
+            onSuccess([OIMFriendInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
