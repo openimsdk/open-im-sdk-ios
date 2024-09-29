@@ -92,4 +92,36 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface OIMConversationReq : NSObject
+
+@property (nonatomic, nullable, copy) NSString *userID;
+
+@property (nonatomic, nullable, copy) NSString *groupID;
+
+@property (nonatomic, assign) OIMReceiveMessageOpt recvMsgOpt;
+
+@property (nonatomic, assign) BOOL isPinned;
+
+@property (nonatomic, assign) OIMGroupAtType groupAtType;
+
+/**
+ *  Whether private chat (burn after reading) is enabled
+ */
+@property (nonatomic, assign) BOOL isPrivateChat;
+/**
+ *  Private chat duration
+ */
+@property (nonatomic, assign) NSTimeInterval burnDuration;
+
+/**
+ *  Whether still in the group, return true if left the group
+ */
+@property (nonatomic, assign) BOOL isMsgDestruct;
+
+@property (nonatomic, assign) NSTimeInterval msgDestructTime;
+
+@property (nonatomic, nullable, copy) NSString *ex;
+
+@end
+
 NS_ASSUME_NONNULL_END

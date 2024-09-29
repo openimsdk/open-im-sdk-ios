@@ -444,9 +444,7 @@
 - (void)setGlobalRecvMessageOpt:(OIMReceiveMessageOpt)opt
                       onSuccess:(OIMSuccessCallback)onSuccess
                       onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkSetGlobalRecvMessageOpt(callback, [self operationId], opt);
 }
 
 - (void)getAdvancedHistoryMessageList:(OIMGetAdvancedHistoryMessageListParam *)opts

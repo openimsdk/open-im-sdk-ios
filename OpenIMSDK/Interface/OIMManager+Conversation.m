@@ -7,6 +7,7 @@
 
 #import "OIMManager+Conversation.h"
 #import "CallbackProxy.h"
+#import "OIMConversationInfo.h"
 
 @implementation OIMManager (Conversation)
 
@@ -98,9 +99,10 @@
                isPinned:(BOOL)isPinned
               onSuccess:(OIMSuccessCallback)onSuccess
               onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    OIMConversationReq *req = [OIMConversationReq new];
+    req.isPinned = isPinned;
     
-    Open_im_sdkPinConversation(callback, [self operationId], conversationID, isPinned);
+    [self setConversation:conversationID req:req onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)getTotalUnreadMsgCountWithOnSuccess:(OIMNumberCallback)onSuccess
@@ -114,51 +116,43 @@
     Open_im_sdkGetTotalUnreadMsgCount(callback, [self operationId]);
 }
 
-- (void)getConversationRecvMessageOpt:(NSArray<NSString *> *)conversationIDs
-                            onSuccess:(OIMConversationNotDisturbInfoCallback)onSuccess
-                            onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
-        if (onSuccess) {
-            onSuccess([OIMConversationNotDisturbInfo mj_objectArrayWithKeyValuesArray:data]);
-        }
-    } onFailure:onFailure];
-    
-    Open_im_sdkGetConversationRecvMessageOpt(callback, [self operationId], conversationIDs.mj_JSONString);
-}
-
 - (void)setConversationRecvMessageOpt:(NSString *)conversationID
                                status:(OIMReceiveMessageOpt)status
                             onSuccess:(OIMSuccessCallback)onSuccess
                             onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    OIMConversationReq *req = [OIMConversationReq new];
+    req.recvMsgOpt = status;
     
-    Open_im_sdkSetConversationRecvMessageOpt(callback, [self operationId], conversationID, status);
+    [self setConversation:conversationID req:req onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)setConversationPrivateChat:(NSString *)conversationID
                             isPrivate:(BOOL)isPrivate
                             onSuccess:(OIMSuccessCallback)onSuccess
                             onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    OIMConversationReq *req = [OIMConversationReq new];
+    req.isPrivateChat = isPrivate;
     
-    Open_im_sdkSetConversationPrivateChat(callback, [self operationId], conversationID, isPrivate);
+    [self setConversation:conversationID req:req onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)setConversationBurnDuration:(NSString *)conversationID
                               duration:(NSInteger)burnDuration
                              onSuccess:(OIMSuccessCallback)onSuccess
                              onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    OIMConversationReq *req = [OIMConversationReq new];
+    req.burnDuration = burnDuration;
     
-    Open_im_sdkSetConversationBurnDuration(callback, [self operationId], conversationID, (int32_t)burnDuration);
+    [self setConversation:conversationID req:req onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)resetConversationGroupAtType:(NSString *)conversationID
                            onSuccess:(OIMSuccessCallback)onSuccess
                            onFailure:(OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    OIMConversationReq *req = [OIMConversationReq new];
+    req.groupAtType = 0;
     
-    Open_im_sdkResetConversationGroupAtType(callback, [self operationId], conversationID);
+    [self setConversation:conversationID req:req onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)hideConversation:(NSString *)conversationID
@@ -188,9 +182,10 @@
                        ex:(NSString *)ex
                 onSuccess:(nullable OIMSuccessCallback)onSuccess
                 onFailure:(nullable OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-
-    Open_im_sdkSetConversationEx(callback, [self operationId], conversationID, ex);
+    OIMConversationReq *req = [OIMConversationReq new];
+    req.ex = ex;
+    
+    [self setConversation:conversationID req:req onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)searchConversation:(NSString *)name
@@ -225,5 +220,14 @@
     } onFailure:onFailure];
     
     Open_im_sdkGetInputStates(callback, [self operationId], conversationID, userID);
+}
+
+- (void)setConversation:(NSString *)conversationID
+                    req:(OIMConversationReq *)req
+             onSuccess:(nullable OIMSuccessCallback)onSuccess
+              onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSetConversation(callback, [self operationId], conversationID, req.mj_JSONString);
 }
 @end

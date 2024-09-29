@@ -246,6 +246,21 @@
     }];
 }
 
+- (void)onUserCommandAdd:(NSString * _Nullable)userCommand { 
+    
+}
+
+
+- (void)onUserCommandDelete:(NSString * _Nullable)userCommand { 
+    
+}
+
+
+- (void)onUserCommandUpdate:(NSString * _Nullable)userCommand { 
+    
+}
+
+
 #pragma mark -
 #pragma mark - Friend
 

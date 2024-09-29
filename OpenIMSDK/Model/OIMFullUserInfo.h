@@ -63,25 +63,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/**
- Integrates PublicUserInfo, FriendInfo, and BlackInfo.
- When getting user information:
- - If it's a friend, publicInfo and friendInfo will be set.
- - If it's in the blacklist, publicInfo and blackInfo will be set.
- - If it's both a friend and in the blacklist, all three will be set.
-
- When getting friend information:
- - If it's in the blacklist, friendInfo and blackInfo will be set, but publicInfo is not set.
- */
-@interface OIMFullUserInfo : NSObject
-
-@property (nonatomic, nullable, strong) OIMPublicUserInfo *publicInfo;
-@property (nonatomic, nullable, strong) OIMFriendInfo *friendInfo;
-@property (nonatomic, nullable, strong) OIMBlackInfo *blackInfo;
-
-@property (nonatomic, copy, readonly) NSString *userID;
-@property (nonatomic, copy, readonly) NSString *showName;
-@property (nonatomic, copy, readonly) NSString *faceURL;
-@end
-
 NS_ASSUME_NONNULL_END

@@ -32,9 +32,9 @@ typedef void (^OIMSimpleResultsCallback)(NSArray <OIMSimpleResultInfo *> * _Null
 
 typedef void (^OIMUserInfoCallback)(OIMUserInfo * _Nullable userInfo);
 typedef void (^OIMUsersInfoCallback)(NSArray <OIMUserInfo *> * _Nullable usersInfo);
-typedef void (^OIMUsersCallback)(NSArray <OIMFullUserInfo *> * _Nullable userInfos);
-typedef void (^OIMFullUserInfoCallback)(OIMFullUserInfo * _Nullable userInfo);
-typedef void (^OIMFullUsersInfoCallback)(NSArray <OIMFullUserInfo *> * _Nullable userInfos);
+typedef void (^OIMUsersCallback)(NSArray <OIMPublicUserInfo *> * _Nullable userInfos);
+typedef void (^OIMPublicUserInfoCallback)(OIMPublicUserInfo * _Nullable userInfo);
+typedef void (^OIMPublicUsersInfoCallback)(NSArray <OIMPublicUserInfo *> * _Nullable userInfos);
 typedef void (^OIMBlacksInfoCallback)(NSArray <OIMBlackInfo *> * _Nullable blackInfos);
 typedef void (^OIMUserStatusInfoCallback)(OIMUserStatusInfo * _Nullable statusInfo);
 typedef void (^OIMUserStatusInfosCallback)(NSArray <OIMUserStatusInfo *> * _Nullable statusInfos);

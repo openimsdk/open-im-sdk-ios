@@ -508,6 +508,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
         
         [OIMManager.manager getSpecifiedFriendsInfo:@[OTHER_USER_ID]
+                                        filterBlack:NO
                                           onSuccess:^(NSArray<OIMFriendInfo *> * _Nullable friendInfo) {
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
@@ -521,7 +522,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
     [self operate:_cmd
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
         
-        [OIMManager.manager getFriendListWithOnSuccess:^(NSArray<OIMFullUserInfo *> * _Nullable userInfos) {
+        [OIMManager.manager getFriendListWithFilterBlack:NO onSuccess:^(NSArray<OIMPublicUserInfo *> * _Nullable userInfos) {
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
             callback(@(code), msg);
@@ -1457,20 +1458,6 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         
         [OIMManager.manager markConversationMessageAsRead:CONVERSASTION_ID
                                            onSuccess:^(NSString * _Nullable data) {
-            
-            callback(nil, nil);
-        } onFailure:^(NSInteger code, NSString * _Nullable msg) {
-            callback(@(code), msg);
-        }];
-    }];
-}
-
-- (void)getConversationRecvMessageOpt {
-    [self operate:_cmd
-             todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
-        
-        [OIMManager.manager getConversationRecvMessageOpt:@[CONVERSASTION_ID]
-                                                onSuccess:^(NSArray<OIMConversationNotDisturbInfo *> * _Nullable conversations) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {

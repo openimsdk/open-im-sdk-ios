@@ -50,4 +50,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface OIMSetGroupMemberInfo : NSObject
+
+@property (nonatomic, nullable, copy) NSString *userID;
+@property (nonatomic, nullable, copy) NSString *groupID;
+@property (nonatomic, nullable, copy) NSString *nickname;
+@property (nonatomic, nullable, copy) NSString *faceURL;
+@property (nonatomic, assign) OIMGroupMemberRole roleLevel;
+@property (nonatomic, nullable, copy) NSString *ex;
+
+@end
+
 NS_ASSUME_NONNULL_END

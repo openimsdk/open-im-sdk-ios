@@ -18,7 +18,7 @@
         self.dataDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingString:@"/"];
         self.logFilePath = self.dataDir;
         self.isLogStandardOutput = YES;
-        self.logLevel = 6;
+        self.logLevel = 5;
         self.compression = NO;
         self.systemType = @"native_iOS";
     }

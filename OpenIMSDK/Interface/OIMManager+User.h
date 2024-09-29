@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param uids List of user IDs
  */
 - (void)getUsersInfo:(NSArray <NSString *> *)uids
-           onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
+           onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
            onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
@@ -74,13 +74,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)getUsersInfoWithCache:(NSArray<NSString *> *)userIDs
                      groupID:(NSString * _Nullable)groupID
-                   onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
-                   onFailure:(nullable OIMFailureCallback)onFailure;
-/*
-- (void)setSelfInfoEx:(OIMUserInfo *)userInfo
-            onSuccess:(nullable OIMSuccessCallback)onSuccess
-            onFailure:(nullable OIMFailureCallback)onFailure;
- */
+                   onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
+                   onFailure:(nullable OIMFailureCallback)onFailure __attribute__((deprecated("Use getUsersInfo instead")));
+
+
+/// Global Do Not Disturb
+/// [status] 0: Normal; 1: Do not accept messages; 2: Accept online messages but not offline messages;
+- (void)setGlobalRecvMessageOpt:(NSInteger )status
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure;
+
 @end
 
 NS_ASSUME_NONNULL_END

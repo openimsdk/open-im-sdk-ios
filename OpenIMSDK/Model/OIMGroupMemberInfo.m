@@ -14,3 +14,7 @@
 @implementation OIMGroupMemberInfo
 
 @end
+
+@implementation OIMSetGroupMemberInfo
+
+@end

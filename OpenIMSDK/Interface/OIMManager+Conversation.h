@@ -98,13 +98,6 @@ NS_ASSUME_NONNULL_BEGIN
                                   onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
- * Get the "do not disturb" status for a conversation
- */
-- (void)getConversationRecvMessageOpt:(NSArray <NSString *> *)conversationIDs
-                            onSuccess:(nullable OIMConversationNotDisturbInfoCallback)onSuccess
-                            onFailure:(nullable OIMFailureCallback)onFailure;
-
-/**
  * Set the "do not disturb" status for a conversation
  */
 - (void)setConversationRecvMessageOpt:(NSString *)conversationID
@@ -185,6 +178,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)getInputstates:(NSString *)conversationID
                 userID:(NSString *)userID
              onSuccess:(nullable OIMInputStatusChangedCallback)onSuccess
+             onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)setConversation:(NSString *)conversationID
+                userID:(OIMConversationReq *)req
+             onSuccess:(nullable OIMSuccessCallback)onSuccess
              onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 

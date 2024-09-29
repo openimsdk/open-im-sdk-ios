@@ -98,41 +98,44 @@
     Open_im_sdkRemoveBlack(callback, [self operationId], userID);
 }
 
-- (void)getSpecifiedFriendsInfo:(NSArray<NSString *> *)usersID
-                      onSuccess:(OIMFullUsersInfoCallback)onSuccess
-                      onFailure:(OIMFailureCallback)onFailure {
+- (void)getSpecifiedFriendsInfo:(NSArray <NSString *> *)usersID
+                    filterBlack:(BOOL)filterBlack
+                      onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
+                      onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMFullUserInfo mj_objectArrayWithKeyValuesArray:data]);
+            onSuccess([OIMPublicUserInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetSpecifiedFriendsInfo(callback, [self operationId], usersID.mj_JSONString);
+    Open_im_sdkGetSpecifiedFriendsInfo(callback, [self operationId], usersID.mj_JSONString, filterBlack);
 }
 
-- (void)getFriendListWithOnSuccess:(OIMFullUsersInfoCallback)onSuccess
-                         onFailure:(OIMFailureCallback)onFailure {
+- (void)getFriendListWithFilterBlack:(BOOL)filterBlack
+                           onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
+                         onFailure:(nullable OIMFailureCallback)onFailure {
     
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMFullUserInfo mj_objectArrayWithKeyValuesArray:data]);
+            onSuccess([OIMPublicUserInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetFriendList(callback, [self operationId]);
+    Open_im_sdkGetFriendList(callback, [self operationId], filterBlack);
 }
 
 - (void)getFriendListPageWithOffset:(NSInteger)offset
                               count:(NSInteger)count
-                          onSuccess:(OIMFullUsersInfoCallback)onSuccess
+                        filterBlack:(BOOL)filterBlack
+                          onSuccess:(OIMPublicUsersInfoCallback)onSuccess
                           onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMFullUserInfo mj_objectArrayWithKeyValuesArray:data]);
+            onSuccess([OIMPublicUserInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetFriendListPage(callback, [self operationId], (int32_t)offset, (int32_t)count);
+    Open_im_sdkGetFriendListPage(callback, [self operationId], (int32_t)offset, (int32_t)count, filterBlack);
 }
 
 - (void)checkFriend:(NSArray<NSString *> *)usersID
@@ -152,9 +155,12 @@
               onSuccess:(OIMSuccessCallback)onSuccess
               onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+        
+    OIMUpdateFriendsReq *req = [OIMUpdateFriendsReq new];
+    req.friendUserIDs = @[userID];
+    req.remark = remark;
     
-    NSDictionary *param = @{@"toUserID": userID, @"remark": remark ?: @""};
-    Open_im_sdkSetFriendRemark(callback, [self operationId], param.mj_JSONString);
+    [self updateFriends:req onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)deleteFriend:(NSString *)friendUserID
@@ -185,6 +191,18 @@
            onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkSetFriendsEx(callback, [self operationId], friendIDs.mj_JSONString, ex);
+    OIMUpdateFriendsReq *req = [OIMUpdateFriendsReq new];
+    req.friendUserIDs = friendIDs;
+    req.ex = ex;
+    
+    [self updateFriends:req onSuccess:onSuccess onFailure:onFailure];
+}
+
+- (void)updateFriends:(OIMUpdateFriendsReq *)req
+            onSuccess:(nullable OIMSuccessCallback)onSuccess
+            onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+
+    Open_im_sdkUpdateFriends(callback, [self operationId], req.mj_JSONString);
 }
 @end

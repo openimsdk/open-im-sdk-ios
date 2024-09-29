@@ -425,7 +425,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)setGlobalRecvMessageOpt:(OIMReceiveMessageOpt)opt
                       onSuccess:(nullable OIMSuccessCallback)onSuccess
-                      onFailure:(nullable OIMFailureCallback)onFailure;
+                      onFailure:(nullable OIMFailureCallback)onFailure __attribute__((deprecated("Use OIMManager+User: setSelfInfo instead")));
 
 /**
  * Advanced Message Series Usage

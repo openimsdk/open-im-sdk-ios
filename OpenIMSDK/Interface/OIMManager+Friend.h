@@ -6,6 +6,7 @@
 //
 
 #import "OIMManager.h"
+#import "OIMUpdateFriendsReq.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -87,18 +88,21 @@ NS_ASSUME_NONNULL_BEGIN
  * @param usersID List of user IDs
  */
 - (void)getSpecifiedFriendsInfo:(NSArray <NSString *> *)usersID
-                      onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
+                    filterBlack:(BOOL)filterBlack
+                      onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
                       onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
  * Get information for all friends
  */
-- (void)getFriendListWithOnSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
+- (void)getFriendListWithFilterBlack:(BOOL)filterBlack
+                           onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
                          onFailure:(nullable OIMFailureCallback)onFailure;
 
 - (void)getFriendListPageWithOffset:(NSInteger)offset
                               count:(NSInteger)count
-                          onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
+                         filterBlack:(BOOL)filterBlack
+                          onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
                           onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
@@ -142,6 +146,11 @@ NS_ASSUME_NONNULL_BEGIN
                   ex:(NSString *)ex
            onSuccess:(nullable OIMSuccessCallback)onSuccess
            onFailure:(nullable OIMFailureCallback)onFailure;
+
+
+- (void)updateFriends:(OIMUpdateFriendsReq *)req
+            onSuccess:(nullable OIMSuccessCallback)onSuccess
+            onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END

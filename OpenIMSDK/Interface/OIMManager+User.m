@@ -11,11 +11,11 @@
 @implementation OIMManager (User)
 
 - (void)getUsersInfo:(NSArray <NSString *> *)uids
-           onSuccess:(OIMFullUsersInfoCallback)onSuccess
+           onSuccess:(OIMPublicUsersInfoCallback)onSuccess
            onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMFullUserInfo mj_objectArrayWithKeyValuesArray:data]);
+            onSuccess([OIMPublicUserInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
@@ -95,24 +95,23 @@
 
 - (void)getUsersInfoWithCache:(NSArray<NSString *> *)userIDs
                      groupID:(NSString *)groupID
-                   onSuccess:(nullable OIMFullUsersInfoCallback)onSuccess
+                   onSuccess:(nullable OIMPublicUsersInfoCallback)onSuccess
                    onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
-            onSuccess([OIMFullUserInfo mj_objectArrayWithKeyValuesArray:data]);
+            onSuccess([OIMPublicUserInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetUsersInfoWithCache(callback, [self operationId], userIDs.mj_JSONString, groupID ?: @"");
+    Open_im_sdkGetUsersInfo(callback, [self operationId], userIDs.mj_JSONString);
 }
 
-/*
-- (void)setSelfInfoEx:(OIMUserInfo *)userInfo
-            onSuccess:(nullable OIMSuccessCallback)onSuccess
-            onFailure:(nullable OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-        
-    Open_im_sdkSetSelfInfoEx(callback, [self operationId], userInfo.mj_JSONString);
+- (void)setGlobalRecvMessageOpt:(NSInteger )status
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                      onFailure:(nullable OIMFailureCallback)onFailure {
+    OIMUserInfo *info = [OIMUserInfo new];
+    info.globalRecvMsgOpt = status;
+    
+    [self setSelfInfo:info onSuccess:onSuccess onFailure:onFailure];
 }
- */
 @end

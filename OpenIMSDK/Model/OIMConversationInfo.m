@@ -22,3 +22,7 @@
 @implementation OIMInputStatusChangedData
 
 @end
+
+@implementation OIMConversationReq
+
+@end
