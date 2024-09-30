@@ -76,4 +76,19 @@
     
     Open_im_sdkUploadLogs(callback, [self operationId], line, ex, progress);
 }
+
+- (void)logs:(NSString *)file
+        line:(NSInteger)line
+        msgs:(NSString *)msgs
+         err:(NSString *)err
+keyAndValues:(NSArray *)keyAndValues
+    logLevel:(NSInteger )logLevel {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
+        
+    } onFailure:^(NSInteger code, NSString * _Nullable msg) {
+        
+    }];
+
+    Open_im_sdkLogs(callback, [self operationId], logLevel, file ?: @"", line, msgs ?: @"", err ?: @"", (keyAndValues ?: @[]).mj_JSONString);
+}
 @end

@@ -52,6 +52,13 @@ NS_ASSUME_NONNULL_BEGIN
                      onSuccess:(OIMSuccessCallback)onSuccess
                      onFailure:(OIMFailureCallback)onFailure;
 
+- (void)logs:(NSString * _Nullable)file
+        line:(NSInteger)line
+        msgs:(NSString * _Nullable)msgs
+         err:(NSString * _Nullable)err
+keyAndValues:(NSArray * _Nullable)keyAndValues
+    logLevel:(NSInteger )logLevel;
+
 @end
 
 NS_ASSUME_NONNULL_END
