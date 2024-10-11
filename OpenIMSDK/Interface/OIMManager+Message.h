@@ -298,7 +298,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)sendMessageNotOss:(OIMMessageInfo *)message
                    recvID:(NSString * _Nullable)recvID
                   groupID:(NSString * _Nullable)groupID
-          offlinePushInfo:(OIMOfflinePushInfo * _Nullable)offlinePushInfo
+          offlinePushInfo:(OIMOfflinePushInfo *)offlinePushInfo
                 onSuccess:(nullable OIMMessageInfoCallback)onSuccess
                onProgress:(nullable OIMNumberCallback)onProgress
                 onFailure:(nullable OIMFailureCallback)onFailure;

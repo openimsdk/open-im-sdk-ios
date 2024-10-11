@@ -294,8 +294,8 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
 
 - (void)initSDK {
     OIMInitConfig *config = [OIMInitConfig new];
-    config.apiAddr = @"";
-    config.wsAddr = @"";
+    config.apiAddr = API_ADDRESS;
+    config.wsAddr = WS_ADDRESS;
     
     BOOL success = [OIMManager.manager initSDKWithConfig:config
                                             onConnecting:^{
@@ -1013,10 +1013,10 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
         
         self.testMessage = [OIMMessageInfo createTextMessage:[@"test message" stringByAppendingFormat:@"%d", arc4random() % 1000]];
-//        OIMMessageInfo *message = [OIMMessageInfo createTextAtAllMessage:@""
-//                                                             displayText:nil
-//                                                                 message:nil];
-//        [OIMMessageInfo createImageMessage:@"/xxx.png"];
+        //        OIMMessageInfo *message = [OIMMessageInfo createTextAtAllMessage:@""
+        //                                                             displayText:nil
+        //                                                                 message:nil];
+        //        [OIMMessageInfo createImageMessage:@"/xxx.png"];
         //        self.testMessage = [OIMMessageInfo createMergeMessage:@[] title:@"" summaryList:@[]];
         //        self.testMessage = [OIMMessageInfo createForwardMessage:self.testMessage];
         //        self.testMessage = [OIMMessageInfo createLocationMessage:@"" latitude:0 longitude:0];
@@ -1046,7 +1046,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         [OIMManager.manager sendMessage:self.testMessage
                                  recvID:OTHER_USER_ID
                                 groupID:GROUP_ID
-                        offlinePushInfo:nil
+                        offlinePushInfo:[OIMOfflinePushInfo new]
                               onSuccess:^(OIMMessageInfo * _Nullable message) {
             // Please pay special attention here, the returned 'message' needs to be replaced with the data source.
             self.testMessage = message;
@@ -1059,9 +1059,9 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         
         /* File upload without sdk
          OIMPictureInfo *pic = [OIMPictureInfo new];
-         pic.url = @"xxx";
+         pic.url = @"https://web.rentsoft.cn/api_enterprise/object/6105455334/msg_picture_a730ff297a9b5fb0af1f6c8a9a99a221.gif";
          
-         self.testMessage = [OIMMessageInfo createImageMessageByURL:pic bigPicture:pic snapshotPicture:pic];
+         self.testMessage = [OIMMessageInfo createImageMessageByURL:@"xxx" sourcePicture:pic bigPicture:pic snapshotPicture:pic];
          self.testMessage = [OIMMessageInfo createSoundMessageByURL:@"xxx"
          duration:10
          size:100];
@@ -1070,10 +1070,14 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
          duration:10
          size:100
          snapshot:@"https://c-ssl.duitang.com/uploads/item/202105/29/20210529001057_aSeLB.jpeg"];
+         NSString *j = self.testMessage.mj_JSONString;
+         
+         NSLog(@"json string: %@", j);
+         
          [OIMManager.manager sendMessageNotOss:self.testMessage
          recvID:OTHER_USER_ID
          groupID:GROUP_ID
-         offlinePushInfo:nil
+         offlinePushInfo:[OIMOfflinePushInfo new]
          onSuccess:^(OIMMessageInfo * _Nullable message) {
          self.testMessage = message;
          callback(nil, nil);
@@ -1159,7 +1163,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
         
         [OIMManager.manager markConversationMessageAsRead:CONVERSASTION_ID
-                                           onSuccess:^(NSString * _Nullable data) {
+                                                onSuccess:^(NSString * _Nullable data) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
@@ -1457,7 +1461,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
         
         [OIMManager.manager markConversationMessageAsRead:CONVERSASTION_ID
-                                           onSuccess:^(NSString * _Nullable data) {
+                                                onSuccess:^(NSString * _Nullable data) {
             
             callback(nil, nil);
         } onFailure:^(NSInteger code, NSString * _Nullable msg) {
