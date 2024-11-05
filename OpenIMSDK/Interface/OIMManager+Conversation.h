@@ -180,8 +180,11 @@ NS_ASSUME_NONNULL_BEGIN
              onSuccess:(nullable OIMInputStatusChangedCallback)onSuccess
              onFailure:(nullable OIMFailureCallback)onFailure;
 
+/**
+ * @param req  OIMConversationReq
+ */
 - (void)setConversation:(NSString *)conversationID
-                userID:(OIMConversationReq *)req
+                    req:(NSDictionary *)req
              onSuccess:(nullable OIMSuccessCallback)onSuccess
              onFailure:(nullable OIMFailureCallback)onFailure;
 @end
