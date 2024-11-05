@@ -72,6 +72,10 @@ NS_ASSUME_NONNULL_BEGIN
            onSuccess:(nullable OIMSuccessCallback)onSuccess
            onFailure:(nullable OIMFailureCallback)onFailure;
 
+- (void)setGroupInfoDictionary:(NSDictionary *)groupInfo
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure;
+
 /**
  * Get group members
  *
@@ -227,8 +231,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Set group member's info
+ * @param groupMemberInfo OIMSetGroupMemberInfo
  */
-- (void)setGroupMemberInfo:(OIMSetGroupMemberInfo *)groupMemberInfo
+- (void)setGroupMemberInfo:(NSDictionary *)groupMemberInfo
                  onSuccess:(nullable OIMSuccessCallback)onSuccess
                  onFailure:(nullable OIMFailureCallback)onFailure;
 
