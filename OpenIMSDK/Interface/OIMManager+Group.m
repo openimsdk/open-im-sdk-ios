@@ -88,12 +88,20 @@
     Open_im_sdkGetSpecifiedGroupsInfo(callback, [self operationId], groupsID.mj_JSONString);
 }
 
-- (void)setGroupInfo:(OIMGroupInfo *)info
+- (void)setGroupInfo:(OIMGroupInfo *)groupInfo
            onSuccess:(OIMSuccessCallback)onSuccess
            onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
-    Open_im_sdkSetGroupInfo(callback, [self operationId], info.mj_JSONString);
+    Open_im_sdkSetGroupInfo(callback, [self operationId], groupInfo.mj_JSONString);
+}
+
+- (void)setGroupInfoDictionary:(NSDictionary *)groupInfo
+                     onSuccess:(nullable OIMSuccessCallback)onSuccess
+                     onFailure:(nullable OIMFailureCallback)onFailure {
+    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
+    
+    Open_im_sdkSetGroupInfo(callback, [self operationId], groupInfo.mj_JSONString);
 }
 
 - (void)getGroupMemberList:(NSString *)groupID
@@ -241,12 +249,8 @@
                  groupNickname:(NSString *)groupNickname
                      onSuccess:(OIMSuccessCallback)onSuccess
                      onFailure:(OIMFailureCallback)onFailure {
-    OIMSetGroupMemberInfo *info = [OIMSetGroupMemberInfo new];
-    info.groupID = groupID;
-    info.userID = userID;
-    info.nickname = groupNickname;
     
-    [self setGroupMemberInfo:info onSuccess:onSuccess onFailure:onFailure];
+    [self setGroupMemberInfo:@{@"groupID": groupID, @"userID": userID, @"nickname": groupNickname} onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)setGroupMemberRoleLevel:(NSString *)groupID
@@ -254,15 +258,11 @@
                       roleLevel:(OIMGroupMemberRole)roleLevel
                       onSuccess:(OIMSuccessCallback)onSuccess
                       onFailure:(OIMFailureCallback)onFailure {
-    OIMSetGroupMemberInfo *info = [OIMSetGroupMemberInfo new];
-    info.groupID = groupID;
-    info.userID = userID;
-    info.roleLevel = roleLevel;
-    
-    [self setGroupMemberInfo:info onSuccess:onSuccess onFailure:onFailure];
+
+    [self setGroupMemberInfo:@{@"groupID": groupID, @"userID": userID, @"roleLevel": @(roleLevel)} onSuccess:onSuccess onFailure:onFailure];
 }
 
-- (void)setGroupMemberInfo:(OIMSetGroupMemberInfo *)groupMemberInfo
+- (void)setGroupMemberInfo:(NSDictionary *)groupMemberInfo
                  onSuccess:(nullable OIMSuccessCallback)onSuccess
                  onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
@@ -291,11 +291,8 @@
             needVerification:(OIMGroupVerificationType)needVerification
                    onSuccess:(OIMSuccessCallback)onSuccess
                    onFailure:(OIMFailureCallback)onFailure {
-    OIMGroupInfo *info = [OIMGroupInfo new];
-    info.groupID = groupID;
-    info.needVerification = needVerification;
     
-    [self setGroupInfo:info onSuccess:onSuccess onFailure:onFailure];
+    [self setGroupInfoDictionary:@{@"groupID": groupID, @"needVerification": @(needVerification)} onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)getGroupMemberOwnerAndAdmin:(NSString *)groupID
@@ -316,22 +313,15 @@
                         onSuccess:(nullable OIMSuccessCallback)onSuccess
                         onFailure:(nullable OIMFailureCallback)onFailure {
     
-    OIMGroupInfo *info = [OIMGroupInfo new];
-    info.groupID = groupID;
-    info.applyMemberFriend = rule;
-    
-    [self setGroupInfo:info onSuccess:onSuccess onFailure:onFailure];
+    [self setGroupInfoDictionary:@{@"groupID": groupID, @"applyMemberFriend": @(rule)} onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)setGroupLookMemberInfo:(NSString *)groupID
                           rule:(int32_t)rule
                      onSuccess:(nullable OIMSuccessCallback)onSuccess
                      onFailure:(nullable OIMFailureCallback)onFailure {
-    OIMGroupInfo *info = [OIMGroupInfo new];
-    info.groupID = groupID;
-    info.applyMemberFriend = rule;
     
-    [self setGroupInfo:info onSuccess:onSuccess onFailure:onFailure];
+    [self setGroupInfoDictionary:@{@"groupID": groupID, @"lookMemberInfo": @(rule)} onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)searchGroupMembers:(OIMSearchParam *)searchParam

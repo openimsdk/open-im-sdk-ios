@@ -99,10 +99,8 @@
                isPinned:(BOOL)isPinned
               onSuccess:(OIMSuccessCallback)onSuccess
               onFailure:(OIMFailureCallback)onFailure {
-    OIMConversationReq *req = [OIMConversationReq new];
-    req.isPinned = isPinned;
     
-    [self setConversation:conversationID req:req onSuccess:onSuccess onFailure:onFailure];
+    [self setConversation:conversationID req:@{@"isPinned": @(isPinned)} onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)getTotalUnreadMsgCountWithOnSuccess:(OIMNumberCallback)onSuccess
@@ -120,39 +118,31 @@
                                status:(OIMReceiveMessageOpt)status
                             onSuccess:(OIMSuccessCallback)onSuccess
                             onFailure:(OIMFailureCallback)onFailure {
-    OIMConversationReq *req = [OIMConversationReq new];
-    req.recvMsgOpt = status;
-    
-    [self setConversation:conversationID req:req onSuccess:onSuccess onFailure:onFailure];
+
+    [self setConversation:conversationID req:@{@"recvMsgOpt": @(status)} onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)setConversationPrivateChat:(NSString *)conversationID
                             isPrivate:(BOOL)isPrivate
                             onSuccess:(OIMSuccessCallback)onSuccess
                             onFailure:(OIMFailureCallback)onFailure {
-    OIMConversationReq *req = [OIMConversationReq new];
-    req.isPrivateChat = isPrivate;
     
-    [self setConversation:conversationID req:req onSuccess:onSuccess onFailure:onFailure];
+    [self setConversation:conversationID req:@{@"isPrivateChat": @(isPrivate)} onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)setConversationBurnDuration:(NSString *)conversationID
                               duration:(NSInteger)burnDuration
                              onSuccess:(OIMSuccessCallback)onSuccess
                              onFailure:(OIMFailureCallback)onFailure {
-    OIMConversationReq *req = [OIMConversationReq new];
-    req.burnDuration = burnDuration;
     
-    [self setConversation:conversationID req:req onSuccess:onSuccess onFailure:onFailure];
+    [self setConversation:conversationID req:@{@"burnDuration": @(burnDuration)} onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)resetConversationGroupAtType:(NSString *)conversationID
                            onSuccess:(OIMSuccessCallback)onSuccess
                            onFailure:(OIMFailureCallback)onFailure {
-    OIMConversationReq *req = [OIMConversationReq new];
-    req.groupAtType = 0;
     
-    [self setConversation:conversationID req:req onSuccess:onSuccess onFailure:onFailure];
+    [self setConversation:conversationID req:@{@"groupAtType": @0} onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)hideConversation:(NSString *)conversationID
@@ -182,10 +172,8 @@
                        ex:(NSString *)ex
                 onSuccess:(nullable OIMSuccessCallback)onSuccess
                 onFailure:(nullable OIMFailureCallback)onFailure {
-    OIMConversationReq *req = [OIMConversationReq new];
-    req.ex = ex;
     
-    [self setConversation:conversationID req:req onSuccess:onSuccess onFailure:onFailure];
+    [self setConversation:conversationID req:@{@"ex": ex} onSuccess:onSuccess onFailure:onFailure];
 }
 
 - (void)searchConversation:(NSString *)name
@@ -223,9 +211,9 @@
 }
 
 - (void)setConversation:(NSString *)conversationID
-                    req:(OIMConversationReq *)req
+                    req:(NSDictionary *)req
              onSuccess:(nullable OIMSuccessCallback)onSuccess
-              onFailure:(nullable OIMFailureCallback)onFailure {
+             onFailure:(nullable OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
     
     Open_im_sdkSetConversation(callback, [self operationId], conversationID, req.mj_JSONString);

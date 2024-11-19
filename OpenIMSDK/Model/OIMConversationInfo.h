@@ -113,13 +113,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) NSTimeInterval burnDuration;
 
-/**
- *  Whether still in the group, return true if left the group
- */
-@property (nonatomic, assign) BOOL isMsgDestruct;
-
-@property (nonatomic, assign) NSTimeInterval msgDestructTime;
-
 @property (nonatomic, nullable, copy) NSString *ex;
 
 @end
