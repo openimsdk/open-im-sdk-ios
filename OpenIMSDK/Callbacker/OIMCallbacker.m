@@ -565,20 +565,12 @@
     
 }
 
-- (void)onRecvMessageExtensionsAdded:(NSString * _Nullable)msgID reactionExtensionList:(NSString * _Nullable)reactionExtensionList {
-    
-}
-
-- (void)onRecvMessageExtensionsChanged:(NSString * _Nullable)msgID reactionExtensionList:(NSString * _Nullable)reactionExtensionList {
-    
-}
-
-- (void)onRecvMessageExtensionsDeleted:(NSString * _Nullable)msgID reactionExtensionKeyList:(NSString * _Nullable)reactionExtensionKeyList {
-    
-}
-
 - (void)onRecvOnlineOnlyMessage:(NSString *)message {
-    
+    OIMMessageInfo *msg = [OIMMessageInfo mj_objectWithKeyValues:message];
+
+    [self dispatchMainThread:^{
+        [self.advancedMsgListeners onRecvOnlineOnlyMessage:msg];
+    }];
 }
 
 #pragma mark -

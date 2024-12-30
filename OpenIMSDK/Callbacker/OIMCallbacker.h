@@ -298,6 +298,8 @@ typedef void (^OIMInputStatusChangedCallback)(NSArray<NSNumber *> *inputStatesCh
 
 - (void)onMsgDeleted:(OIMMessageInfo *)message;
 
+- (void)onRecvOnlineOnlyMessage:(OIMMessageInfo *)message;
+
 @end
 
 /// Custom Business Callbacks for IM
