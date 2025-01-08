@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OpenIMSDK'
-  s.version          = '3.8.2+1'
+  s.version          = '3.8.3'
   s.summary          = 'Open-IM-SDK'
 
 # This description is used to generate tags and improve search results.
@@ -77,6 +77,6 @@ Pod::Spec.new do |s|
   
   s.static_framework = true
 
-  s.dependency 'OpenIMSDKCore', '3.8.2'
+  s.dependency 'OpenIMSDKCore', '3.8.3'
   s.dependency 'MJExtension'
 end

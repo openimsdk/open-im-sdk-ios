@@ -215,4 +215,9 @@ typedef NS_ENUM(NSInteger, OIMLoginStatus) {
     OIMLoginStatusLogged = 3,
 };
 
+typedef NS_ENUM(NSInteger, OIMGetHistoryViewType) {
+    OIMGetHistoryViewTypeHistory = 0,
+    OIMGetHistoryViewTypeSearch = 1
+};
+
 #endif /* IMDefine_h */

@@ -125,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OIMGetAdvancedHistoryMessageListParam : OIMGetMessageOptions
 
-@property (nonatomic, assign) NSInteger lastMinSeq;
+@property (nonatomic, assign) OIMGetHistoryViewType viewType;
 
 @end
 
