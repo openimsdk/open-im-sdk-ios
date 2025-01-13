@@ -13,8 +13,9 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/OpenIMSDK/OpenIMSDKCore-iOS", .exact("3.8.3")),
-        .package(url: "https://github.com/CoderMJLee/MJExtension", from: "3.0.0"),
+        // Updated repository URL
+        .package(url: "https://github.com/bc1pjerry/open-im-sdk-ios.git", .exact("1.0.0")),
+        .package(url: "https://github.com/CoderMJLee/MJExtension.git", from: "3.0.0"),
     ],
     targets: [
         .target(
