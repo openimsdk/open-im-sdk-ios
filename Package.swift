@@ -1,5 +1,4 @@
-// swift-tools-version:5.5
-
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
@@ -14,8 +13,8 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/OpenIMSDK/Open-IM-SDK-Core.git", .exact("3.8.3")),
-        .package(url: "https://github.com/CoderMJLee/MJExtension.git", from: "3.0.0")
+        .package(url: "https://github.com/OpenIMSDK/OpenIMSDKCore-iOS", .exact("3.8.3")),
+        .package(url: "https://github.com/CoderMJLee/MJExtension", from: "3.0.0"),
     ],
     targets: [
         .target(
@@ -23,48 +22,46 @@ let package = Package(
             dependencies: [
                 "OpenIMSDKCore",
                 "MJExtension",
-                .target(name: "Utils"),
-                .target(name: "CallbackProxy"),
-                .target(name: "Model"),
-                .target(name: "Interface"),
-                .target(name: "Callbacker")
             ],
             path: "OpenIMSDK",
-            exclude: ["LICENSE"],
-            sources: ["OpenIMSDK.{h,m}"],
+            sources: ["OpenIMSDK.h", "OpenIMSDK.m"],
             publicHeadersPath: ".",
             cSettings: [
-                .define("VALID_ARCHS", to: "armv7s arm64 x86_64")
+                .headerSearchPath(".")
             ]
         ),
         .target(
-            name: "Utils",
-            path: "OpenIMSDK/Utils",
-            sources: ["*.{h,m}"]
+            name: "OpenIMSDKUtils",
+            dependencies: [],
+            path: "OpenIMSDK/Utils"
         ),
         .target(
-            name: "CallbackProxy",
-            dependencies: ["Utils"],
-            path: "OpenIMSDK/CallbackProxy",
-            sources: ["*.{h,m}"]
+            name: "OpenIMSDKCallbackProxy",
+            dependencies: ["OpenIMSDKUtils"],
+            path: "OpenIMSDK/CallbackProxy"
         ),
         .target(
-            name: "Model",
-            dependencies: ["Utils"],
-            path: "OpenIMSDK/Model",
-            sources: ["*.{h,m}"]
+            name: "OpenIMSDKModel",
+            dependencies: ["OpenIMSDKUtils"],
+            path: "OpenIMSDK/Model"
         ),
         .target(
-            name: "Interface",
-            dependencies: ["Model", "CallbackProxy", "Callbacker"],
-            path: "OpenIMSDK/Interface",
-            sources: ["*.{h,m}"]
+            name: "OpenIMSDKCallbacker",
+            dependencies: [
+                "OpenIMSDKModel",
+                "OpenIMSDKUtils",
+            ],
+            path: "OpenIMSDK/Callbacker"
         ),
         .target(
-            name: "Callbacker",
-            dependencies: ["Model", "Utils"],
-            path: "OpenIMSDK/Callbacker",
-            sources: ["*.{h,m}"]
-        )
-    ]
+            name: "OpenIMSDKInterface",
+            dependencies: [
+                "OpenIMSDKModel",
+                "OpenIMSDKCallbackProxy",
+                "OpenIMSDKCallbacker",
+            ],
+            path: "OpenIMSDK/Interface"
+        ),
+    ],
+    cxxLanguageStandard: .cxx14
 )
