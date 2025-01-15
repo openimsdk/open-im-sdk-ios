@@ -9,7 +9,7 @@ let package = Package(
     products: [
         .library(
             name: "OpenIMSDK",
-            targets: ["OpenIMSDK"]
+            targets: ["open-im-sdk-ios"]
         )
     ],
     dependencies: [
