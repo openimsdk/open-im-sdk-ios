@@ -16,48 +16,14 @@ let package = Package(
         .target(
             name: "OpenIMSDK",
             dependencies: [
-                "OpenIMSDKCore",
-                "MJExtension",
+                "MJExtension"
             ],
-            path: "OpenIMSDK",
-            sources: ["OpenIMSDK.h"],
+            path: "Sources",
             publicHeadersPath: ".",
             cSettings: [
-                .headerSearchPath(".")
+                .headerSearchPath("OpenIMSDK")
             ]
-        ),
-        .target(
-            name: "OpenIMSDKUtils",
-            dependencies: [],
-            path: "OpenIMSDK/Utils"
-        ),
-        .target(
-            name: "OpenIMSDKCallbackProxy",
-            dependencies: ["OpenIMSDKUtils"],
-            path: "OpenIMSDK/CallbackProxy"
-        ),
-        .target(
-            name: "OpenIMSDKModel",
-            dependencies: ["OpenIMSDKUtils"],
-            path: "OpenIMSDK/Model"
-        ),
-        .target(
-            name: "OpenIMSDKCallbacker",
-            dependencies: [
-                "OpenIMSDKModel",
-                "OpenIMSDKUtils",
-            ],
-            path: "OpenIMSDK/Callbacker"
-        ),
-        .target(
-            name: "OpenIMSDKInterface",
-            dependencies: [
-                "OpenIMSDKModel",
-                "OpenIMSDKCallbackProxy",
-                "OpenIMSDKCallbacker",
-            ],
-            path: "OpenIMSDK/Interface"
-        ),
+        )
     ],
     cxxLanguageStandard: .cxx14
 )

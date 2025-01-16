@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "MJExtension",
+        "repositoryURL": "https://github.com/CoderMJLee/MJExtension.git",
+        "state": {
+          "branch": null,
+          "revision": "03ceefbcb51be045e0b4d252442a2fb2939d52ae",
+          "version": "3.4.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
