@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 import PackageDescription
 
 let package = Package(
@@ -7,14 +7,9 @@ let package = Package(
         .iOS(.v11)
     ],
     products: [
-        .library(
-            name: "OpenIMSDK",
-            targets: ["open-im-sdk-ios"]
-        )
+        .library(name: "OpenIMSDK", targets: ["OpenIMSDK"])
     ],
     dependencies: [
-        // Updated repository URL
-        .package(url: "https://github.com/bc1pjerry/open-im-sdk-ios.git", .exact("1.0.0")),
         .package(url: "https://github.com/CoderMJLee/MJExtension.git", from: "3.0.0"),
     ],
     targets: [
@@ -25,7 +20,7 @@ let package = Package(
                 "MJExtension",
             ],
             path: "OpenIMSDK",
-            sources: ["OpenIMSDK.h", "OpenIMSDK.m"],
+            sources: ["OpenIMSDK.h"],
             publicHeadersPath: ".",
             cSettings: [
                 .headerSearchPath(".")
