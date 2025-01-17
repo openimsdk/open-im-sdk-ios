@@ -15,8 +15,16 @@ For the SDK reference, see [Quick Start guide](https://docs.openim.io/sdks/quick
 
 ### Adding Dependencies
 
-```ruby
-pod 'OpenIMSDK'
+```swift
+// swift-tools-version:5.5
+import PackageDescription
+
+let package = Package(
+    name: "YOUR_PROJECT_NAME",
+    dependencies: [
+        .package(url: "https://github.com/bc1pjerry/open-im-sdk-ios.git", from: "4.0.0"),
+    ]
+)
 ```
 
 ## Usage 🚀

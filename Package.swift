@@ -10,8 +10,7 @@ let package = Package(
         .library(name: "OpenIMSDK", targets: ["OpenIMSDK"])
     ],
     dependencies: [
-        .package(url: "https://github.com/bc1pjerry/open-im-sdk-ios.git", from: "1.0.2"),
-        .package(url: "https://github.com/CoderMJLee/MJExtension.git", from: "3.0.0"),
+        .package(url: "https://github.com/CoderMJLee/MJExtension.git", from: "3.0.0")
     ],
     targets: [
         .target(
