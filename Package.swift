@@ -18,7 +18,7 @@ let package = Package(
             dependencies: [
                 "MJExtension"
             ],
-            path: "Sources",
+            path: "Sources/OpenIMSDK",
             publicHeadersPath: ".",
             cSettings: [
                 .headerSearchPath(".")
