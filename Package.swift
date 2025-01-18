@@ -21,7 +21,7 @@ let package = Package(
             path: "Sources",
             publicHeadersPath: ".",
             cSettings: [
-                .headerSearchPath("OpenIMSDK")
+                .headerSearchPath(".")
             ]
         )
     ],
