@@ -19,6 +19,7 @@ profile
 DerivedData
 *.hmap
 *.ipa
+Package.resolved
 
 # Generated files
 VersionX-revision.h
