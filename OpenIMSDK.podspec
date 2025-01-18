@@ -28,23 +28,23 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '11.0'    
   
-  s.source_files = 'OpenIMSDK/OpenIMSDK.{h,m}'
+  s.source_files = 'Sources/OpenIMSDK/OpenIMSDK.{h,m}'
 
 
   s.subspec 'Utils' do |ss|
-    ss.source_files = 'OpenIMSDK/Utils/*.{h,m}'
+    ss.source_files = 'Sources/OpenIMSDK/Utils/*.{h,m}'
   end
 
   s.subspec 'CallbackProxy' do |ss|
     ss.dependency 'OpenIMSDK/Utils'
 
-    ss.source_files = 'OpenIMSDK/CallbackProxy/*.{h,m}'
+    ss.source_files = 'Sources/OpenIMSDK/CallbackProxy/*.{h,m}'
   end
 
   s.subspec 'Model' do |ss|
     ss.dependency 'OpenIMSDK/Utils'
 
-    ss.source_files = 'OpenIMSDK/Model/*.{h,m}'
+    ss.source_files = 'Sources/OpenIMSDK/Model/*.{h,m}'
   end
 
   s.subspec 'Interface' do |ss|
@@ -52,14 +52,14 @@ Pod::Spec.new do |s|
     ss.dependency 'OpenIMSDK/CallbackProxy'
     ss.dependency 'OpenIMSDK/Callbacker'
 
-    ss.source_files = 'OpenIMSDK/Interface/*.{h,m}'
+    ss.source_files = 'Sources/OpenIMSDK/Interface/*.{h,m}'
   end
 
   s.subspec 'Callbacker' do |ss|
     ss.dependency 'OpenIMSDK/Model'
     ss.dependency 'OpenIMSDK/Utils'
 
-    ss.source_files = 'OpenIMSDK/Callbacker/*.{h,m}'
+    ss.source_files = 'Sources/OpenIMSDK/Callbacker/*.{h,m}'
   end
 
   valid_archs = ['armv7s','arm64','x86_64']
