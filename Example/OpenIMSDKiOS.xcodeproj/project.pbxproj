@@ -252,7 +252,7 @@
 			attributes = {
 				CLASSPREFIX = OPENIMSDK;
 				LastUpgradeCheck = 0720;
-				ORGANIZATIONNAME = xpg;
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
 						DevelopmentTeam = BDLHL8GNFV;
