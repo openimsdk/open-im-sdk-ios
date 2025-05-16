@@ -1095,7 +1095,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
              todo:^(void (^callback)(NSNumber *code, NSString *msg)) {
         OIMGetAdvancedHistoryMessageListParam *param = [OIMGetAdvancedHistoryMessageListParam new];
         param.conversationID = CONVERSASTION_ID;
-        param.lastMinSeq = 0;
+        param.viewType = OIMGetHistoryViewTypeHistory;
         param.startClientMsgID = @"xxx";
         param.count = 100;
         
@@ -1116,7 +1116,7 @@ static NSString *OPENIMSDKTableViewCellIdentifier = @"OPENIMSDKTableViewCellIden
         
         OIMGetAdvancedHistoryMessageListParam *param = [OIMGetAdvancedHistoryMessageListParam new];
         param.conversationID = CONVERSASTION_ID;
-        param.lastMinSeq = 0;
+        param.viewType = OIMGetHistoryViewTypeHistory;
         param.startClientMsgID = @"xxx";
         param.count = 100;
         
