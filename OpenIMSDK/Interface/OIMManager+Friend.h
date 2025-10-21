@@ -27,12 +27,20 @@ NS_ASSUME_NONNULL_BEGIN
  * Get received friend applications, i.e., people who have applied to be friends with me
  */
 - (void)getFriendApplicationListAsRecipientWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
-                                    onFailure:(nullable OIMFailureCallback)onFailure;
+                                         onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)getFriendApplicationListAsRecipientWithReq:(nullable GetFriendApplicationListAsRecipientReq *)req
+                                         onSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
+                                         onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
  * Friend applications sent by the current user
  */
 - (void)getFriendApplicationListAsApplicantWithOnSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
+                                        onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)getFriendApplicationListAsApplicantWithReq:(nullable GetFriendApplicationListAsApplicantReq *)req
+                                         onSuccess:(nullable OIMFriendApplicationsCallback)onSuccess
                                         onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**

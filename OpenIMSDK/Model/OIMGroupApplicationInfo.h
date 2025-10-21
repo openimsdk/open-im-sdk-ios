@@ -40,5 +40,63 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface DeleteGroupRequest : NSObject
+
+@property (nonatomic, copy) NSString *groupID;
+@property (nonatomic, copy) NSString *fromUserID;
+
+- (instancetype)initWithGroupID:(NSString *)groupID fromUserID:(NSString *)fromUserID;
+- (instancetype)initWithJson:(NSDictionary *)json;
+- (NSDictionary *)toJson;
+- (NSString *)description;
+
+@end
+
+@interface GetGroupApplicationListAsRecipientReq : NSObject
+
+@property (nonatomic, copy) NSArray<NSString *> *groupIDs;
+@property (nonatomic, copy) NSArray<NSNumber *> *handleResults;
+@property (nonatomic, assign) NSInteger offset;
+@property (nonatomic, assign) NSInteger count;
+
+- (instancetype)initWithGroupIDs:(NSArray<NSString *> *)groupIDs
+                   handleResults:(NSArray<NSNumber *> *)handleResults
+                         offset:(NSInteger)offset
+                          count:(NSInteger)count;
+
+- (instancetype)initWithJson:(NSDictionary *)json;
+- (NSDictionary *)toJson;
+- (NSString *)description;
+
+@end
+
+@interface GetGroupApplicationListAsApplicantReq : NSObject
+
+@property (nonatomic, copy) NSArray<NSString *> *groupIDs;
+@property (nonatomic, copy) NSArray<NSNumber *> *handleResults;
+@property (nonatomic, assign) NSInteger offset;
+@property (nonatomic, assign) NSInteger count;
+
+- (instancetype)initWithGroupIDs:(NSArray<NSString *> *)groupIDs
+                   handleResults:(NSArray<NSNumber *> *)handleResults
+                         offset:(NSInteger)offset
+                          count:(NSInteger)count;
+
+- (instancetype)initWithJson:(NSDictionary *)json;
+- (NSDictionary *)toJson;
+- (NSString *)description;
+
+@end
+
+@interface GetGroupApplicationUnhandledCountReq : NSObject
+
+@property (nonatomic, assign) NSInteger time;
+
+- (instancetype)initWithTime:(NSInteger)time;
+- (instancetype)initWithJson:(NSDictionary *)json;
+- (NSDictionary *)toJson;
+- (NSString *)description;
+
+@end
 
 NS_ASSUME_NONNULL_END

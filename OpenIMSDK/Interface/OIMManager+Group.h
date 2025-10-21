@@ -139,17 +139,22 @@ NS_ASSUME_NONNULL_BEGIN
                 onSuccess:(nullable OIMSuccessCallback)onSuccess
                 onFailure:(nullable OIMFailureCallback)onFailure;
 
-/**
- * Get a list of group member applications received by administrators or group owners
- */
 - (void)getGroupApplicationListAsRecipientWithOnSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
-                                              onFailure:(nullable OIMFailureCallback)onFailure;
+                                        onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)getGroupApplicationListAsRecipientWithReq:(nullable GetGroupApplicationListAsRecipientReq *)req
+                                        onSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
+                                        onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
  * Group applications sent by the current user
  */
 - (void)getGroupApplicationListAsApplicantWithOnSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
-                                              onFailure:(nullable OIMFailureCallback)onFailure;
+                                        onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)getGroupApplicationListAsApplicantWithRep:(nullable GetGroupApplicationListAsApplicantReq *)req
+                                        onSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
+                                        onFailure:(nullable OIMFailureCallback)onFailure;
 
 /**
  * Accept someone's application to join a group as an administrator or group owner

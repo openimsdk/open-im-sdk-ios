@@ -162,26 +162,37 @@
     Open_im_sdkInviteUserToGroup(callback, [self operationId], groupID, reason ?: @"", usersID.mj_JSONString);
 }
 
-- (void)getGroupApplicationListAsRecipientWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
-                                              onFailure:(OIMFailureCallback)onFailure {
+- (void)getGroupApplicationListAsRecipientWithOnSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
+                                              onFailure:(nullable OIMFailureCallback)onFailure {
+    [self getGroupApplicationListAsRecipientWithReq:nil onSuccess:onSuccess onFailure:onFailure];
+}
+- (void)getGroupApplicationListAsRecipientWithReq:(GetGroupApplicationListAsRecipientReq *)req
+                                        onSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
+                                        onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
             onSuccess([OIMGroupApplicationInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetGroupApplicationListAsRecipient(callback, [self operationId]);
+    Open_im_sdkGetGroupApplicationListAsRecipient(callback, [self operationId], req ? req.mj_JSONString : @"{}");
 }
 
-- (void)getGroupApplicationListAsApplicantWithOnSuccess:(OIMGroupsApplicationCallback)onSuccess
-                                              onFailure:(OIMFailureCallback)onFailure {
+- (void)getGroupApplicationListAsApplicantWithOnSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
+                                              onFailure:(nullable OIMFailureCallback)onFailure {
+    [self getGroupApplicationListAsApplicantWithRep:nil onSuccess:onSuccess onFailure:onFailure];
+}
+
+- (void)getGroupApplicationListAsApplicantWithRep:(nullable GetGroupApplicationListAsApplicantReq *)req
+                                        onSuccess:(nullable OIMGroupsApplicationCallback)onSuccess
+                                        onFailure:(OIMFailureCallback)onFailure {
     CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:^(NSString * _Nullable data) {
         if (onSuccess) {
             onSuccess([OIMGroupApplicationInfo mj_objectArrayWithKeyValuesArray:data]);
         }
     } onFailure:onFailure];
     
-    Open_im_sdkGetGroupApplicationListAsApplicant(callback, [self operationId]);
+    Open_im_sdkGetGroupApplicationListAsApplicant(callback, [self operationId], req ? req.mj_JSONString : @"{}");
 }
 
 - (void)acceptGroupApplication:(NSString *)groupID
