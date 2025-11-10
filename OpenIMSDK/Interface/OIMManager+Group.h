@@ -316,6 +316,14 @@ NS_ASSUME_NONNULL_BEGIN
                 userIDs:(NSArray<NSString *> *)userIDs
             onSuccess:(nullable OIMStringArrayCallback)onSuccess
             onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)deleteGroupRequests:(NSArray<DeleteGroupRequest *> *)groupRequests
+                   onSuccess:(nullable OIMSuccessCallback)onSuccess
+                   onFailure:(nullable OIMFailureCallback)onFailure;
+
+- (void)getGroupApplicationUnhandledCount:(GetGroupApplicationUnhandledCountReq *)req
+                                 onSuccess:(nullable OIMNumberCallback)onSuccess
+                                 onFailure:(nullable OIMFailureCallback)onFailure;
 @end
 
 NS_ASSUME_NONNULL_END
