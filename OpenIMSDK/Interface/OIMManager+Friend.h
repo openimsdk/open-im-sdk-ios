@@ -160,9 +160,6 @@ NS_ASSUME_NONNULL_BEGIN
             onSuccess:(nullable OIMSuccessCallback)onSuccess
             onFailure:(nullable OIMFailureCallback)onFailure;
 
-- (void)deleteFriendRequests:(NSArray<DeleteFriendRequest *> *)friendRequests
-                   onSuccess:(nullable OIMSuccessCallback)onSuccess
-                   onFailure:(nullable OIMFailureCallback)onFailure;
 
 - (void)getFriendApplicationUnhandledCount:(GetFriendApplicationUnhandledCountReq *)req
                                  onSuccess:(nullable OIMNumberCallback)onSuccess

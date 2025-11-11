@@ -373,17 +373,6 @@
     Open_im_sdkGetUsersInGroup(callback, [self operationId], groupID, userIDs.mj_JSONString);
 }
 
-- (void)deleteGroupRequests:(NSArray<DeleteGroupRequest *> *)groupRequests
-                   onSuccess:(nullable OIMSuccessCallback)onSuccess
-                   onFailure:(nullable OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-    
-    NSArray *requests = [DeleteGroupRequest mj_keyValuesArrayWithObjectArray:groupRequests];
-    NSDictionary *param = @{@"groupRequests": requests};
-    
-    Open_im_sdkDeleteGroupRequests(callback, [self operationId], param.mj_JSONString);
-}
-
 - (void)getGroupApplicationUnhandledCount:(GetGroupApplicationUnhandledCountReq *)req
                                  onSuccess:(nullable OIMNumberCallback)onSuccess
                                 onFailure:(nullable OIMFailureCallback)onFailure {

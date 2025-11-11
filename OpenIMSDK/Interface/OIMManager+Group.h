@@ -317,10 +317,6 @@ NS_ASSUME_NONNULL_BEGIN
             onSuccess:(nullable OIMStringArrayCallback)onSuccess
             onFailure:(nullable OIMFailureCallback)onFailure;
 
-- (void)deleteGroupRequests:(NSArray<DeleteGroupRequest *> *)groupRequests
-                   onSuccess:(nullable OIMSuccessCallback)onSuccess
-                   onFailure:(nullable OIMFailureCallback)onFailure;
-
 - (void)getGroupApplicationUnhandledCount:(GetGroupApplicationUnhandledCountReq *)req
                                  onSuccess:(nullable OIMNumberCallback)onSuccess
                                  onFailure:(nullable OIMFailureCallback)onFailure;

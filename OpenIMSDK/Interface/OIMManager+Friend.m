@@ -218,17 +218,6 @@
     Open_im_sdkUpdateFriends(callback, [self operationId], req.mj_JSONString);
 }
 
-- (void)deleteFriendRequests:(NSArray<DeleteFriendRequest *> *)friendRequests
-                   onSuccess:(nullable OIMSuccessCallback)onSuccess
-                   onFailure:(nullable OIMFailureCallback)onFailure {
-    CallbackProxy *callback = [[CallbackProxy alloc]initWithOnSuccess:onSuccess onFailure:onFailure];
-    
-    NSArray *requests = [DeleteFriendRequest mj_keyValuesArrayWithObjectArray:friendRequests];
-    NSDictionary *param = @{@"friendRequests": requests};
-    
-    Open_im_sdkDeleteFriendRequests(callback, [self operationId], param.mj_JSONString);
-}
-
 - (void)getFriendApplicationUnhandledCount:(GetFriendApplicationUnhandledCountReq *)req
                                  onSuccess:(OIMNumberCallback)onSuccess
                                  onFailure:(OIMFailureCallback)onFailure {
