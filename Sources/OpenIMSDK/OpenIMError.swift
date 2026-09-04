@@ -1,7 +1,16 @@
 import Foundation
 
 public enum OpenIMError: Error, Equatable, Sendable {
-    case invalidState(expected: OpenIMClient.State, actual: OpenIMClient.State)
+    public enum ExpectedState: Equatable, Sendable {
+        case idle
+        case initialized
+        case loggedIn
+    }
+
+    /// The operation cannot be performed from the current client state.
+    case invalidState(expected: ExpectedState, actual: OpenIMClient.State)
+    /// An in-flight core operation was invalidated by `uninitialize()`.
+    case cancelled
     case coreUnavailable
     case core(code: Int, message: String?)
 }
@@ -11,6 +20,8 @@ extension OpenIMError: LocalizedError {
         switch self {
         case let .invalidState(expected, actual):
             return "Invalid client state. Expected \(expected), got \(actual)."
+        case .cancelled:
+            return "The OpenIMCore operation was cancelled."
         case .coreUnavailable:
             return "The OpenIMCore adapter has not been configured."
         case let .core(code, message):
