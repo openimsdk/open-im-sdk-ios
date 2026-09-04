@@ -12,6 +12,8 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '11.0'
   s.swift_version = '5.9'
+  # Keep the import/module name identical to the SwiftPM product.
+  s.module_name = 'OpenIMSDK'
   s.source_files = 'Sources/OpenIMSDK/**/*.swift'
   s.dependency 'OpenIMSDKCore', '3.8.3-hotfix.14'
   s.static_framework = true

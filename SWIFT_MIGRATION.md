@@ -6,6 +6,14 @@
 
 Swift Package Manager 與 CocoaPods 必須使用同一版本的 `OpenIMCore.xcframework`：
 
+兩種套件管理器都使用相同的 module name，因此呼叫端不需要因為安裝方式不同而改變 import：
+
+```swift
+import OpenIMSDK
+```
+
+Swift 原始碼中的 `enum`、`struct`、`class` 與 public member name 會直接由兩種套件管理器共用；名稱不應依賴 CocoaPods 的 spec name 或資料夾名稱自動推導。
+
 - SPM 使用 `binaryTarget`，指向 release 上的 `.xcframework.zip` 並鎖定 checksum。
 - CocoaPods 使用 `vendored_frameworks`，或在過渡期間依賴 `OpenIMSDKCore` pod。
 - `MJExtension` 不納入新的 Swift API；模型層將改用 `Codable` 與自訂 decoder。
