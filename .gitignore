@@ -25,6 +25,7 @@ VersionX-revision.h
 # build products
 *.o
 *.LinkFileList
+.build/
 
 # Other source repository archive directories (protects when importing)
 .hg
