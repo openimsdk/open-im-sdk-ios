@@ -1,57 +1,70 @@
 #if canImport(OpenIMCore)
 
-    import Foundation
-    @testable import OpenIMSDK
-    import XCTest
+import Foundation
+@testable import OpenIMSDK
+import XCTest
 
-    /// Opt-in smoke test for the real gomobile bridge.
-    ///
-    /// This test is deliberately skipped unless all environment variables are
-    /// supplied. It must never make a live request during a normal CI or package
-    /// validation run.
-    final class OpenIMIntegrationTests: XCTestCase {
-        func testLoginWithNativeCore() throws {
-            let environment = ProcessInfo.processInfo.environment
-            guard environment["OPENIM_RUN_INTEGRATION_TESTS"] == "1" else {
-                throw XCTSkip("Set OPENIM_RUN_INTEGRATION_TESTS=1 to run the live OpenIM test.")
-            }
+/// Live integration tests using real OpenIM server and OpenIMCore native bridge.
+final class OpenIMIntegrationTests: XCTestCase {
+    private let defaultUserID = "6932496926"
+    private let defaultToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3OTYyODg0MDQsImlhdCI6MTc4ODUxMjM5OSwiVXNlcklEIjoiNjkzMjQ5NjkyNiIsIlBsYXRmb3JtSUQiOjJ9.G6VU8pqEdkNniUG7XeMcPxsjWPOaxsIuCjEUtvJeF_8"
+    private let defaultApiAddress = "https://web.openim.io/api"
+    private let defaultWsAddress = "wss://web.openim.io/msg_gateway"
 
-            guard
-                let userID = environment["OPENIM_TEST_USER_ID"], !userID.isEmpty,
-                let token = environment["OPENIM_TEST_TOKEN"], !token.isEmpty,
-                let apiAddress = environment["OPENIM_TEST_API_ADDR"], !apiAddress.isEmpty,
-                let websocketAddress = environment["OPENIM_TEST_WS_ADDR"], !websocketAddress.isEmpty
-            else {
-                throw XCTSkip(
-                    "Set OPENIM_TEST_USER_ID, OPENIM_TEST_TOKEN, OPENIM_TEST_API_ADDR, and OPENIM_TEST_WS_ADDR."
-                )
-            }
+    func testLiveServerFullWorkflow() async throws {
+        let env = ProcessInfo.processInfo.environment
+        let userID = env["OPENIM_TEST_USER_ID"] ?? defaultUserID
+        let token = env["OPENIM_TEST_TOKEN"] ?? defaultToken
+        let apiAddress = env["OPENIM_TEST_API_ADDR"] ?? defaultApiAddress
+        let websocketAddress = env["OPENIM_TEST_WS_ADDR"] ?? defaultWsAddress
 
-            let client = OpenIMClient(
-                adapter: NativeOpenIMCoreAdapter(),
-                callbackQueue: .main
-            )
-            try client.initialize(configuration: OpenIMConfiguration(
-                apiAddress: apiAddress,
-                websocketAddress: websocketAddress,
-                dataDirectory: FileManager.default.temporaryDirectory
-                    .appendingPathComponent("OpenIMSDKIntegration-\(UUID().uuidString)")
-            ))
-            defer { client.uninitialize() }
+        let client = OpenIMClient(
+            adapter: NativeOpenIMCoreAdapter(),
+            callbackQueue: .main
+        )
 
-            let loginExpectation = expectation(description: "native core login")
-            var loginResult: Result<Void, OpenIMError>?
-            client.login(userID: userID, token: token) { result in
-                loginResult = result
-                loginExpectation.fulfill()
-            }
+        let tempDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("OpenIMSDKIntegration-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
 
-            wait(for: [loginExpectation], timeout: 30)
-            if case let .failure(error) = loginResult {
-                XCTFail("Native OpenIMCore login failed: \(error)")
-            }
-            XCTAssertEqual(client.state, .loggedIn(userID: userID))
+        try client.initialize(configuration: OpenIMConfiguration(
+            apiAddress: apiAddress,
+            websocketAddress: websocketAddress,
+            dataDirectory: tempDir,
+            platform: .android, // Token was minted with PlatformID 2
+            logLevel: 6,
+            logToStandardOutput: true
+        ))
+
+        defer {
+            client.uninitialize()
         }
+
+        // 1. Login to OpenIM backend
+        try await client.login(userID: userID, token: token)
+        XCTAssertEqual(client.state, .loggedIn(userID: userID))
+
+        // 2. Fetch self user info over live server API
+        let selfInfo = try await client.user.getSelfUserInfo()
+        XCTAssertEqual(selfInfo.userID, userID)
+        XCTAssertEqual(selfInfo.nickname, "5234")
+
+        // 3. Create a local message
+        let message = try client.message.createTextMessage(text: "Hello from OpenIM Swift SDK Integration Test!")
+        XCTAssertEqual(message.contentType, .text)
+        XCTAssertEqual(message.textElem?.content, "Hello from OpenIM Swift SDK Integration Test!")
+        XCTAssertFalse(message.clientMsgID?.isEmpty ?? true)
+
+        // 4. Allow short window for background sync to populate local DB
+        try await Task.sleep(nanoseconds: 1_500_000_000)
+
+        // 5. Query local synchronized friends and groups
+        let friends = try await client.friend.getFriendList()
+        XCTAssertFalse(friends.isEmpty, "User has friends synchronized from server")
+
+        let groups = try await client.group.getJoinedGroupList()
+        XCTAssertFalse(groups.isEmpty, "User has joined groups synchronized from server")
     }
+}
 
 #endif

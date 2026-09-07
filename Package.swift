@@ -16,7 +16,17 @@ let package = Package(
     targets: [
         .target(
             name: "OpenIMSDK",
-            path: "Sources/OpenIMSDK"
+            dependencies: [
+                .target(name: "OpenIMCore", condition: .when(platforms: [.iOS]))
+            ],
+            path: "Sources/OpenIMSDK",
+            linkerSettings: [
+                .linkedLibrary("resolv")
+            ]
+        ),
+        .binaryTarget(
+            name: "OpenIMCore",
+            path: "Example/Pods/OpenIMSDKCore/Framework/OpenIMCore.xcframework"
         ),
         .testTarget(
             name: "OpenIMSDKTests",
