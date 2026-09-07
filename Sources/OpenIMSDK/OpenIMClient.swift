@@ -26,6 +26,12 @@ public final class OpenIMClient {
         stateQueue.sync { stateStorage }
     }
 
+    public private(set) lazy var user: OpenIMUserManager = OpenIMUserManager(client: self, adapter: adapter)
+    public private(set) lazy var friend: OpenIMFriendManager = OpenIMFriendManager(client: self, adapter: adapter)
+    public private(set) lazy var group: OpenIMGroupManager = OpenIMGroupManager(client: self, adapter: adapter)
+    public private(set) lazy var conversation: OpenIMConversationManager = OpenIMConversationManager(client: self, adapter: adapter)
+    public private(set) lazy var message: OpenIMMessageManager = OpenIMMessageManager(client: self, adapter: adapter)
+
     public init(
         adapter: OpenIMCoreAdapter,
         callbackQueue: DispatchQueue = .main
@@ -209,6 +215,47 @@ public final class OpenIMClient {
     ) {
         callbackQueue.async {
             completion(result)
+        }
+    }
+
+    // MARK: - Listener Configuration
+    public func setUserListener(_ listener: OpenIMUserListener?) {
+        adapter.setUserListener(listener)
+    }
+
+    public func setFriendshipListener(_ listener: OpenIMFriendshipListener?) {
+        adapter.setFriendshipListener(listener)
+    }
+
+    public func setGroupListener(_ listener: OpenIMGroupListener?) {
+        adapter.setGroupListener(listener)
+    }
+
+    public func setConversationListener(_ listener: OpenIMConversationListener?) {
+        adapter.setConversationListener(listener)
+    }
+
+    public func setAdvancedMsgListener(_ listener: OpenIMAdvancedMsgListener?) {
+        adapter.setAdvancedMsgListener(listener)
+    }
+}
+
+// MARK: - Async / Await Lifecycle (iOS 13.0+)
+@available(iOS 13.0, macOS 10.15, *)
+public extension OpenIMClient {
+    func login(userID: String, token: String) async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            login(userID: userID, token: token) { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
+
+    func logout() async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            logout { result in
+                continuation.resume(with: result)
+            }
         }
     }
 }

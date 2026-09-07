@@ -13,6 +13,9 @@ public enum OpenIMError: Error, Equatable, Sendable {
     case cancelled
     case coreUnavailable
     case core(code: Int, message: String?)
+    case decodingFailed(message: String)
+    case encodingFailed(message: String)
+    case invalidParameter(message: String)
 }
 
 extension OpenIMError: LocalizedError {
@@ -26,6 +29,12 @@ extension OpenIMError: LocalizedError {
             return "The OpenIMCore adapter has not been configured."
         case let .core(code, message):
             return message.map { "OpenIMCore error \(code): \($0)" } ?? "OpenIMCore error \(code)."
+        case let .decodingFailed(message):
+            return "Failed to decode response: \(message)"
+        case let .encodingFailed(message):
+            return "Failed to encode parameter: \(message)"
+        case let .invalidParameter(message):
+            return "Invalid parameter: \(message)"
         }
     }
 }
