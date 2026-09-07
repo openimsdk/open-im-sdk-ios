@@ -2,7 +2,7 @@ platform :ios, '13.0'
 use_frameworks!
 
 target 'OpenIMSDKiOS_Example' do
-  pod 'OpenIMSDK', :path => '../'
+  pod 'OpenIMSDK', '3.8.3-hotfix.14'
 
   target 'OpenIMSDKiOS_Tests' do
     inherit! :search_paths

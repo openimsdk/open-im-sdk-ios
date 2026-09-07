@@ -6,15 +6,15 @@ import XCTest
 
 /// Live integration tests using real OpenIM server and OpenIMCore native bridge.
 final class OpenIMIntegrationTests: XCTestCase {
-    private let defaultUserID = "6932496926"
-    private let defaultToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3OTYyODg0MDQsImlhdCI6MTc4ODUxMjM5OSwiVXNlcklEIjoiNjkzMjQ5NjkyNiIsIlBsYXRmb3JtSUQiOjJ9.G6VU8pqEdkNniUG7XeMcPxsjWPOaxsIuCjEUtvJeF_8"
     private let defaultApiAddress = "https://web.openim.io/api"
     private let defaultWsAddress = "wss://web.openim.io/msg_gateway"
 
     func testLiveServerFullWorkflow() async throws {
         let env = ProcessInfo.processInfo.environment
-        let userID = env["OPENIM_TEST_USER_ID"] ?? defaultUserID
-        let token = env["OPENIM_TEST_TOKEN"] ?? defaultToken
+        guard let userID = env["OPENIM_TEST_USER_ID"],
+              let token = env["OPENIM_TEST_TOKEN"] else {
+            throw XCTSkip("Skipping live integration test: set OPENIM_TEST_USER_ID and OPENIM_TEST_TOKEN to run.")
+        }
         let apiAddress = env["OPENIM_TEST_API_ADDR"] ?? defaultApiAddress
         let websocketAddress = env["OPENIM_TEST_WS_ADDR"] ?? defaultWsAddress
 

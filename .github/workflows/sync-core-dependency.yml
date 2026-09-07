@@ -1,0 +1,124 @@
+name: Sync & Verify OpenIMCore Dependency
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Automatically check every 6 hours
+  workflow_dispatch:
+    inputs:
+      core_tag:
+        description: 'Target OpenIMSDKCore tag (e.g. 3.8.3-hotfix.15, leave blank for latest)'
+        required: false
+        default: ''
+      auto_merge:
+        description: 'Auto-commit directly if tests pass (true/false, default false creates PR)'
+        required: false
+        default: 'false'
+        type: boolean
+  repository_dispatch:
+    types: [core_updated]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  check-and-update:
+    runs-on: macos-14
+    steps:
+      - name: Checkout open-im-sdk-ios
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect Core Tag
+        id: detect
+        env:
+          INPUT_TAG: ${{ github.event.inputs.core_tag || github.event.client_payload.tag }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -n "$INPUT_TAG" ]; then
+            TARGET_TAG="$INPUT_TAG"
+          else
+            TARGET_TAG=$(gh api "repos/openimsdk/openim-sdk-core-ios/tags?per_page=1" --jq '.[0].name')
+          fi
+          echo "TARGET_CORE_TAG=$TARGET_TAG" >> $GITHUB_ENV
+
+          CURRENT_POD_CORE=$(grep "dependency 'OpenIMSDKCore'" OpenIMSDK.podspec | sed -E "s/.*'OpenIMSDKCore',[[:space:]]*'([^']+)'.*/\1/")
+          echo "Current core dependency in podspec: $CURRENT_POD_CORE"
+          echo "Detected latest core tag: $TARGET_TAG"
+
+          if [ "$CURRENT_POD_CORE" = "$TARGET_TAG" ]; then
+            echo "NEED_UPDATE=false" >> $GITHUB_ENV
+            echo "Already on the latest OpenIMSDKCore version ($TARGET_TAG). Nothing to do."
+          else
+            echo "NEED_UPDATE=true" >> $GITHUB_ENV
+          fi
+
+      - name: Update Dependency in Podspec and Package.swift
+        if: env.NEED_UPDATE == 'true'
+        run: |
+          # 1. Update OpenIMSDK.podspec
+          sed -i '' "s/s.dependency 'OpenIMSDKCore', '.*'/s.dependency 'OpenIMSDKCore', '${TARGET_CORE_TAG}'/g" OpenIMSDK.podspec
+          echo "Updated OpenIMSDK.podspec dependency to ${TARGET_CORE_TAG}"
+
+          # 2. Update Package.swift (if using exact or branch)
+          if grep -q "openim-sdk-core-ios.git" Package.swift; then
+            sed -i '' "s/exact: \".*\"/exact: \"${TARGET_CORE_TAG}\"/g" Package.swift || true
+            sed -i '' "s/branch: \"feature\/swift-sdk-rewrite\"/exact: \"${TARGET_CORE_TAG}\"/g" Package.swift || true
+          fi
+          echo "Updated Package.swift"
+
+      - name: Run SPM Verification Tests
+        if: env.NEED_UPDATE == 'true'
+        run: |
+          echo "Running swift test with new core dependency..."
+          swift test
+
+      - name: Run CocoaPods Lint Verification
+        if: env.NEED_UPDATE == 'true'
+        run: |
+          echo "Installing CocoaPods..."
+          gem install cocoapods --no-document
+          echo "Linting OpenIMSDK.podspec..."
+          pod lib lint OpenIMSDK.podspec --allow-warnings --skip-tests
+
+      - name: Create Pull Request on Success
+        if: env.NEED_UPDATE == 'true' && github.event.inputs.auto_merge != 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(deps): bump OpenIMSDKCore to ${{ env.TARGET_CORE_TAG }}"
+          branch: "automation/bump-core-${{ env.TARGET_CORE_TAG }}"
+          title: "chore(deps): bump OpenIMSDKCore to ${{ env.TARGET_CORE_TAG }}"
+          body: |
+            ### Automated Dependency Update 🚀
+            
+            `OpenIMSDKCore` has a new release: **`${{ env.TARGET_CORE_TAG }}`**.
+            
+            #### Automated Verification Results:
+            - ✅ **Swift Package Manager (`swift test`)**: Passed all unit tests.
+            - ✅ **CocoaPods (`pod lib lint`)**: Passed specification validation.
+            
+            All checks passed without error! Ready for review and release.
+          labels: |
+            dependencies
+            automated-pr
+
+      - name: Push Directly (if auto_merge is true)
+        if: env.NEED_UPDATE == 'true' && github.event.inputs.auto_merge == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add OpenIMSDK.podspec Package.swift
+          git commit -m "chore(deps): bump OpenIMSDKCore to ${TARGET_CORE_TAG}"
+          git push origin HEAD
+
+      - name: Report Failure via Issue
+        if: failure() && env.NEED_UPDATE == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "🚨 [CI Failure] OpenIMSDKCore ${TARGET_CORE_TAG} broke Swift SDK build/tests" \
+            --body "Automated dependency update to \`OpenIMSDKCore\` **${TARGET_CORE_TAG}** failed during verification.\n\nPlease inspect the GitHub Actions run logs to check for breaking API changes in the Go core."

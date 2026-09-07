@@ -14,110 +14,35 @@ public final class OpenIMUserManager {
         adapter.setUserListener(listener)
     }
 
-    public func getUsersInfo(
-        userIDs: [String],
-        completion: @escaping (Result<[OpenIMPublicUserInfo], OpenIMError>) -> Void
-    ) {
-        adapter.getUsersInfo(userIDs: userIDs, completion: completion)
+    public func getUsersInfo(userIDs: [String]) async throws -> [OpenIMPublicUserInfo] {
+        try await adapter.getUsersInfo(userIDs: userIDs)
     }
 
-    public func getSelfUserInfo(
-        completion: @escaping (Result<OpenIMUserInfo, OpenIMError>) -> Void
-    ) {
-        adapter.getSelfUserInfo(completion: completion)
+    public func getSelfUserInfo() async throws -> OpenIMUserInfo {
+        try await adapter.getSelfUserInfo()
     }
 
-    public func setSelfUserInfo(
-        userInfo: OpenIMUserInfo,
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    ) {
-        adapter.setSelfUserInfo(userInfo: userInfo, completion: completion)
+    public func setSelfUserInfo(userInfo: OpenIMUserInfo) async throws {
+        try await adapter.setSelfUserInfo(userInfo: userInfo)
     }
 
-    public func updateFcmToken(
-        fcmToken: String,
-        expireTime: Int,
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    ) {
-        adapter.updateFcmToken(fcmToken: fcmToken, expireTime: expireTime, completion: completion)
+    public func updateFcmToken(fcmToken: String, expireTime: Int) async throws {
+        try await adapter.updateFcmToken(fcmToken: fcmToken, expireTime: expireTime)
     }
 
-    public func subscribeUsersStatus(
-        userIDs: [String],
-        completion: @escaping (Result<[OpenIMUserStatusInfo], OpenIMError>) -> Void
-    ) {
-        adapter.subscribeUsersStatus(userIDs: userIDs, completion: completion)
+    public func subscribeUsersStatus(userIDs: [String]) async throws -> [OpenIMUserStatusInfo] {
+        try await adapter.subscribeUsersStatus(userIDs: userIDs)
     }
 
-    public func unsubscribeUsersStatus(
-        userIDs: [String],
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    ) {
-        adapter.unsubscribeUsersStatus(userIDs: userIDs, completion: completion)
+    public func unsubscribeUsersStatus(userIDs: [String]) async throws {
+        try await adapter.unsubscribeUsersStatus(userIDs: userIDs)
     }
 
-    public func getSubscribeUsersStatus(
-        completion: @escaping (Result<[OpenIMUserStatusInfo], OpenIMError>) -> Void
-    ) {
-        adapter.getSubscribeUsersStatus(completion: completion)
+    public func getSubscribeUsersStatus() async throws -> [OpenIMUserStatusInfo] {
+        try await adapter.getSubscribeUsersStatus()
     }
 
-    public func getUserStatus(
-        userIDs: [String],
-        completion: @escaping (Result<[OpenIMUserStatusInfo], OpenIMError>) -> Void
-    ) {
-        adapter.getUserStatus(userIDs: userIDs, completion: completion)
-    }
-}
-
-// MARK: - Async / Await Support (iOS 13.0+)
-@available(iOS 13.0, macOS 10.15, *)
-public extension OpenIMUserManager {
-    func getUsersInfo(userIDs: [String]) async throws -> [OpenIMPublicUserInfo] {
-        try await withCheckedThrowingContinuation { continuation in
-            getUsersInfo(userIDs: userIDs) { continuation.resume(with: $0) }
-        }
-    }
-
-    func getSelfUserInfo() async throws -> OpenIMUserInfo {
-        try await withCheckedThrowingContinuation { continuation in
-            getSelfUserInfo { continuation.resume(with: $0) }
-        }
-    }
-
-    func setSelfUserInfo(userInfo: OpenIMUserInfo) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            setSelfUserInfo(userInfo: userInfo) { continuation.resume(with: $0) }
-        }
-    }
-
-    func updateFcmToken(fcmToken: String, expireTime: Int) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            updateFcmToken(fcmToken: fcmToken, expireTime: expireTime) { continuation.resume(with: $0) }
-        }
-    }
-
-    func subscribeUsersStatus(userIDs: [String]) async throws -> [OpenIMUserStatusInfo] {
-        try await withCheckedThrowingContinuation { continuation in
-            subscribeUsersStatus(userIDs: userIDs) { continuation.resume(with: $0) }
-        }
-    }
-
-    func unsubscribeUsersStatus(userIDs: [String]) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            unsubscribeUsersStatus(userIDs: userIDs) { continuation.resume(with: $0) }
-        }
-    }
-
-    func getSubscribeUsersStatus() async throws -> [OpenIMUserStatusInfo] {
-        try await withCheckedThrowingContinuation { continuation in
-            getSubscribeUsersStatus { continuation.resume(with: $0) }
-        }
-    }
-
-    func getUserStatus(userIDs: [String]) async throws -> [OpenIMUserStatusInfo] {
-        try await withCheckedThrowingContinuation { continuation in
-            getUserStatus(userIDs: userIDs) { continuation.resume(with: $0) }
-        }
+    public func getUserStatus(userIDs: [String]) async throws -> [OpenIMUserStatusInfo] {
+        try await adapter.getUserStatus(userIDs: userIDs)
     }
 }

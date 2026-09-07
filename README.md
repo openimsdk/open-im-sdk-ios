@@ -1,127 +1,344 @@
 # iOS Client SDK for OpenIM 👨‍💻💬
 
-Use this SDK to add instant messaging capabilities to your app. By connecting to a self-hosted [OpenIM](https://www.openim.online/) server, you can quickly integrate instant messaging capabilities into your app with just a few lines of code.
+The official **Swift-first SDK** for [OpenIM](https://www.openim.online/), redesigned from the ground up for modern iOS development using **Swift Concurrency (`async/await`)**, clean structured data models, and reactive events.
 
-The underlying SDK core is implemented in [OpenIM SDK Core](https://github.com/openimsdk/openim-sdk-core). Using [gomobile](https://github.com/golang/mobile), it can be compiled into an XCFramework for iOS integration. iOS interacts with the [OpenIM SDK Core](https://github.com/openimsdk/openim-sdk-core) through JSON, and the SDK exposes a re-encapsulated API for easy usage. In terms of data storage, iOS utilizes the SQLite layer provided internally by the [OpenIM SDK Core](https://github.com/openimsdk/openim-sdk-core).
+Connect to a self-hosted or cloud OpenIM server to integrate instant messaging into your iOS apps with concise, thread-safe, and idiomatic Swift code.
 
+---
 
-## Documentation 📚
+## Features 🚀
 
-Visit [https://docs.openim.io/](https://docs.openim.io/) for detailed documentation and guides.
+- **Pure Swift Concurrency**: All business APIs (`login`, `sendMessage`, `getFriendList`, `createGroup`, `getAllConversationList`, etc.) use native `async/await throws`. No callback hell or nested completion handlers.
+- **Strongly Typed Models**: Every parameter, return type, and listener payload is represented as clean Swift structs and enums (`OpenIMUserInfo`, `OpenIMMessageInfo`, `OpenIMConversationInfo`, etc.).
+- **UIKit & SwiftUI Ready**: Effortlessly bind to SwiftUI views using `@ObservedObject` or UIKit `UIViewController`.
+- **Comprehensive Lifecycle & Listeners**: Type-safe protocols for real-time connection status, conversation updates, message delivery, group events, and user statuses.
+- **Backward & Dual Compatibility**: Available via both **CocoaPods** and **Swift Package Manager (SPM)**.
 
-For the SDK reference, see [Quick Start guide](https://docs.openim.io/sdks/quickstart/ios).
+---
 
 ## Installation 💻
 
-### Adding Dependencies
+### CocoaPods
+
+Add OpenIMSDK to your `Podfile`:
 
 ```ruby
-pod 'OpenIMSDK'
+platform :ios, '13.0'
+use_frameworks!
+
+target 'YourApp' do
+  pod 'OpenIMSDK'
+end
 ```
 
-## Usage 🚀
+Then run:
 
-The following examples demonstrate how to use the SDK. Objective-C is used, providing complete type hints.
+```bash
+pod install
+```
 
-### Importing the SDK
+### Swift Package Manager (SPM)
+
+In Xcode, select **File > Add Package Dependencies...** and enter the repository URL:
+
+```
+https://github.com/OpenIMSDK/Open-IM-SDK-iOS.git
+```
+
+---
+
+## Quick Start 🌟
+
+### 1. Import the SDK
 
 ```swift
-@import OpenIMSDK;
+import OpenIMSDK
 ```
 
-### Logging In and Listening for Connection Status
-
-> Note: You need to [Deploy OpenIM Server](https://github.com/openimsdk/open-im-server#rocket-quick-start)  first, the default port of OpenIM Server is 10001, 10002.
+### 2. Initialize the Client
 
 ```swift
-OIMInitConfig *config = [OIMInitConfig new];
-config.apiAddr = @"";
-config.wsAddr = @"";
-config.objectStorage = @"";
+let client = OpenIMClient()
 
-BOOL success = [OIMManager.manager initSDKWithConfig:config
-                                        onConnecting:^{
-    // The SDK is currently connecting to the IM server.
-} onConnectFailure:^(NSInteger code, NSString * _Nullable msg) {
-    // Callback function for connection failure
-    // code: Error code
-    // error: Error message
-} onConnectSuccess:^{
-    // The SDK has successfully connected to the IM server.
-} onKickedOffline:^{
-    // Kicked offline.
-} onUserTokenExpired:^{
-    // Token expired while online: In this situation, you need to generate a new token and then call the `login()` function again to log in.
-}];
+// Configure local storage and server endpoints
+let docsDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+let dataDir = docsDir?.appendingPathComponent("OpenIM_Data")
+
+let config = OpenIMConfiguration(
+    apiAddress: "http://your-server-api-address:10002",
+    websocketAddress: "ws://your-server-ws-address:10001",
+    dataDirectory: dataDir,
+    platform: .iPhone,
+    logLevel: 5
+)
+
+do {
+    try client.initialize(configuration: config)
+    print("OpenIM SDK initialized successfully!")
+} catch {
+    print("SDK initialization failed: \(error)")
+}
 ```
 
-To log into the IM server, you need to create an account and obtain a user ID and token. Refer to the [access token documentation](https://doc.rentsoft.cn/restapi/userManagement/userRegister) for details.
-
-### Receiving and Sending Messages 💬
-
-OpenIM makes it easy to send and receive messages. By default, there is no restriction on having a friend relationship to send messages (although you can configure other policies on the server). If you know the user ID of the recipient, you can conveniently send a message to them.
+### 3. Observe Connection Events
 
 ```swift
-@import OpenIMSDK;
-
-// Listenfor new messages 📩
-[OIMManager.callbacker setAdvancedMsgListenerWithOnRecvMessageRevoked:^(OIMMessageRevokedInfo * _Nullable msgRovoked) {
-} onRecvC2CReadReceipt:^(NSArray<OIMReceiptInfo *> * _Nullable msgReceiptList) {
-} onRecvGroupReadReceipt:^(NSArray<OIMReceiptInfo *> * _Nullable msgReceiptList) {
-} onRecvNewMessage:^(OIMMessageInfo * _Nullable message) {
-}];
-
-OIMMessageInfo *testMessage = [OIMMessageInfo createTextMessage:@"Hello!"];
-
-[OIMManager.manager sendMessage:testMessage
-                         recvID:@""
-                        groupID:@""
-                offlinePushInfo:nil
-                      onSuccess:^(OIMMessageInfo * _Nullable message) {
-            // Please note here that the returned message needs to be replaced with the data source.
-            testMessage = message;
-} onProgress:^(NSInteger number) {
-} onFailure:^(NSInteger code, NSString * _Nullable msg) {
-}];
+let observerID = client.observeEvents { event in
+    switch event {
+    case .connecting:
+        print("Connecting to OpenIM gateway...")
+    case .connected:
+        print("Connected to OpenIM gateway! 🟢")
+    case let .connectionFailed(code, msg):
+        print("Connection failed with code \(code): \(msg ?? "")")
+    case .kickedOffline:
+        print("User was kicked offline ⚠️")
+    case .tokenExpired:
+        print("User token has expired ⚠️")
+    case let .tokenInvalid(msg):
+        print("User token invalid: \(msg ?? "")")
+    }
+}
 ```
 
-## Examples 🌟
+### 4. User Login & Logout (`async/await`)
 
-You can find a demo app that uses the SDK in the [open-im-ios-demo](https://github.com/openimsdk/open-im-ios-demo) repository.
+```swift
+Task {
+    do {
+        // Asynchronously log in
+        try await client.login(userID: "user123", token: "your_jwt_token")
+        print("User logged in successfully!")
+
+        // Fetch personal profile
+        let selfInfo = try await client.user.getSelfUserInfo()
+        print("Welcome, \(selfInfo.nickname ?? selfInfo.userID ?? "")!")
+    } catch {
+        print("Login failed: \(error.localizedDescription)")
+    }
+}
+
+// Logout
+Task {
+    do {
+        try await client.logout()
+        print("Logged out")
+    } catch {
+        print("Logout error: \(error)")
+    }
+}
+```
+
+---
+
+## Messaging Operations 📩
+
+All message operations are available through `client.message`:
+
+```swift
+Task {
+    do {
+        // 1. Create a text message
+        let message = try client.message.createTextMessage(text: "Hello from Swift async/await! 🚀")
+
+        // 2. Send message (C2C or Group)
+        let sentMessage = try await client.message.sendMessage(
+            message: message,
+            recvID: "recipient_user_id",
+            groupID: nil
+        )
+        print("Message sent with ID: \(sentMessage.clientMsgID ?? "")")
+
+        // 3. Fetch conversation message history
+        let options = OpenIMGetMessageOptions(
+            conversationID: "si_recipient_user_id_user123",
+            count: 20
+        )
+        let history = try await client.message.getAdvancedHistoryMessageList(options: options)
+        print("Retrieved \(history.messageList?.count ?? 0) history messages.")
+
+        // 4. Revoke a message
+        if let msgID = sentMessage.clientMsgID {
+            try await client.message.revokeMessage(
+                conversationID: "si_recipient_user_id_user123",
+                clientMsgID: msgID
+            )
+            print("Message revoked!")
+        }
+    } catch {
+        print("Messaging error: \(error)")
+    }
+}
+```
+
+---
+
+## Conversations & Friends & Groups 👥
+
+### Conversations
+
+```swift
+Task {
+    do {
+        // Get all conversations sorted by activity
+        let conversations = try await client.conversation.getAllConversationList()
+        for conv in conversations {
+            print("\(conv.showName ?? ""): unread \(conv.unreadCount ?? 0)")
+        }
+
+        // Get total unread count across all conversations
+        let unreadTotal = try await client.conversation.getTotalUnreadMsgCount()
+        print("Total unread count: \(unreadTotal)")
+
+        // Set draft
+        try await client.conversation.setConversationDraft(
+            conversationID: "si_friend_user_id",
+            draftText: "See you tomorrow!"
+        )
+    } catch {
+        print("Conversation error: \(error)")
+    }
+}
+```
+
+### Friend Management
+
+```swift
+Task {
+    do {
+        // Send a friend request
+        try await client.friend.addFriend(userID: "friend_uid", reqMsg: "Hi, let's connect!")
+
+        // Fetch friend list
+        let friends = try await client.friend.getFriendList()
+        print("Friends count: \(friends.count)")
+
+        // Accept a friend request
+        try await client.friend.acceptFriendApplication(userID: "requester_uid", handleMsg: "Accepted!")
+    } catch {
+        print("Friendship error: \(error)")
+    }
+}
+```
+
+### Group Management
+
+```swift
+Task {
+    do {
+        // Create a working group
+        var baseInfo = OpenIMGroupBaseInfo()
+        baseInfo.groupName = "Swift Developers"
+        baseInfo.groupType = .working
+
+        let createInfo = OpenIMGroupCreateInfo(groupInfo: baseInfo, memberUserIDs: ["userA", "userB"])
+        let group = try await client.group.createGroup(createInfo: createInfo)
+        print("Group created with ID: \(group.groupID ?? "")")
+
+        // Fetch members
+        if let gid = group.groupID {
+            let members = try await client.group.getGroupMemberList(groupID: gid, filter: .all, offset: 0, count: 50)
+            print("Group has \(members.count) members.")
+        }
+    } catch {
+        print("Group error: \(error)")
+    }
+}
+```
+
+---
+
+## Real-Time Event Listeners 🔔
+
+Conform to strongly typed listener protocols to receive real-time updates:
+
+```swift
+class MyIMManager: OpenIMAdvancedMsgListener, OpenIMConversationListener {
+    let client = OpenIMClient()
+
+    func setup() {
+        client.setAdvancedMsgListener(self)
+        client.setConversationListener(self)
+    }
+
+    // New message received
+    func onRecvNewMessage(message: OpenIMMessageInfo) {
+        print("Received message: \(message.textElem?.content ?? "") from \(message.sendID ?? "")")
+    }
+
+    // Message revoked
+    func onRecvMessageRevoked(revokedInfo: OpenIMMessageRevokedInfo) {
+        print("Message revoked: \(revokedInfo.clientMsgID ?? "")")
+    }
+
+    // Conversations updated
+    func onConversationChanged(conversations: [OpenIMConversationInfo]) {
+        print("Conversations updated: \(conversations.count)")
+    }
+
+    func onTotalUnreadMessageCountChanged(totalUnreadCount: Int) {
+        print("Total unread count changed to \(totalUnreadCount)")
+    }
+}
+```
+
+---
+
+## Example Apps 📱
+
+### 1. Modern Standalone Swift Example (`Examples/SwiftExample`) ⭐ Recommended
+A 100% pure Swift, modern SwiftUI example showcasing **Swift Concurrency (`async/await`)** and MVVM architecture:
+
+- **Chats & Messaging (`ConversationsView.swift`, `ChatView.swift`)**:
+  - Live conversation list with unread counter badges and last message preview.
+  - Swipe actions to pin/unpin, mark as read, or delete conversations.
+  - Interactive chat timeline with message bubbles (outgoing/incoming), delivery status indicators, and long-press context menu to **revoke messages**.
+  - Send messages via `client.message.sendMessage(message:recvID:groupID:)` using `async/await`.
+- **Contacts & Groups (`ContactsView.swift`)**:
+  - Friends list with add friend dialog and delete friend action.
+  - Joined groups list with create group modal and quit group action.
+  - Friend requests tab with instant **Accept** / **Decline** actions.
+- **Authentication & Profile (`LoginProfileView.swift`)**:
+  - Preconfigured test server endpoints and credentials.
+  - Live connection status badge (`Connected`, `Connecting...`, `Token Expired`, etc.).
+  - User profile card and one-tap "Sync All Data".
+- **Real-time Event Logs (`LogsView.swift`)**:
+  - Live stream of all SDK listener events (`OpenIMCoreEvent`, `OpenIMConversationListener`, `OpenIMAdvancedMsgListener`, `OpenIMFriendshipListener`, `OpenIMGroupListener`).
+  - Real-time search and filter capabilities with level badges (`[OK]`, `[INFO]`, `[WARN]`, `[ERR]`).
+
+#### Running the Swift Example
+```bash
+cd Examples/SwiftExample
+pod install
+open SwiftExample.xcworkspace
+```
+Select the **`SwiftExample`** scheme and run on any iOS Simulator or device (iOS 15.0+).
+
+---
+
+### 2. Legacy Objective-C Example (`Examples/OCExample`)
+The original Objective-C test suite and example project is preserved in `Examples/OCExample` for legacy compatibility and reference:
+```bash
+cd Examples/OCExample
+pod install
+open OpenIMSDKiOS.xcworkspace
+```
+
+---
 
 ## Requirements 🌐
 
-+ The minimum deployment target is iOS 11.0.
+- iOS 13.0+
+- Xcode 15.0+
+- Swift 5.9+
 
-## Community :busts_in_silhouette:
-
-- 📚 [OpenIM Community](https://github.com/OpenIMSDK/community)
-- 💕 [OpenIM Interest Group](https://github.com/Openim-sigs)
-- 🚀 [Join our Slack community](https://join.slack.com/t/openimsdk/shared_invite/zt-2ijy1ys1f-O0aEDCr7ExRZ7mwsHAVg9A)
-- :eyes: [Join our wechat (微信群)](https://openim-1253691595.cos.ap-nanjing.myqcloud.com/WechatIMG20.jpeg)
-
-## Community Meetings :calendar:
-
-We want anyone to get involved in our community and contributing code, we offer gifts and rewards, and we welcome you to join us every Thursday night.
-
-Our conference is in the [OpenIM Slack](https://join.slack.com/t/openimsdk/shared_invite/zt-22720d66b-o_FvKxMTGXtcnnnHiMqe9Q) 🎯, then you can search the Open-IM-Server pipeline to join
-
-We take notes of each [biweekly meeting](https://github.com/orgs/OpenIMSDK/discussions/categories/meeting) in [GitHub discussions](https://github.com/openimsdk/open-im-server/discussions/categories/meeting), Our historical meeting notes, as well as replays of the meetings are available at [Google Docs :bookmark_tabs:](https://docs.google.com/document/d/1nx8MDpuG74NASx081JcCpxPgDITNTpIIos0DS6Vr9GU/edit?usp=sharing).
-
-## Who are using OpenIM :eyes:
-
-Check out our [user case studies](https://github.com/OpenIMSDK/community/blob/main/ADOPTERS.md) page for a list of the project users. Don't hesitate to leave a [📝comment](https://github.com/openimsdk/open-im-server/issues/379) and share your use case.
+---
 
 ## License :page_facing_up:
 
 This software is licensed under a dual-license model:
-
 - The GNU Affero General Public License (AGPL), Version 3 or later; **OR**
 - Commercial license terms from OpenIMSDK.
 
-If you wish to use this software under commercial terms, please contact us at: contact@openim.io
-
-For more information, see: https://www.openim.io/en/licensing
-
-
-
+For commercial licensing, contact: [contact@openim.io](mailto:contact@openim.io)
+Website: [https://www.openim.io](https://www.openim.io)

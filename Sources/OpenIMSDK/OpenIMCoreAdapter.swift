@@ -18,83 +18,78 @@ public protocol OpenIMCoreAdapter: AnyObject {
         eventHandler: @escaping (OpenIMCoreEvent) -> Void
     ) throws
 
-    func login(
-        userID: String,
-        token: String,
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    )
-
-    func logout(completion: @escaping (Result<Void, OpenIMError>) -> Void)
+    func login(userID: String, token: String) async throws
+    func logout() async throws
     func uninitialize()
 
     // MARK: - User
-    func getUsersInfo(userIDs: [String], completion: @escaping (Result<[OpenIMPublicUserInfo], OpenIMError>) -> Void)
-    func getSelfUserInfo(completion: @escaping (Result<OpenIMUserInfo, OpenIMError>) -> Void)
-    func setSelfUserInfo(userInfo: OpenIMUserInfo, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func updateFcmToken(fcmToken: String, expireTime: Int, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func subscribeUsersStatus(userIDs: [String], completion: @escaping (Result<[OpenIMUserStatusInfo], OpenIMError>) -> Void)
-    func unsubscribeUsersStatus(userIDs: [String], completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func getSubscribeUsersStatus(completion: @escaping (Result<[OpenIMUserStatusInfo], OpenIMError>) -> Void)
-    func getUserStatus(userIDs: [String], completion: @escaping (Result<[OpenIMUserStatusInfo], OpenIMError>) -> Void)
+    func getUsersInfo(userIDs: [String]) async throws -> [OpenIMPublicUserInfo]
+    func getSelfUserInfo() async throws -> OpenIMUserInfo
+    func setSelfUserInfo(userInfo: OpenIMUserInfo) async throws
+    func updateFcmToken(fcmToken: String, expireTime: Int) async throws
+    func subscribeUsersStatus(userIDs: [String]) async throws -> [OpenIMUserStatusInfo]
+    func unsubscribeUsersStatus(userIDs: [String]) async throws
+    func getSubscribeUsersStatus() async throws -> [OpenIMUserStatusInfo]
+    func getUserStatus(userIDs: [String]) async throws -> [OpenIMUserStatusInfo]
     func setUserListener(_ listener: OpenIMUserListener?)
 
     // MARK: - Friend
-    func getSpecifiedFriendsInfo(userIDs: [String], filterBlack: Bool, completion: @escaping (Result<[OpenIMFriendInfo], OpenIMError>) -> Void)
-    func getFriendList(filterBlack: Bool, completion: @escaping (Result<[OpenIMFriendInfo], OpenIMError>) -> Void)
-    func getFriendListPage(offset: Int, count: Int, filterBlack: Bool, completion: @escaping (Result<[OpenIMFriendInfo], OpenIMError>) -> Void)
-    func searchFriends(param: OpenIMSearchFriendsParam, completion: @escaping (Result<[OpenIMSearchFriendsInfo], OpenIMError>) -> Void)
-    func checkFriend(userIDs: [String], completion: @escaping (Result<[OpenIMFriendCheckResult], OpenIMError>) -> Void)
-    func addFriend(userID: String, reqMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func setFriendRemark(userID: String, remark: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func deleteFriend(friendUserID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func getFriendApplicationListAsRecipient(completion: @escaping (Result<[OpenIMFriendApplication], OpenIMError>) -> Void)
-    func getFriendApplicationListAsApplicant(completion: @escaping (Result<[OpenIMFriendApplication], OpenIMError>) -> Void)
-    func acceptFriendApplication(userID: String, handleMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func refuseFriendApplication(userID: String, handleMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func addBlack(blackUserID: String, ex: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func removeBlack(blackUserID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func getBlackList(completion: @escaping (Result<[OpenIMBlackInfo], OpenIMError>) -> Void)
+    func getSpecifiedFriendsInfo(userIDs: [String], filterBlack: Bool) async throws -> [OpenIMFriendInfo]
+    func getFriendList(filterBlack: Bool) async throws -> [OpenIMFriendInfo]
+    func getFriendListPage(offset: Int, count: Int, filterBlack: Bool) async throws -> [OpenIMFriendInfo]
+    func searchFriends(param: OpenIMSearchFriendsParam) async throws -> [OpenIMSearchFriendsInfo]
+    func checkFriend(userIDs: [String]) async throws -> [OpenIMFriendCheckResult]
+    func addFriend(userID: String, reqMsg: String?) async throws
+    func setFriendRemark(userID: String, remark: String) async throws
+    func deleteFriend(friendUserID: String) async throws
+    func getFriendApplicationListAsRecipient() async throws -> [OpenIMFriendApplication]
+    func getFriendApplicationListAsApplicant() async throws -> [OpenIMFriendApplication]
+    func acceptFriendApplication(userID: String, handleMsg: String?) async throws
+    func refuseFriendApplication(userID: String, handleMsg: String?) async throws
+    func addBlack(blackUserID: String, ex: String?) async throws
+    func removeBlack(blackUserID: String) async throws
+    func getBlackList() async throws -> [OpenIMBlackInfo]
     func setFriendshipListener(_ listener: OpenIMFriendshipListener?)
 
     // MARK: - Group
-    func createGroup(createInfo: OpenIMGroupCreateInfo, completion: @escaping (Result<OpenIMGroupInfo, OpenIMError>) -> Void)
-    func joinGroup(groupID: String, reqMsg: String?, joinSource: OpenIMJoinType, ex: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func quitGroup(groupID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func dismissGroup(groupID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func getJoinedGroupList(completion: @escaping (Result<[OpenIMGroupInfo], OpenIMError>) -> Void)
-    func getJoinedGroupListPage(offset: Int, count: Int, completion: @escaping (Result<[OpenIMGroupInfo], OpenIMError>) -> Void)
-    func getSpecifiedGroupsInfo(groupIDs: [String], completion: @escaping (Result<[OpenIMGroupInfo], OpenIMError>) -> Void)
-    func searchGroups(param: OpenIMSearchGroupParam, completion: @escaping (Result<[OpenIMGroupInfo], OpenIMError>) -> Void)
-    func setGroupInfo(groupInfo: OpenIMGroupInfo, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func getGroupMemberList(groupID: String, filter: OpenIMGroupMemberFilter, offset: Int, count: Int, completion: @escaping (Result<[OpenIMGroupMemberInfo], OpenIMError>) -> Void)
-    func getSpecifiedGroupMembersInfo(groupID: String, userIDs: [String], completion: @escaping (Result<[OpenIMGroupMemberInfo], OpenIMError>) -> Void)
-    func searchGroupMembers(param: OpenIMSearchGroupMembersParam, completion: @escaping (Result<[OpenIMGroupMemberInfo], OpenIMError>) -> Void)
-    func setGroupMemberRoleLevel(groupID: String, userID: String, roleLevel: OpenIMGroupMemberRole, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func changeGroupMute(groupID: String, isMute: Bool, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func changeGroupMemberMute(groupID: String, userID: String, mutedSeconds: Int, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func setGroupMemberNickname(groupID: String, userID: String, nickname: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func kickGroupMember(groupID: String, reason: String?, userIDs: [String], completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func inviteUserToGroup(groupID: String, reason: String?, userIDs: [String], completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func getGroupApplicationListAsRecipient(completion: @escaping (Result<[OpenIMGroupApplicationInfo], OpenIMError>) -> Void)
-    func getGroupApplicationListAsApplicant(completion: @escaping (Result<[OpenIMGroupApplicationInfo], OpenIMError>) -> Void)
-    func acceptGroupApplication(groupID: String, fromUserID: String, handleMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func refuseGroupApplication(groupID: String, fromUserID: String, handleMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void)
+    func createGroup(createInfo: OpenIMGroupCreateInfo) async throws -> OpenIMGroupInfo
+    func joinGroup(groupID: String, reqMsg: String?, joinSource: OpenIMJoinType, ex: String?) async throws
+    func quitGroup(groupID: String) async throws
+    func dismissGroup(groupID: String) async throws
+    func getJoinedGroupList() async throws -> [OpenIMGroupInfo]
+    func getJoinedGroupListPage(offset: Int, count: Int) async throws -> [OpenIMGroupInfo]
+    func getSpecifiedGroupsInfo(groupIDs: [String]) async throws -> [OpenIMGroupInfo]
+    func searchGroups(param: OpenIMSearchGroupParam) async throws -> [OpenIMGroupInfo]
+    func setGroupInfo(groupInfo: OpenIMGroupInfo) async throws
+    func getGroupMemberList(groupID: String, filter: OpenIMGroupMemberFilter, offset: Int, count: Int) async throws -> [OpenIMGroupMemberInfo]
+    func getSpecifiedGroupMembersInfo(groupID: String, userIDs: [String]) async throws -> [OpenIMGroupMemberInfo]
+    func searchGroupMembers(param: OpenIMSearchGroupMembersParam) async throws -> [OpenIMGroupMemberInfo]
+    func setGroupMemberRoleLevel(groupID: String, userID: String, roleLevel: OpenIMGroupMemberRole) async throws
+    func changeGroupMute(groupID: String, isMute: Bool) async throws
+    func changeGroupMemberMute(groupID: String, userID: String, mutedSeconds: Int) async throws
+    func setGroupMemberNickname(groupID: String, userID: String, nickname: String) async throws
+    func kickGroupMember(groupID: String, reason: String?, userIDs: [String]) async throws
+    func inviteUserToGroup(groupID: String, reason: String?, userIDs: [String]) async throws
+    func getGroupApplicationListAsRecipient() async throws -> [OpenIMGroupApplicationInfo]
+    func getGroupApplicationListAsApplicant() async throws -> [OpenIMGroupApplicationInfo]
+    func acceptGroupApplication(groupID: String, fromUserID: String, handleMsg: String?) async throws
+    func refuseGroupApplication(groupID: String, fromUserID: String, handleMsg: String?) async throws
     func setGroupListener(_ listener: OpenIMGroupListener?)
 
     // MARK: - Conversation
-    func getAllConversationList(completion: @escaping (Result<[OpenIMConversationInfo], OpenIMError>) -> Void)
-    func getConversationListSplit(offset: Int, count: Int, completion: @escaping (Result<[OpenIMConversationInfo], OpenIMError>) -> Void)
-    func getOneConversation(sessionType: OpenIMConversationType, sourceID: String, completion: @escaping (Result<OpenIMConversationInfo, OpenIMError>) -> Void)
-    func getMultipleConversation(conversationIDs: [String], completion: @escaping (Result<[OpenIMConversationInfo], OpenIMError>) -> Void)
-    func setConversation(conversationID: String, req: OpenIMConversationReq, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func hideConversation(conversationID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func setConversationDraft(conversationID: String, draftText: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func setConversationPinned(conversationID: String, isPinned: Bool, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func setConversationRecvMessageOpt(conversationIDs: [String], status: OpenIMReceiveMessageOpt, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func markConversationMessageAsRead(conversationID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func getTotalUnreadMsgCount(completion: @escaping (Result<Int, OpenIMError>) -> Void)
-    func deleteConversationAndDeleteAllMsg(conversationID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func clearConversationAndDeleteAllMsg(conversationID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
+    func getAllConversationList() async throws -> [OpenIMConversationInfo]
+    func getConversationListSplit(offset: Int, count: Int) async throws -> [OpenIMConversationInfo]
+    func getOneConversation(sessionType: OpenIMConversationType, sourceID: String) async throws -> OpenIMConversationInfo
+    func getMultipleConversation(conversationIDs: [String]) async throws -> [OpenIMConversationInfo]
+    func setConversation(conversationID: String, req: OpenIMConversationReq) async throws
+    func hideConversation(conversationID: String) async throws
+    func setConversationDraft(conversationID: String, draftText: String) async throws
+    func setConversationPinned(conversationID: String, isPinned: Bool) async throws
+    func setConversationRecvMessageOpt(conversationIDs: [String], status: OpenIMReceiveMessageOpt) async throws
+    func markConversationMessageAsRead(conversationID: String) async throws
+    func getTotalUnreadMsgCount() async throws -> Int
+    func deleteConversationAndDeleteAllMsg(conversationID: String) async throws
+    func clearConversationAndDeleteAllMsg(conversationID: String) async throws
     func setConversationListener(_ listener: OpenIMConversationListener?)
 
     // MARK: - Message
@@ -117,202 +112,201 @@ public protocol OpenIMCoreAdapter: AnyObject {
         groupID: String?,
         offlinePushInfo: OpenIMOfflinePushInfo?,
         isOnlineOnly: Bool,
-        onProgress: ((Int) -> Void)?,
-        completion: @escaping (Result<OpenIMMessageInfo, OpenIMError>) -> Void
-    )
-    func getAdvancedHistoryMessageList(options: OpenIMGetMessageOptions, completion: @escaping (Result<OpenIMGetAdvancedHistoryMessageListInfo, OpenIMError>) -> Void)
-    func revokeMessage(conversationID: String, clientMsgID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func typingStatusUpdate(recvID: String, msgTip: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func markMessagesAsReadByMsgID(conversationID: String, clientMsgIDs: [String], completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func deleteMessage(conversationID: String, clientMsgID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func deleteMessageFromLocalStorage(conversationID: String, clientMsgID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func deleteAllMsgFromLocal(completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func deleteAllMsgFromLocalAndSvr(completion: @escaping (Result<Void, OpenIMError>) -> Void)
-    func searchLocalMessages(param: OpenIMSearchParam, completion: @escaping (Result<OpenIMSearchResultInfo, OpenIMError>) -> Void)
+        onProgress: ((Int) -> Void)?
+    ) async throws -> OpenIMMessageInfo
+    func getAdvancedHistoryMessageList(options: OpenIMGetMessageOptions) async throws -> OpenIMGetAdvancedHistoryMessageListInfo
+    func revokeMessage(conversationID: String, clientMsgID: String) async throws
+    func typingStatusUpdate(recvID: String, msgTip: String) async throws
+    func markMessagesAsReadByMsgID(conversationID: String, clientMsgIDs: [String]) async throws
+    func deleteMessage(conversationID: String, clientMsgID: String) async throws
+    func deleteMessageFromLocalStorage(conversationID: String, clientMsgID: String) async throws
+    func deleteAllMsgFromLocal() async throws
+    func deleteAllMsgFromLocalAndSvr() async throws
+    func searchLocalMessages(param: OpenIMSearchParam) async throws -> OpenIMSearchResultInfo
     func setAdvancedMsgListener(_ listener: OpenIMAdvancedMsgListener?)
 }
 
 // MARK: - Default Implementations for OpenIMCoreAdapter
 public extension OpenIMCoreAdapter {
-    func getUsersInfo(userIDs: [String], completion: @escaping (Result<[OpenIMPublicUserInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getUsersInfo(userIDs: [String]) async throws -> [OpenIMPublicUserInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func getSelfUserInfo(completion: @escaping (Result<OpenIMUserInfo, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getSelfUserInfo() async throws -> OpenIMUserInfo {
+        throw OpenIMError.coreUnavailable
     }
-    func setSelfUserInfo(userInfo: OpenIMUserInfo, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func setSelfUserInfo(userInfo: OpenIMUserInfo) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func updateFcmToken(fcmToken: String, expireTime: Int, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func updateFcmToken(fcmToken: String, expireTime: Int) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func subscribeUsersStatus(userIDs: [String], completion: @escaping (Result<[OpenIMUserStatusInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func subscribeUsersStatus(userIDs: [String]) async throws -> [OpenIMUserStatusInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func unsubscribeUsersStatus(userIDs: [String], completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func unsubscribeUsersStatus(userIDs: [String]) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func getSubscribeUsersStatus(completion: @escaping (Result<[OpenIMUserStatusInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getSubscribeUsersStatus() async throws -> [OpenIMUserStatusInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func getUserStatus(userIDs: [String], completion: @escaping (Result<[OpenIMUserStatusInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getUserStatus(userIDs: [String]) async throws -> [OpenIMUserStatusInfo] {
+        throw OpenIMError.coreUnavailable
     }
     func setUserListener(_ listener: OpenIMUserListener?) {}
 
-    func getSpecifiedFriendsInfo(userIDs: [String], filterBlack: Bool, completion: @escaping (Result<[OpenIMFriendInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getSpecifiedFriendsInfo(userIDs: [String], filterBlack: Bool) async throws -> [OpenIMFriendInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func getFriendList(filterBlack: Bool, completion: @escaping (Result<[OpenIMFriendInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getFriendList(filterBlack: Bool) async throws -> [OpenIMFriendInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func getFriendListPage(offset: Int, count: Int, filterBlack: Bool, completion: @escaping (Result<[OpenIMFriendInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getFriendListPage(offset: Int, count: Int, filterBlack: Bool) async throws -> [OpenIMFriendInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func searchFriends(param: OpenIMSearchFriendsParam, completion: @escaping (Result<[OpenIMSearchFriendsInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func searchFriends(param: OpenIMSearchFriendsParam) async throws -> [OpenIMSearchFriendsInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func checkFriend(userIDs: [String], completion: @escaping (Result<[OpenIMFriendCheckResult], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func checkFriend(userIDs: [String]) async throws -> [OpenIMFriendCheckResult] {
+        throw OpenIMError.coreUnavailable
     }
-    func addFriend(userID: String, reqMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func addFriend(userID: String, reqMsg: String?) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func setFriendRemark(userID: String, remark: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func setFriendRemark(userID: String, remark: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func deleteFriend(friendUserID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func deleteFriend(friendUserID: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func getFriendApplicationListAsRecipient(completion: @escaping (Result<[OpenIMFriendApplication], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getFriendApplicationListAsRecipient() async throws -> [OpenIMFriendApplication] {
+        throw OpenIMError.coreUnavailable
     }
-    func getFriendApplicationListAsApplicant(completion: @escaping (Result<[OpenIMFriendApplication], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getFriendApplicationListAsApplicant() async throws -> [OpenIMFriendApplication] {
+        throw OpenIMError.coreUnavailable
     }
-    func acceptFriendApplication(userID: String, handleMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func acceptFriendApplication(userID: String, handleMsg: String?) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func refuseFriendApplication(userID: String, handleMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func refuseFriendApplication(userID: String, handleMsg: String?) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func addBlack(blackUserID: String, ex: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func addBlack(blackUserID: String, ex: String?) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func removeBlack(blackUserID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func removeBlack(blackUserID: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func getBlackList(completion: @escaping (Result<[OpenIMBlackInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getBlackList() async throws -> [OpenIMBlackInfo] {
+        throw OpenIMError.coreUnavailable
     }
     func setFriendshipListener(_ listener: OpenIMFriendshipListener?) {}
 
-    func createGroup(createInfo: OpenIMGroupCreateInfo, completion: @escaping (Result<OpenIMGroupInfo, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func createGroup(createInfo: OpenIMGroupCreateInfo) async throws -> OpenIMGroupInfo {
+        throw OpenIMError.coreUnavailable
     }
-    func joinGroup(groupID: String, reqMsg: String?, joinSource: OpenIMJoinType, ex: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func joinGroup(groupID: String, reqMsg: String?, joinSource: OpenIMJoinType, ex: String?) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func quitGroup(groupID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func quitGroup(groupID: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func dismissGroup(groupID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func dismissGroup(groupID: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func getJoinedGroupList(completion: @escaping (Result<[OpenIMGroupInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getJoinedGroupList() async throws -> [OpenIMGroupInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func getJoinedGroupListPage(offset: Int, count: Int, completion: @escaping (Result<[OpenIMGroupInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getJoinedGroupListPage(offset: Int, count: Int) async throws -> [OpenIMGroupInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func getSpecifiedGroupsInfo(groupIDs: [String], completion: @escaping (Result<[OpenIMGroupInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getSpecifiedGroupsInfo(groupIDs: [String]) async throws -> [OpenIMGroupInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func searchGroups(param: OpenIMSearchGroupParam, completion: @escaping (Result<[OpenIMGroupInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func searchGroups(param: OpenIMSearchGroupParam) async throws -> [OpenIMGroupInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func setGroupInfo(groupInfo: OpenIMGroupInfo, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func setGroupInfo(groupInfo: OpenIMGroupInfo) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func getGroupMemberList(groupID: String, filter: OpenIMGroupMemberFilter, offset: Int, count: Int, completion: @escaping (Result<[OpenIMGroupMemberInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getGroupMemberList(groupID: String, filter: OpenIMGroupMemberFilter, offset: Int, count: Int) async throws -> [OpenIMGroupMemberInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func getSpecifiedGroupMembersInfo(groupID: String, userIDs: [String], completion: @escaping (Result<[OpenIMGroupMemberInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getSpecifiedGroupMembersInfo(groupID: String, userIDs: [String]) async throws -> [OpenIMGroupMemberInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func searchGroupMembers(param: OpenIMSearchGroupMembersParam, completion: @escaping (Result<[OpenIMGroupMemberInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func searchGroupMembers(param: OpenIMSearchGroupMembersParam) async throws -> [OpenIMGroupMemberInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func setGroupMemberRoleLevel(groupID: String, userID: String, roleLevel: OpenIMGroupMemberRole, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func setGroupMemberRoleLevel(groupID: String, userID: String, roleLevel: OpenIMGroupMemberRole) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func changeGroupMute(groupID: String, isMute: Bool, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func changeGroupMute(groupID: String, isMute: Bool) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func changeGroupMemberMute(groupID: String, userID: String, mutedSeconds: Int, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func changeGroupMemberMute(groupID: String, userID: String, mutedSeconds: Int) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func setGroupMemberNickname(groupID: String, userID: String, nickname: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func setGroupMemberNickname(groupID: String, userID: String, nickname: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func kickGroupMember(groupID: String, reason: String?, userIDs: [String], completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func kickGroupMember(groupID: String, reason: String?, userIDs: [String]) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func inviteUserToGroup(groupID: String, reason: String?, userIDs: [String], completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func inviteUserToGroup(groupID: String, reason: String?, userIDs: [String]) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func getGroupApplicationListAsRecipient(completion: @escaping (Result<[OpenIMGroupApplicationInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getGroupApplicationListAsRecipient() async throws -> [OpenIMGroupApplicationInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func getGroupApplicationListAsApplicant(completion: @escaping (Result<[OpenIMGroupApplicationInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getGroupApplicationListAsApplicant() async throws -> [OpenIMGroupApplicationInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func acceptGroupApplication(groupID: String, fromUserID: String, handleMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func acceptGroupApplication(groupID: String, fromUserID: String, handleMsg: String?) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func refuseGroupApplication(groupID: String, fromUserID: String, handleMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func refuseGroupApplication(groupID: String, fromUserID: String, handleMsg: String?) async throws {
+        throw OpenIMError.coreUnavailable
     }
     func setGroupListener(_ listener: OpenIMGroupListener?) {}
 
-    func getAllConversationList(completion: @escaping (Result<[OpenIMConversationInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getAllConversationList() async throws -> [OpenIMConversationInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func getConversationListSplit(offset: Int, count: Int, completion: @escaping (Result<[OpenIMConversationInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getConversationListSplit(offset: Int, count: Int) async throws -> [OpenIMConversationInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func getOneConversation(sessionType: OpenIMConversationType, sourceID: String, completion: @escaping (Result<OpenIMConversationInfo, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getOneConversation(sessionType: OpenIMConversationType, sourceID: String) async throws -> OpenIMConversationInfo {
+        throw OpenIMError.coreUnavailable
     }
-    func getMultipleConversation(conversationIDs: [String], completion: @escaping (Result<[OpenIMConversationInfo], OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getMultipleConversation(conversationIDs: [String]) async throws -> [OpenIMConversationInfo] {
+        throw OpenIMError.coreUnavailable
     }
-    func setConversation(conversationID: String, req: OpenIMConversationReq, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func setConversation(conversationID: String, req: OpenIMConversationReq) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func hideConversation(conversationID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func hideConversation(conversationID: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func setConversationDraft(conversationID: String, draftText: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func setConversationDraft(conversationID: String, draftText: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func setConversationPinned(conversationID: String, isPinned: Bool, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func setConversationPinned(conversationID: String, isPinned: Bool) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func setConversationRecvMessageOpt(conversationIDs: [String], status: OpenIMReceiveMessageOpt, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func setConversationRecvMessageOpt(conversationIDs: [String], status: OpenIMReceiveMessageOpt) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func markConversationMessageAsRead(conversationID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func markConversationMessageAsRead(conversationID: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func getTotalUnreadMsgCount(completion: @escaping (Result<Int, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getTotalUnreadMsgCount() async throws -> Int {
+        throw OpenIMError.coreUnavailable
     }
-    func deleteConversationAndDeleteAllMsg(conversationID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func deleteConversationAndDeleteAllMsg(conversationID: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func clearConversationAndDeleteAllMsg(conversationID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func clearConversationAndDeleteAllMsg(conversationID: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
     func setConversationListener(_ listener: OpenIMConversationListener?) {}
 
@@ -361,37 +355,36 @@ public extension OpenIMCoreAdapter {
         groupID: String?,
         offlinePushInfo: OpenIMOfflinePushInfo?,
         isOnlineOnly: Bool,
-        onProgress: ((Int) -> Void)?,
-        completion: @escaping (Result<OpenIMMessageInfo, OpenIMError>) -> Void
-    ) {
-        completion(.failure(.coreUnavailable))
+        onProgress: ((Int) -> Void)?
+    ) async throws -> OpenIMMessageInfo {
+        throw OpenIMError.coreUnavailable
     }
-    func getAdvancedHistoryMessageList(options: OpenIMGetMessageOptions, completion: @escaping (Result<OpenIMGetAdvancedHistoryMessageListInfo, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func getAdvancedHistoryMessageList(options: OpenIMGetMessageOptions) async throws -> OpenIMGetAdvancedHistoryMessageListInfo {
+        throw OpenIMError.coreUnavailable
     }
-    func revokeMessage(conversationID: String, clientMsgID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func revokeMessage(conversationID: String, clientMsgID: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func typingStatusUpdate(recvID: String, msgTip: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func typingStatusUpdate(recvID: String, msgTip: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func markMessagesAsReadByMsgID(conversationID: String, clientMsgIDs: [String], completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func markMessagesAsReadByMsgID(conversationID: String, clientMsgIDs: [String]) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func deleteMessage(conversationID: String, clientMsgID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func deleteMessage(conversationID: String, clientMsgID: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func deleteMessageFromLocalStorage(conversationID: String, clientMsgID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func deleteMessageFromLocalStorage(conversationID: String, clientMsgID: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func deleteAllMsgFromLocal(completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func deleteAllMsgFromLocal() async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func deleteAllMsgFromLocalAndSvr(completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func deleteAllMsgFromLocalAndSvr() async throws {
+        throw OpenIMError.coreUnavailable
     }
-    func searchLocalMessages(param: OpenIMSearchParam, completion: @escaping (Result<OpenIMSearchResultInfo, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    func searchLocalMessages(param: OpenIMSearchParam) async throws -> OpenIMSearchResultInfo {
+        throw OpenIMError.coreUnavailable
     }
     func setAdvancedMsgListener(_ listener: OpenIMAdvancedMsgListener?) {}
 }
@@ -407,16 +400,12 @@ public final class UnavailableOpenIMCoreAdapter: OpenIMCoreAdapter {
         throw OpenIMError.coreUnavailable
     }
 
-    public func login(
-        userID: String,
-        token: String,
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    ) {
-        completion(.failure(.coreUnavailable))
+    public func login(userID: String, token: String) async throws {
+        throw OpenIMError.coreUnavailable
     }
 
-    public func logout(completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        completion(.failure(.coreUnavailable))
+    public func logout() async throws {
+        throw OpenIMError.coreUnavailable
     }
 
     public func uninitialize() {}

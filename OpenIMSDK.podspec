@@ -5,7 +5,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'OpenIMSDK'
-  s.version          = '4.0.0-alpha.1'
+  s.version          = '3.8.3-hotfix.14'
   s.summary          = 'Swift-first OpenIM SDK for iOS'
   s.description      = <<-DESC
     Swift-first OpenIM SDK backed by the OpenIMCore XCFramework.

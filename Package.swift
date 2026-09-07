@@ -1,6 +1,9 @@
 // swift-tools-version: 5.9
 
 import PackageDescription
+import Foundation
+
+let useLocalCore = FileManager.default.fileExists(atPath: "/Volumes/T7/Dev/Framework/openim-sdk-core-ios/Package.swift")
 
 let package = Package(
     name: "OpenIMSDK",
@@ -13,20 +16,21 @@ let package = Package(
             targets: ["OpenIMSDK"]
         )
     ],
+    dependencies: [
+        useLocalCore
+            ? .package(name: "OpenIMSDKCore", path: "/Volumes/T7/Dev/Framework/openim-sdk-core-ios")
+            : .package(url: "https://github.com/openimsdk/openim-sdk-core-ios.git", branch: "feature/swift-sdk-rewrite")
+    ],
     targets: [
         .target(
             name: "OpenIMSDK",
             dependencies: [
-                .target(name: "OpenIMCore", condition: .when(platforms: [.iOS]))
+                .product(name: "OpenIMCore", package: "OpenIMSDKCore", condition: .when(platforms: [.iOS]))
             ],
             path: "Sources/OpenIMSDK",
             linkerSettings: [
                 .linkedLibrary("resolv")
             ]
-        ),
-        .binaryTarget(
-            name: "OpenIMCore",
-            path: "Example/Pods/OpenIMSDKCore/Framework/OpenIMCore.xcframework"
         ),
         .testTarget(
             name: "OpenIMSDKTests",

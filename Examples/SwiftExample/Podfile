@@ -1,0 +1,6 @@
+platform :ios, '15.0'
+use_frameworks!
+
+target 'SwiftExample' do
+  pod 'OpenIMSDK', :path => '../../'
+end

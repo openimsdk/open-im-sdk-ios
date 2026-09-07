@@ -37,18 +37,16 @@
             }
         }
 
-        public func login(
-            userID: String,
-            token: String,
-            completion: @escaping (Result<Void, OpenIMError>) -> Void
-        ) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkLogin(callback, UUID().uuidString, userID, token)
+        public func login(userID: String, token: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkLogin(callback, UUID().uuidString, userID, token)
+            }
         }
 
-        public func logout(completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkLogout(callback, UUID().uuidString)
+        public func logout() async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkLogout(callback, UUID().uuidString)
+            }
         }
 
         public func uninitialize() {
@@ -68,68 +66,56 @@
         }
 
         // MARK: - User Module
-        public func getUsersInfo(userIDs: [String], completion: @escaping (Result<[OpenIMPublicUserInfo], OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(userIDs)
-                let callback = retainDecodableCallback([OpenIMPublicUserInfo].self, completion: completion)
+        public func getUsersInfo(userIDs: [String]) async throws -> [OpenIMPublicUserInfo] {
+            let json = try encodeJSON(userIDs)
+            return try await invoke([OpenIMPublicUserInfo].self) { callback in
                 Open_im_sdkGetUsersInfo(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func getSelfUserInfo(completion: @escaping (Result<OpenIMUserInfo, OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback(OpenIMUserInfo.self, completion: completion)
-            Open_im_sdkGetSelfUserInfo(callback, UUID().uuidString)
+        public func getSelfUserInfo() async throws -> OpenIMUserInfo {
+            try await invoke(OpenIMUserInfo.self) { callback in
+                Open_im_sdkGetSelfUserInfo(callback, UUID().uuidString)
+            }
         }
 
-        public func setSelfUserInfo(userInfo: OpenIMUserInfo, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(userInfo)
-                let callback = retainVoidCallback(completion)
+        public func setSelfUserInfo(userInfo: OpenIMUserInfo) async throws {
+            let json = try encodeJSON(userInfo)
+            try await invokeVoid { callback in
                 Open_im_sdkSetSelfInfo(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func updateFcmToken(fcmToken: String, expireTime: Int, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkUpdateFcmToken(callback, UUID().uuidString, fcmToken, Int64(expireTime))
+        public func updateFcmToken(fcmToken: String, expireTime: Int) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkUpdateFcmToken(callback, UUID().uuidString, fcmToken, Int64(expireTime))
+            }
         }
 
-        public func subscribeUsersStatus(userIDs: [String], completion: @escaping (Result<[OpenIMUserStatusInfo], OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(userIDs)
-                let callback = retainDecodableCallback([OpenIMUserStatusInfo].self, completion: completion)
+        public func subscribeUsersStatus(userIDs: [String]) async throws -> [OpenIMUserStatusInfo] {
+            let json = try encodeJSON(userIDs)
+            return try await invoke([OpenIMUserStatusInfo].self) { callback in
                 Open_im_sdkSubscribeUsersStatus(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func unsubscribeUsersStatus(userIDs: [String], completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(userIDs)
-                let callback = retainVoidCallback(completion)
+        public func unsubscribeUsersStatus(userIDs: [String]) async throws {
+            let json = try encodeJSON(userIDs)
+            try await invokeVoid { callback in
                 Open_im_sdkUnsubscribeUsersStatus(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func getSubscribeUsersStatus(completion: @escaping (Result<[OpenIMUserStatusInfo], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMUserStatusInfo].self, completion: completion)
-            Open_im_sdkGetSubscribeUsersStatus(callback, UUID().uuidString)
+        public func getSubscribeUsersStatus() async throws -> [OpenIMUserStatusInfo] {
+            try await invoke([OpenIMUserStatusInfo].self) { callback in
+                Open_im_sdkGetSubscribeUsersStatus(callback, UUID().uuidString)
+            }
         }
 
-        public func getUserStatus(userIDs: [String], completion: @escaping (Result<[OpenIMUserStatusInfo], OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(userIDs)
-                let callback = retainDecodableCallback([OpenIMUserStatusInfo].self, completion: completion)
+        public func getUserStatus(userIDs: [String]) async throws -> [OpenIMUserStatusInfo] {
+            let json = try encodeJSON(userIDs)
+            return try await invoke([OpenIMUserStatusInfo].self) { callback in
                 Open_im_sdkGetUserStatus(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
@@ -149,130 +135,117 @@
         }
 
         // MARK: - Friend Module
-        public func getSpecifiedFriendsInfo(userIDs: [String], filterBlack: Bool, completion: @escaping (Result<[OpenIMFriendInfo], OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(userIDs)
-                let callback = retainDecodableCallback([OpenIMFriendInfo].self, completion: completion)
+        public func getSpecifiedFriendsInfo(userIDs: [String], filterBlack: Bool) async throws -> [OpenIMFriendInfo] {
+            let json = try encodeJSON(userIDs)
+            return try await invoke([OpenIMFriendInfo].self) { callback in
                 Open_im_sdkGetSpecifiedFriendsInfo(callback, UUID().uuidString, json, filterBlack)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func getFriendList(filterBlack: Bool, completion: @escaping (Result<[OpenIMFriendInfo], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMFriendInfo].self, completion: completion)
-            Open_im_sdkGetFriendList(callback, UUID().uuidString, filterBlack)
+        public func getFriendList(filterBlack: Bool) async throws -> [OpenIMFriendInfo] {
+            try await invoke([OpenIMFriendInfo].self) { callback in
+                Open_im_sdkGetFriendList(callback, UUID().uuidString, filterBlack)
+            }
         }
 
-        public func getFriendListPage(offset: Int, count: Int, filterBlack: Bool, completion: @escaping (Result<[OpenIMFriendInfo], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMFriendInfo].self, completion: completion)
-            Open_im_sdkGetFriendListPage(callback, UUID().uuidString, Int32(offset), Int32(count), filterBlack)
+        public func getFriendListPage(offset: Int, count: Int, filterBlack: Bool) async throws -> [OpenIMFriendInfo] {
+            try await invoke([OpenIMFriendInfo].self) { callback in
+                Open_im_sdkGetFriendListPage(callback, UUID().uuidString, Int32(offset), Int32(count), filterBlack)
+            }
         }
 
-        public func searchFriends(param: OpenIMSearchFriendsParam, completion: @escaping (Result<[OpenIMSearchFriendsInfo], OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(param)
-                let callback = retainDecodableCallback([OpenIMSearchFriendsInfo].self, completion: completion)
+        public func searchFriends(param: OpenIMSearchFriendsParam) async throws -> [OpenIMSearchFriendsInfo] {
+            let json = try encodeJSON(param)
+            return try await invoke([OpenIMSearchFriendsInfo].self) { callback in
                 Open_im_sdkSearchFriends(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func checkFriend(userIDs: [String], completion: @escaping (Result<[OpenIMFriendCheckResult], OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(userIDs)
-                let callback = retainDecodableCallback([OpenIMFriendCheckResult].self, completion: completion)
+        public func checkFriend(userIDs: [String]) async throws -> [OpenIMFriendCheckResult] {
+            let json = try encodeJSON(userIDs)
+            return try await invoke([OpenIMFriendCheckResult].self) { callback in
                 Open_im_sdkCheckFriend(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func addFriend(userID: String, reqMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let req: [String: Any] = ["toUserID": userID, "reqMsg": reqMsg ?? ""]
-                let data = try JSONSerialization.data(withJSONObject: req, options: [])
-                guard let json = String(data: data, encoding: .utf8) else {
-                    throw OpenIMError.invalidParameter(message: "Failed to format friend request")
-                }
-                let callback = retainVoidCallback(completion)
+        public func addFriend(userID: String, reqMsg: String?) async throws {
+            let req: [String: Any] = ["toUserID": userID, "reqMsg": reqMsg ?? ""]
+            let data = try JSONSerialization.data(withJSONObject: req, options: [])
+            guard let json = String(data: data, encoding: .utf8) else {
+                throw OpenIMError.invalidParameter(message: "Failed to format friend request")
+            }
+            try await invokeVoid { callback in
                 Open_im_sdkAddFriend(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func setFriendRemark(userID: String, remark: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let req: [String: Any] = ["friendUserIDs": [userID], "remark": remark]
-                let data = try JSONSerialization.data(withJSONObject: req, options: [])
-                guard let json = String(data: data, encoding: .utf8) else {
-                    throw OpenIMError.invalidParameter(message: "Failed to format remark request")
-                }
-                let callback = retainVoidCallback(completion)
+        public func setFriendRemark(userID: String, remark: String) async throws {
+            let req: [String: Any] = ["friendUserIDs": [userID], "remark": remark]
+            let data = try JSONSerialization.data(withJSONObject: req, options: [])
+            guard let json = String(data: data, encoding: .utf8) else {
+                throw OpenIMError.invalidParameter(message: "Failed to format remark request")
+            }
+            try await invokeVoid { callback in
                 Open_im_sdkUpdateFriends(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func deleteFriend(friendUserID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkDeleteFriend(callback, UUID().uuidString, friendUserID)
+        public func deleteFriend(friendUserID: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkDeleteFriend(callback, UUID().uuidString, friendUserID)
+            }
         }
 
-        public func getFriendApplicationListAsRecipient(completion: @escaping (Result<[OpenIMFriendApplication], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMFriendApplication].self, completion: completion)
-            Open_im_sdkGetFriendApplicationListAsRecipient(callback, UUID().uuidString, "{}")
+        public func getFriendApplicationListAsRecipient() async throws -> [OpenIMFriendApplication] {
+            try await invoke([OpenIMFriendApplication].self) { callback in
+                Open_im_sdkGetFriendApplicationListAsRecipient(callback, UUID().uuidString, "{}")
+            }
         }
 
-        public func getFriendApplicationListAsApplicant(completion: @escaping (Result<[OpenIMFriendApplication], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMFriendApplication].self, completion: completion)
-            Open_im_sdkGetFriendApplicationListAsApplicant(callback, UUID().uuidString, "{}")
+        public func getFriendApplicationListAsApplicant() async throws -> [OpenIMFriendApplication] {
+            try await invoke([OpenIMFriendApplication].self) { callback in
+                Open_im_sdkGetFriendApplicationListAsApplicant(callback, UUID().uuidString, "{}")
+            }
         }
 
-        public func acceptFriendApplication(userID: String, handleMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let req: [String: Any] = ["toUserID": userID, "handleMsg": handleMsg ?? ""]
-                let data = try JSONSerialization.data(withJSONObject: req, options: [])
-                guard let json = String(data: data, encoding: .utf8) else {
-                    throw OpenIMError.invalidParameter(message: "Failed to format accept friend request")
-                }
-                let callback = retainVoidCallback(completion)
+        public func acceptFriendApplication(userID: String, handleMsg: String?) async throws {
+            let req: [String: Any] = ["toUserID": userID, "handleMsg": handleMsg ?? ""]
+            let data = try JSONSerialization.data(withJSONObject: req, options: [])
+            guard let json = String(data: data, encoding: .utf8) else {
+                throw OpenIMError.invalidParameter(message: "Failed to format accept friend request")
+            }
+            try await invokeVoid { callback in
                 Open_im_sdkAcceptFriendApplication(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func refuseFriendApplication(userID: String, handleMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let req: [String: Any] = ["toUserID": userID, "handleMsg": handleMsg ?? ""]
-                let data = try JSONSerialization.data(withJSONObject: req, options: [])
-                guard let json = String(data: data, encoding: .utf8) else {
-                    throw OpenIMError.invalidParameter(message: "Failed to format refuse friend request")
-                }
-                let callback = retainVoidCallback(completion)
+        public func refuseFriendApplication(userID: String, handleMsg: String?) async throws {
+            let req: [String: Any] = ["toUserID": userID, "handleMsg": handleMsg ?? ""]
+            let data = try JSONSerialization.data(withJSONObject: req, options: [])
+            guard let json = String(data: data, encoding: .utf8) else {
+                throw OpenIMError.invalidParameter(message: "Failed to format refuse friend request")
+            }
+            try await invokeVoid { callback in
                 Open_im_sdkRefuseFriendApplication(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func addBlack(blackUserID: String, ex: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkAddBlack(callback, UUID().uuidString, blackUserID, ex ?? "")
+        public func addBlack(blackUserID: String, ex: String?) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkAddBlack(callback, UUID().uuidString, blackUserID, ex ?? "")
+            }
         }
 
-        public func removeBlack(blackUserID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkRemoveBlack(callback, UUID().uuidString, blackUserID)
+        public func removeBlack(blackUserID: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkRemoveBlack(callback, UUID().uuidString, blackUserID)
+            }
         }
 
-        public func getBlackList(completion: @escaping (Result<[OpenIMBlackInfo], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMBlackInfo].self, completion: completion)
-            Open_im_sdkGetBlackList(callback, UUID().uuidString)
+        public func getBlackList() async throws -> [OpenIMBlackInfo] {
+            try await invoke([OpenIMBlackInfo].self) { callback in
+                Open_im_sdkGetBlackList(callback, UUID().uuidString)
+            }
         }
 
         public func setFriendshipListener(_ listener: OpenIMFriendshipListener?) {
@@ -291,172 +264,154 @@
         }
 
         // MARK: - Group Module
-        public func createGroup(createInfo: OpenIMGroupCreateInfo, completion: @escaping (Result<OpenIMGroupInfo, OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(createInfo)
-                let callback = retainDecodableCallback(OpenIMGroupInfo.self, completion: completion)
+        public func createGroup(createInfo: OpenIMGroupCreateInfo) async throws -> OpenIMGroupInfo {
+            let json = try encodeJSON(createInfo)
+            return try await invoke(OpenIMGroupInfo.self) { callback in
                 Open_im_sdkCreateGroup(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func joinGroup(groupID: String, reqMsg: String?, joinSource: OpenIMJoinType, ex: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkJoinGroup(callback, UUID().uuidString, groupID, reqMsg ?? "", Int32(joinSource.rawValue), ex ?? "")
+        public func joinGroup(groupID: String, reqMsg: String?, joinSource: OpenIMJoinType, ex: String?) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkJoinGroup(callback, UUID().uuidString, groupID, reqMsg ?? "", Int32(joinSource.rawValue), ex ?? "")
+            }
         }
 
-        public func quitGroup(groupID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkQuitGroup(callback, UUID().uuidString, groupID)
+        public func quitGroup(groupID: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkQuitGroup(callback, UUID().uuidString, groupID)
+            }
         }
 
-        public func dismissGroup(groupID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkDismissGroup(callback, UUID().uuidString, groupID)
+        public func dismissGroup(groupID: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkDismissGroup(callback, UUID().uuidString, groupID)
+            }
         }
 
-        public func getJoinedGroupList(completion: @escaping (Result<[OpenIMGroupInfo], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMGroupInfo].self, completion: completion)
-            Open_im_sdkGetJoinedGroupList(callback, UUID().uuidString)
+        public func getJoinedGroupList() async throws -> [OpenIMGroupInfo] {
+            try await invoke([OpenIMGroupInfo].self) { callback in
+                Open_im_sdkGetJoinedGroupList(callback, UUID().uuidString)
+            }
         }
 
-        public func getJoinedGroupListPage(offset: Int, count: Int, completion: @escaping (Result<[OpenIMGroupInfo], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMGroupInfo].self, completion: completion)
-            Open_im_sdkGetJoinedGroupListPage(callback, UUID().uuidString, Int32(offset), Int32(count))
+        public func getJoinedGroupListPage(offset: Int, count: Int) async throws -> [OpenIMGroupInfo] {
+            try await invoke([OpenIMGroupInfo].self) { callback in
+                Open_im_sdkGetJoinedGroupListPage(callback, UUID().uuidString, Int32(offset), Int32(count))
+            }
         }
 
-        public func getSpecifiedGroupsInfo(groupIDs: [String], completion: @escaping (Result<[OpenIMGroupInfo], OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(groupIDs)
-                let callback = retainDecodableCallback([OpenIMGroupInfo].self, completion: completion)
+        public func getSpecifiedGroupsInfo(groupIDs: [String]) async throws -> [OpenIMGroupInfo] {
+            let json = try encodeJSON(groupIDs)
+            return try await invoke([OpenIMGroupInfo].self) { callback in
                 Open_im_sdkGetSpecifiedGroupsInfo(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func searchGroups(param: OpenIMSearchGroupParam, completion: @escaping (Result<[OpenIMGroupInfo], OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(param)
-                let callback = retainDecodableCallback([OpenIMGroupInfo].self, completion: completion)
+        public func searchGroups(param: OpenIMSearchGroupParam) async throws -> [OpenIMGroupInfo] {
+            let json = try encodeJSON(param)
+            return try await invoke([OpenIMGroupInfo].self) { callback in
                 Open_im_sdkSearchGroups(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func setGroupInfo(groupInfo: OpenIMGroupInfo, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(groupInfo)
-                let callback = retainVoidCallback(completion)
+        public func setGroupInfo(groupInfo: OpenIMGroupInfo) async throws {
+            let json = try encodeJSON(groupInfo)
+            try await invokeVoid { callback in
                 Open_im_sdkSetGroupInfo(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func getGroupMemberList(groupID: String, filter: OpenIMGroupMemberFilter, offset: Int, count: Int, completion: @escaping (Result<[OpenIMGroupMemberInfo], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMGroupMemberInfo].self, completion: completion)
-            Open_im_sdkGetGroupMemberList(callback, UUID().uuidString, groupID, Int32(filter.rawValue), Int32(offset), Int32(count))
+        public func getGroupMemberList(groupID: String, filter: OpenIMGroupMemberFilter, offset: Int, count: Int) async throws -> [OpenIMGroupMemberInfo] {
+            try await invoke([OpenIMGroupMemberInfo].self) { callback in
+                Open_im_sdkGetGroupMemberList(callback, UUID().uuidString, groupID, Int32(filter.rawValue), Int32(offset), Int32(count))
+            }
         }
 
-        public func getSpecifiedGroupMembersInfo(groupID: String, userIDs: [String], completion: @escaping (Result<[OpenIMGroupMemberInfo], OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(userIDs)
-                let callback = retainDecodableCallback([OpenIMGroupMemberInfo].self, completion: completion)
+        public func getSpecifiedGroupMembersInfo(groupID: String, userIDs: [String]) async throws -> [OpenIMGroupMemberInfo] {
+            let json = try encodeJSON(userIDs)
+            return try await invoke([OpenIMGroupMemberInfo].self) { callback in
                 Open_im_sdkGetSpecifiedGroupMembersInfo(callback, UUID().uuidString, groupID, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func searchGroupMembers(param: OpenIMSearchGroupMembersParam, completion: @escaping (Result<[OpenIMGroupMemberInfo], OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(param)
-                let callback = retainDecodableCallback([OpenIMGroupMemberInfo].self, completion: completion)
+        public func searchGroupMembers(param: OpenIMSearchGroupMembersParam) async throws -> [OpenIMGroupMemberInfo] {
+            let json = try encodeJSON(param)
+            return try await invoke([OpenIMGroupMemberInfo].self) { callback in
                 Open_im_sdkSearchGroupMembers(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func setGroupMemberRoleLevel(groupID: String, userID: String, roleLevel: OpenIMGroupMemberRole, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let req: [String: Any] = ["groupID": groupID, "userID": userID, "roleLevel": roleLevel.rawValue]
-                let data = try JSONSerialization.data(withJSONObject: req, options: [])
-                guard let json = String(data: data, encoding: .utf8) else {
-                    throw OpenIMError.invalidParameter(message: "Failed to format member role request")
-                }
-                let callback = retainVoidCallback(completion)
+        public func setGroupMemberRoleLevel(groupID: String, userID: String, roleLevel: OpenIMGroupMemberRole) async throws {
+            let req: [String: Any] = ["groupID": groupID, "userID": userID, "roleLevel": roleLevel.rawValue]
+            let data = try JSONSerialization.data(withJSONObject: req, options: [])
+            guard let json = String(data: data, encoding: .utf8) else {
+                throw OpenIMError.invalidParameter(message: "Failed to format member role request")
+            }
+            try await invokeVoid { callback in
                 Open_im_sdkSetGroupMemberInfo(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func changeGroupMute(groupID: String, isMute: Bool, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkChangeGroupMute(callback, UUID().uuidString, groupID, isMute)
+        public func changeGroupMute(groupID: String, isMute: Bool) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkChangeGroupMute(callback, UUID().uuidString, groupID, isMute)
+            }
         }
 
-        public func changeGroupMemberMute(groupID: String, userID: String, mutedSeconds: Int, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkChangeGroupMemberMute(callback, UUID().uuidString, groupID, userID, mutedSeconds)
+        public func changeGroupMemberMute(groupID: String, userID: String, mutedSeconds: Int) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkChangeGroupMemberMute(callback, UUID().uuidString, groupID, userID, mutedSeconds)
+            }
         }
 
-        public func setGroupMemberNickname(groupID: String, userID: String, nickname: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let req: [String: Any] = ["groupID": groupID, "userID": userID, "nickname": nickname]
-                let data = try JSONSerialization.data(withJSONObject: req, options: [])
-                guard let json = String(data: data, encoding: .utf8) else {
-                    throw OpenIMError.invalidParameter(message: "Failed to format member nickname request")
-                }
-                let callback = retainVoidCallback(completion)
+        public func setGroupMemberNickname(groupID: String, userID: String, nickname: String) async throws {
+            let req: [String: Any] = ["groupID": groupID, "userID": userID, "nickname": nickname]
+            let data = try JSONSerialization.data(withJSONObject: req, options: [])
+            guard let json = String(data: data, encoding: .utf8) else {
+                throw OpenIMError.invalidParameter(message: "Failed to format member nickname request")
+            }
+            try await invokeVoid { callback in
                 Open_im_sdkSetGroupMemberInfo(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func kickGroupMember(groupID: String, reason: String?, userIDs: [String], completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(userIDs)
-                let callback = retainVoidCallback(completion)
+        public func kickGroupMember(groupID: String, reason: String?, userIDs: [String]) async throws {
+            let json = try encodeJSON(userIDs)
+            try await invokeVoid { callback in
                 Open_im_sdkKickGroupMember(callback, UUID().uuidString, groupID, reason ?? "", json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func inviteUserToGroup(groupID: String, reason: String?, userIDs: [String], completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(userIDs)
-                let callback = retainVoidCallback(completion)
+        public func inviteUserToGroup(groupID: String, reason: String?, userIDs: [String]) async throws {
+            let json = try encodeJSON(userIDs)
+            try await invokeVoid { callback in
                 Open_im_sdkInviteUserToGroup(callback, UUID().uuidString, groupID, reason ?? "", json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func getGroupApplicationListAsRecipient(completion: @escaping (Result<[OpenIMGroupApplicationInfo], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMGroupApplicationInfo].self, completion: completion)
-            Open_im_sdkGetGroupApplicationListAsRecipient(callback, UUID().uuidString, "{}")
+        public func getGroupApplicationListAsRecipient() async throws -> [OpenIMGroupApplicationInfo] {
+            try await invoke([OpenIMGroupApplicationInfo].self) { callback in
+                Open_im_sdkGetGroupApplicationListAsRecipient(callback, UUID().uuidString, "{}")
+            }
         }
 
-        public func getGroupApplicationListAsApplicant(completion: @escaping (Result<[OpenIMGroupApplicationInfo], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMGroupApplicationInfo].self, completion: completion)
-            Open_im_sdkGetGroupApplicationListAsApplicant(callback, UUID().uuidString, "{}")
+        public func getGroupApplicationListAsApplicant() async throws -> [OpenIMGroupApplicationInfo] {
+            try await invoke([OpenIMGroupApplicationInfo].self) { callback in
+                Open_im_sdkGetGroupApplicationListAsApplicant(callback, UUID().uuidString, "{}")
+            }
         }
 
-        public func acceptGroupApplication(groupID: String, fromUserID: String, handleMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkAcceptGroupApplication(callback, UUID().uuidString, groupID, fromUserID, handleMsg ?? "")
+        public func acceptGroupApplication(groupID: String, fromUserID: String, handleMsg: String?) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkAcceptGroupApplication(callback, UUID().uuidString, groupID, fromUserID, handleMsg ?? "")
+            }
         }
 
-        public func refuseGroupApplication(groupID: String, fromUserID: String, handleMsg: String?, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkRefuseGroupApplication(callback, UUID().uuidString, groupID, fromUserID, handleMsg ?? "")
+        public func refuseGroupApplication(groupID: String, fromUserID: String, handleMsg: String?) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkRefuseGroupApplication(callback, UUID().uuidString, groupID, fromUserID, handleMsg ?? "")
+            }
         }
 
         public func setGroupListener(_ listener: OpenIMGroupListener?) {
@@ -475,109 +430,101 @@
         }
 
         // MARK: - Conversation Module
-        public func getAllConversationList(completion: @escaping (Result<[OpenIMConversationInfo], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMConversationInfo].self, completion: completion)
-            Open_im_sdkGetAllConversationList(callback, UUID().uuidString)
+        public func getAllConversationList() async throws -> [OpenIMConversationInfo] {
+            try await invoke([OpenIMConversationInfo].self) { callback in
+                Open_im_sdkGetAllConversationList(callback, UUID().uuidString)
+            }
         }
 
-        public func getConversationListSplit(offset: Int, count: Int, completion: @escaping (Result<[OpenIMConversationInfo], OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback([OpenIMConversationInfo].self, completion: completion)
-            Open_im_sdkGetConversationListSplit(callback, UUID().uuidString, offset, count)
+        public func getConversationListSplit(offset: Int, count: Int) async throws -> [OpenIMConversationInfo] {
+            try await invoke([OpenIMConversationInfo].self) { callback in
+                Open_im_sdkGetConversationListSplit(callback, UUID().uuidString, offset, count)
+            }
         }
 
-        public func getOneConversation(sessionType: OpenIMConversationType, sourceID: String, completion: @escaping (Result<OpenIMConversationInfo, OpenIMError>) -> Void) {
-            let callback = retainDecodableCallback(OpenIMConversationInfo.self, completion: completion)
-            Open_im_sdkGetOneConversation(callback, UUID().uuidString, Int32(sessionType.rawValue), sourceID)
+        public func getOneConversation(sessionType: OpenIMConversationType, sourceID: String) async throws -> OpenIMConversationInfo {
+            try await invoke(OpenIMConversationInfo.self) { callback in
+                Open_im_sdkGetOneConversation(callback, UUID().uuidString, Int32(sessionType.rawValue), sourceID)
+            }
         }
 
-        public func getMultipleConversation(conversationIDs: [String], completion: @escaping (Result<[OpenIMConversationInfo], OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(conversationIDs)
-                let callback = retainDecodableCallback([OpenIMConversationInfo].self, completion: completion)
+        public func getMultipleConversation(conversationIDs: [String]) async throws -> [OpenIMConversationInfo] {
+            let json = try encodeJSON(conversationIDs)
+            return try await invoke([OpenIMConversationInfo].self) { callback in
                 Open_im_sdkGetMultipleConversation(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func setConversation(conversationID: String, req: OpenIMConversationReq, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(req)
-                let callback = retainVoidCallback(completion)
+        public func setConversation(conversationID: String, req: OpenIMConversationReq) async throws {
+            let json = try encodeJSON(req)
+            try await invokeVoid { callback in
                 Open_im_sdkSetConversation(callback, UUID().uuidString, conversationID, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func hideConversation(conversationID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkHideConversation(callback, UUID().uuidString, conversationID)
+        public func hideConversation(conversationID: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkHideConversation(callback, UUID().uuidString, conversationID)
+            }
         }
 
-        public func setConversationDraft(conversationID: String, draftText: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkSetConversationDraft(callback, UUID().uuidString, conversationID, draftText)
+        public func setConversationDraft(conversationID: String, draftText: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkSetConversationDraft(callback, UUID().uuidString, conversationID, draftText)
+            }
         }
 
-        public func setConversationPinned(conversationID: String, isPinned: Bool, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let req: [String: Any] = ["isPinned": isPinned]
-                let data = try JSONSerialization.data(withJSONObject: req, options: [])
-                guard let json = String(data: data, encoding: .utf8) else {
-                    throw OpenIMError.invalidParameter(message: "Failed to format pin request")
-                }
-                let callback = retainVoidCallback(completion)
+        public func setConversationPinned(conversationID: String, isPinned: Bool) async throws {
+            let req: [String: Any] = ["isPinned": isPinned]
+            let data = try JSONSerialization.data(withJSONObject: req, options: [])
+            guard let json = String(data: data, encoding: .utf8) else {
+                throw OpenIMError.invalidParameter(message: "Failed to format pin request")
+            }
+            try await invokeVoid { callback in
                 Open_im_sdkSetConversation(callback, UUID().uuidString, conversationID, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func setConversationRecvMessageOpt(conversationIDs: [String], status: OpenIMReceiveMessageOpt, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let req: [String: Any] = ["recvMsgOpt": status.rawValue]
-                let data = try JSONSerialization.data(withJSONObject: req, options: [])
-                guard let json = String(data: data, encoding: .utf8) else {
-                    throw OpenIMError.invalidParameter(message: "Failed to format recvMsgOpt request")
-                }
-                let callback = retainVoidCallback(completion)
-                if let firstID = conversationIDs.first {
+        public func setConversationRecvMessageOpt(conversationIDs: [String], status: OpenIMReceiveMessageOpt) async throws {
+            let req: [String: Any] = ["recvMsgOpt": status.rawValue]
+            let data = try JSONSerialization.data(withJSONObject: req, options: [])
+            guard let json = String(data: data, encoding: .utf8) else {
+                throw OpenIMError.invalidParameter(message: "Failed to format recvMsgOpt request")
+            }
+            if let firstID = conversationIDs.first {
+                try await invokeVoid { callback in
                     Open_im_sdkSetConversation(callback, UUID().uuidString, firstID, json)
-                } else {
-                    completion(.success(()))
                 }
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func markConversationMessageAsRead(conversationID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkMarkConversationMessageAsRead(callback, UUID().uuidString, conversationID)
+        public func markConversationMessageAsRead(conversationID: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkMarkConversationMessageAsRead(callback, UUID().uuidString, conversationID)
+            }
         }
 
-        public func getTotalUnreadMsgCount(completion: @escaping (Result<Int, OpenIMError>) -> Void) {
-            let callback = retainDataCallback(
-                transform: { data in
-                    guard let str = data?.trimmingCharacters(in: .whitespacesAndNewlines), let count = Int(str) else {
-                        return 0
-                    }
-                    return count
-                },
-                completion: completion
-            )
-            Open_im_sdkGetTotalUnreadMsgCount(callback, UUID().uuidString)
+        public func getTotalUnreadMsgCount() async throws -> Int {
+            try await invokeData(transform: { data in
+                guard let str = data?.trimmingCharacters(in: .whitespacesAndNewlines), let count = Int(str) else {
+                    return 0
+                }
+                return count
+            }) { callback in
+                Open_im_sdkGetTotalUnreadMsgCount(callback, UUID().uuidString)
+            }
         }
 
-        public func deleteConversationAndDeleteAllMsg(conversationID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkDeleteConversationAndDeleteAllMsg(callback, UUID().uuidString, conversationID)
+        public func deleteConversationAndDeleteAllMsg(conversationID: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkDeleteConversationAndDeleteAllMsg(callback, UUID().uuidString, conversationID)
+            }
         }
 
-        public func clearConversationAndDeleteAllMsg(conversationID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkClearConversationAndDeleteAllMsg(callback, UUID().uuidString, conversationID)
+        public func clearConversationAndDeleteAllMsg(conversationID: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkClearConversationAndDeleteAllMsg(callback, UUID().uuidString, conversationID)
+            }
         }
 
         public func setConversationListener(_ listener: OpenIMConversationListener?) {
@@ -675,15 +622,16 @@
             groupID: String?,
             offlinePushInfo: OpenIMOfflinePushInfo?,
             isOnlineOnly: Bool,
-            onProgress: ((Int) -> Void)?,
-            completion: @escaping (Result<OpenIMMessageInfo, OpenIMError>) -> Void
-        ) {
-            do {
-                let msgJSON = try encodeJSON(message)
-                let pushJSON = try offlinePushInfo.map { try encodeJSON($0) } ?? "{}"
+            onProgress: ((Int) -> Void)?
+        ) async throws -> OpenIMMessageInfo {
+            let msgJSON = try encodeJSON(message)
+            let pushJSON = try offlinePushInfo.map { try encodeJSON($0) } ?? "{}"
+            return try await withCheckedThrowingContinuation { continuation in
                 let callback = retainSendMsgCallBack(
                     onProgress: onProgress,
-                    completion: completion
+                    completion: { result in
+                        continuation.resume(with: result)
+                    }
                 )
                 Open_im_sdkSendMessage(
                     callback,
@@ -694,68 +642,63 @@
                     pushJSON,
                     isOnlineOnly
                 )
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func getAdvancedHistoryMessageList(options: OpenIMGetMessageOptions, completion: @escaping (Result<OpenIMGetAdvancedHistoryMessageListInfo, OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(options)
-                let callback = retainDecodableCallback(OpenIMGetAdvancedHistoryMessageListInfo.self, completion: completion)
+        public func getAdvancedHistoryMessageList(options: OpenIMGetMessageOptions) async throws -> OpenIMGetAdvancedHistoryMessageListInfo {
+            let json = try encodeJSON(options)
+            return try await invoke(OpenIMGetAdvancedHistoryMessageListInfo.self) { callback in
                 Open_im_sdkGetAdvancedHistoryMessageList(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func revokeMessage(conversationID: String, clientMsgID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkRevokeMessage(callback, UUID().uuidString, conversationID, clientMsgID)
+        public func revokeMessage(conversationID: String, clientMsgID: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkRevokeMessage(callback, UUID().uuidString, conversationID, clientMsgID)
+            }
         }
 
-        public func typingStatusUpdate(recvID: String, msgTip: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkTypingStatusUpdate(callback, UUID().uuidString, recvID, msgTip)
+        public func typingStatusUpdate(recvID: String, msgTip: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkTypingStatusUpdate(callback, UUID().uuidString, recvID, msgTip)
+            }
         }
 
-        public func markMessagesAsReadByMsgID(conversationID: String, clientMsgIDs: [String], completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(clientMsgIDs)
-                let callback = retainVoidCallback(completion)
+        public func markMessagesAsReadByMsgID(conversationID: String, clientMsgIDs: [String]) async throws {
+            let json = try encodeJSON(clientMsgIDs)
+            try await invokeVoid { callback in
                 Open_im_sdkMarkMessagesAsReadByMsgID(callback, UUID().uuidString, conversationID, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
-        public func deleteMessage(conversationID: String, clientMsgID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkDeleteMessage(callback, UUID().uuidString, conversationID, clientMsgID)
+        public func deleteMessage(conversationID: String, clientMsgID: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkDeleteMessage(callback, UUID().uuidString, conversationID, clientMsgID)
+            }
         }
 
-        public func deleteMessageFromLocalStorage(conversationID: String, clientMsgID: String, completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkDeleteMessageFromLocalStorage(callback, UUID().uuidString, conversationID, clientMsgID)
+        public func deleteMessageFromLocalStorage(conversationID: String, clientMsgID: String) async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkDeleteMessageFromLocalStorage(callback, UUID().uuidString, conversationID, clientMsgID)
+            }
         }
 
-        public func deleteAllMsgFromLocal(completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkDeleteAllMsgFromLocal(callback, UUID().uuidString)
+        public func deleteAllMsgFromLocal() async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkDeleteAllMsgFromLocal(callback, UUID().uuidString)
+            }
         }
 
-        public func deleteAllMsgFromLocalAndSvr(completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-            let callback = retainVoidCallback(completion)
-            Open_im_sdkDeleteAllMsgFromLocalAndSvr(callback, UUID().uuidString)
+        public func deleteAllMsgFromLocalAndSvr() async throws {
+            try await invokeVoid { callback in
+                Open_im_sdkDeleteAllMsgFromLocalAndSvr(callback, UUID().uuidString)
+            }
         }
 
-        public func searchLocalMessages(param: OpenIMSearchParam, completion: @escaping (Result<OpenIMSearchResultInfo, OpenIMError>) -> Void) {
-            do {
-                let json = try encodeJSON(param)
-                let callback = retainDecodableCallback(OpenIMSearchResultInfo.self, completion: completion)
+        public func searchLocalMessages(param: OpenIMSearchParam) async throws -> OpenIMSearchResultInfo {
+            let json = try encodeJSON(param)
+            return try await invoke(OpenIMSearchResultInfo.self) { callback in
                 Open_im_sdkSearchLocalMessages(callback, UUID().uuidString, json)
-            } catch {
-                completion(.failure(error as? OpenIMError ?? .encodingFailed(message: error.localizedDescription)))
             }
         }
 
@@ -775,6 +718,41 @@
         }
 
         // MARK: - Private Helpers
+        private func invoke<T: Decodable>(
+            _ type: T.Type,
+            operation: (Open_im_sdk_callbackBaseProtocol) -> Void
+        ) async throws -> T {
+            try await withCheckedThrowingContinuation { continuation in
+                let callback = retainDecodableCallback(type) { result in
+                    continuation.resume(with: result)
+                }
+                operation(callback)
+            }
+        }
+
+        private func invokeData<T>(
+            transform: @escaping (String?) throws -> T,
+            operation: (Open_im_sdk_callbackBaseProtocol) -> Void
+        ) async throws -> T {
+            try await withCheckedThrowingContinuation { continuation in
+                let callback = retainDataCallback(transform: transform) { result in
+                    continuation.resume(with: result)
+                }
+                operation(callback)
+            }
+        }
+
+        private func invokeVoid(
+            operation: (Open_im_sdk_callbackBaseProtocol) -> Void
+        ) async throws {
+            try await withCheckedThrowingContinuation { continuation in
+                let callback = retainVoidCallback { result in
+                    continuation.resume(with: result)
+                }
+                operation(callback)
+            }
+        }
+
         private func makeConfigurationJSON(_ configuration: OpenIMConfiguration) throws -> String {
             let payload: [String: Any] = [
                 "platformID": configuration.platform.rawValue,
@@ -992,6 +970,10 @@
 
         init(eventHandler: @escaping (OpenIMCoreEvent) -> Void) {
             self.eventHandler = eventHandler
+        }
+
+        func onError(_ errCode: Int32, errMsg: String?) {
+            eventHandler(.connectionFailed(code: Int(errCode), message: errMsg))
         }
 
         func onConnectFailed(_ errCode: Int32, errMsg: String?) {

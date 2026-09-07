@@ -100,89 +100,59 @@ public final class OpenIMClient {
         }
     }
 
-    /// Starts a login request. The completion is always delivered on
-    /// `callbackQueue`, including invalid-state failures.
-    public func login(
-        userID: String,
-        token: String,
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    ) {
-        let callbackQueue = self.callbackQueue
-        var stateError: OpenIMError?
-        let currentSessionID = stateQueue.sync { () -> UUID? in
+    /// Starts a login request using Swift async/await.
+    public func login(userID: String, token: String) async throws {
+        let currentSessionID = try stateQueue.sync { () -> UUID in
             guard stateStorage == .initialized else {
-                stateError = .invalidState(
+                throw OpenIMError.invalidState(
                     expected: .initialized,
                     actual: stateStorage
                 )
-                return nil
             }
             stateStorage = .loggingIn(userID: userID)
             return sessionID
         }
-        guard let currentSessionID else {
-            if let stateError {
-                deliver(completion: completion, result: .failure(stateError))
-            }
-            return
-        }
 
-        let adapter = self.adapter
-        adapterQueue.async { [weak self] in
-            adapter.login(userID: userID, token: token) { [weak self] result in
-                self?.stateQueue.sync {
-                    guard self?.sessionID == currentSessionID else { return }
-                    if case .success = result {
-                        self?.stateStorage = .loggedIn(userID: userID)
-                    } else {
-                        self?.stateStorage = .initialized
-                    }
-                }
-                callbackQueue.async {
-                    completion(result)
-                }
+        do {
+            try await adapter.login(userID: userID, token: token)
+            stateQueue.sync {
+                guard self.sessionID == currentSessionID else { return }
+                self.stateStorage = .loggedIn(userID: userID)
             }
+        } catch {
+            stateQueue.sync {
+                guard self.sessionID == currentSessionID else { return }
+                self.stateStorage = .initialized
+            }
+            throw error
         }
     }
 
-    /// Starts a logout request. The completion is always delivered on
-    /// `callbackQueue`, including invalid-state failures.
-    public func logout(completion: @escaping (Result<Void, OpenIMError>) -> Void) {
-        let callbackQueue = self.callbackQueue
-        var stateError: OpenIMError?
-        let currentSessionID = stateQueue.sync { () -> (UUID, String)? in
-            guard case let .loggedIn(userID) = stateStorage else {
-                stateError = .invalidState(
+    /// Starts a logout request using Swift async/await.
+    public func logout() async throws {
+        let (currentSessionID, userID) = try stateQueue.sync { () -> (UUID, String) in
+            guard case let .loggedIn(uid) = stateStorage else {
+                throw OpenIMError.invalidState(
                     expected: .loggedIn,
                     actual: stateStorage
                 )
-                return nil
             }
-            stateStorage = .loggingOut(userID: userID)
-            return (sessionID, userID)
-        }
-        guard let currentSessionID else {
-            if let stateError {
-                deliver(completion: completion, result: .failure(stateError))
-            }
-            return
+            stateStorage = .loggingOut(userID: uid)
+            return (sessionID, uid)
         }
 
-        let adapter = self.adapter
-        adapterQueue.async { [weak self] in
-            adapter.logout { [weak self] result in
-                self?.stateQueue.sync {
-                    guard self?.sessionID == currentSessionID.0 else { return }
-                    if case .success = result {
-                        self?.stateStorage = .initialized
-                    } else {
-                        self?.stateStorage = .loggedIn(userID: currentSessionID.1)
-                    }
-                }
-                callbackQueue.async {
-                    completion(result)
-                }
+        do {
+            try await adapter.logout()
+            stateQueue.sync {
+                guard self.sessionID == currentSessionID else { return }
+                self.stateStorage = .initialized
             }
+        } catch {
+            stateQueue.sync {
+                guard self.sessionID == currentSessionID else { return }
+                self.stateStorage = .loggedIn(userID: userID)
+            }
+            throw error
         }
     }
 
@@ -209,15 +179,6 @@ public final class OpenIMClient {
         }
     }
 
-    private func deliver(
-        completion: @escaping (Result<Void, OpenIMError>) -> Void,
-        result: Result<Void, OpenIMError>
-    ) {
-        callbackQueue.async {
-            completion(result)
-        }
-    }
-
     // MARK: - Listener Configuration
     public func setUserListener(_ listener: OpenIMUserListener?) {
         adapter.setUserListener(listener)
@@ -237,25 +198,5 @@ public final class OpenIMClient {
 
     public func setAdvancedMsgListener(_ listener: OpenIMAdvancedMsgListener?) {
         adapter.setAdvancedMsgListener(listener)
-    }
-}
-
-// MARK: - Async / Await Lifecycle (iOS 13.0+)
-@available(iOS 13.0, macOS 10.15, *)
-public extension OpenIMClient {
-    func login(userID: String, token: String) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            login(userID: userID, token: token) { result in
-                continuation.resume(with: result)
-            }
-        }
-    }
-
-    func logout() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            logout { result in
-                continuation.resume(with: result)
-            }
-        }
     }
 }

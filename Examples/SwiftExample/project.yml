@@ -1,0 +1,19 @@
+name: SwiftExample
+options:
+  bundleIdPrefix: io.openim
+  deploymentTarget:
+    iOS: "15.0"
+targets:
+  SwiftExample:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: SwiftExample
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: io.openim.SwiftExample
+      GENERATE_INFOPLIST_FILE: YES
+      INFOPLIST_KEY_UILaunchScreen_Generation: YES
+      INFOPLIST_KEY_UISupportedInterfaceOrientations: "UIInterfaceOrientationPortrait"
+      SWIFT_VERSION: "5.0"
+      TARGETED_DEVICE_FAMILY: "1,2"

@@ -1,6 +1,6 @@
 import Foundation
 
-/// Manager handling message creation, sending, history retrieval, and revocation.
+/// Manager handling message creation, sending, history retrieval, revoking, and searching.
 public final class OpenIMMessageManager {
     private weak var client: OpenIMClient?
     private let adapter: OpenIMCoreAdapter
@@ -14,7 +14,7 @@ public final class OpenIMMessageManager {
         adapter.setAdvancedMsgListener(listener)
     }
 
-    // MARK: - Message Creation
+    // MARK: - Message Creation Factory Methods
     public func createTextMessage(text: String) throws -> OpenIMMessageInfo {
         try adapter.createTextMessage(text: text)
     }
@@ -25,7 +25,12 @@ public final class OpenIMMessageManager {
         atUsersInfo: [OpenIMAtInfo] = [],
         quoteMessage: OpenIMMessageInfo? = nil
     ) throws -> OpenIMMessageInfo {
-        try adapter.createTextAtMessage(text: text, atUserIDs: atUserIDs, atUsersInfo: atUsersInfo, quoteMessage: quoteMessage)
+        try adapter.createTextAtMessage(
+            text: text,
+            atUserIDs: atUserIDs,
+            atUsersInfo: atUsersInfo,
+            quoteMessage: quoteMessage
+        )
     }
 
     public func createImageMessage(imagePath: String) throws -> OpenIMMessageInfo {
@@ -42,7 +47,12 @@ public final class OpenIMMessageManager {
         duration: Int64,
         snapshotPath: String
     ) throws -> OpenIMMessageInfo {
-        try adapter.createVideoMessage(videoPath: videoPath, videoType: videoType, duration: duration, snapshotPath: snapshotPath)
+        try adapter.createVideoMessage(
+            videoPath: videoPath,
+            videoType: videoType,
+            duration: duration,
+            snapshotPath: snapshotPath
+        )
     }
 
     public func createFileMessage(filePath: String, fileName: String) throws -> OpenIMMessageInfo {
@@ -59,7 +69,7 @@ public final class OpenIMMessageManager {
 
     public func createCustomMessage(
         data: String,
-        `extension`: String? = nil,
+        extension: String? = nil,
         description: String? = nil
     ) throws -> OpenIMMessageInfo {
         try adapter.createCustomMessage(data: data, extension: `extension`, description: description)
@@ -89,98 +99,8 @@ public final class OpenIMMessageManager {
         try adapter.createForwardMessage(message: message)
     }
 
-    // MARK: - Message Sending & Ops
+    // MARK: - Message Operations (Async/Await)
     public func sendMessage(
-        message: OpenIMMessageInfo,
-        recvID: String? = nil,
-        groupID: String? = nil,
-        offlinePushInfo: OpenIMOfflinePushInfo? = nil,
-        isOnlineOnly: Bool = false,
-        onProgress: ((Int) -> Void)? = nil,
-        completion: @escaping (Result<OpenIMMessageInfo, OpenIMError>) -> Void
-    ) {
-        adapter.sendMessage(
-            message: message,
-            recvID: recvID,
-            groupID: groupID,
-            offlinePushInfo: offlinePushInfo,
-            isOnlineOnly: isOnlineOnly,
-            onProgress: onProgress,
-            completion: completion
-        )
-    }
-
-    public func getAdvancedHistoryMessageList(
-        options: OpenIMGetMessageOptions,
-        completion: @escaping (Result<OpenIMGetAdvancedHistoryMessageListInfo, OpenIMError>) -> Void
-    ) {
-        adapter.getAdvancedHistoryMessageList(options: options, completion: completion)
-    }
-
-    public func revokeMessage(
-        conversationID: String,
-        clientMsgID: String,
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    ) {
-        adapter.revokeMessage(conversationID: conversationID, clientMsgID: clientMsgID, completion: completion)
-    }
-
-    public func typingStatusUpdate(
-        recvID: String,
-        msgTip: String,
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    ) {
-        adapter.typingStatusUpdate(recvID: recvID, msgTip: msgTip, completion: completion)
-    }
-
-    public func markMessagesAsReadByMsgID(
-        conversationID: String,
-        clientMsgIDs: [String],
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    ) {
-        adapter.markMessagesAsReadByMsgID(conversationID: conversationID, clientMsgIDs: clientMsgIDs, completion: completion)
-    }
-
-    public func deleteMessage(
-        conversationID: String,
-        clientMsgID: String,
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    ) {
-        adapter.deleteMessage(conversationID: conversationID, clientMsgID: clientMsgID, completion: completion)
-    }
-
-    public func deleteMessageFromLocalStorage(
-        conversationID: String,
-        clientMsgID: String,
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    ) {
-        adapter.deleteMessageFromLocalStorage(conversationID: conversationID, clientMsgID: clientMsgID, completion: completion)
-    }
-
-    public func deleteAllMsgFromLocal(
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    ) {
-        adapter.deleteAllMsgFromLocal(completion: completion)
-    }
-
-    public func deleteAllMsgFromLocalAndSvr(
-        completion: @escaping (Result<Void, OpenIMError>) -> Void
-    ) {
-        adapter.deleteAllMsgFromLocalAndSvr(completion: completion)
-    }
-
-    public func searchLocalMessages(
-        param: OpenIMSearchParam,
-        completion: @escaping (Result<OpenIMSearchResultInfo, OpenIMError>) -> Void
-    ) {
-        adapter.searchLocalMessages(param: param, completion: completion)
-    }
-}
-
-// MARK: - Async / Await Support (iOS 13.0+)
-@available(iOS 13.0, macOS 10.15, *)
-public extension OpenIMMessageManager {
-    func sendMessage(
         message: OpenIMMessageInfo,
         recvID: String? = nil,
         groupID: String? = nil,
@@ -188,69 +108,51 @@ public extension OpenIMMessageManager {
         isOnlineOnly: Bool = false,
         onProgress: ((Int) -> Void)? = nil
     ) async throws -> OpenIMMessageInfo {
-        try await withCheckedThrowingContinuation { continuation in
-            sendMessage(
-                message: message,
-                recvID: recvID,
-                groupID: groupID,
-                offlinePushInfo: offlinePushInfo,
-                isOnlineOnly: isOnlineOnly,
-                onProgress: onProgress
-            ) { continuation.resume(with: $0) }
-        }
+        try await adapter.sendMessage(
+            message: message,
+            recvID: recvID,
+            groupID: groupID,
+            offlinePushInfo: offlinePushInfo,
+            isOnlineOnly: isOnlineOnly,
+            onProgress: onProgress
+        )
     }
 
-    func getAdvancedHistoryMessageList(options: OpenIMGetMessageOptions) async throws -> OpenIMGetAdvancedHistoryMessageListInfo {
-        try await withCheckedThrowingContinuation { continuation in
-            getAdvancedHistoryMessageList(options: options) { continuation.resume(with: $0) }
-        }
+    public func getAdvancedHistoryMessageList(
+        options: OpenIMGetMessageOptions
+    ) async throws -> OpenIMGetAdvancedHistoryMessageListInfo {
+        try await adapter.getAdvancedHistoryMessageList(options: options)
     }
 
-    func revokeMessage(conversationID: String, clientMsgID: String) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            revokeMessage(conversationID: conversationID, clientMsgID: clientMsgID) { continuation.resume(with: $0) }
-        }
+    public func revokeMessage(conversationID: String, clientMsgID: String) async throws {
+        try await adapter.revokeMessage(conversationID: conversationID, clientMsgID: clientMsgID)
     }
 
-    func typingStatusUpdate(recvID: String, msgTip: String) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            typingStatusUpdate(recvID: recvID, msgTip: msgTip) { continuation.resume(with: $0) }
-        }
+    public func typingStatusUpdate(recvID: String, msgTip: String) async throws {
+        try await adapter.typingStatusUpdate(recvID: recvID, msgTip: msgTip)
     }
 
-    func markMessagesAsReadByMsgID(conversationID: String, clientMsgIDs: [String]) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            markMessagesAsReadByMsgID(conversationID: conversationID, clientMsgIDs: clientMsgIDs) { continuation.resume(with: $0) }
-        }
+    public func markMessagesAsReadByMsgID(conversationID: String, clientMsgIDs: [String]) async throws {
+        try await adapter.markMessagesAsReadByMsgID(conversationID: conversationID, clientMsgIDs: clientMsgIDs)
     }
 
-    func deleteMessage(conversationID: String, clientMsgID: String) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            deleteMessage(conversationID: conversationID, clientMsgID: clientMsgID) { continuation.resume(with: $0) }
-        }
+    public func deleteMessage(conversationID: String, clientMsgID: String) async throws {
+        try await adapter.deleteMessage(conversationID: conversationID, clientMsgID: clientMsgID)
     }
 
-    func deleteMessageFromLocalStorage(conversationID: String, clientMsgID: String) async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            deleteMessageFromLocalStorage(conversationID: conversationID, clientMsgID: clientMsgID) { continuation.resume(with: $0) }
-        }
+    public func deleteMessageFromLocalStorage(conversationID: String, clientMsgID: String) async throws {
+        try await adapter.deleteMessageFromLocalStorage(conversationID: conversationID, clientMsgID: clientMsgID)
     }
 
-    func deleteAllMsgFromLocal() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            deleteAllMsgFromLocal { continuation.resume(with: $0) }
-        }
+    public func deleteAllMsgFromLocal() async throws {
+        try await adapter.deleteAllMsgFromLocal()
     }
 
-    func deleteAllMsgFromLocalAndSvr() async throws {
-        try await withCheckedThrowingContinuation { continuation in
-            deleteAllMsgFromLocalAndSvr { continuation.resume(with: $0) }
-        }
+    public func deleteAllMsgFromLocalAndSvr() async throws {
+        try await adapter.deleteAllMsgFromLocalAndSvr()
     }
 
-    func searchLocalMessages(param: OpenIMSearchParam) async throws -> OpenIMSearchResultInfo {
-        try await withCheckedThrowingContinuation { continuation in
-            searchLocalMessages(param: param) { continuation.resume(with: $0) }
-        }
+    public func searchLocalMessages(param: OpenIMSearchParam) async throws -> OpenIMSearchResultInfo {
+        try await adapter.searchLocalMessages(param: param)
     }
 }
