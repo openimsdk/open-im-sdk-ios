@@ -1,0 +1,66 @@
+name: Publish to CocoaPods & GitHub Releases
+
+# Triggered by pushing a version tag, e.g. 3.8.3-hotfix.14
+# This tag also serves as the SPM release version — no separate action needed for SPM.
+on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+*' # Matches 3.8.3-hotfix.14, 3.8.3, 4.0.0-alpha.1, etc.
+
+jobs:
+  publish:
+    runs-on: macos-14
+    permissions:
+      contents: write # Required to create GitHub Releases
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # --- Pre-publish verification ---
+
+      - name: Run SPM Tests
+        run: swift test
+
+      - name: Lint CocoaPods Podspec
+        run: |
+          gem install cocoapods --no-document
+          pod lib lint OpenIMSDK.podspec --allow-warnings --skip-tests
+
+      # --- Publish to CocoaPods Trunk ---
+      # Prerequisites (one-time):
+      #   1. Run: pod trunk register <email> '<name>'
+      #   2. Copy the token from ~/.netrc (cocoapods.org line) or run:
+      #      pod trunk me --verbose (shows your token)
+      #   3. Add it as a GitHub Secret named COCOAPODS_TRUNK_TOKEN in this repo.
+      - name: Push to CocoaPods Trunk
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: |
+          echo "Pushing OpenIMSDK ${{ github.ref_name }} to CocoaPods trunk..."
+          pod trunk push OpenIMSDK.podspec --allow-warnings --skip-tests
+
+      # --- Create GitHub Release ---
+      # SPM users consume the package via the git tag, so the release makes
+      # the tag discoverable and lets us attach release notes.
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ github.ref_name }}"
+          echo "Creating GitHub Release for ${VERSION}..."
+          gh release create "${VERSION}" \
+            --title "OpenIMSDK ${VERSION}" \
+            --generate-notes \
+            --latest
+
+      - name: Report Failure via Issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "🚨 [Publish Failed] OpenIMSDK ${{ github.ref_name }}" \
+            --body "Automated publishing of **${{ github.ref_name }}** failed.\n\nPlease inspect the [GitHub Actions run](https://github.com/${{ github.repository }}/actions) logs."

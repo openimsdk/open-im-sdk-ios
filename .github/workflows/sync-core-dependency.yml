@@ -114,6 +114,12 @@ jobs:
           git commit -m "chore(deps): bump OpenIMSDKCore to ${TARGET_CORE_TAG}"
           git push origin HEAD
 
+          # Push a version tag to trigger the publish workflow (publish.yml)
+          # The tag becomes the CocoaPods version AND the SPM release version.
+          echo "Pushing tag ${TARGET_CORE_TAG} to trigger CocoaPods + GitHub Release publish..."
+          git tag "${TARGET_CORE_TAG}"
+          git push origin "${TARGET_CORE_TAG}"
+
       - name: Report Failure via Issue
         if: failure() && env.NEED_UPDATE == 'true'
         env:
